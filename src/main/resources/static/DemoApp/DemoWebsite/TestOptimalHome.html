@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<LINK REL="SHORTCUT ICON" HREF="http://testoptimal.com/img/to.ico">
+<META name="description" content="Model-Based Test Automation Tool, Empowers Test Engineers to Innovates">
+<META name="keywords" content="testing, test automation, test case generation, model-based testing, regression testing, functional testing, requirements traceability, test coverage, data-driven testing, pairwise testing, scriptless automation, manual testing">
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script src="js/jquery-corner.js" type="text/javascript"></script>
+<script src="js/login.js" type="text/javascript"></script>
+<link href="js/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="js/facebox/facebox.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+      jQuery(document).ready(function($) {
+    	$("#description").corner("round 10px");
+    	$("#testimonial").corner("bite 15px").parent().css('padding', '10px').corner("round 15px");//corner("wicked 20px");//corner("round 15px").parent().css('padding', '10px').corner("round 15px");
+		$("#downloadHere a").corner("round 30px");
+		
+		setCurPage('Home');
+     });
+
+</script>
+
+<style>
+	#testimonial {
+  		padding: 5px;
+  		padding-left: 0px;
+  		font-size: 1.25em;
+  		padding-bottom: 10px;
+	}
+
+	#testimonialWrap {
+		background-color: #333333;//#cc9966;
+  		margin-bottom: 25px;
+  		margin-top: 20px;
+	}
+
+	#testimonial p {
+  		color: #CCCCCC;
+		font: arial, helvetica, sans-serif;
+		padding-left: 20px;
+		padding-right: 10px;
+	}
+
+	.bgstart {
+	     float: left;
+	     font-size: 300%;
+	     color: #cc9966;
+	     position: relative;
+	     top: -15px;
+	     height: 10px;
+	     padding-right: 3px;
+	 }
+
+	 .bgend {
+	     font-size: 300%;
+		line-height: 10px;
+	     color: #cc9966;
+	     padding-right: 3px;
+	     position: relative;
+	     top: 15px;
+	     height: 10px;
+	 }
+
+	 .emphasis {
+	 	font-size: large;
+	 	color: orange;
+	 }
+
+	.signature {
+  		font-style: italic;
+  		font-color: #333333;
+  		font-size: 0.85em;
+  		float: right;
+  		position: relative;
+  		top: -30px;
+  		left: -15px;
+  	}
+
+	#seeMore {
+		margin-left: 15px;
+	}
+
+	#downloadHere {
+		border: 1px solid #171717;
+		width: 100%;
+		margin-top: 15px;
+		margin-bottom: 15px;
+		font-style: italic;
+	}
+
+	#downloadHere h3 {
+		text-align: center;
+		font-size: large;
+	}
+
+	#downloadHere a {
+		color: #FF6600;
+		background-image:url('images/gradientBand.png');
+		padding: 20px;
+	}
+
+	#downloadHere img {
+		border: 0;
+		height: 50px;
+		vertical-align: middle;
+	}
+
+</style>
+
+<title>Demo WebSite - Home</title>
+</head>
+<body>
+<div id="loginSection">
+	<table>
+		<tr><td colspan=2 align="right"><span id="closeBtn" onclick="closeLogin()">x</span></td></tr>
+		<tr class=field><td>User ID:</td><td><input type=text value="" id="loginID" class="UserID"/></td></tr>
+		<tr class=field><td>Password:</td><td><input type=password value="" id="password" class="Password"/></td></tr>
+		<tr class=field><td><button id="loginBtn" onclick="login()">Login</button></td><td align="right"></td></tr>
+		<tr><td id="alertMsg" colspan=2 wrap></td></tr>
+	</table>
+</div>
+
+<div id="wrap">
+	<div id="lastPage" style="float:right; positioin:relative;">last visited page: <span class="pageURL"></span></div>
+	<div id="header">
+		<img src="images/TestOptimal.png"/>
+		<span id="slogan">Empowered Innovation</span>
+	</div>
+
+	<div id="menu">
+		<div style="float:left;">
+		<ul>
+			<li class="selectSection to-current" id="leftMenu">
+			<a href="TestOptimalHome.html" title="TestOptimal Home Page" id="menuHome">Home</a></li>
+			<li class="selectSection">
+			<a href="TestOptimalFeatures.html" title="TestOptimal Features" id="menuFeature">Features</a></li>
+			<li class="selectSection">
+			<a href="TestOptimalDownload.html" title="Download TestOptimal" id="menuDownload">Download</a></li>
+		</ul>
+		</div>
+
+	<div style="float: right; position:relative; top: 5px;">
+	<span id="notLoggedIn" style="display:none;">You are not logged in, please <a href="javascript:popupLogin();" id="actionLogin">login</a> or <a href="javascript:popupRegister();" id="popupRegister">register</a></span>
+	<span id="loggedIn"  style="display:none;">Welcome! <span class="displayName"></span> (<span class="UserID"></span>)  <a href="javascript:logoff();" id="actionLogoff">logoff</a></span>
+	</div>
+</div>
+	<div id="contentwrap" style="margin-left: 10px;">
+
+		<div id="content">
+
+			<h2>Empowers QA professionals to innovate</h2>
+			<div id="description" style="background-color: #333333; padding: 15px;">
+				<p>
+TestOptimal ProMBT, WinMBT, BasicMBT, RuntimeMBT are a suite of model-based test automation tools for functional testing and load/performance testing. TestOptimal combines Model-Based Testing (MBT) and Data-Driven Testing (DDT) to provide you a powerful test case generation and test automation tool. MBT enables you to find defects earlier in the development cycle and respond to changes quickly and efficiently. Animation of test execution enables you to gain insight and perform visual validation on the model. Track requirement coverage and visualize test cases in various graphs. Choose one of many algorithms to generate test sequences for desired test coverage. Re-purpose same models and automation scripts for load and performance testing. TestOptimal can help you reduce development cycle, achieve unprecedented test coverage and improve response to changes while gaining higher confidence in your software delivery.
+</p>
+			</div>
+			<div id="downloadHere"><div>
+				<h3><a href="TestOptimalDownload.html" id="download30Trial"><img src="images/download.gif"/> Download 30-Day Free Trial Now</a></h3>
+			</div></div>
+			<div id="testimonialWrap">
+				<div id="testimonial" style="border-top: 1px solid #333333;">
+
+					<p><span class="bgstart">&#8220;</span><span class="indent"></span>TestOptimal provided the test team with the
+					ability to complete automated progression testing of a large web based
+					medical results portal ... to achieve <span class="emphasis">over 90% coverage</span> of requirements with automated tests and provide an
+					<span class="emphasis">improvement in
+					release turnaround times of over 60%</span>. Based on the success of the initial
+					pilot project the TestOptimal ProMBT tools have been deployed to all our
+					project teams with excellent results...<span class="bgend">&#8221;</span> <a id="seeMore" href="TO_CustomerComments.html">see more</a></p>
+					<p class="signature">Paul Graham | Chief Technology Officer | <a href="http://ddihealth.com/">DDI Health</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="sidebar" style="margin-top: 5px;  ">
+		</ul>
+	</div>
+
+	<div style="clear: both;">
+	</div>
+
+	<div id="footer">
+		<p>Copyright &copy; <a href="http://testoptimal.com/">TestOptimal, LLC</a></p>
+	</div>
+
+</div>
+
+</body>
+</html>

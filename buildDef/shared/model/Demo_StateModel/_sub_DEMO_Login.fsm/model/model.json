@@ -1,0 +1,462 @@
+{
+  "uid": "U100",
+  "typeCode": "scxml",
+  "desc": "This is a sub model used by Demo_HomePageLogin model.",
+  "notepad": "\u003cp\u003eThis is a sub model used by Demo_HomePageLogin model.\n\u003c/p\u003e\n\u003cp\u003eThis sub model may be run independently by itself just like regular model\u003c/p\u003e\n\u003cp\u003eAll models with name prefixed with \"_sub_\" are treated as sub-models.\n\u003c/p\u003e\n\u003cp\u003eSub models are included into other models by setting the state property \"Sub Model\" in State Property in MODEL tab.\n\u003c/p\u003e\n\u003cp\u003eThe model uses Selenium/Web Driver to interact with AUT. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "ConsecutiveInvalidLogin",
+      "uid": "U45d1c9bb",
+      "notepad": "",
+      "annot": "",
+      "stateID": "ConsecutiveInvalidLogin",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "checkLoginLocked",
+          "uid": "U9ce6f707",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U25657b8f",
+          "event": "checkLoginLocked",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "down",
+            "posList": [
+              {
+                "left": 440.0,
+                "top": 237.0
+              },
+              {
+                "left": 573.0,
+                "top": 237.0
+              },
+              {
+                "left": 573.0,
+                "top": 166.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 126,
+              "height": 19
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "$VAR.failCount \u003e\u003d 3",
+          "guardHint": "LoginRetry",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "performInvalidLogin",
+          "uid": "U9f16f0be",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U45d1c9bb",
+          "event": "performInvalidLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "InvalidLoginLock",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 331.0,
+                "top": 303.0
+              },
+              {
+                "left": 331.0,
+                "top": 338.0
+              },
+              {
+                "left": 466.0,
+                "top": 338.0
+              },
+              {
+                "left": 466.0,
+                "top": 284.0
+              },
+              {
+                "left": 440.0,
+                "top": 284.0
+              }
+            ],
+            "label": {
+              "left": 2,
+              "top": 39,
+              "width": 133,
+              "height": 23
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "LoginRetry",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 281.0,
+        "top": 231.0,
+        "width": 161.0,
+        "height": 73.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "end",
+      "uid": "U25657b8f",
+      "notepad": "",
+      "annot": "",
+      "stateID": "end",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 533.0,
+        "top": 117.0,
+        "width": 75.0,
+        "height": 50.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "LoginPage",
+      "uid": "U33f038da",
+      "notepad": "",
+      "annot": "",
+      "stateID": "LoginPage",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "loginUsingDataSet",
+          "uid": "U4255387f",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U25657b8f",
+          "event": "performInvalidLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "InvalidLogin",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 250.0,
+                "top": 141.0
+              },
+              {
+                "left": 437.0,
+                "top": 141.0
+              },
+              {
+                "left": 437.0,
+                "top": 142.0
+              },
+              {
+                "left": 532.0,
+                "top": 142.0
+              }
+            ],
+            "label": {
+              "left": 12,
+              "top": -20,
+              "width": 142,
+              "height": 27
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "performValidLogin",
+          "uid": "U9fd69d76",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U25657b8f",
+          "event": "performValidLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "ValidLogin",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 208.0,
+                "top": 110.0
+              },
+              {
+                "left": 208.0,
+                "top": 64.0
+              },
+              {
+                "left": 569.0,
+                "top": 64.0
+              },
+              {
+                "left": 569.0,
+                "top": 116.0
+              }
+            ],
+            "label": {
+              "left": 4,
+              "top": -67,
+              "width": 123,
+              "height": 26
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "startInvalidLogin",
+          "uid": "Ube2bc50a",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U45d1c9bb",
+          "event": "startInvalidLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 203.0,
+                "top": 185.0
+              },
+              {
+                "left": 203.0,
+                "top": 271.0
+              },
+              {
+                "left": 279.0,
+                "top": 271.0
+              }
+            ],
+            "label": {
+              "left": -32,
+              "top": 93,
+              "width": 109,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 152.0,
+        "top": 111.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "start",
+      "uid": "U3be2df19",
+      "notepad": "",
+      "annot": "",
+      "stateID": "start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "start",
+          "uid": "Ub05d520a",
+          "notepad": "",
+          "annot": "",
+          "targetUID": "U33f038da",
+          "event": "start",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 84.0,
+                "top": 139.0
+              },
+              {
+                "left": 110.0,
+                "top": 139.0
+              },
+              {
+                "left": 110.0,
+                "top": 139.0
+              },
+              {
+                "left": 151.0,
+                "top": 139.0
+              }
+            ],
+            "label": {
+              "left": 14,
+              "top": -21,
+              "width": 29,
+              "height": 24
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 56.0,
+        "top": 126.0,
+        "width": 30.0,
+        "height": 30.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    }
+  ],
+  "modelName": "_sub_DEMO_Login",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "",
+  "versionReq": "",
+  "buildNum": 1,
+  "mbtNode": {
+    "uid": "U120",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": false
+    },
+    "execThreadNum": 1,
+    "threadSpreadDelay": 0,
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "pluginList": [
+    "SELENIUM"
+  ],
+  "modelType": "FSM"
+}

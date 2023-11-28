@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+	<script type="text/javascript" src="../js/common.js"></script>
+
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		.name {
+			font-weight: bold;
+			opacity: 0.75;
+		}
+		
+		.key {
+			font-style: italic;
+			white-space: nowrap;
+		}
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div>
+		<p>Build State model that describes AUT behaviors. Use State (node) for AUT state and transition (edge) 
+			for actions that change AUT state.  Each model must have one <i>Initial State</i> and at least one
+			<i>Final State</i> and all states must be reachable from <i>Initial State</i>.
+		</p>
+		<p><i>TestOptimal</i> generates test sequences (test paths) from the model using the selected sequencer to 
+			achieve desired test coverage.
+		</p>
+		<p><b>Editor has three modes:</b>
+			<ul>
+				<li>
+					<span class="glyphicon glyphicon-star"></span> Edit: view/edit/position state and transition properties, and full model execution.
+				</li>
+				<li>
+					<span class="symb char">O</span>
+					<span class="glyphicon glyphicon-unchecked"></span>
+					<span class="symb">&#10140;</span>
+					<span class="glyphicon glyphicon-record"></span>
+					<span class="glyphicon glyphicon-chevron-down"></span>
+					 Add: add states, transitions and others.
+				</li>
+				<li>
+					<span class="glyphicon glyphicon-star-empty"></span> Mark:  select state/transition for set operation and partial model execution.
+					Also supports left-mouse lasso to select multiple states.
+				</li>
+			</ul>
+			<p>Double click on canvas backgroud reset to <span class="glyphicon glyphicon-star"></span><i>Edit mode</i>.</p>
+		</p>
+		<b>Four easy steps to create model:</b>
+		<ul>
+			<li>Create <i>Initial State</i> - select <span class="symb char">O</span>, click on canvas to place <i>Initial State</i>
+			<li>Create <i>Final State</i> - select <span class="glyphicon glyphicon-record"></span>, click on canvas to place <i>Final State</i>
+			<li>Create AUT states - select <span class="glyphicon glyphicon-unchecked"></span>, click on canvas to place state on the model
+			<li>Create Transitions - select <span class="symb">&#10140;</span>, click on source state and target state
+		</ul>
+		<b>Other common actions while in <span class="glyphicon glyphicon-star"></span> <i>Edit mode</i>:</b>
+		<ul>
+			<li>Move states - hover over state, click on &#128070; to activate move and click again to place the state on desired location</li>
+			<li>Adjust transitions - click on transition segment to activate mode and click again at desired location</li>
+			<li>Relocate transition ends - move transition end segment to edge of the state and click again</li>
+			<li>Move transition label - hover over transition label, click on &#128070;  to activate move and click again to place label on desired location</li>
+			<li>State/Transition menus: hover over state / transition label, click <img src="../img/to.png" width="16px;"/> to show circular menu items</li>
+			<li>State/Trans Properties: double click on state/transtion label or click on state/transition menu item <span class="glyphicon glyphicon-th-list"></span></li>
+		</ul>
+		
+		<p>More info at <a href="#" onclick="parent.curAppState.winMgr.openWebPage('https://testoptimal.com/v6/wiki/doku.php?id=ide_model')">Wiki / Model Editor</a>.
+	</div>
+</body>
+</html>

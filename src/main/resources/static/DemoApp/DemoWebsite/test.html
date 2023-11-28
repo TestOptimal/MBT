@@ -1,0 +1,164 @@
+
+<html>
+<head>
+<script src="jquery-1.4.4.min.js"></script>
+
+<script>
+
+// cookies functions: 0 days  - good until browser closes, -1 days - trashed right after creation
+function createCookie(c_name,value,exdays)
+{
+var exdate=new Date();
+exdate.setDate(exdate.getDate() + exdays);
+var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+document.cookie=c_name + "=" + c_value;
+}
+
+function readCookie(c_name)
+{
+var i,x,y,ARRcookies=document.cookie.split(";");
+for (i=0;i<ARRcookies.length;i++)
+{
+  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+  x=x.replace(/^\s+|\s+$/g,"");
+  if (x==c_name)
+    {
+    return unescape(y);
+    }
+  }
+}
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+
+
+function alertDialog(msg_p) {
+	alert(msg_p);
+}
+
+function login() {
+	var aUserID = $("#loginSection .UserID").val();
+	var aPassword = $("#loginSection .Password").val();
+	if (aUserID=="" || aPassword=="") {
+		alertDialog("User ID/Password required.");
+		return;
+	}
+
+	var loginPassword = readCookie("TO_PWD_" + aUserID);
+	if (loginPassword && loginPassword!="") {
+		if (loginPassword==aPassword) {
+			$("#displayName").text(getUserDisplayName(aUserID));
+			$("#loggedInSection").show();
+			createCookie("TO_CUR_USERID", aUserID, 2);
+			$("#loginSection").hide();
+			return;
+		}
+
+	}
+	alertDialog("Login invalid");
+}
+
+
+function register() {
+	var aFirst = $("#registerSection .FirstName").val();
+
+	var aLast = $("#registerSection .LastName").val();
+	var aUserID = $("#registerSection .UserID").val();
+	var aPassword = $("#registerSection .Password").val();
+	if (aFirst=="" || aLast == "" || aUserID=="" || aPassword=="") {
+		alertDialog("All fields are required.");
+		return;
+	}
+
+	createCookie("TO_CUR_USERID", aUserID, 2);
+	createCookie("TO_PWD_" + aUserID, aPassword, 2);
+	createCookie("TO_FIRST_" + aUserID, aFirst, 2);
+	createCookie("TO_LAST_" + aUserID, aLast, 2);
+	showLogin();
+
+}
+
+
+function getUserDisplayName(loginUserID) {
+	var displayName = readCookie("TO_FIRST_" + loginUserID) + " " + readCookie("TO_LAST_" + loginUserID);
+	return displayName;
+}
+
+function showLogin() {
+	$("#loginSection").hide();
+	$("#registerSection").hide();
+	$("#loggedInSection").show();
+	var userID = readCookie("TO_CUR_USERID");
+	var displayName = getUserDisplayName(userID);
+	$("#loggedInSection .displayName").html(displayName);
+	$("#loggedInSection .UserID").html(userID);
+}
+
+
+
+function displayRegister() {
+	$("#registerSection").show();
+	$("#loginSection").hide();
+}
+
+function logoff() {
+	eraseCookie("TO_CUR_USERID");
+	$("#loginSection").show();
+	$("#loggedInSection").hide();
+
+}
+
+function isLoggedIn() {
+	var usr = readCookie("TO_CUR_USERID");
+	if (usr && usr!="") return true;
+	else return false;
+
+}
+
+
+$(document).ready(function() {
+
+	if (isLoggedIn()) {
+		showLogin();
+	}
+	else {
+		$("#loginSection").show();
+		$("#registerSection").hide();
+		$("#loggedInSection").hide();
+
+	}
+
+});
+
+
+
+
+</script>
+</head>
+<body>
+
+<div id="loggedInSection">
+	Login User: <span class="displayName"></span> (<span class="UserID"></span>)  <a href="javascript:logoff();">logoff</a>
+</div>
+
+<table id="loginSection">
+	<tr><td>User ID:</td><td><input type=text value="" class="UserID"/></td></tr>
+	<tr><td>Password:</td><td><input type=password value="" class="Password"/></td></tr>
+	<tr><td><button onclick="login()">Login</button></td><td align="right"><a href="javascript:displayRegister();">register</a></td></tr>
+</table>
+
+<table id="registerSection">
+	<tr><td>First Name:</td><td><input type=text value="" class="FirstName"/></td></tr>
+	<tr><td>Last Name:</td><td><input type=text value="" class="LastName"/></td></tr>
+	<tr><td>User ID:</td><td><input type=text value="" class="UserID"/></td></tr>
+	<tr><td>Password:</td><td><input type=password value="" class="Password"/></td></tr>
+	<tr><td colspan=2><button onclick="register()">Register</button></td></tr>
+</table>
+
+
+</body>
+
+
+</html>

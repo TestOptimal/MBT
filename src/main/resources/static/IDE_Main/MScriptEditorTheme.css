@@ -1,0 +1,153 @@
+.CodeMirror-focused { 
+	border-top: 1px solid #EEEEEE !important;
+}
+
+.cmp-err-widget {
+	background: #ffa; 
+	color: #a00; 
+	padding: 2px 5px 3px; 
+}
+.cmp-err-icon {
+    color: white; 
+    background-color: #ef8330; 
+    font-weight: bold; 
+    border-radius: 50%; 
+    padding: 0 3px; 
+    margin-right: 7px;
+}
+
+.CodeMirror {
+  border: 1px solid #eeeeee;
+  height: auto;
+  line-height: 1.25;
+  font-size: 11.75px;
+}
+
+.cm-tab {
+   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+   background-position: right;
+   background-repeat: no-repeat;
+}
+
+.CodeMirror-gutter.breakpoints {
+	width: 0px;
+}
+
+.CodeMirror-gutter.CodeMirror-folded {
+	width: 4px;
+}
+
+.CodeMirror-gutter.CodeMirror-folded:hover{
+	border-right: 2px dashed blue;
+}
+
+.CodeMirror-foldmarker {
+	padding-left: 0px;
+	font-weight: bold;
+	font-size: large;
+	background-color: #DDDDDD;
+	border-radius: 8px;
+	color: blue;
+    cursor: pointer;
+}
+
+.CodeMirror-foldmarker:hover {
+	color: red;
+}
+
+.CodeMirror-linenumber.CodeMirror-linenumbers {
+	padding-right: 0px;
+}
+
+.CodeMirror-linenumber {
+	font-size: x-small;
+}
+
+pre span {
+	margin-top: 0px !important;
+	padding-top: 0px !important;
+}
+
+.CodeMirror-gutterlinenumber.CodeMirror-gutter-elt {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.CodeMirror-scroll {
+  overflow-y: auto;
+  overflow-x: auto;
+  	background-color: #FDFDFD;
+}
+
+.CodeMirror-focused .cm-matchhighlight {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
+        background-position: bottom;
+        background-repeat: repeat-x;
+      }
+
+.CodeMirror-focused span.CodeMirror-matchhighlight { 
+	background: #e7e4ff;
+}
+
+.CodeMirror-gutter {
+//    width: 3em;
+    background: #F0F0F0;
+}
+
+.activeline {
+	background: #E8F2FE !important;
+}
+
+
+.cm-s-to span.cm-keyword {color: #708;}
+.cm-s-to span.cm-atom {color: #219;}
+.cm-s-to span.cm-number {color: #164;}
+.cm-s-to span.cm-def {color: #00f;}
+.cm-s-to span.cm-variable {color: black;}
+.cm-s-to span.cm-variable-2 {color: #05a;}
+.cm-s-to span.cm-variable-3 {color: #085;}
+.cm-s-to span.cm-property {color: black;}
+.cm-s-to span.cm-operator {color: black;}
+.cm-s-to span.cm-comment {color: #a50;}
+.cm-s-to span.cm-string {color: black;}
+.cm-s-to span.cm-string-2 {color: black;}
+.cm-s-to span.cm-meta {color: #555;}
+.cm-s-to span.cm-error {color: #f00;}
+.cm-s-to span.cm-qualifier {color: #555;}
+.cm-s-to span.cm-builtin {color: #30a;}
+.cm-s-to span.cm-bracket {color: #cc7;}
+
+.CodeMirror-gutter-text { font-size: 9px !important; border-right: 4px solid #EEEEEE;}
+
+.cm-s-to div.CodeMirror-selected { 
+	background: #97c3d4 !important; 
+	color: #FFFFFF !important;
+}
+.CodeMirror-searching {
+  background: #3399FF;
+}
+
+.cm-s-to span.cm-tag {color: #000080;}
+.cm-s-to span.cm-attribute {color: #AA1111;}
+
+.cm-s-to span.cm-header {color: #a0a;}
+.cm-s-to span.cm-quote {color: #090;}
+.cm-s-to span.cm-hr {color: #999;}
+.cm-s-to span.cm-link {color: #00c;}
+
+
+span.cm-mscriptFunc {
+	font-style: italic;
+	font-weight: bold;
+}
+
+.CodeMirror-dialog.CodeMirror-dialog-top {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: 99;
+	background: #FFFFFF;
+	padding: 5px;
+	border: 1px solid #AAAAAA;
+	border-radius: 5px;
+}

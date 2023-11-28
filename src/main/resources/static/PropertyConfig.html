@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+    <link href="css/IDE_View.css" rel="stylesheet">
+   	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+		MainModule.controller("mainCtrl", function ($scope) {
+			parent.curAppState.winMgr.addWin("PropConfig", window);
+			
+			$scope.attrList = {};
+			$scope.keyList = [
+				{key: "modelFolder", label: "Model Root Folder", title: "Root folder of models"},
+				{key: "IDE.msgHideMillis", label: "Hide Message (millis)", title: "Automatically hides alert messages after specified milliseconds"}
+			];
+			$scope.config = parent.curAppState.config;
+			
+			$scope.init = function () {
+				$scope.keyList.forEach(function(k) {
+					$scope.attrList[k.key] = $scope.config[k.key];
+				});
+			}
+			
+			$scope.save = function () {
+				if ($scope.propertyForm.$valid) {
+					if (!$scope.propertyForm.$pristine) {
+						$scope.keyList.forEach(function(k) {
+							$scope.config[k.key] = $scope.attrList[k.key];
+						});
+						parent.wsSend("saveConfig", $scope.attrList);
+					}
+					parent.closeDialog();
+				}
+				else {
+					parent.alertDialog("Please fix the field validation errors.");
+				}
+			}
+			
+			$scope.init();
+		});
+
+		function mainCallbackFunc(action_p, params_p) {
+			var scope = $("body").scope();
+			if (action_p=="saved" && params_p=="config") {
+				scope.saved();
+			}
+		}		
+	</script>	
+	
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		input {
+			width: 400px;
+		}
+		
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV" style="overflow: auto;">
+		<table width="100%" style="margin-bottom: 40px;">
+			<tbody ng-form="propertyForm">
+				<tr ng-repeat="k in keyList">
+					<td title="{{k.title}}">{{k.label}}</td>
+					<td><input  type="text" ng-model="attrList[k.key]"></input></td>
+				</tr>
+			</tbody>		
+		</table>
+		<div style="position: absolute; left: 3px; bottom: 3px;">
+			<button class="btn btn-primary" ng-click="save()">OK</button>
+		</div>
+	</div>
+
+</body>
+</html>

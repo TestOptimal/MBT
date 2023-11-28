@@ -1,0 +1,317 @@
+<style>
+
+	.paneTitle {
+		height: 25px;
+		padding-top: 5px;
+		border-top: 1px solid #CCCCCC;
+	}
+	
+	.miniBtn.execLock {
+		color: #CCCCCC;
+	}
+	
+	.miniBtn:hover, .miniBtn.execLock.locked:hover {
+		color: orange;
+	}
+	
+	.miniBtn.execLock.locked {
+		color: #555555;
+	}
+
+	#statsDescHeader .delBtn {
+		color: #AAAAAA;
+	}
+	
+	#statsDescHeader:hover .delBtn {
+		display: inline;
+	}
+	
+	
+	#headerLinks {
+		font-style: italic;
+		float: right;
+	}
+	
+	#headerLinks .link {
+		background: #FFFFFF;
+		border-radius: 11px;
+		padding: 2px;
+		padding-left: 8px;
+		padding-right: 8px;
+		cursor: default;
+	}
+	#headerLinks .link:hover {
+		background: ORANGE;
+		color: #FFFFFF;
+	}
+	
+	.paneTitle {
+		background: #EEEEEE;
+	}
+	
+  	.numField {
+   		border-right: 1px dotted #DDDDDD;	
+  	}
+  	
+  	.sectHeader {
+  		padding-left: 5px;
+  		padding-top: 5px;
+  		background: #E0E0E0;
+  		border-top: 1px solid #AAAAAA;
+  	}
+  	
+  	.sectSubHeader {
+  		height: 25px;
+  		padding-top: 5px;
+  		font-style: italic;
+  		font-weight: bold;
+		background: #F5F5F5;
+		font-weight: bold;
+  	}
+  	
+  	.graphIcon {
+  		font-style: italic;
+  		margin-right: 5px;
+  	}
+  	  	
+	span.glyphicon {
+		color: #555555;
+	}
+	
+	span.glyphicon:hover {
+		color: ORANGE !important;
+	}
+	
+	.rowHover:hover {
+		background: #FAFAFA;
+	}
+	
+	#tcList .header {
+		background-color: #F0F0F0;
+	}
+	
+	.covered.passed, .passed {
+		background-color: lightblue;
+	}
+	
+	.covered {
+		background-color: #EEEEEE;
+	}
+	
+	.covered.failed, .failed {
+		background-color: orange;
+	}
+	
+	.covered.blocked, .blocked {
+		background-color: yellow;
+	}
+	
+ 	#reqList {
+ 		padding-top: 3px;
+		font-size: 10pt;
+ 	}
+ 	
+	#reqList span {
+		border-radius: 6px;
+		padding-left: 3px;
+		padding-right: 3px;
+		margin-right: 3px;
+		background-color: #EEEEEE;
+	}
+	
+	#legendStatus {
+		margin-left: 10px;
+	}
+	
+	#legendStatus span {
+		padding-left: 5px; 
+		padding-right: 5px; 
+		border: 1px solid #999999;
+	}
+	
+	#legends {
+		font-size: 10pt;
+		margin-top: 5px; 
+		padding-top: 3px; 
+		padding-bottom: 3px; 
+		border-top: 1px solid #EEEEEE;
+	}
+	
+	table {
+		padding-top: 0px;
+		margin-top: 0px;
+		top: -3px;
+		position:relative;
+	}
+	
+	#reqMatrix {
+		border-top: 1px solid #EEEEEE;
+		margin-top: 5px;
+		cursor: arrow;
+	}
+	
+	#reqMatrix tbody tr:hover {
+		background-color: #EEEEEE;
+	}
+	
+	#reqMatrix tbody tr {
+		line-height: 15px;
+	}
+	
+	#reqMatrix thead {
+		background-color: #EEEEEE;
+	}
+	
+	#reqListing, #statDescDiv {
+		margin-bottom: 5px;
+		margin-top: 3px;
+	}
+	
+		
+	.tcStatus {
+		width: 5px;
+	}
+	
+	#tagMode {
+		font-size: small;
+		color: blue;
+		font-weight: none;
+		cursor: pointer;
+	}
+	
+	#tagMode:hover {
+		text-decoration: underline;
+	}
+	
+	.tlabel {
+		border-bottom: 1px solid #AAAAAA;
+	}
+	
+	#statDescDiv input {
+		width: 500px;
+	}
+	
+	.ReqCount {
+		background: #EEEEEE;
+	}
+	
+	.verifyStatus {
+		padding: 5px;
+		float: left;
+	}
+	
+	ul.assertItems {
+		list-style-type: circle;
+		padding-left: 25px;
+		margin-top: 0px;
+	}
+	
+	#tcReqList {
+		margin-bottom: 5px;
+	}
+
+	.shade {
+		background-color: #FAFAFA;
+	}
+	
+	.testcaseFooter {
+		border-top: 1px solid #AAAAAA;
+	}
+	
+	.tcStatus {
+		width: 5px;
+	}
+	
+	#testcase thead th {
+		border-bottom: 1px solid #CCCCCC;
+	}
+	
+	.stepStatus {
+		width: 5px;
+		float:right;
+	}
+	
+	.assertItems li:hover {
+		background-color: #F0F0F0;
+	}
+	
+	.taglink {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	
+	.clickable {
+		cursor: default;
+	}
+	
+	.sectCmd {
+		float: right; 
+		font-style: italic; 
+		font-size: smaller;
+	}
+	
+	.tag {
+		border: 1px solid #EEEEEE;
+		border-radius: 4px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	
+</style>
+<div ng-controller="detailsCtrl" ng-show="curExecStatDetail" style="padding-bottom: 20px;">
+	<div>
+		<div id="statsDescHeader">
+			<span><b>Stat Desc:</b> {{execID >=0?curExecStatDetail.statDesc:"Latest Execution"}} <small style="margin-right: 10px;">(ExecID: {{execID}})</small></span>
+			<span ng-if="execID >= 0">
+				<span class="miniBtn execLock glyphicon glyphicon-lock" ng-click="toggleKeep()" ng-class="{locked: curExecStatDetail.keepIt}"
+					title="this execution stats is {{curExecStatDetail.keepIt?'locked':'unlocked'}}. click to toggle."></span>
+				<span ng-hide="curExecStatDetail.keepIt" class="miniBtn delBtn glyphicon glyphicon-remove" ng-click="deleteModelExec()"></span>
+			</span>
+			<a href="#" style="float: right;" class="sectCmd" ng-click="showExecSettings()">Execution Settings</a>
+		</div>
+	</div>
+	<div style="padding-left: 16px;">
+		<table width="100%" cellspacing="0" cellpadding="0" ng-hide="hideExecStatus">
+			<tr class="rowHover">
+				<td class="colLabel">Sequence Mode:</td><td>{{curExecStatDetail.execSummary.mbtSequencer}}</span></td>
+				<td class="colLabel">MBT Session ID:</td><td title="Model execution id">{{curExecStatDetail.mbtSessID}}</td>
+				<td class="colLabel">Submited By:</td><td title="by whom the execution wsa submitted">{{curExecStatDetail.execOptions.submitEmail}}</td>
+			</tr>
+			<tr class="rowHover">
+				<td class="colLabel">Start Time:</td><td>{{curExecStatDetail.execSummary.startDT.toLocaleString()}}</td>
+				<td class="colLabel">End Time:</td><td>{{curExecStatDetail.execSummary.endDT.toLocaleString()}}</td>
+				<td class="colLabel">Executed On:</td><td title="Server that executed the model">{{curExecStatDetail.execOptions.Server}}</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="paneTitle" id="modelCov" style="text-align: left;">
+		<img ng-src="../img/{{coverageExpanded?'minus.png':'plus.png'}}" ng-click="coverageExpanded = !coverageExpanded" ng-init="coverageExpanded=true"/> <b>Model Coverage</b> 
+		<span style="float: right;" id="headerLinks">
+			Graphs: 
+			<span class="link" title="Model graph" ng-click="openModelGraph()">Model</span>
+			<span class="link" title="Model traversal sequence graph" ng-click="openTravGraph()">Traversal</span>
+			<span class="link" title="Model test coverage graph" ng-click="openCoverageGraph()">Coverage</span>
+			<span class="link" title="Model test case MSC" ng-click="openTravMSC()">Test Case</span>
+		</span>
+	</div>
+	<div ng-show="coverageExpanded" style="padding-left: 16px;" ng-include="'../StatsRpt/Coverage.html'"></div>
+
+	<div class="paneTitle" id="reqCov" style="text-align: left;">
+		<img ng-src="../img/{{reqExpanded?'minus.png':'plus.png'}}" ng-click="reqExpanded = !reqExpanded"/> <b>Requirement Coverage & Traceability</b>
+		<a href="#" style="float: right;" class="sectCmd" ng-show="reqExpanded" ng-click="showTag=!showTag" ng-init="showTag=true">{{showTag?'Hide Tag':'Show Tag'}}</a>
+	</div>
+	<div ng-show="reqExpanded" style="padding-left: 16px;" id="ModelExecReq" ng-include="'../StatsRpt/Requirement.html'"></div>
+	
+	<div class="paneTitle" id="testCases" style="text-align: left;">
+		<img ng-src="../img/{{tcExpanded?'minus.png':'plus.png'}}" ng-click="tcExpanded = !tcExpanded"/> <b>Test Cases</b> 
+		<select ng-model="curTestCase" ng-options="tcObj0 as tcObj0.tcName for tcObj0 in curExecStatDetail.tcList" 
+			ng-change="tcExpanded = true"></select>
+		<span style="float: right;">
+			<input type="checkbox" ng-model="tcShowState"/> State
+			<input type="checkbox" ng-model="tcShowTrans"/> Transition
+		</span>
+	</div>
+	<div ng-show="tcExpanded" id="ModelExecTC" style="padding-left: 16px; width: 100%; overflow: auto;" ng-include="'../StatsRpt/TestCase.html'"></div>
+	
+</div>

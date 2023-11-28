@@ -1,0 +1,131 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script>
+
+var MainModule = angular.module("Main", []);
+MainModule.controller("mainCtrl", function($scope) {
+    $scope.mqtt = {
+    	URL: "ws://u3a4e3f9.en.emqx.cloud:8083/mqtt",
+    	subTopic: "TO/Server",
+    	pubTopic: "TO/Server",
+    	username: "demo",
+    	password: "test123",
+    	clientID: "democlient",
+    	messageToSend: '{"test": 123}',
+    	messageReceived: ''
+    }
+    
+    $scope.msgList = [];
+    
+    $scope.connectMQTT = function () {
+    	const options = {
+    	  username: $scope.mqtt.username,
+    	  password: $scope.mqtt.password,
+    	  clientId: $scope.mqtt.clientID,
+    	  protocolId: 'MQTT',
+    	  clean: true,
+    	}
+
+    	$scope.addMsg('Connecting mqtt client')
+    	$scope.mqtt.client = mqtt.connect($scope.mqtt.URL, options)
+
+    	$scope.mqtt.client.on('error', (err) => {
+    	  $scope.addMsg('Connection error: ', err);
+    	  $scope.mqtt.client.end();
+    	})
+
+    	$scope.mqtt.client.on('reconnect', () => {
+    	  $scope.addMsg('Reconnecting...');
+    	})
+
+    	$scope.mqtt.client.on('connect', () => {
+	        $scope.addMsg("Connected to " + $scope.mqtt.URL + " with clientID: " + $scope.mqtt.clientID);
+	        $scope.mqtt.client.subscribe($scope.mqtt.subTopic, {qos: 0});
+	        $scope.addMsg("Subscribed to: " + $scope.mqtt.pubTopic);
+    	})
+    	
+    	$scope.mqtt.client.on('message', (topic, message) => {
+    		$scope.mqtt.messageReceived = JSON.stringify({topic: topic, message: message.toString()}, null, 2);
+    		$scope.$apply();
+    	})
+    }
+
+    $scope.sendMessage = function () {
+        $scope.mqtt.client.publish($scope.mqtt.pubTopic, $scope.mqtt.messageToSend);
+        $scope.addMsg("message sent: " + $scope.mqtt.messageToSend);
+    }
+
+	$scope.addMsg = function (msg) {
+		var json = msg;
+		if (msg instanceof Error) {
+			json = JSON.stringify(msg, Object.getOwnPropertyNames(msg), 2);
+		}
+		else if (typeof msg === 'object') {
+			json = JSON.stringify(msg, null, 2);
+		}
+		$scope.msgList.unshift(json);
+		setTimeout(function() {$scope.$apply();}, 50);
+	}
+		
+	$scope.init = function() {
+		$scope.connectMQTT();
+	}
+	
+	$scope.init();
+});
+
+</script>
+<style>
+	html, body {
+		width: 100%; 
+		height: 100%;
+		overflow: hidden;
+	 	background: #FAFAFA;
+	}
+	
+	input.bigField {
+		width: 400px !important;
+	}
+</style>
+</head>
+
+<body ng-app="Main" ng-controller="mainCtrl">
+    <div style="text-align: center; font-size: x-large; font-weight: bold; background: #F0F0F0;">Model-Based Testing with TestOptimal - MQTT Demo
+    	<small style="margin-left: 15px; font-style: italic;"><a ng-click="showInfo=!showInfo">{{showInfo?"hide info": "more info"}}</a></small>
+    </div>
+	<table class="table" width="100%">
+    	<tr>
+        	<td>MQTT URL: <input class="bigField" type="text" ng-model="mqtt.URL"/></td>
+            <td align="right">User Name: <input type="text" ng-model="mqtt.username"/>
+            	Password: <input type="password" ng-model="mqtt.password"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Subscribe to Topic: <input class="bigField" type="text" ng-model="mqtt.subTopic"/></td>
+            <td align="right">Publish to Topic: <input class="bigField" type="text" ng-model="mqtt.pubTopic"/></td>
+        </tr>
+        <tr>
+            <td>
+            	<textarea class="form-control" style="width: 100%; height: 150px;" ng-model="mqtt.messageToSend"></textarea>
+               <button ng-click="sendMessage();">send</button>
+            </td>
+            <td>
+            	Message Received:
+            	<pre>{{mqtt.messageReceived}}</pre>
+            </td>
+        </tr>
+	</table>
+	<div style="height: calc(100% - 330px); overflow: auto;">
+       	<div ng-repeat="msg in msgList track by $index">
+           	<pre>{{msg}}</pre>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,302 @@
+{
+  "uid": "U1036",
+  "typeCode": "scxml",
+  "desc": "This model demonstrates testing of REST APIs using combinatorial testing algorithms.",
+  "notepad": "\u003cp\u003eThis model demonstrates testing of REST APIs using combinatorial testing algorithms.\n\u003c/p\u003e\n\u003cp\u003eThe model tests a sample Insurance Premium calculator provided in TestOptimal server.  The web service contains following parameters:\n\u003cul\u003e\n\u003cli\u003eAge: 16 - 89\u003c/li\u003e\n\u003cli\u003eatFaultClaims: 0 - 10\u003c/li\u003e\n\u003cli\u003egoodStudent: true / false\u003c/li\u003e\n\u003cli\u003enonDrinker: true / false\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/p\u003e\n\u003cp\u003eThe premium is calculated using following formula:\n\u003cul\u003e\n\u003cli\u003eBase premium by age group: 16-24 $900, 25-64: $600, and 65-89: 720\u003c/li\u003e\n\u003cli\u003eCredit for good student: $50\u003c/li\u003e\n\u003cli\u003ePenalty for at fault claims: 1-4 $100, 5-10 $300\u003c/li\u003e\n\u003cli\u003ePenalty for drinker: $75\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/p\u003e\n\u003cp\u003eCheck DATASET tab for the variable definition and generated test scenarios using combinatorial testing algorithms.\n\u003c/p\u003e\n\u003c/p\u003eNotice that the expected premium is automatically calculated using the above formula as the test data scenarios is generated.\n\u003c/p\u003e",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1038",
+      "notepad": "",
+      "stateID": "End",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 718.0,
+        "top": 146.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1037",
+      "notepad": "",
+      "stateID": "Start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "trans name",
+          "uid": "Ud78efbeb",
+          "notepad": "",
+          "targetUID": "U7464e09a",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 123.0,
+                "top": 161.0
+              },
+              {
+                "left": 163.0,
+                "top": 161.0
+              },
+              {
+                "left": 163.0,
+                "top": 161.0
+              },
+              {
+                "left": 210.0,
+                "top": 161.0
+              }
+            ],
+            "label": {
+              "left": -9,
+              "top": -31,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 50.0,
+        "top": 142.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "state1",
+      "uid": "U7464e09a",
+      "notepad": "",
+      "stateID": "state1",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "test each scenario",
+          "uid": "U8febef57",
+          "notepad": "",
+          "targetUID": "Ubdd9d5d3",
+          "event": "testScenario",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 310.0,
+                "top": 151.0
+              },
+              {
+                "left": 328.0,
+                "top": 151.0
+              },
+              {
+                "left": 328.0,
+                "top": 151.0
+              },
+              {
+                "left": 453.0,
+                "top": 151.0
+              }
+            ],
+            "label": {
+              "left": 16,
+              "top": -26,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 212.0,
+        "top": 125.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "state2",
+      "uid": "Ubdd9d5d3",
+      "notepad": "",
+      "stateID": "state2",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "trans name",
+          "uid": "U7e213f16",
+          "notepad": "",
+          "targetUID": "U1038",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 552.0,
+                "top": 165.0
+              },
+              {
+                "left": 585.0,
+                "top": 165.0
+              },
+              {
+                "left": 585.0,
+                "top": 165.0
+              },
+              {
+                "left": 717.0,
+                "top": 165.0
+              }
+            ],
+            "label": {
+              "left": 25,
+              "top": -23,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 454.0,
+        "top": 127.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    }
+  ],
+  "modelName": "Demo_REST",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "7.0.3",
+  "versionReq": "",
+  "buildNum": 1,
+  "mbtNode": {
+    "uid": "U1040",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": false
+    },
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "modelType": "FSM"
+}

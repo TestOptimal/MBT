@@ -1,0 +1,96 @@
+#tab-target .target {
+	width: 100%;
+	height: 100%;
+}
+
+#tab-target {
+	overflow: hidden;
+	position: absolute; 
+	bottom: 0px;
+	width: 100%;
+}
+
+
+
+.paneDivider {
+	background-color: #DADFE1;
+	width: 1px;
+	cursor: col-resize !important;
+	position: absolute;
+	bottom: 0px;
+}
+
+.paneDivider:hover {
+	width: 3px;
+}
+.paneTitle {
+	text-align: center;
+	color: #000000;
+	height: 25px;
+	font-size: 11pt;
+	background-color: #EEEEEE;
+//	background: linear-gradient(to bottom, #FAFAFA, #eaefd1); 
+	font-weight: bold;
+}
+
+
+.pane {
+	height: 100%;
+}
+
+.paneContent {
+	height: calc(100% - 25px);
+	overflow: hidden;
+	position: absolute;
+	left: 0px;
+	top: 25px;
+	width: 100%;
+}
+
+.paneTitle {
+	height: 25px; 
+	text-align: left;	
+}
+
+.pane_1 {
+	overflow-x: hidden;
+	overflow-y: auto;
+	float: left;
+}
+
+.pane_2 {
+	overflow-x: auto;
+	overflow-y: auto;
+}
+	
+.filter {
+	white-space: nowrap;
+	float: left;
+}
+	
+.filter input {
+	width: 100%;
+	background-color:#FAFAFA;
+	padding-left: 3px;
+	margin-top: 1px;
+	margin-left: 0px !important;
+	border: none;
+	height: 23px;
+	font-weight: none;
+	font-size: 10pt;
+	color: #999999;
+}
+
+.filter .appBtn {
+	float: right;
+	position: relative;
+	top: -16px;
+	right: 2px;
+}
+
+
+.rightPaneTitle {
+	position: absolute;
+	top: 1px;
+	font-size: 11pt;
+}

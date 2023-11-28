@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+  	<script src="js/jquery-1.7.min.js"></script>
+  	<script src="js/jquery.cookie.js"></script>
+	<script src="js/webstore.js" type="text/javascript"></script>
+
+<style>
+	#shoppingcart:hover {
+		background-color: orange;
+	}
+	
+	
+
+</style>
+<script>
+	function init() {
+		var itemCode = getRequestParam('prodCode');
+		var item = getItemDesc(itemCode);
+		$("#itemName").text(item.name + "(" + itemCode + ")");
+		$("#itemDesc").text(item.desc);
+	}
+
+	var userName = "";
+	$(document).ready( function () {
+		var msgList1 = $.cookie('xssMsgList');
+		if (msgList1) {
+			msgList1 = msgList1.split("@@");
+			for (var i in msgList1) {
+				$("<li>" + msgList1[i] + "</li>").appendTo($("#msgList"));
+			}
+		}
+		
+		$("#emailAddress").blur(function () {
+			userName = "?";
+			$.getJSON("http://localhost:8888/MbtSvr/app=customWS&name=validateEmail&emailAddress=" + $("#emailAddress").val(), function(data) {
+				if (data.alertMessage.indexOf("NotFound")>=0) {
+					$("#leaveCmt").attr("disabled","true");
+				}
+				else {
+					userName = data.alertMessage;
+					$("#leaveCmt").removeAttr("disabled");
+				}
+			});
+		});
+		
+	});
+	
+	function saveCmt () {
+		var msg = $("#txt").val() + "  (by " + userName + ")";
+		var msgList1 = $.cookie('xssMsgList');
+		if (msgList1==undefined) msgList1 = "";
+		msgList1 = msgList1 + "@@" + msg;
+		$.cookie('xssMsgList', msgList1);
+		$("#txt").val("");
+		$("<li>" + msg+ "</li>").appendTo($("#msgList"));
+	}
+	
+	function clearCmt() {
+		$.cookie('xssMsgList',null);
+		$("#txt").val("");
+	}
+
+</script>
+
+	<title>WebStore - Product Details</title>
+</head>
+<body>
+
+	<table><tr><td colspan="2">
+			<div id='shoppingcart' style="float: right; font-size: small; font-style:italic; color: green;" onclick="javascript:gotoPage('ShoppingCart.html');">
+				Shopping Cart: <span id="cartItems"></span>
+			</div>
+		<h1 id="itemName"></h1>
+	<hr>
+	</td></tr>
+	<tr><td valign="top"  colspan="2">
+		<p id="itemDesc"></p>
+	</td></tr>
+	<tr><td valign="top" width="10%">Your Review:<br/><small>you must enter a valid registered email address in order to submit your review.</small></td>
+		<td><textarea id="txt" size="50"></textarea></td>
+	</tr>
+	<tr><td nowrap>Registered Email Address:</td>
+		<td><input type="text" id="emailAddress"/></td>
+	</tr>
+	<tr><td colspan="2"><button id='leaveCmt' onclick='saveCmt();' disabled>Submit Comment</button><button id='clearCmt' onclick='clearCmt();'>Reset</button></td>
+	</tr>
+	<tr><td colspan="2">
+		<ul id="msgList">
+		
+		</ul>
+	</td></tr>
+	<tr><td valign="top" colspan=2 width="5%">
+	
+	<a href="ProductList.html" id="prodList">Continue Shopping</a>
+	
+	</td></tr></table>
+</body>
+</html>

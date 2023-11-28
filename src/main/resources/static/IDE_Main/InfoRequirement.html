@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+	<script type="text/javascript" src="../js/common.js"></script>
+
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		.name {
+			font-weight: bold;
+			opacity: 0.75;
+		}
+		
+		.key {
+			font-style: italic;
+			white-space: nowrap;
+		}
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div>
+		<p>Define requirements to be covered by the model.   
+		</p>
+		<p><b>Use of Requirements:</b>
+		<ul>
+			<li>Requirements can be referenced in TRIGGER script to track their coverage and test status. 
+				Ctrl-R or Cmd-R in <i>Script Editor</i> to open requirement selection list. 
+			</li>
+			<li>Requirement traceability can be visualized on model with <i>Requirement View</i> in <i>MODEL</i> tab.
+			</li>
+			<li>Requirement coverage are reported in <i>RESULT</i> tab.</li>
+		</ul>
+		
+		<p><b>Additional Info:</b>
+			Requirements are saved in model's <em>data</em> folder.
+		    You may extend this capability to integrate with your own requirement management system.
+	    </p>
+		<p>More info at <a href="#" onclick="parent.curAppState.winMgr.openWebPage('https://testoptimal.com/v6/wiki/doku.php?id=ide_requirement')">Wiki / Requirement Editor</a>.
+		
+	</div>
+
+</body>
+</html>

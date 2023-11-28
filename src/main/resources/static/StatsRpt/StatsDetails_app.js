@@ -1,0 +1,235 @@
+MainModule.controller("detailsCtrl", function ($scope) {
+	$scope.stateTransFilter = "";
+	$scope.rspBarWidth = 100;
+	$scope.rspBarHeight = 10; // should be kept in sync with parent.curAppState.execID
+
+	$scope.modelName = "";
+	$scope.mbtSessID = undefined;
+	$scope.curExecStatDetail = {};
+	
+	$scope.refresh = function () {
+		$scope.curExecStatDetail = undefined;
+		$scope.tcShowState=true; 
+		$scope.tcShowTrans=true;
+		
+		$scope.reqExpanded = true;	
+		parent.curAppState.toSvc.StatsSvc.getModelExec ($scope.modelName, $scope.mbtSessID,
+			function(returnData) {
+				if (returnData==="") {
+					$scope.curExecStatDetail = null;
+					$scope.$apply();
+					return;
+				}
+				
+				$scope.curExecStatDetail = returnData;
+				if ($scope.curExecStatDetail.execSummary.startDT) {
+					$scope.curExecStatDetail.execSummary.startDT = new Date($scope.curExecStatDetail.execSummary.startDT).toLocaleString();
+				}
+				if ($scope.curExecStatDetail.execSummary.endDT) {
+					$scope.curExecStatDetail.execSummary.endDT = new Date($scope.curExecStatDetail.execSummary.endDT).toLocaleString();
+				}
+				
+				$scope.stateTransMap = Stream($scope.curExecStatDetail.stateTransList).groupBy(function (s) {
+					return s.stateTransUID;
+				});
+				for (var s in $scope.stateTransMap) {
+					var stat = $scope.stateTransMap[s][0];
+					$scope.stateTransMap[s] = stat;
+					if (stat.maxMillis-stat.minMillis>0) {
+						stat.histoMidPos = Math.round(($scope.rspBarWidth-2) * (stat.avgMillis-stat.minMillis)/(stat.maxMillis-stat.minMillis));
+					}
+				}
+				var sMap = Stream($scope.curExecStatDetail.tcList).flatMap(function(tcObj){
+						return tcObj.stepList;
+					}).groupBy(function (step) {
+						return step.stateTransUID;
+					});
+				for ( var k in  sMap) {
+					$scope.stateTransMap[k].msgMap = Stream(sMap[k])
+						.flatMap(function(step) {
+							return step.itemList; 
+						})
+						.filter(function(item) { 
+							return !item.passed;
+						})
+						.groupBy(function(item) { 
+							return "failed";
+						});
+				}
+				
+				$scope.curExecStatDetail.execSummary.stateCovPct = Math.round($scope.curExecStatDetail.execSummary.stateCovered * 100 / $scope.curExecStatDetail.execSummary.stateNum);
+				$scope.curExecStatDetail.execSummary.transCovPct = Math.round($scope.curExecStatDetail.execSummary.transCovered * 100 / $scope.curExecStatDetail.execSummary.transNum);
+				if ($scope.curExecStatDetail.execSummary.reqNum>0) {
+					$scope.curExecStatDetail.execSummary.tagCovPct = Math.round($scope.curExecStatDetail.execSummary.reqCovered * 100 / $scope.curExecStatDetail.execSummary.reqNum);
+				}
+				
+				angular.forEach($scope.curExecStatDetail.tcList, function(tcObj) {
+					var s1 = tcObj.ReqStatusList = Stream(tcObj.stepList).flatMap(function (step) {
+						return step.itemList;
+					}).groupBy(function(item) {
+						return item.reqTag;
+					});
+					for ( var k in  s1) {
+						s1[k] = (Stream(s1[k]).anyMatch(function(item) {
+								return item.status=='failed';
+							}))?'failed':'passed';
+					}
+				});
+				
+				Stream($scope.curExecStatDetail.tcList).forEach(function(tcObj) {
+					Stream(tcObj.stepList).forEach(function(stepObj) {
+						var t = $scope.stateTransMap[stepObj.stateTransUID];
+						stepObj.type = t.type;
+						stepObj.stateName = t.stateName;
+						stepObj.transName = t.transName;
+					});
+				});
+				
+				$scope.$apply();
+			});
+	}
+
+	$scope.showTagPassMsg = function (tagStat) {
+		var msgList = Stream($scope.curExecStatDetail.tcList).flatMap(function (tcObj) {
+			return tcObj.stepList;
+		}).flatMap(function(step) {
+			return step.itemList;
+		}).filter(function(item) {
+			return item.reqTag===tagStat.reqTag && item.status==="passed";
+		}).toArray();
+		$scope.showTagMsg(tagStat.reqTag + ": Passed Traversals", "State.Transition", msgList);
+	}
+	
+	$scope.showTagFailMsg = function (tagStat) {
+		var msgList = Stream($scope.curExecStatDetail.tcList).flatMap(function (tcObj) {
+			return tcObj.stepList;
+		}).flatMap(function(step) {
+			return step.itemList;
+		}).filter(function(item) {
+			return item.reqTag===tagStat.reqTag && item.status==="failed";
+		}).toArray();
+		$scope.showTagMsg(tagStat.reqTag + ": Failed Traversals", "State.Transition", msgList);
+	}
+
+	$scope.openDialog = function (winName_p) {
+		parent.curAppState.openDialog (winName_p);
+	}
+	
+	$scope.showTagMsg = function (title_p, columnLabel_p, msgList_p) {
+		var msgText = "<div id=msgDialog><div class='header'>" + title_p + "</div>" +
+			"<div><ol>";
+		for (var i in msgList_p) {
+			var msgTag = msgList_p[i];
+			
+			msgText += "<li>";
+			if (msgTag.stateName) {
+				msgText +=  msgTag.stateName;
+				if (msgTag.transName) {
+					msgText += "." + msgTag.transName;
+				}
+				if (msgTag.assertCode!="") {
+					msgText += " (" + msgTag.assertCode + ")"; 
+				}
+				msgText += ": ";
+			}
+			msgText += msgTag.checkMsg + "</li>";
+		}
+		msgText += "</ol></div></div>";
+		msgText = $scope.resolveSnapID(msgText, parent.curAppState.mbtSessID);
+		parent.alertDialog(msgText);
+	}
+
+	$scope.showPerfMsg = function (stat) {
+		parent.alertDialog("Number of slow traversals: " + stat.slowCount);
+	}
+
+	$scope.showTravExceptMsg = function (stat) {
+		var msgList = stat.msgMap.failed;
+		var hcode = "<ol>";
+		for (i in msgList) {
+			hcode += "<li>"+ msgList[i].checkMsg + "</li>";
+		}
+		hcode += "</ol>";
+		hcode = $scope.resolveSnapID(hcode, $scope.mbtSessID);
+		parent.alertDialog(hcode);
+	}
+
+	$scope.resolveSnapID = function (msg_p, mbtSessID_p) {
+		var snapIdx = msg_p.indexOf("@snapTS:");
+		var mbtSessID = "";
+		if (mbtSessID_p) {
+			mbtSessID = "&mbtSessID=" + mbtSessID_p;
+		}
+		while (snapIdx>=0) {
+			var snapId = msg_p.substring(snapIdx+8);
+			var snapIdx2 = snapId.indexOf("@");
+			var msgTail = snapId.substring(snapIdx2+1);
+			snapId = snapId.substring(0, snapIdx2);
+			msg_p = msg_p.substring(0, snapIdx) 
+				+ " <a href='api/v1/file/artifact/" + $scope.modelName + "/snapscreen/snap_" + snapId + ".png"
+				+ "' target='_blank'>ScreenShot</a>" + msgTail;
+			snapIdx = msg_p.indexOf("@snapTS:");
+		}
+		return msg_p;
+	}
+
+	$scope.showExecSettings = function () {
+		var msgList = [];
+		angular.forEach($scope.curExecStatDetail.execOptions, function (v,k) {
+			if (v && k) {
+				msgList.push(k + ": " + v);
+			}
+		});
+
+		var hcode = "<div><b>Model Execution Settings</b></div><ul><li>" + msgList.join("</li><li>") + "</li></ul>";
+		parent.alertDialog(hcode);
+	}
+	
+	$scope.toggleKeep = function () {
+		if ($scope.curExecStatDetail.keepIt==undefined) $scope.curExecStatDetail.keepIt=false;
+		var newKeep = !$scope.curExecStatDetail.keepIt;
+		parent.curAppState.toSvc.StatsSvc.setModelExecKeep ($scope.modelName, $scope.mbtSessID, newKeep, 
+			function(returnData) {
+				$scope.curExecStatDetail.keepIt = newKeep;
+				$scope.$apply();
+			});
+	}
+	
+	$scope.deleteModelExec = function () {
+		$scope.$parent.deleteModelExec($scope.modelName, $scope.mbtSessID);
+	}
+
+	$scope.showTestCase = function(tcObj_p) {
+		$scope.curTestCase = tcObj_p; 
+		$scope.reqExpanded = false;
+		$scope.tcExpanded = true;
+	}
+	
+
+	$scope.openModelGraph = function () {
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/model", "ModelGraph");
+	}
+
+	$scope.openTravGraph = function () {
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/sequence?mbtSessID=" + $scope.mbtSessID, "SequenceGraph");
+	}
+
+	$scope.openCoverageGraph = function () {
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/coverage?mbtSessID=" + $scope.mbtSessID, "CoverageGraph");
+	}
+
+	$scope.openTravMSC = function () {
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/msc?mbtSessID=" + $scope.mbtSessID, "ModelMSC"); 
+	}
+	
+	$scope.init = function () {
+		parent.curAppState.winMgr.regEvent("refreshExec", function(modelName, mbtSessID) {
+			$scope.modelName = modelName;
+			$scope.mbtSessID = mbtSessID;
+			$scope.refresh();
+		});
+
+	}
+	
+	$scope.init();
+});

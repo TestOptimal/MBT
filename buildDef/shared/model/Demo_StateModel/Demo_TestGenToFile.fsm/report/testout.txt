@@ -1,0 +1,146 @@
+Model Name: Demo_TestGenToFile
+Model Version: 1.2
+Model Description: This model demonstrates the test generation and output of generated test cases to excel and text file to be used for manual testing or off-line MBT.
+Sequencer: Optimal
+Generation Date: 2020-05-16
+Coverage Type: 
+Optimization Objective: 
+Transition Coverage: 
+Test Case Count: 5
+AUT Version: 1.5
+TO Version: 6.0.2
+Requirements Version: 2.0
+Stop Conditions:Duplicate TestCases Removed: 0
+Requirment List:
+	Tag	Priority
+	H1	
+	R2	
+	V1	
+	Q1	
+	R1	
+Test Case List & Requirement Coverage: 
+TC0001	 (weight: 20, length: 4)
+	Requirement: H1, R2, V1
+   1	From: Start
+	Do: add50
+		Insert one Half-Dallor
+	At: V50Cents
+		Check: Deposit Amount must be 0.50 (H1
+   2	From: V50Cents
+	Do: add50
+		Insert one Half-Dallor
+	At: V100Cents
+		Check: Deposit Amount must be 1.00 (H1
+   3	From: V100Cents
+	Do: toDrink
+		Check for coins returned
+	At: Choose Drink
+		No change should be returned (R2
+   4	From: Choose Drink
+	Do: discharge
+		Select MountainDew
+	At: End
+		Check MountainDew is discharged. (V1
+TC0002	 (weight: 20, length: 4)
+	Requirement: H1, R2, V1
+   1	From: Start
+	Do: add50
+		Insert one Half-Dallor
+	At: V50Cents
+		Check: Deposit Amount must be 0.50 (H1
+   2	From: V50Cents
+	Do: add50
+		Insert one Half-Dallor
+	At: V100Cents
+		Check: Deposit Amount must be 1.00 (H1
+   3	From: V100Cents
+	Do: toDrink
+		Check for coins returned
+	At: Choose Drink
+		No change should be returned (R2
+   4	From: Choose Drink
+	Do: discharge
+		Select Coke
+	At: End
+		Check Coke is discharged. (V1
+TC0003	 (weight: 25, length: 5)
+	Requirement: Q1, H1, R1, V1
+   1	From: Start
+	Do: add25
+		Insert one Quarter
+	At: V25Cents
+		Check: Deposited Amount must be 0.25 (Q1
+   2	From: V25Cents
+	Do: add50
+		Insert one Half-Dallor
+	At: V75Cents
+		Check: Deposit Amount must be 0.75 (H1
+   3	From: V75Cents
+	Do: add50
+		Insert one Half-Dallor
+	At: V125Cents
+		Check: Deposit Amount must be 1.25 (H1
+   4	From: V125Cents
+	Do: return25
+		Check for coins returned
+	At: Choose Drink
+		Check: 25 cents is returned (R1
+   5	From: Choose Drink
+	Do: discharge
+		Select Sprite
+	At: End
+		Check Sprite is discharged. (V1
+TC0004	 (weight: 20, length: 4)
+	Requirement: H1, R2, V1
+   1	From: Start
+	Do: add50
+		Insert one Half-Dallor
+	At: V50Cents
+		Check: Deposit Amount must be 0.50 (H1
+   2	From: V50Cents
+	Do: add50
+		Insert one Half-Dallor
+	At: V100Cents
+		Check: Deposit Amount must be 1.00 (H1
+   3	From: V100Cents
+	Do: toDrink
+		Check for coins returned
+	At: Choose Drink
+		No change should be returned (R2
+   4	From: Choose Drink
+	Do: discharge
+		Select Water
+	At: End
+		Check Water is discharged. (V1
+TC0005	 (weight: 30, length: 6)
+	Requirement: Q1, R2, V1
+   1	From: Start
+	Do: add25
+		Insert one Quarter
+	At: V25Cents
+		Check: Deposited Amount must be 0.25 (Q1
+   2	From: V25Cents
+	Do: add25
+		Insert one Quarter
+	At: V50Cents
+		Check: Deposited Amount must be 0.50 (Q1
+   3	From: V50Cents
+	Do: add25
+		Insert one Quarter
+	At: V75Cents
+		Check: Deposited Amount must be 0.75 (Q1
+   4	From: V75Cents
+	Do: add25
+		Insert one Quarter
+	At: V100Cents
+		Check: Deposited Amount must be 1.00 (Q1
+   5	From: V100Cents
+	Do: toDrink
+		Check for coins returned
+	At: Choose Drink
+		No change should be returned (R2
+   6	From: Choose Drink
+	Do: discharge
+		Select Pepsi
+	At: End
+		Check Pepsi is discharged. (V1

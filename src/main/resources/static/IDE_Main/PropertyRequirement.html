@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="../packages/stream-min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script>
+		window.onerror = function (message, source, lineno, colno, error) {
+			parent.curAppState.addMsg ({
+				text: message + " (" + source + ": " + lineno + "." + colno + ")",
+				error: error
+			});
+		};
+	
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+	</script>
+    <script src="../packages/directives.js"></script>
+	<script>
+		MainModule.controller("mainCtrl", function ($scope) {
+
+			$scope.curAppState = parent.curAppState;
+			$scope.headerHeight = 25;
+			$scope.reqList = parent.curAppState.reqList;
+					
+			$scope.priorityList = [
+				{code: "high", name: "high"},
+				{code: "medium", name: "medium"},
+				{code: "low", name: "low"},
+			];
+
+			$scope.colLabelList = [
+				{code: "name", name: "name"},
+				{code: "desc", name: "desc"},
+				{code: "priority", name: "priority"},
+				{code: "reqID", name: "reqID"},
+			];
+			$scope.fileColLabelList = [
+				"name", "desc", "priority", "reqID"
+			];
+			$scope.fileContainsHeader = true;
+		    
+			$scope.addReq = function () {
+				var reqObj = {
+					"name": "", 
+					"priority": "medium",
+					"desc": "",
+					"reqID": ""
+				};
+				$scope.reqList.push(reqObj);
+			}
+
+			$scope.delReq = function (reqObj_p) {
+				$scope.reqList.splice($scope.reqList.indexOf(reqObj_p),1);
+			}
+
+			$scope.sortDataTable = function (fieldName) {
+				$scope.predicate = fieldName;
+				$scope.reverse = !$scope.reverse;
+			}
+			
+			$scope.saveReq = function () {
+				parent.curAppState.toSvc.AlmSvc.saveRequirements (parent.curAppState.scxml.modelName, $scope.reqList, function(data) {
+					parent.curAppState.winMgr.raiseEvent("refreshReqList");
+					parent.curAppState.reqList = $scope.reqList;
+					setTimeout(parent.closeDialog, 50);
+				}); 
+			}
+			
+			$scope.cancel = function () {
+				parent.closeDialog();
+			}
+			
+		    $scope.init = function () {
+				$scope.curAppState.toSvc.AlmSvc.getRequirements (parent.curAppState.scxml.modelName, function(reqList_p) {
+					$scope.reqList = reqList_p;
+					$scope.$apply();
+				});
+		    };
+
+			$scope.init();
+		});		
+
+		var scope;
+		$(document).ready (function () {
+			scope = $("body").scope();
+		});
+
+		// callback from IDE_Main
+		function mainCallbackFunc(action_p, params_p) {
+			if (action_p=="save") {
+				scope.saveReq();
+			}
+		}
+		
+		MainModule.directive('onReadFile', function ($parse) {
+			return {
+				restrict: 'A',
+				scope: false,
+				link: function(scope, element, attrs) {
+		            var fn = $parse(attrs.onReadFile);
+					element.on('change', function(onChangeEvent) {
+						var reader = new FileReader();
+						reader.onload = function(onLoadEvent) {
+							scope.$apply(function() {
+								fn(scope, {$fileContent:onLoadEvent.target.result});
+							});
+						};
+						reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+					});
+				}
+			};
+		});		
+	</script>	
+
+	<style>
+
+
+		html, body {
+			background: #FAFAFA;
+			font-size: small;
+			height: 100%;
+		}
+		
+		.header {
+			border-bottom: 1px solid #EEEEEE;
+			font-weight: bold;
+			background: #F0F0F0;
+		}
+		
+		.btnTO {
+			cursor: default;
+			color: #666666;
+		}
+		
+		.reqRow .btnTO.rowAction {
+			color: #CCCCCC;
+		}
+		
+		.reqRow:hover .btnTO.rowAction {
+			color: #333333;
+		}
+		
+		.btnTO:hover, .reqRow:hover .btnTO.rowAction:hover {
+			color: orange;
+		}
+		
+		table td {
+			border-left: 2px ;
+		}
+		
+		input, select {
+			border: 1px solid #EAEAEA !important;
+		}
+		
+		a {
+			cursor: default;
+		}
+		
+		#params {
+		
+		}
+		#params textarea {
+			border: 1px solid #E0E0E0; 
+			background: #FAFAFA; 
+			width: 100%; 
+			padding: 5px;
+		}
+		#params textarea.errored {
+			background: #FFFF00;
+		}
+		
+	</style>
+</head>
+<body id="Main" ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div style="position: absolute; top: 10px; right: 10px;">
+		<span onclick="parent.curAppState.openDialog('InfoRequirement');" title="Info on Requirement Editor" 
+			class="icon-ctrl glyphicon glyphicon-info-sign" style="position: relative; top: 2px;">
+		</span>
+	</div>
+	<div style="width:100%; padding: 0px; margin: 0px; height: calc(100% - 30px); overflow: auto;">
+		<table class="table">
+			<tr style="height: 35px;">
+				<th>
+					<span class="btnTO glyphicon glyphicon-plus" ng-click="addReq()" title="add a new requirement"></span>
+				</th>
+				<th title="requirement short name, click to sort" ng-click="sortDataTable('name')">Name</th>
+				<th title="requirement priority, click to sort" ng-click="sortDataTable('priority')">Priority</th>
+				<th title="requirement description, click to sort" ng-click="sortDataTable('desc')">Description</th>
+			</tr>
+			<tr class="reqRow" ng-repeat="req in reqList | orderBy:predicate:reverse">
+				<td>
+					<span class="btnTO rowAction glyphicon glyphicon-remove" ng-click="delReq(req)" title="deletes this requirement"></span>
+				</td>
+				<td><input class="form-control" type="text" ng-model="req.name" ng-change="setChanged()"/></td>
+				<td><select class="form-control" ng-model="req.priority" ng-options="p.code as p.name for p in priorityList" ng-change="setChanged()"></select></td>
+				<td><input class="form-control" type="text" ng-model="req.desc" ng-change="setChanged()"/></td>
+			</tr>
+		</table>
+	</div>
+	<div style="position: absolute; bottom: 0px; right: 10px;">
+		<button ng-click="saveReq()">Save</button>
+		<button ng-click="cancel()">Cancel</button>
+	</div>
+</body>
+</html>

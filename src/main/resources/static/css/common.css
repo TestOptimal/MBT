@@ -1,0 +1,293 @@
+body {
+	color: #444444;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	font-size: 12px;
+}
+
+.header {
+	background-color: #F0EEE3;
+	text-decoration: none;
+	font-weight: bold;
+	color: #666666;
+	padding: 6px;
+	height: 25px;
+}
+
+#facebox .close, .ui-icon.ui-icon-closethick {
+	background-color: #eeeeee !important;
+	border-radius: 5px !important;
+	color: #333333;
+}
+
+#facebox .close:hover, .ui-icon.ui-icon-closethick:hover {
+	background-color: orange !important;
+}
+
+.hint {
+	font-size: x-small;
+	font-style: italic;
+}
+
+#facebox .content {
+	height: 50%;
+	overflow-y: auto;
+} 
+
+
+.selected {
+	color: #000080;
+	font-weight: bold;
+}
+
+
+.shade {
+	background-color: #f5f5f5; 
+}
+
+
+.header a {
+	color: #4082AE;
+}
+
+
+span.span-ctrl {
+	padding-left: 3px;
+	padding-right: 3px;
+	position: relative;
+	top: 4px;
+	cursor: default;
+}
+
+.icon-ctrl img {
+	position: relative;
+	top: 3px;
+}
+
+.icon-ctrl img, span.span-ctrl {
+	margin-left: 1px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+}
+
+.icon-ctrl img:hover, span.span-ctrl:hover {
+	border: 1px solid #AAAAAA;
+	background-color: #FDE38A;
+}
+
+.icon-ctrl img:active, span.span-ctrl:active {
+	border: 1px solid #DDDDDD;
+	background-color: #FFD86C;
+}
+
+#execMenu {
+	vertical-align: bottom;	
+	height: 20px;
+	width: 16px;
+}
+
+#execMenu div {
+	margin-top:2px;
+	vertical-align:middle;	
+	horizontal-align:center;
+	height: 100%;
+}
+
+#execMenu img {
+	height: 14px;
+	width: 14px;
+	padding: 1px;
+}
+
+
+.travbtn11 a:link, .travbtn11 a:visited, .travbtn11 a:active {background-image: url(../img/seqGraph.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin: 0px 8px 0px 8px;}
+.travbtn11 a:hover {background-image: url(../img/seqGraph2.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin: 0px 8px 0px 8px;}
+
+
+.search23 a:link, .search23 a:visited, .search23 a:active {background-image: url(../img/searchBtn.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin: 7px 8px 0px 0px; float:left;}
+.search23 a:hover {background-image: url(../img/searchBtn2.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin: 7px 8px 0px 0px; float: left;}
+
+.compile23 a:link, .compile23 a:visited, .compile23 a:active {background-image: url(../img/compile.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin-top: 7px; float:left;}
+.compile23 a:hover {background-image: url(../img/compile2.png); background-repeat: no-repeat; width:16px; height:16px; display:block; margin-top: 7px; float: left;}
+
+.exec77 a:link, .exec77 a:visited, .exec77 a:active {background-image: url(../img/exec.png); background-repeat: no-repeat; width:19px; height:19px; display:block; float:left; margin: -2px 0px 0px 4px;}
+.exec77 a:hover {background-image: url(../img/exec2.png); background-repeat: no-repeat; width:19px; height:19px; display:block; float: left; margin: -2px 0px 0px 4px;}
+
+
+
+.menuHover, .hover {
+	color:#000000;
+	text-decoration: none;
+	background-color: #F2F7F8;
+}
+
+.popupMenuLeft {
+	position: relative;
+	top: 3px;
+	float: left;
+	height: 25px;
+	margin-left: 4px;
+}
+
+.popupMenuRight {
+	position: relative;
+	top: 3px;
+	float: right;
+	height: 25px;
+	display: inline;
+	margin-right: 4px;
+}
+
+.innerMenu table {
+	margin-top: 0; 
+	padding-top:0; 
+	padding-left:5px; 
+	margin-bottom: 5px;
+}
+
+.popupHeader a {
+	margin-left: 4px;
+	color: #005000;
+}
+
+.popupHeader a:hover {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
+.menu {
+	background-color: #85a6c1;
+	z-index: 9999;
+}
+
+.menu .innerMenu {
+	background-color: #DDDDDD;
+	margin: 2px;
+	color: #000000;
+	font-size: 1em;
+}
+
+.menu ul {
+	padding: 0;
+	margin: 0;
+}
+
+.innerMenu td {
+	padding: 3px;
+}
+
+.hover {
+	color:#333333;
+	text-decoration: none;
+	background-color: #F2F7F8;
+}
+
+.selected {
+	color: #000080;
+	font-weight: bold;
+}
+
+A, A:visited {
+	text-decoration: none; 
+	color: blue;
+}
+
+.noHL {
+	height: 5px;
+	color: green;
+	background-color: red;
+}
+
+#menuTitle {
+	height: 10px;
+	width: 100%;
+	cursor: move;
+}
+
+#hoverMsg {
+	border: 1px solid #AAAAAA;
+	background-color: #A5BEAF;
+
+}
+
+#hoverMsgText {
+	padding: 10px;
+}
+
+.popupHeader {
+	cursor: move;
+}
+
+
+.popupMenu table {
+	font-size: 1em;
+	color: #000000;
+}
+
+.popupMenu {
+  	background-color: #85A6C1;
+	display: none;
+	color: #000000;
+	overflow: auto;
+	z-index: 99;
+}
+
+.popupMenu .innerMenu {
+	color: black;
+	display: block;
+	margin-left:5px;
+	background-color: #DDDDDD;
+	color: #000000;
+	font-size: 1em;
+	border-top: 1px solid #cccccc;
+	overflow: auto; 
+}
+
+
+
+.actionBtn {
+	position:relative; 
+	top:2px; 
+	padding: 2px 3px 2px 2px; 
+	padding-left: 5px;
+	float: right;
+}
+
+#hoverMenu {
+	display:none; 
+	position: fixed; 
+	width: 80px;
+	right: 3px; 
+	top: 28px;
+	overflow: hidden; 
+	border-radius: 8px; 
+	background-color: #DCE9F0;
+	font-size: x-small;
+	color: black;
+}
+
+
+#hoverMenu ul {
+	list-style: none; 
+	margin-left: 0px; 
+	padding-left: 0px; 
+	padding-right: 0px;
+}
+
+#hoverMenu li {
+	padding-left: 6px;
+	padding-right: 4px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin: 0px;
+}
+
+#hoverMenu .menuItem:hover {
+	background-color: #F2F7FA;
+}
+
+.helpLink {
+	font-weight: bold;
+}

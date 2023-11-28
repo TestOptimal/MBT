@@ -1,0 +1,39 @@
+<div id="tcReqList">Coverred Requirements: 
+	<span ng-repeat="(reqTag, status) in curTestCase.ReqStatusList" 
+		class="tag p_{{getReqDefn(reqTag).priority}} {{status}}">
+		{{reqTag}}<sup><small>{{getReqDefn(reqTag).priority}}</small></sup>
+	</span>
+</div>
+
+<table cellspacing="1" cellpadding="2" id="testcase" width="100%">
+	<thead>
+		<tr class="tcHeader sectSubHeader">
+			<td>Step</td>
+			<td>Results</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="stepObj in curTestCase.stepList" 
+			ng-class="{shade: (curTestCase.stepList.indexOf(stepObj)%2==0)}"
+			ng-show="stepObj.type=='state' && tcShowState || stepObj.type=='trans' && tcShowTrans">
+			<td valign="top" class="colNum">
+				{{curTestCase.stepList.indexOf(stepObj) + 1}}</td>
+			<td valign="top" align="left" class="colVerify">
+				<span>{{stepObj.stateName}}
+					<span ng-if="stepObj.type=='trans'">:&#160;{{stepObj.transName}}</span>
+				</span>
+				<ul class="assertItems" ng-if="stepObj.itemList.length>0">
+					<li ng-repeat="verifyObj in stepObj.itemList" ng-if="verifyObj.reqTag || verifyObj.assertCode || verifyObj.checkMsg">
+						<div ng-if="verifyObj.reqTag || verifyObj.assertCode">Requirement:
+							<span class="tag">{{verifyObj.reqTag}}</span>
+							<span ng-if="verifyObj.assertCode">({{verifyObj.assertCode}})</span>
+						</div>
+						<div>{{verifyObj.checkMsg}}
+							<span class="stepStatus {{verifyObj.status}}">&nbsp;</span>
+						</div>
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>

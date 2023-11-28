@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+	<script type="text/javascript" src="../js/common.js"></script>
+
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		.name {
+			font-weight: bold;
+			opacity: 0.75;
+		}
+		
+		.key {
+			font-style: italic;
+			white-space: nowrap;
+		}
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div>
+		<p>Write groovy scripts to output test cases or perform test automation as model executes.</p>
+		<p>There are 4 types of scripts you may write:
+		<ul>
+			<li><b>TRIGGERS</b>: script for each state and transition to be executed when it's traversed. Ctrl/Cmd-I to add a script.</li>
+			<li><b>PAGES</b>: UI page object scripts (optional) to be used in TRIGGERS script.</li>
+			<li><b>STEPS</b>: Behavior Driven Development (BBD) style step definition to be used in TRIGGERS script.</li>
+			<li><b>Custom Script</b>: custom script - utility functions to be called in TRIGGERS script.</li>
+		</ul>
+		<p>Script editor supports Code-Assist on predefined script variables ($SYS, $UTIL, $VAR and $RAND). 
+			Ctrl/Cmd-Space to bring up Code Assist.
+		</p>
+		<p><b>Requirements</b>: click on <span class="symb barAtLeft">Req</span> to view and edit requirements to be covered by this model.
+		<p>
+	</div>
+	<div><b>Editor ShortCut Keys</b>  <small>more info at <a href="#" onclick="parent.curAppState.winMgr.openWebPage('https://testoptimal.com/v6/wiki/doku.php?id=ide_script#shortcut_keys')">Wiki / Script Editor/Shortcut Keys</a></small></div>
+	<table class="table">
+		<tr><th>Name</th><th>Shortcut Key</th><th>Description</th></tr>
+		<tr><td class="name">Code Assist</td><td><span class="key">Ctrl-Space</td><td>Code completion. The cursor must be either at the begging of the line or the line starts with $, $SYS.log('xya').</td></tr>
+		<tr><td class="name">Find</td><td><span class="key">Ctrl-F<br/>Cmd-F</span></td><td>Find/Search panel, support regular expression</td></tr>
+		<tr><td class="name">Next</td><td><span class="key">Ctrl-G<br/>Cmd-G</span></td><td>Goto next match</td></tr>
+		<tr><td class="name">Previous</td><td><span class="key">Shift-Ctrl-G<br/>Shift-Cmd-G</span></td><td>Goto previous match</td></tr>
+		<tr><td class="name">Jump</td><td><span class="key">Alt-G</span></td><td>Jump to a specific line and character position</td></tr>
+		<tr><td class="name">Replace</td><td><span class="key">Shift-Ctrl-F<br/>Cmd-Option-F</span></td><td>Find & replace panel with options</td></tr>
+		<tr><td class="name">Replace All</td><td><span class="key">Shift-Ctrl-R</span></td><td>Find & replace all panel</td></tr>
+		<tr><td class="name">Comment</td><td><span class="key">Ctrl-/<br/>Cmd-/</span></td><td>Toggle comments</td></tr>
+		<tr><td class="name">Undo</td><td><span class="key">Ctrl-Z<br/>Cmd-Z</span></td><td>Undo edits</td></tr>
+		<tr><td class="name">Redo</td><td><span class="key">Ctrl-Y<br/>Shift-Cmd-Z</span></td><td>Redo edits</td></tr>
+		<tr><td class="name">Debug Watch</td><td><span class="key">Ctrl-E<br/>Cmd-E</span></td><td>Execute selected script expression on <i>Monitor</i></td></tr>
+		<tr><td class="name">Requirement</td><td><span class="key">Ctrl-R<br/>Cmd-R</span></td><td>Insert a requirement code from list or display requirement description on selected code</td></tr>
+		<tr><td class="name">Add Trigger</td><td><span class="key">Ctrl-I<br/>Cmd-I</span></td><td>Insert a trigger script for a state/transition</td></tr>
+		<tr><td class="name">Save</td><td><span class="key">Ctrl-S<br/>Cmd-S</span></td><td>Save script and model changes</td></tr>
+	</table>
+
+	<p>More info at <a href="#" onclick="parent.curAppState.winMgr.openWebPage('https://testoptimal.com/v6/wiki/doku.php?id=ide_script')">Wiki / Script Editor</a>.
+</body>
+</html>

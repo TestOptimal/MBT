@@ -1,0 +1,1 @@
+{"dsName":"InvalidLoginLock","fieldList":[{"fieldName":"loginID","dataType":"text","derived":false,"groupCode":"","domainList":["badID"]},{"fieldName":"password","dataType":"text","derived":false,"groupCode":"loginID","domainList":["badPwd"]}],"overallStrength":"pairWise","dataRows":[{"password":"badPwd","loginID":"badID","$$hashKey":"object:224"}]}

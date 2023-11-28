@@ -1,0 +1,12 @@
+skinparam packageBorderColor #808000
+skinparam packageBackgroundColor #FDFDFD
+
+skinparam activity {
+   StartColor #333333
+   BarColor #CCCCEE 
+   EndColor #333333
+   BackgroundColor #FFFFFF
+   BackgroundColor<< Begin >> Olive
+   BorderColor #222222
+   ArrowColor #333333
+}

@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<link href="../packages/JSDiagram/JSDiagram.css" rel="stylesheet">
+	<script src="../packages/JSDiagram/route.js"></script>
+	<script src="../packages/JSDiagram/JSDiagram.js"></script>
+
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+	</script>	
+
+	<script src="Tab_Model_app.js"></script>
+    <script src="../packages/stream-min.js"></script>
+	
+<style>
+	html, body {
+		margin: 0px;
+		width: 100%;
+		height: 100%;
+		padding: 0px;
+		margin: 0px;
+		background: #EFEFEF;
+		overflow: hidden;
+	}
+
+	span.glyphicon {
+		color: #555555;
+		font-size: 90%;
+	}
+
+	span.glyphicon:hover {
+		color: ORANGE !important;
+	}
+	
+	span.glyphicon.barAtLeft, span.symb.barAtLeft {
+		padding-left: 5px;
+		border-left: 1px solid #333333;
+	}
+	
+	span.glyphicon.barAtRight, span.symb.barAtRight {
+		padding-right: 5px;
+		border-right: 1px solid #333333;
+	}
+
+	span.glyphicon.mode, span.char {
+		color: #555555;
+	}
+	
+	span.glyphicon.mode.selected, span.symb.mode.selected {
+		color: #ED4C67;
+	}
+
+	#toolPallet {
+		position: fixed;
+		top: 1px;
+		right: 0px;
+		height: 30px; 
+		background: #f0eee3;
+		width: max-content;
+		z-index: 10;
+		padding: 5px;
+		padding-right: 0px;
+		white-space: nowrap;
+		border-radius: 8px 0px 0px 8px;
+		border: 1px solid #DDDDDD;
+	}
+
+	#workPane {
+		position: absolute; 
+		overflow: auto; 
+		z-index: 0; 
+		left: 0px; 
+		top: 0px;
+		height: 100%;
+		width: 100%;
+	}
+	
+	.dropdown {
+	    position: relative;
+	    display: inline-block;
+	    padding-right: 8px 0px 0px 8px;
+	    font-size: small;
+	    cursor: default;
+	    top: -5px;
+	    z-index: 15;
+	}
+	
+	.hoverDropdown .dropdown-content {
+		display: none;
+	}
+	
+	.clickDropdown {
+		top: -1px;
+	}
+	
+	.clickDropdown .dropdown-content {
+		top: 20px;
+	}
+	
+	.dropdown-content {
+	    position: absolute;
+	    left: -110px;
+	    background-color: #f1f1f1;
+	    min-width: 130px;
+	    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	    z-index: 99;
+	    padding-top: 8px;
+	    padding-bottom: 5px;
+	}
+	
+	.dropdown-content a {
+	    color: black;
+	    padding: 2px 8px;
+	    display: block;
+	    cursor: pointer;
+	}
+	
+	.dropdown-content a.barAtLeftTop {
+		padding-top: 8px;
+	}
+	
+	.dropdown-content a:hover {
+		background-color: #ddd;
+	    text-decoration: none;
+	}
+	
+	.hoverDropdown:hover .dropdown-content {
+	    display: block;
+	}
+	
+	#alignMenu .dropdown-content, 
+	#viewMenu .dropdown-content,
+	#shapeMenu .dropdown-content {
+		display: none;
+	}
+	
+	#alignMenu:hover .dropdown-content, 
+	#viewMenu:hover .dropdown-content, #viewMenu.tourHover .dropdown-content,
+	#shapeMenu:hover .dropdown-content, #shapeMenu.tourHover .dropdown-content {
+		display: block;
+	}
+	
+	#FloatView {
+		height: calc(100% - 30px); 
+		right: 0px; 
+		top: 30px; 
+		overflow: auto;
+		background: #EEEEEE; 
+		border-left: 1px solid #CECECE;
+		overflow: auto;  
+		position: absolute; 
+		min-width: 200px;
+		width: max-content;
+	}
+	 
+	span.symb {
+		font-weight: bold;
+		font-size: medium;
+		cursor: default;
+		line-height: 12px;
+	}
+
+	span.symb.char {
+		font-size: 1.15em;
+		position: relative;
+		top: 1px;
+		font-weight: normal;
+	}
+	
+	span.symb.box {
+		font-size: 10pt; 
+		padding-left: 3px; 
+		border-radius: 2px; 
+		border: 1px solid #333333;
+		margin-right: 3px;
+	}
+	
+	span.symb:hover {
+		color: ORANGE;
+	}
+
+	span.symb.box:hover {
+		border: 1px solid ORANGE;
+	}
+	
+	div.JSD-state.pausedAt {
+		border: 1px solid #eb4d4b;
+	}
+
+	div.viewHeader {
+		background: #f0eee3; 
+		height: 25px; 
+		padding-top: 5px;
+		padding-left: 3px;
+		font-weight: bold;
+		font-style: italic;
+		cursor: default;
+		overflow: hidden;
+	}
+	
+	div.viewActionBtn {
+		float: right;
+		padding-right: 3px;
+	}
+	
+	.row {
+		margin-right: 0px;
+	}
+	
+	.form-group {
+		margin-bottom: 5px;
+	}
+	
+	form.ViewWorkArea {
+		font-size: 12px;
+	}
+	
+	.view-state {
+		cursor: default;
+	}
+	
+	li.view-state:hover span.state-label, li.view-trans:hover {
+		font-weight: bold;
+	}
+	
+	label.uom {
+		position: relative;
+		left: -25px;
+		top: 15px;
+	}
+	
+	span.glyphicon.modeSelected, span.symb.modeSelected {
+		color: ORANGE;
+	}
+	
+	#modelName {
+		position: fixed;
+		left: 1px;
+		top: 3px;
+		cursor: pointer;
+	}
+	
+	#rtMsg {
+		position: fixed;
+		left: auto;
+		padding: 5px;
+		border-bottom-left-radius: 10px;
+		box-shadow: 10px 10px 5px lightgrey;
+		background: yellow;
+		z-index: 99;
+	}
+	
+	.JSDHiLite-pausedAt {
+		border: 2px dashed ORANGE;
+	}
+	.JSDHiLite-pausedAt .JSDHiLite-seq {
+		background: RED;
+	}
+	
+	.JSDHiLite-breakpoint {
+		border: 2px dotted GREEN;
+	}
+
+	.JSDHiLite-trailing {
+		border: 2px dotted ORANGE;
+	}
+	.JSDHiLite-item.JSDHiLite-trailing .JSDHiLite-seq {
+		background: ORANGE;
+	}
+	
+	#ToggleBreakpoint {
+		color: ORANGE;
+	}
+	
+	.viewAction {
+		float: right; 
+		font-size: small;
+	}
+	
+	#viewExpender {
+		position: absolute; 
+		top: 50%; 
+		right: 0px; 
+		cursor: default; 
+		z-index: 9999; 
+		font-size: x-large;
+	}
+	
+	#viewExpender:hover {
+		font-weight: bold;
+		background: ORANGE;
+	}
+	
+	.ViewWorkArea {
+		padding-left: 8px;
+	}
+	
+	.searchOpt {
+		background-image: linear-gradient(to right, #777777 , #999999);
+		color: #FFFFFF;
+		width: 75px;
+		display: inline;
+		white-space: nowrap;
+		horizontal-align: center;
+		padding: 3px;
+		cursor: default;
+	}
+	
+	.searchResult-line {
+		cursor: default;
+	}
+
+	.searchOpt.search-checked {
+		background-image: linear-gradient(to right, #333333 , #555555);
+	}
+	
+	.searchResult-line:hover {
+		background: #FFFFFF;
+	}
+	
+	.req-item {
+		cursor: default;
+	}
+	
+	.req-item:hover {
+		background: #FFFFFF;
+	}
+	
+	.req-item .req-changed {
+		color: ORANGE;
+	}
+	
+	#toolbarToggler {
+		font-weight: bold; 
+		font-size: medium;
+		cursor: default;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	
+	#toolbarToggler:hover {
+		background: ORANGE;
+	}
+	
+	.subFieldLabel {
+		padding-left: 25px;
+		font-weight: normal;
+	}
+	
+	.nodeType {
+		float: right;
+		font-size: smaller;
+	}
+	
+</style>
+
+    <link href="/api/v1/file/ideCss" rel="stylesheet">
+
+
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+<div id="toolPallet">
+	<span ng-show="palletVisible">
+		<span ng-click="reset();" title="Edit Mode: &#013;move states/transitions and edit properties. &#013;Can also be selected by double-clicking on canvas."
+			id="resetBtn" class="mode icon-ctrl barAtRight glyphicon glyphicon-star" ng-class="{'modeSelected': diagramMode=='edit'}">
+		</span>
+		<span id="addBtnGroup">
+			<span ng-click="addNode('addState-initial', 'hint_addState_initial');" title="Add Initial State:  &#013;click on canvas to place initial state"
+				class="mode symb char" ng-class="{'modeSelected': diagramMode=='addState-initial'}">O
+			</span>
+			<span ng-click="addNode('addState-state', 'hint_addState_state'); " title="Add State:  &#013;click on canvas to place state"
+				class="icon-ctrl glyphicon glyphicon-unchecked" ng-class="{'modeSelected': diagramMode=='addState-state'}">
+			</span>
+			<span ng-click="addTrans('hint_addTrans');" title="Add Transitions: &#013;click on sides of source and &#013;target states to create transition" 
+				class="mode symb" ng-class="{'modeSelected': diagramMode=='addTrans' || diagramMode=='rerouteTrans'}">&#10140;
+			</span>
+			<span ng-click="addNode('addState-final', 'hint_addState_final');" title="Add Final State:  &#013;click on canvas to place final state"
+				class="icon-ctrl glyphicon glyphicon-record" ng-class="{'modeSelected': diagramMode=='addState-final'}">
+			</span>
+			
+			<span id="shapeMenu" title="More model state shapes">
+				<span class="dropdown clickDropdown">
+					<span class="mode symb" style="font-style: italic;">
+						<span class="mode symb modeSelected" ng-show="diagramMode=='addState-branch'">&#9830;</span>
+						<span class="mode symb modeSelected" ng-show="diagramMode=='addState-switch'">&#9974;</span>
+						<span class="mode symb modeSelected" ng-show="diagramMode=='addBox'">&#10063;</span>
+						<span class="mode symb modeSelected" ng-show="diagramMode=='addSwimlaneH'">&sqsub;</span>
+						<span class="mode symb modeSelected" ng-show="diagramMode=='addSwimlaneV'">&sqcap;</span>
+					</span>
+					<span class="glyphicon glyphicon-chevron-down" style="font-style: italic;font-size: 5pt;"></span>
+					<div class="dropdown-content" style="min-width: 100px; left: -60px; top: 11px;">
+						<a ng-click="addNode('addState-branch', 'hint_addState_branch');" title="Add Branch States"
+							class="mode symb" ng-class="{'modeSelected': diagramMode=='addState-branch'}">&#9830;&nbsp;&nbsp;Branch
+						</a>
+						<a ng-click="addNode('addState-switch', 'hint_addState_switch');" title="Add Switch States"
+							class="mode symb" ng-class="{'modeSelected': diagramMode=='addState-switch'}">&#9974;&nbsp;Switch
+						</a>
+						<a ng-click="addNode('addBox', 'hint_addBox');" title="Add Boxes" 
+							class="mode symb" style="position: relative; top: 1px;" ng-class="{'modeSelected': diagramMode=='addBox'}">&#10063;&nbsp;Box
+						</a>
+						<a ng-click="addNode('addSwimlaneH', 'hint_addSwimlane');" title="Add Horizontal Swimlanes" 
+							class="mode symb" ng-class="{'modeSelected': diagramMode=='addSwimlaneH'}">&sqsub;&nbsp;&nbsp;Swimlane-H
+						</a>
+						<a ng-click="addNode('addSwimlaneV', 'hint_addSwimlane');" title="Add Vertical Swimlanes" 
+							class="mode symb" ng-class="{'modeSelected': diagramMode=='addSwimlaneV'}">&sqcap;&nbsp;&nbsp;Swimlane-V
+						</a>
+					</div>
+				</span>
+			</span>
+		</span>
+
+		<span id="markBtnGroup">
+			<span ng-click="setMarkMode();" title="Mark Mode: &#013;select states/transitions &#013;for set operations: movement, &#013;removal, alignment, model execution" 
+				class="mode icon-ctrl glyphicon glyphicon-star-empty barAtLeft" ng-class="{'modeSelected': diagramMode=='mark'}">
+			</span>
+			<span ng-click="markAll();" title="Mark all states" 
+				class="mode icon-ctrl glyphicon glyphicon-ok-circle">
+			</span>
+			<span ng-click="deleteMarkedStateTrans();" title="Delete marked states/transitions."
+				class="icon-ctrl glyphicon glyphicon-remove">
+			</span>
+			<span id="alignMenu" title="Align marked states">
+				<span class="dropdown clickDropdown">
+					<span class="glyphicon glyphicon-indent-left" style="font-style: italic;"></span>
+					<span class="glyphicon glyphicon-chevron-down" style="font-style: italic;font-size: 5pt;"></span>
+					<div class="dropdown-content" style="min-width: 100px; left: -60px; top: 18px;">
+						<a ng-click="diagram.alignStates('left');" title="Align to left.">Align Left</a>
+						<a ng-click="diagram.alignStates('center');" title="Align to center">Align Center</a>
+						<a ng-click="diagram.alignStates('right');" title="Align to right.">Align Right</a>
+						<a ng-click="diagram.alignStates('top');" title="Align to top.">Align Top</a>
+						<a ng-click="diagram.alignStates('middle');" title="Align to middle">Align Middle</a>
+						<a ng-click="diagram.alignStates('bottom');" title="Align to bottom.">Align Bottom</a>
+					</div>
+				</span>
+			</span>
+		</span>
+		
+		<span ng-click="openView('Search');" title="Find States/Transitions"
+			class="icon-ctrl glyphicon glyphicon-search barAtLeft">
+		</span>
+
+		<span id="viewMenu" title="Properties and views">
+			<span class="dropdown clickDropdown" style="padding-right: 5px;">
+				<span class="glyphicon glyphicon-th-large" style="font-style: italic;"></span>
+				<span class="glyphicon glyphicon-chevron-down" style="font-style: italic;font-size: 5pt;"></span>
+				<div class="dropdown-content" style="left: -85px; top: 18px;">
+					<a ng-click="openView('CanvasSettingView', scxmlNode.mbt);" title="Canvas Settings" class="symb">Canvas Settings</a>
+					<a ng-click="openView('TreeView');" title="Tree View">Tree View</a>
+					<a ng-click="openView('ReqmtView');" title="Requirements View">Requirements</a>
+				</div>
+			</span>
+		</span>
+
+		<span onclick="parentWinObj.curAppState.openDialog('InfoModel');" title="Info on Model Editor" 
+			class="icon-ctrl glyphicon glyphicon-info-sign">
+		</span>
+	</span>
+	<span id="toolbarToggler" ng-click="palletVisible=!palletVisible" title="show/hide toolbar">
+		<span ng-hide="palletVisible">&langle;</span>
+		<span ng-show="palletVisible">&rangle;</span>
+	</span>
+</div>
+	
+<div id="workPane">
+	<div id="canvas">
+		<div id=rtMsg title='click to clear Sys Msg' ng-show="sysMsgList.length>0" ng-click="sysMsgList.length=0">
+			<div ng-repeat="msgObj in sysMsgList track by $index"><img ng-src="../img/{{msgObj.type}}.png" style="margin-right: 5px"/><span class="msg">{{msgObj.text}}</span></div>
+		</div>
+		<div id="stateMenu" class="circle">
+			<span id="DeleteState" title="Delete state" class="icon-ctrl glyphicon glyphicon-remove" hideWhen="objData.readOnly"></span>
+			<span id="StateProp" title="State properties" class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			<span id="ToggleBreakpoint" class="symb" title="Toggle breakpoint">&#11044;</span>
+			<span id="StateNeighbors" title="Highlight neighboring states: incoming - blue, outgoing - green." class="icon-ctrl glyphicon glyphicon-adjust"></span>
+			<span id="RefreshState" title="Refresh routing of all incoming &#013;and outgoing transitions" class="icon-ctrl glyphicon glyphicon-refresh" hideWhen="objData.readOnly"></span>
+			<!-- span id="StateAnnot" class="icon-ctrl glyphicon glyphicon-film" title="State Annotation (Bahavior simulation using BA - Business Analysis plugin)"></span-->
+			<span id="StateTrigger" class="icon-ctrl glyphicon glyphicon-align-justify" title="goto state trigger (script)" hideWhen="objData.readOnly"></span>
+			<span id="OpenSubModel" title="Open Sub-Model" hideWhen="objData.subModel.trim().length==0" class="icon-ctrl glyphicon glyphicon-new-window"></span>
+		</div>
+		<div  id="transMenu" class="circle">
+			<span id="DeleteTrans" title="Delete transition" class="icon-ctrl glyphicon glyphicon-remove" hideWhen="objData.readOnly"></span>
+			<span id="TransProp" title="Transition properties" class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			<span id="ToggleBreakpoint" class="symb" title="Toggle breakpoint">&#11044;</span>
+			<span id="RefreshTrans" title="Refresh transition routing &#013;with same start/end" class="icon-ctrl glyphicon glyphicon-refresh" hideWhen="objData.readOnly"></span>
+			<span id="ReRouteTrans" title="Change transition source &#013;and target states" class="icon-ctrl glyphicon glyphicon-retweet" hideWhen="objData.readOnly"></span>
+			<span id="TransTrigger" class="icon-ctrl glyphicon glyphicon-align-justify" title="goto transition trigger (script)" hideWhen="objData.readOnly"></span>
+		</div>	
+		<div id="swimlaneMenu" class="circle">
+			<span id="SwimlaneProp" title="Swimlane properties" class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			<span id="DeleteSwimlane" title="Delete swimlane" class="icon-ctrl glyphicon glyphicon-remove"></span>
+		</div>	
+		<div id="boxMenu" class="circle">
+			<span id="BoxProp" title="Box properties" class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			<span id="DeleteBox" title="Delete box" class="icon-ctrl glyphicon glyphicon-remove"></span>
+		</div>	
+	</div>
+</div>
+<div id="FloatView" ng-show="FloatViewVisible">
+	<div ng-show="FloatViewID=='TreeView'" id="TreeView">
+		<div class="viewHeader">
+			State/Transition TreeView
+		</div>
+		<div>
+			<ul ng-if="stateList.length>0" style="padding-left: 3px; list-style:none;">
+				<li ng-repeat="state in stateList" class="view-state">
+					<img ng-src="../img/{{state.expanded?'minus':'plus'}}.png" ng-click="state.expanded=!state.expanded"/>
+					<span class="state-label" title="click to highlight state" ng-click="hiLiteStateTrans(state.uid)">{{state.stateID}}</span>
+					<ul style="padding-left: 11px; margin-left: 19px;" ng-show="state.expanded">
+						<li class="view-trans" ng-repeat="trans in state.transitions" ng-click="hiLiteStateTrans(trans.uid)">{{trans.event}}</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div ng-show="FloatViewID=='StateProp'" id="StateProp">
+		<div class="viewHeader" title="click to highlight the state" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">
+			<span class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			{{curPropNodeData.curNodeData.stateID}}
+		</div>
+		<div>
+			<form class="ViewWorkArea" form-on-change="saveCurProp()">
+				<div class="form-group row">
+					<label class="col-sm-4">UID</label>
+					<div class="col-sm-8">
+						<span>{{curPropNodeData.curNodeData.uid}}</span><span class="nodeType">{{curPropNodeData.curNodeData.nodeType}}</span]]>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">State Name</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" ng-change="saveCurProp()" required ng-model="curPropNodeData.curNodeData.stateID" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">{{gMsgList.desc.code}}</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" required ng-model="curPropNodeData.curNodeData.desc" ng-readonly="curPropNodeData.curNodeData.readOnly"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-12 col-form-label">State Color / Style:</label>
+				</div>
+				<div class="form-group row">
+					<span class="subFieldLabel col-sm-4 col-form-label" title="State color or css style">Background</span>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.color" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<span class="subFieldLabel col-sm-4" title="State label color or css style">Label</span>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.textColor" ng-readonly="curPropNodeData.curNodeData.readOnly" />
+					</div>
+				</div>
+				<div class="form-group row" ng-show="curPropNodeData.curNodeData.nodeType=='STATE'">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.subModel.desc}}">{{gMsgList.subModel.code}}</label>
+					<div class="col-sm-8">
+						<select class="form-control" ng-model="curPropNodeData.curNodeData.subModel" 
+							ng-change="curPropNodeData.changed_subModel=true;"
+							ng-readonly="curPropNodeData.curNodeData.readOnly">
+							<option value=""></option> 
+							<option ng-repeat="subModel in subModelList track by $index" ng-value="subModel">{{subModel}}</option> 
+						</select>
+					</div>
+				</div>
+			<div ng-hide="curPropNodeData.curNodeData.isInitial || curPropNodeData.curNodeData.isFinal">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.maxMillis.desc}}">{{gMsgList.maxMillis.code}}</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.maxMillis" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.subModelFilter.desc}}">{{gMsgList.subModelFilter.code}}</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.subModelFilter" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
+					<label class="col-sm-4 col-form-label" title="Toggle hide/show children states">Hide Children States</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="checkbox" 
+							ng-change="curPropNodeData.changed_hideSubstates= true;"
+							ng-model="curPropNodeData.curNodeData.hideSubstates" 
+							ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-12 col-form-label">Concurrent State Properties:</label>
+				</div>
+				<div class="form-group row">
+					<span class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.activateType.desc}}">Activation</span>
+					<div class="col-sm-8">
+						<select class="form-control" ng-model="curPropNodeData.curNodeData.activateType" ng-readonly="curPropNodeData.curNodeData.readOnly">
+							<option value="TRAV_COUNT" title="activate this state by counting &#013;traversals of incoming transitions">Traversals - default</option>
+							<option value="TRANS_COUNT" title="activate this state by counting &#013;incoming transitions that are covered">Transitions</option>
+							<option value="VAR" title="activate this state by setting &#013;user variable $SYS._ACTIVATE_{{curPropNodeData.curNodeData.stateID}} to true">By Variable</option>
+							<option value="WEIGHT" title="activate this state when sum of &#013;weights of transition traversals &#013;exceeded the specified value">Sum of Weights</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<span class="subFieldLabel col-sm-4" title="{{gMsgList.activateThreshold.desc}}">Threashold</span>
+					<div class="col-sm-8">
+						<input class="form-control" type="number" ng-model="curPropNodeData.curNodeData.activateThreshold" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<span class="subFieldLabel col-sm-4" title="{{gMsgList.firingType.desc}}">Firing Trans</span>
+					<div class="col-sm-8">
+						<select class="form-control" ng-model="curPropNodeData.curNodeData.firingType" ng-readonly="curPropNodeData.curNodeData.readOnly">
+							<option value="RANDOM" title="randomly select one transition from &#013;the outgoing transitions to fire">Random - default</option>
+							<option value="VAR" title="fire outgoing transition with name &#013;matching the value of user variable $SYS._FIRING_{{curPropNodeData.curNodeData.stateID}}">By Variable</option>
+							<option value="ALL" title="fire all outgoing transitions">ALL</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+				
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Notepad</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" style="height: 100%;" ng-model="curPropNodeData.curNodeData.notepad" ng-readonly="curPropNodeData.curNodeData.readOnly"></textarea>
+					</div>
+				</div>			
+			</form>
+		</div>
+	</div>
+	<div ng-show="FloatViewID=='TransProp'" id="TransProp">
+		<div class="viewHeader" title="click to highlight the transition" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">
+			<span class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			{{curPropNodeData.curNodeData.event}}
+		</div>
+		<div>
+			<form class="ViewWorkArea" form-on-change="saveCurProp()">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">UID</label>
+					<div class="col-sm-8">
+						<span>{{curPropNodeData.curNodeData.uid}}</span><span class="nodeType">(TRANSITION)</span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Transition Name</label>
+					<div class="col-sm-8">
+						<input type="text" id="transEvent" ng-change="saveCurProp()" class="form-control" required ng-model="curPropNodeData.curNodeData.event" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="Hide transition name">Hide Name</label>
+					<div class="col-sm-8">
+						<input type="checkbox" ng-model="curPropNodeData.curNodeData.hideName" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Description</label>
+					<div class="col-sm-8">
+						<textarea id="transDesc" class="form-control" required ng-model="curPropNodeData.curNodeData.desc" ng-readonly="curPropNodeData.curNodeData.readOnly"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.weight.desc}}">Weight</label>
+					<div class="col-sm-8">
+						<input type="text" id="transWeight" class="form-control" required min="0" max="100" ng-model="curPropNodeData.curNodeData.weight"
+						 	ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.traverseTimes.desc}}">{{gMsgList.traverseTimes.code}}</label>
+					<div class="col-sm-8">
+						<input id="transTraverseTimes" class="form-control" type="text" required min="0" ng-model="curPropNodeData.curNodeData.traverseTimes"
+							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-12 col-form-label">Transition Color / Style:</label>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="Transition segment color or css style">Line</label>
+					<div class="col-sm-8">
+						<input id="transColor" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.color" 
+							ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="Transition label color or css style">Label</label>
+					<div class="col-sm-8">
+						<input id="transTextColor" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.textColor"  
+							ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-12 col-form-label">Transition Guards <small><i>if supported by sequencer</i></small>:</label>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.guard.desc}}">{{gMsgList.guard.code}}</label>
+					<div class="col-sm-8">
+						<input id="transGuard" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.guard"
+							 ng-readonly="curPropNodeData.curNodeData.readOnly" placeHolder="e.g. $VAR.var1 == 'val1'"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.guardHint.desc}}">{{gMsgList.guardHint.code}}</label>
+					<div class="col-sm-8">
+						<input id="transGuardHint" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.guardHint"
+							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.satisfyingHint.desc}}">{{gMsgList.satisfyingHint.code}}</label>
+					<div class="col-sm-8">
+						<input id="transSatisfyingHint" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.satisfyingHint"
+							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row" ng-show="isSubModelState(curPropNodeData.curNodeData.parentuid)">
+					<label class="col-sm-4 col-form-label" title="From a final state in sub-model">From Final State</label>
+					<div class="col-sm-8">
+						<select class="form-control" ng-model="curPropNodeData.curNodeData.subModelFinalStateUID" 
+							ng-readonly="curPropNodeData.curNodeData.readOnly" 
+							ng-options="fstate.uid as fstate.stateID for fstate in getFinalStates(curPropNodeData.curNodeData.parentuid)">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>			
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.maxMillis.desc}}">{{gMsgList.maxMillis.code}}</label>
+					<div class="col-sm-5">
+						<input id="transMaxMillis" class="form-control" type="number" min="0" max="300000" ng-model="curPropNodeData.curNodeData.maxMillis"
+							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+					<label class="col-sm-1 uom">millis</label>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.notepad.desc}}">Notepad</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" style="height: 100%;" ng-model="curPropNodeData.curNodeData.notepad" ng-readonly="curPropNodeData.curNodeData.readOnly"></textarea>
+					</div>
+				</div>			
+			</form>
+		</div>
+	</div>
+	<div ng-show="FloatViewID=='BoxProp'" id="BoxProp">
+		<div class="viewHeader">
+			<span class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			{{curPropNodeData.curNodeData.name}}
+		</div>
+		<div>
+			<form class="ViewWorkArea" form-on-change="saveCurProp()">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">UID</label>
+					<div class="col-sm-8">
+						<span>{{curPropNodeData.curNodeData.uid}}</span><span class="nodeType">BOX</span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Name</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" ng-blur="diagram.updateObjAttr(curPropNodeData.curNodeData.uid)" required 
+							 ng-change="setModelChanged();" ng-model="curPropNodeData.curNodeData.name" ng-readonly="curPropNodeData.curNodeData.readOnly" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-12 col-form-label">Box Color / Style:</label>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="Box color or css style">Background</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" required ng-model="curPropNodeData.curNodeData.color" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="subFieldLabel col-sm-4 col-form-label" title="Box label color or css style">Label</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" required ng-model="curPropNodeData.curNodeData.textColor" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div ng-show="FloatViewID=='SwimlaneProp'" id="SwimlaneProp">
+		<div class="viewHeader">
+			<span class="icon-ctrl glyphicon glyphicon-th-list"></span>
+			{{curPropNodeData.curNodeData.name}}
+		</div>
+		<div>
+			<form class="ViewWorkArea" form-on-change="saveCurProp()">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.uid.desc}}">{{gMsgList.uid.code}}</label>
+					<div class="col-sm-8">
+						<span>{{curPropNodeData.curNodeData.uid}}</span><span class="nodeType">SWIMLANE</spane>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.name.desc}}">{{gMsgList.name.code}}</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" required ng-model="curPropNodeData.curNodeData.name"
+							 ng-change="saveCurProp()" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.color.desc}}">{{gMsgList.color.code}}</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" required ng-model="curPropNodeData.curNodeData.color" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.textColor.desc}}">{{gMsgList.textColor.code}}</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" required ng-model="curPropNodeData.curNodeData.textColor" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+				</div>
+				<div ng-repeat="lane in curPropNodeData.curNodeData.lanes">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label" title="Lanes label/name">Lane {{$index+1}}
+							<a href="#" ng-click="deleteLane(lane)" style="float:right;" title="Delete this lane">x</a>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" ng-change="saveCurProp()" required ng-model="lane.name" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="subFieldLabel col-sm-4 col-form-label">Color</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" required ng-model="lane.color" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="subFieldLabel col-sm-4 col-form-label">Text Color</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" required ng-model="lane.textColor" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="subFieldLabel col-sm-4 col-form-label">Size</label>
+						<div class="col-sm-5">
+							<input type="number" class="form-control" required ng-model="lane.size" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+						<label class="col-sm-1 uom">px</label>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<button class="form-control" ng-click="addLane();" title="Add a lane to Swimlane">Add Lane</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div ng-show="FloatViewID=='ReqmtView'" id="ReqmtView">
+		<div class="viewHeader">Requirement View</div>
+		<div>
+			<table class="table" width="100%">
+				<tbody>
+					<tr class="req-item" ng-repeat="reqObj in reqList track by $index"
+						ng-click="hiLiteByTag(reqObj.name);" title="{{reqObj.desc}}: &#013;click to highlight coverage on model">
+						<td valign="top"><span style="margin-left: 4px;">{{reqObj.name}}</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div ng-show="FloatViewID=='CanvasSettingView'" id="CanvasSettingView">
+		<div class="viewHeader">Canvas Settings</div>
+		<div>
+			<form class="ViewWorkArea" form-on-change="saveCurProp()">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.canvasWidth.desc}}">Canvas Width</label>
+					<div class="col-sm-5">
+						<input type="number" class="form-control" required ng-model="scxmlNode.miscNode.canvasWidth" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+					<label class="col-sm-1 uom">px</label>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" title="{{gMsgList.canvasHeight.desc}}">Canvas Height</label>
+					<div class="col-sm-5">
+						<input type="number" class="form-control" required ng-model="scxmlNode.miscNode.canvasHeight" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+					</div>
+					<label class="col-sm-1 uom">px</label>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div ng-show="FloatViewID=='AnnotView'" id="AnnotView">
+		<div class="viewHeader">
+			<span class="icon-ctrl glyphicon glyphicon-film"></span>
+			<span title="click to highlight state" ng-show="curPropNodeData.curNodeData.typeCode=='state'" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">&#9723; {{curPropNodeData.curNodeData.stateID}}</span>
+			<span title="click to highight transition" ng-show="curPropNodeData.curNodeData.typeCode=='transition'" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">&#8605; {{curPropNodeData.curNodeData.event}}</span>
+		</div>
+		<div>
+			<div class="mdd_toolbar"></div>
+			<textarea rows="12" id="mdd_editor" class="mdd_editor" style="margin-top: 8px;"></textarea>
+			<div class="mdd_resizer"></div>
+			<div class="mdd_preview"></div>
+		</div>
+	</div>
+	<div ng-show="FloatViewID=='Search'" id="SearchView">
+		<div class="viewHeader">
+			<span class="icon-ctrl glyphicon glyphicon-search"></span>
+			<span>Find States/Transitions</span>
+		</div>
+		<div>
+			<form class="ViewWorkArea" style="height: 100%;">
+				<div class="form-group row" style="font-size: x-small;" >
+					<div class="col-sm-12">
+						<div style="display: inline; font-weight: bold;">By: </div>
+						<div class="searchOpt" ng-class="{'search-checked': searchOpt.uid}" ng-click="searchOpt.uid=!searchOpt.uid; doSearch();">
+							<span ng-show="searchOpt.uid">&#10004;</span><span ng-hide="searchOpt.uid">&#9932;</span>UID
+						</div>
+						<div class="searchOpt" ng-class="{'search-checked': searchOpt.name}" ng-click="searchOpt.name=!searchOpt.name; doSearch();">
+							<span ng-show="searchOpt.name">&#10004;</span><span ng-hide="searchOpt.name">&#9932;</span>Name
+						</div>
+						<div class="searchOpt" ng-class="{'search-checked': searchOpt.desc}" ng-click="searchOpt.desc=!searchOpt.desc; doSearch();">
+							<span ng-show="searchOpt.desc">&#10004;</span><span ng-hide="searchOpt.desc">&#9932;</span>Desc
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<input type="text" class="form-control" ng-model="searchOpt.searchText" ng-change="doSearch();" placeholder="search text or /regExp"/>
+						<span style="float: right; position: relative; left: -5px; top: -20px; cursor: default;" ng-click="searchOpt.searchText=''">x</span>
+					</div>
+				</div>
+				<div class="form-group row" style="font-size: x-small; margin-left: 0px;">
+						<div style="display: inline; font-weight: bold;">Show: </div>
+						<div class="searchOpt" ng-class="{'search-checked': searchOpt.showState}" ng-click="searchOpt.showState=!searchOpt.showState;doSearch();">
+							<span ng-show="searchOpt.showState">&#10004;</span><span ng-hide="searchOpt.showState">&#9932;</span>state
+						</div>
+						<div class="searchOpt" ng-class="{'search-checked': searchOpt.showTrans}" ng-click="searchOpt.showTrans=!searchOpt.showTrans;doSearch();">
+							<span ng-show="searchOpt.showTrans">&#10004;</span><span ng-hide="searchOpt.showTrans">&#9932;</span>transition
+						</div>
+						
+						<a style="float: right; margin-right: 10px; cursor: default;" ng-click="hiLiteSearch();">Mark All</a>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<ul style="padding-left: 12px;">
+							<li class="searchResult-line" ng-repeat="rslt in searchOpt.resultList" ng-click="hiLiteStateTrans(rslt.uid)">{{rslt.typeCode}} - {{rslt.stateID?rslt.stateID:rslt.event}}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="backdrop" style="display:none; position: absolute; width:100%; height: 100%; z-index: 998; opacity: 0.1;"></div>
+<div title="drag to resize" id="viewResizer"
+	class="" style="background: #F0EEE0; position: fixed; top: 0; height: 100%; width: 5px; cursor: col-resize;">
+</div>
+<div id="viewExpender" ng-click="FloatViewVisible=!FloatViewVisible">
+	<span ng-hide="FloatViewVisible">&langle;</span>
+	<span ng-show="FloatViewVisible">&rangle;</span>
+</div>
+
+</body>
+</html>

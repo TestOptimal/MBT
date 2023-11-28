@@ -1,0 +1,5 @@
+jquery.jcontext.1.0.js
+  3.1.17: changed to substract 20px when it's not on the top of the screen.
+  
+jquery.jcontext.js
+	see comments in js

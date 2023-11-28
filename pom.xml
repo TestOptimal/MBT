@@ -1,0 +1,449 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.13</version>
+	</parent>
+  	<groupId>TestOptimal</groupId>
+  	<artifactId>TestOptimal</artifactId>
+  	<version>7.0.3</version>
+  	<packaging>jar</packaging>
+
+  	<name>TestOptimal</name>
+  	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		
+		<!-- spring security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+		
+		<dependency>
+	      <groupId>com.google.code.gson</groupId>
+	      <artifactId>gson</artifactId>
+	      <scope>compile</scope>
+	    </dependency>
+	    
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured, need to be before lambdaj due to hamcrest conflict-->
+		<dependency>
+		    <groupId>io.rest-assured</groupId>
+		    <artifactId>rest-assured</artifactId>
+		</dependency>
+
+		<!--
+	    <dependency>
+	        <groupId>org.seleniumhq.selenium</groupId>
+	        <artifactId>selenium-server</artifactId>
+	        <version>3.141.59</version>
+	    </dependency> 
+	  	<dependency>
+	        <groupId>org.seleniumhq.selenium</groupId>
+	        <artifactId>htmlunit-driver</artifactId>
+	    </dependency>
+		-->
+		
+	    <!-- dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-remote-driver</artifactId>
+		</dependency -->
+
+          	    
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>29.0-jre</version>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+		    <version>4.5.3</version>
+		</dependency>
+
+		<!--        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+		-->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.groovy/groovy-all -->
+		<dependency>
+		    <groupId>org.apache.groovy</groupId>
+		    <artifactId>groovy-all</artifactId>
+		    <version>4.0.15</version>
+		    <type>pom</type>
+		</dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.scannotation/scannotation -->
+		<dependency>
+		    <groupId>org.scannotation</groupId>
+		    <artifactId>scannotation</artifactId>
+		    <version>1.0.3</version>
+		</dependency>
+		        
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+		<dependency>
+		    <groupId>net.sourceforge.jexcelapi</groupId>
+		    <artifactId>jxl</artifactId>
+		    <version>2.6.12</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
+		<dependency>
+		    <groupId>net.sourceforge.plantuml</groupId>
+		    <artifactId>plantuml</artifactId>
+		    <version>1.2023.7</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/com.microsoft.azure/azure-client-runtime -->
+		<dependency>
+		    <groupId>com.microsoft.azure</groupId>
+		    <artifactId>azure-client-runtime</artifactId>
+		    <version>1.7.5</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>javax.mail-api</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.10.6</version>
+		</dependency>
+				
+		<!-- https://mvnrepository.com/artifact/colt/colt -->
+		<dependency>
+		    <groupId>colt</groupId>
+		    <artifactId>colt</artifactId>
+		    <version>1.2.0</version>
+		</dependency>
+		
+  		<dependency>
+		    <groupId>com.github.testoptimal</groupId>
+		    <artifactId>openOptima</artifactId>
+		    <version>1.0.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		</dependency>	
+		
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>	
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/codemirror -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>codemirror</artifactId>
+		    <version>5.50.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/angularjs -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>angularjs</artifactId>
+		    <version>1.7.9</version>
+		</dependency>
+        
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+		<dependency>
+		    <groupId>com.github.ulisesbocchio</groupId>
+		    <artifactId>jasypt-spring-boot-starter</artifactId>
+		    <version>3.0.2</version>
+   		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/d3js -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>d3js</artifactId>
+            <version>5.9.7</version>
+        </dependency>
+        
+		<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
+		<!--
+		<dependency>
+		    <groupId>org.eclipse.paho</groupId>
+		    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
+		-->
+	    <dependency>
+	        <groupId>com.fasterxml.jackson.dataformat</groupId>
+	        <artifactId>jackson-dataformat-yaml</artifactId>
+	    </dependency>	    
+	    
+		<!-- https://mvnrepository.com/artifact/io.ultreia/bluecove -->
+		<!-- dependency>
+		    <groupId>io.ultreia</groupId>
+		    <artifactId>bluecove</artifactId>
+		    <version>2.1.1</version>
+		</dependency -->
+		
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+		    <groupId>com.opencsv</groupId>
+		    <artifactId>opencsv</artifactId>
+		    <version>5.3</version>
+		</dependency>
+
+	</dependencies>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.17</java.version>
+		<start-class>com.testoptimal.server.Application</start-class>
+		<maven.compiler.source>1.17</maven.compiler.source>
+		<maven.compiler.target>1.17</maven.compiler.target>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<to.version>${project.version}</to.version>
+		<build.date>${timestamp}</build.date>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+			  <groupId>org.codehaus.mojo</groupId>
+			  <artifactId>properties-maven-plugin</artifactId>
+			  <version>1.0.0</version>
+			  <executions>
+			    <execution>
+			      <id>one</id>
+			      <phase>initialize</phase>
+			      <goals>
+			        <goal>write-project-properties</goal>
+			      </goals>
+			      <configuration>
+			        <outputFile>src/main/resources/TO.properties</outputFile>
+			      </configuration>
+			    </execution>
+			  </executions>
+			</plugin>	
+				
+	       <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-compiler-plugin</artifactId>
+	            <configuration>
+	                <excludes>
+	                    <exclude>**/com/testoptimal/license/LicenseManager.javax</exclude>
+	                    <exclude>**/TOWebSite/</exclude>
+	                </excludes>
+	            </configuration>
+	        </plugin>
+		   	<plugin>
+		        <artifactId>maven-antrun-plugin</artifactId>
+		        <executions>
+					<execution>
+					    <id>deploy-win</id>
+					    <phase>install</phase>
+					    <goals>
+					        <goal>run</goal>
+					    </goals>
+					    <configuration>
+					        <target>
+					        	<property name="releaseLabel" value="${project.version}"/>
+								<property name = "releaseBuildDir" value = "build" />
+								
+						  		<delete includeEmptyDirs="true" failonerror="false">
+						  		  	<fileset dir="${releaseBuildDir}/TestOptimal_win/" includes="**"/>
+						  		</delete>
+								<mkdir dir="${releaseBuildDir}/TestOptimal_win/work/" />
+							  	<copy todir="${releaseBuildDir}/TestOptimal_win/">
+							    	<fileset dir="buildDef/shared/" includes="**/*"/>
+							  	</copy>
+							  	<copy todir="${releaseBuildDir}/TestOptimal_win/">
+							    	<fileset dir="buildDef/TestOptimal_win/" includes="**/*"/>
+							  	</copy>
+							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_win/TestOptimal.jar"/>
+							  	<zip destfile="${releaseBuildDir}/TestOptimal_${releaseLabel}_win.zip"
+							       basedir="${releaseBuildDir}/TestOptimal_win"
+							  	/>
+								<delete file="${releaseBuildDir}/TestOptimal_Setup.nsi"/>
+							  	<copy todir="${releaseBuildDir}">
+							  		<fileset dir="buildDef" includes="to_128.ico,TestOptimal_Setup.nsi"/>
+								</copy>							  	
+							  	
+						  		<delete includeEmptyDirs="true" failonerror="false">
+						  		  	<fileset dir="${releaseBuildDir}/TestOptimal_mac/" includes="**"/>
+						  		</delete>
+								<mkdir dir="${releaseBuildDir}/TestOptimal_mac/work/" />
+								<copy todir="${releaseBuildDir}/TestOptimal_mac/">
+							    	<fileset dir="buildDef/shared/" includes="**/*"/>
+							  	</copy>
+							  	<copy todir="${releaseBuildDir}/TestOptimal_mac/">
+							    	<fileset dir="buildDef/TestOptimal_mac/" includes="**/*"/>
+							  	</copy>
+							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_mac/TestOptimal.jar"/>
+							  	<zip destfile="${releaseBuildDir}/TestOptimal_${releaseLabel}_mac.zip">
+							  		 <zipfileset filemode="755" dir="${releaseBuildDir}/TestOptimal_mac" includes="**/*"/>
+							  	</zip>
+					        </target>
+					    </configuration>
+					</execution>
+		        </executions>
+		    </plugin>		
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+	            <configuration>
+	                <mainClass>com.testoptimal.server.Application</mainClass>
+	                <layout>ZIP</layout>
+				    <addResources>true</addResources>
+       				<!-- jvmArguments>-Xmx1024m</jvmArguments -->
+       				<includeSystemScope>true</includeSystemScope>
+		            <executions>
+		                <execution>
+		                    <goals>
+		                        <goal>repackage</goal>
+		                    </goals>
+		                </execution>
+		            </executions>       				
+       	        </configuration>
+			</plugin>
+			
+	      <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-javadoc-plugin</artifactId>
+			    <configuration>
+			        <links>
+			            <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+			        </links>
+			        <source>1.17</source>
+			        <show>public</show>
+			        <doctitle>TestOptimal API</doctitle>
+			        <title>TestOptimal API</title>
+			        <bottom><![CDATA[Copyright TestOptimal, LLC]]></bottom>
+				    <sourceFileIncludes>
+					    <include>exception/*</include>
+					    <include>server/model/RunRequest.java</include>
+					    <include>dataset/DataMgr.java</include>
+					    <include>dataset/DataSet.java</include>
+					    <include>dataset/DataSetDef.java</include>
+					    <include>mcase/*</include>
+					    <include>mscript/Sys.java</include>
+					    <include>mscript/Util.java</include>
+					    <include>page/*</include>
+					    <include>plugin/*</include>
+					    <include>model/*</include>
+					    <include>plugin/selenium/SeleniumAssist.java</include>
+					    <include>plugin/selenium/WebDriverAssist.java</include>
+				    </sourceFileIncludes>
+			        <sourcepath>${basedir}/src/main/java/com/testoptimal/</sourcepath>
+                    <configuration> <!-- add this to disable checking -->
+		                <additionalparam>-Xdoclint:none</additionalparam>
+						<failOnError>false</failOnError>
+		            </configuration>
+			    </configuration>
+			</plugin>
+			
+
+    		<plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>replaceTokens</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>build/TestOptimal_Setup.nsi</file>
+                    <replacements>
+                        <replacement>
+                            <token>RELEASEVERSION</token>
+                            <value>${project.version}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+    		</plugin>
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+		    <id>ProjectRepo</id>
+		    <name>ProjectRepo</name>
+		    <url>file:${project.basedir}/repo</url>
+		</repository>
+	</repositories>
+</project>

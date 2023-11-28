@@ -1,0 +1,51 @@
+{
+  "dsName": "ProductList",
+  "fieldList": [
+    {
+      "fieldName": "IPad",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "499"
+      ]
+    },
+    {
+      "fieldName": "PicFrame",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "49"
+      ]
+    },
+    {
+      "fieldName": "UsbMem",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "39"
+      ]
+    },
+    {
+      "fieldName": "Toaster",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "19"
+      ]
+    }
+  ],
+  "overallStrength": "pairWise",
+  "dataRows": [
+    {
+      "IPad": 499,
+      "PicFrame": 49,
+      "Toaster": 19,
+      "UsbMem": 39,
+      "$$hashKey": "object:271"
+    }
+  ]
+}

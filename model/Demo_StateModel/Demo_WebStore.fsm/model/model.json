@@ -1,0 +1,889 @@
+{
+  "uid": "U1398",
+  "typeCode": "scxml",
+  "desc": "A simple WebStore consisting of 5 web pages with variety of html elements. This demo includes MBT model, scripting, data-driven testing and MCase.",
+  "notepad": "\u003cp\u003eA simple WebStore consisting of 5 web pages with variety of html elements. This demo includes MBT model, scripting, data-driven pairwise testing and MCase.\n\u003c/p\u003e\n\u003cp\u003eYou can just run this model to test web store pages are being driven by automation script. You may also \"Play\" the model to  see the model is being traversed in sync with the web pages being interacted with.\n\u003c/p\u003e\n\u003cp\u003eThe model uses Selenium/Web Driver to interact with the \u003ca href\u003d\"http://localhost:8888/DemoApp/DemoWebApp/ProductList.html\" target\u003d_blank\u003eWebStore web site\u003c/a\u003e. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Check out page which asks for payment and shipping info.",
+      "uid": "U1399",
+      "notepad": "",
+      "stateID": "Checkout",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on continue shoppping link",
+          "uid": "U1406",
+          "notepad": "",
+          "targetUID": "U1402",
+          "event": "ContinueShopping",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 419.0,
+                "top": 415.0
+              },
+              {
+                "left": 419.0,
+                "top": 340.0
+              },
+              {
+                "left": 224.0,
+                "top": 340.0
+              }
+            ],
+            "label": {
+              "left": -123,
+              "top": -96,
+              "width": 134,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on Confirm",
+          "uid": "U1407",
+          "notepad": "",
+          "targetUID": "U1405",
+          "event": "Pay",
+          "weight": 10,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 452.0,
+                "top": 474.0
+              },
+              {
+                "left": 452.0,
+                "top": 544.0
+              },
+              {
+                "left": 350.0,
+                "top": 544.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": 25,
+              "width": 54,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on shopping cart link",
+          "uid": "U1408",
+          "notepad": "",
+          "targetUID": "U1403",
+          "event": "ShowShoppingCart",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "down",
+            "posList": [
+              {
+                "left": 520.0,
+                "top": 472.0
+              },
+              {
+                "left": 664.0,
+                "top": 472.0
+              },
+              {
+                "left": 664.0,
+                "top": 341.0
+              }
+            ],
+            "label": {
+              "left": 11,
+              "top": -23,
+              "width": 134,
+              "height": 27
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 405.0,
+        "top": 416.0,
+        "width": 117.0,
+        "height": 59.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1400",
+      "notepad": "",
+      "stateID": "End",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 137.0,
+        "top": 531.0,
+        "width": 75.0,
+        "height": 39.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Shows the details of an item.",
+      "uid": "U1401",
+      "notepad": "",
+      "stateID": "ProductDetail",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "Click on continue shopping link",
+          "uid": "U1409",
+          "notepad": "",
+          "targetUID": "U1402",
+          "event": "ContinueShopping",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 376.0,
+                "top": 136.0
+              },
+              {
+                "left": 376.0,
+                "top": 192.0
+              },
+              {
+                "left": 224.0,
+                "top": 192.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": 25,
+              "width": 127,
+              "height": 24
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1410",
+          "notepad": "",
+          "targetUID": "U1403",
+          "event": "ShowShoppingCart",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 434.0,
+                "top": 114.0
+              },
+              {
+                "left": 471.0,
+                "top": 114.0
+              },
+              {
+                "left": 471.0,
+                "top": 192.0
+              },
+              {
+                "left": 583.0,
+                "top": 192.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 131,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 335.0,
+        "top": 89.0,
+        "width": 101.0,
+        "height": 48.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Product Catalog List. The starting page which is why you see Initial and Final States are set to Y.",
+      "uid": "U1402",
+      "notepad": "",
+      "stateID": "ProductList",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on addItem link.  Notice Traverses Required is set to 2 so that there will be at least 1 item in the shopping cart as RemoveItem will be called once.",
+          "uid": "U1411",
+          "notepad": "",
+          "targetUID": "U1403",
+          "event": "AddItem",
+          "weight": 10,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 224.0,
+                "top": 276.0
+              },
+              {
+                "left": 325.0,
+                "top": 276.0
+              },
+              {
+                "left": 325.0,
+                "top": 276.0
+              },
+              {
+                "left": 582.0,
+                "top": 276.0
+              }
+            ],
+            "label": {
+              "left": 4,
+              "top": -19,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "SCart",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1412",
+          "notepad": "",
+          "targetUID": "U1400",
+          "event": "end",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 171.0,
+                "top": 424.0
+              },
+              {
+                "left": 171.0,
+                "top": 477.0
+              },
+              {
+                "left": 171.0,
+                "top": 477.0
+              },
+              {
+                "left": 171.0,
+                "top": 530.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": 25,
+              "width": 37,
+              "height": 21
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on ShoppingCart link",
+          "uid": "U1413",
+          "notepad": "",
+          "targetUID": "U1403",
+          "event": "ShowShoppingCart",
+          "weight": 2,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 224.0,
+                "top": 233.0
+              },
+              {
+                "left": 325.0,
+                "top": 233.0
+              },
+              {
+                "left": 325.0,
+                "top": 233.0
+              },
+              {
+                "left": 582.0,
+                "top": 233.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 138,
+              "height": 24
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "Click on detail link",
+          "uid": "U1414",
+          "notepad": "",
+          "targetUID": "U1401",
+          "event": "ViewDetail",
+          "weight": 3,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 209.0,
+                "top": 181.0
+              },
+              {
+                "left": 209.0,
+                "top": 107.0
+              },
+              {
+                "left": 333.0,
+                "top": 107.0
+              }
+            ],
+            "label": {
+              "left": 6,
+              "top": -93,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 133.0,
+        "top": 182.0,
+        "width": 93.0,
+        "height": 243.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Shows the content in the shopping cart,",
+      "uid": "U1403",
+      "notepad": "",
+      "stateID": "ShoppingCart",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on Continue Shopping",
+          "uid": "U1415",
+          "notepad": "",
+          "targetUID": "U1402",
+          "event": "ContinueShopping",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 618.0,
+                "top": 180.0
+              },
+              {
+                "left": 618.0,
+                "top": 67.0
+              },
+              {
+                "left": 149.0,
+                "top": 67.0
+              },
+              {
+                "left": 149.0,
+                "top": 181.0
+              }
+            ],
+            "label": {
+              "left": -116,
+              "top": -131,
+              "width": 125,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "Click on Checkout clink",
+          "uid": "U1416",
+          "notepad": "",
+          "targetUID": "U1399",
+          "event": "Order",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 636.0,
+                "top": 341.0
+              },
+              {
+                "left": 636.0,
+                "top": 424.0
+              },
+              {
+                "left": 520.0,
+                "top": 424.0
+              }
+            ],
+            "label": {
+              "left": -81,
+              "top": 59,
+              "width": 59,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "$VAR.ShoppingCartItemCount \u003e\u003d 1",
+          "guardHint": "SCart",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "click on removeItem link",
+          "uid": "U1417",
+          "notepad": "",
+          "targetUID": "U1403",
+          "event": "RemoveItem",
+          "weight": 1,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 701.0,
+                "top": 206.0
+              },
+              {
+                "left": 729.0,
+                "top": 206.0
+              },
+              {
+                "left": 729.0,
+                "top": 130.0
+              },
+              {
+                "left": 650.0,
+                "top": 130.0
+              },
+              {
+                "left": 650.0,
+                "top": 180.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 113,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "$VAR.ShoppingCartItemCount \u003e\u003d 1",
+          "guardHint": "SCart",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 584.0,
+        "top": 181.0,
+        "width": 119.0,
+        "height": 161.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Starting state",
+      "uid": "U1404",
+      "notepad": "",
+      "stateID": "Start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1418",
+          "notepad": "",
+          "targetUID": "U1402",
+          "event": "start",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 88.0,
+                "top": 308.0
+              },
+              {
+                "left": 105.0,
+                "top": 308.0
+              },
+              {
+                "left": 105.0,
+                "top": 308.0
+              },
+              {
+                "left": 132.0,
+                "top": 308.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 37,
+              "height": 24
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 15.0,
+        "top": 283.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Confirms the order and payment.",
+      "uid": "U1405",
+      "notepad": "",
+      "stateID": "ThankYou",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "Click on continue shopping",
+          "uid": "U1419",
+          "notepad": "",
+          "targetUID": "U1402",
+          "event": "ContinueShopping",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "right",
+            "posList": [
+              {
+                "left": 314.0,
+                "top": 522.0
+              },
+              {
+                "left": 314.0,
+                "top": 396.0
+              },
+              {
+                "left": 224.0,
+                "top": 396.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 121,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 275.0,
+        "top": 523.0,
+        "width": 77.0,
+        "height": 48.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    }
+  ],
+  "modelName": "Demo_WebStore",
+  "version": "1.0",
+  "versionAUT": "iteration 2",
+  "versionTO": "7.0.3",
+  "versionReq": "1.0",
+  "buildNum": 2,
+  "mbtNode": {
+    "uid": "U1420",
+    "mode": "Random",
+    "stopCond": {
+      "stopAtFinalOnly": true
+    },
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "modelType": "FSM"
+}

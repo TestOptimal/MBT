@@ -1,0 +1,96 @@
+
+html, body {
+	height: 100%;
+	background: #FFFFFF !important;
+}
+
+#tabHeader {
+	height: 25px; 
+	padding-top: 5px; 
+	padding-left: 8px; 
+	font-style: italic; 
+	font-weight: bold; 
+	background: #FAFAFA;
+}
+ 
+.header {
+	background: #E0E0E0;
+	padding: 3px;
+}
+
+#mainDIV {
+	height: calc(100% - 30px); 
+	padding-top: 8px; 
+	display: flex;
+}
+
+.folder {
+	padding: 5px; 
+	border: 1px solid #AAAAAA; 
+	margin-left: 8px;
+	height: 100%;
+	min-width: 250px;
+}
+
+.items {
+	overflow: auto;
+	padding: 0px;
+}
+
+.item {
+	white-space: nowrap;
+	line-height: 25px;
+	
+}
+
+.item:hover {
+	background: #FAFAFA;
+}
+
+.item.selected {
+	font-weight: bold;
+	background: #F5F5F5;
+}
+
+.item .miniBtn {
+	display: none;
+	position: relativev;
+	top: 3px;
+}
+
+.item img {
+	display: inline;
+}
+
+.item:hover .miniBtn {
+	display: inline;
+}	
+
+.miniBtn:hover {
+	color: orange;
+}
+
+.actions {
+	float: right;
+	margin-right: 3px;
+}
+
+.actions .miniBtn {
+	margin-top: 5px;
+}
+
+.actions img {
+	opacity: 0.75;
+}
+
+.actions img:hover {
+	opacity: 1;	
+}
+
+.item .delBtn {
+	opacity: 0;	
+}
+
+.item:hover .delBtn {
+	opacity: 1;
+}

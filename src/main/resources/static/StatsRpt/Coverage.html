@@ -1,0 +1,87 @@
+<div>
+	<table style="margin-top: 10px;" width="100%" cellspacing="0" cellpadding="0">
+		<tr class="sectSubHeader">
+			<td class="colLabel"><span>Traversal Type</span></td>
+			<td class="colLabel"><span>Traversals</span></td>
+			<td class="colLabel"><span>Covered</span></td>
+			<td class="colLabel"><span>Un-Covered</span></td>
+			<td class="colLabel" colspan="2"><span>Coverage</span></td>
+		</tr>
+		<tr>
+			<td class="colLabel">State</td>
+			<td>{{curExecStatDetail.execSummary.stateTraversal}}</td>
+			<td>{{curExecStatDetail.execSummary.stateCovered}}</td>
+			<td>{{curExecStatDetail.execSummary.stateNum - curExecStatDetail.execSummary.stateCovered}}</td>
+			<td colspan="2">
+				<div style="float:left; border: 1px solid #AAAAAA; width: {{rspBarWidth}}px; height: {{rspBarHeight}}px;">
+					<div style="width: {{rspBarWidth*curExecStatDetail.execSummary.stateCovPct/100}}px; height: {{rspBarHeight}}px; background: green;"></div>
+				</div>
+				<div style="float: left; position:relative; top:-2px; padding-left: 3px;">{{curExecStatDetail.execSummary.stateCovPct}}%</div>
+			</td>
+		</tr>
+		<tr class="rowHover">
+			<td class="colLabel">Transition</td>
+			<td>{{curExecStatDetail.execSummary.transTraversal}}</td>
+			<td>{{curExecStatDetail.execSummary.transCovered}}</td>
+			<td>{{curExecStatDetail.execSummary.transNum - curExecStatDetail.execSummary.transCovered}}</td>
+			<td colspan="2">
+				<div style="float:left; border: 1px solid #AAAAAA; width: {{rspBarWidth}}px; height: {{rspBarHeight}}px;">
+					<div style="width: {{rspBarWidth*curExecStatDetail.execSummary.transCovPct/100}}px; height: {{rspBarHeight}}px; background: green;"></div>
+				</div>
+				<div style="float: left; position:relative; top:-2px; padding-left: 3px;">{{curExecStatDetail.execSummary.transCovPct}}%</div>
+			</td>
+		</tr>
+		<tr class="rowHover" ng-show="curExecStatDetail.execSummary.reqNum>0">
+			<td class="colLabel" title="Requirement tags">Requirement/Tag</td>
+			<td>{{curExecStatDetail.execSummary.reqTraversal}}</td>
+			<td>{{curExecStatDetail.execSummary.reqCovered}}</td>
+			<td>{{curExecStatDetail.execSummary.reqNum - curExecStatDetail.execSummary.reqCovered}}</td>
+			<td colspan="2">
+				<div style="float:left; border: 1px solid #AAAAAA; width: {{rspBarWidth}}px; height: {{rspBarHeight}}px;">
+					<div style="width: {{rspBarWidth*curExecStatDetail.execSummary.tagCovPct/100}}px; height: {{rspBarHeight}}px; background: green;"></div>
+				</div>
+				<div style="float: left; position:relative; top:-2px; padding-left: 3px;">{{curExecStatDetail.execSummary.tagCovPct}}%</div>
+			</td>
+		</tr>
+	</table>	
+	<table width="100%" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr class="sectSubHeader">
+				<td class="firstCol">
+					<span width='100%' title='state and transition (event)'><span id="stateTransLabel">State.Transition</span>
+						<select name=type id=type value="ALL" ng-model="stateTransFilter">
+							<option value="">All</option>
+							<option value="STATE">State</option>
+							<option value="TRANS">Transition</option>
+						</select>
+					</span>
+				</td>
+				<td align="center"><span title='number of script executions'>Traversals</span></td>
+				<td><span title='number of failures'>Failures</span></td>
+				<td align="left" width="10%" align="left" title="performance distribution during this execution">Response Time</td>
+				<td align="center" title="number of times the traversals were slower than the expected as set in Response Max in State/Transition Properties">Slow</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="statObj in curExecStatDetail.stateTransList | filter: {type: stateTransFilter}" class="rowHover">
+				<td class="firstCol"><span>{{statObj.stateName}}</span><span ng-show="statObj.type=='trans'">: {{statObj.transName}}</span></td>
+				<td align="center">{{statObj.passCount + statObj.failCount}}</td>
+				<td>
+					<span ng-show="statObj.msgMap.failed">
+						<a href="#" class="clickable" ng-click="showTravExceptMsg(statObj);">{{statObj.msgMap.failed.length}}</a>
+					</span>
+				</td>
+				<td align="left" title="Average: {{statObj.avgMillis}} millis, range: {{statObj.minMillis}} - {{statObj.maxMillis}}">
+					<div style="background: #F0F0F0; border: 1px solid #AAAAAA; width: {{rspBarWidth}}px; height: {{rspBarHeight}}px;">
+						<div ng-show="statObj.avgMillis>0" 
+							style="position: relative; left: {{statObj.histoMidPos}}px; width: 2px; height: {{rspBarHeight}}px; background: green;">
+						</div>
+					</div>
+				</td>
+				<td style="text-align: center;">
+					<a href="#" ng-show="statObj.slowCount>0" ng-click="showPerfMsg(statObj);">{{statObj.slowCount}}</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

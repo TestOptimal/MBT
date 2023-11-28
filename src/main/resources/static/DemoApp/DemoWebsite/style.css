@@ -1,0 +1,175 @@
+body { 
+font-family: Arial, sans-serif; 
+line-height: 1.4;
+font-size: 12px;
+background: #000;
+margin: 0;
+padding: 0;
+color: #fefefe;
+}
+
+#slogan {
+position: relative; 
+top: -3px; 
+left: -177px; 
+font-style:italic; 
+color: #E5CBAA;
+}
+
+#header img {
+ height: 60px;
+ padding-top: 10px;
+}
+
+a { color: #FFDCAF; text-decoration: none;}
+a:hover { text-decoration: underline; }
+h1 { margin: 0; padding: 0; }
+h2 { margin: 0; padding: 0; font-size: x-large;}
+
+#wrap { 
+width: 800px;
+margin: 0 auto;
+background: #171717;
+}
+
+#header {
+height: 90px;
+background: url(images/header.jpg) no-repeat;
+}
+
+.sectionLabel {
+	font-size: large;
+}
+
+#menu {
+background: url(images/menu.jpg) no-repeat;
+height: 40px;
+line-height: 30px;
+}
+
+#menu ul {
+list-style-type: none;
+margin: 0;
+padding-left: 10px;
+}
+#menu ul li {
+display: block;
+float: left;
+}
+#menu ul li a {
+display: block;
+padding: 0 10px 0 10px;
+text-decoration: none;
+color: #DDDDDD;
+font-size: 12px;
+font-weight: 600;
+}
+#menu ul li a:hover {
+color: #DDDDDD;
+background: url(images/menuover.png) repeat-x;
+}
+
+
+
+#content {
+margin-top: 10px;
+float: left;
+width: 540px;
+}
+#content h2 {
+margin: 0;
+color: #FFDCAF;
+line-height: 30px;
+font-size: 22px;
+font-weight: 100;
+}
+
+#content p { padding: 0 0 10px 0; color: #fefefe;}
+#content ul { padding: 0 20px 10px 30px; }
+
+#sidebar {
+float: right;
+width: 220px;
+margin-top: 10px;
+}
+
+#sidebar h3 {
+background: url(images/sidebarh3.jpg) no-repeat;
+height: 30px;
+line-height: 30px;
+font-weight: 600;
+font-size: 12px;
+margin: 0; padding: 0 0 0 10px; 
+color: #DDDDDD;
+}
+
+#sidebar p { padding: 0 10px 10px 10px; color: #eee; }
+
+#sidebar ul {
+padding: 10px 0 25px 30px;
+margin: 0;
+list-style-type: circle;
+}
+
+#sidebar ul li {
+padding: 0;
+margin: 0;
+}
+
+#footer { 
+text-align: center;
+color: #DDDDDD;
+font-size: 12px;
+background: url(images/footer.jpg) no-repeat;
+height: 30px;
+line-height: 30px;
+margin-top: 10px;
+}
+#footer p { padding: 0; margin: 0; }
+#footer a { color: #DDDDDD; }
+#footer a:hover { text-decoration: underline; }
+
+#lastPage {
+	font-size:xx-small;
+	font-style:italic;
+	color: #DDDDDD;
+}
+
+#loginSection {
+	display:none; 
+	position: absolute; 
+	border-radius: 8px; 
+	background-color: #B3B3B3; 
+	width: 250px; 
+	left: 820px; 
+	top: 125px;
+	color: #333333;
+	font-weight: bold;
+}
+
+#downloadTrial {
+	background-color: #EEEEEE;
+	color: #000000;
+	font-weight: bold;
+}
+
+#downloadTrial.disabled {
+	color: #AAAAAA;
+	font-weight: none;
+}
+
+#loginSection table {
+	padding: 5px;
+}
+
+#alertMsg {
+	color: red;
+}
+
+#closeBtn {
+	cursor: pointer;
+}
+
+#closeBtn:hover {
+	color: red;
+}

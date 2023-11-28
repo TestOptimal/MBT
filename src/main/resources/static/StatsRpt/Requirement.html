@@ -1,0 +1,38 @@
+
+<table border="0" cellspacing="1" id="tcList" class="table">
+	<thead>
+		<tr class="sectSubHeader">
+			<td align="left" class="tlabel">Test Case</td>
+			<td align="center" ng-repeat="reqObj in curExecStatDetail.reqList" 
+				class="tlabel" title="Priority {{reqObj.priority}}, requirement tag {{reqObj.tag}}">
+				<span ng-hide="showTag">{{curExecStatDetail.reqList.indexOf(reqObj)+1}}<sup><small class="p_{{reqObj.priority}}">{{reqObj.priority==''?'':reqObj.priority.substring(0,1)}}</small></sup></span>
+				<span ng-show="showTag"><small>{{reqObj.reqTag}}</small></span>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="rowHover" ng-repeat="tcObj1 in curExecStatDetail.tcList" ng-click="alert(tagObj.tag);" >
+			<td align="left" style="white-space: nowrap;" ng-click="showTestCase(tcObj1);" title="Number of steps: {{tcObj1.stepList.length}}">
+				<span style="width: 5px;" class="{{tcObj1.status}}">&nbsp;</span>
+				<a class="clickable">{{tcObj1.tcName}}<small> ({{tcObj1.stepList.length}})</small></a>
+			</td>
+			<td align="center" ng-repeat="tagObj in curExecStatDetail.reqList"
+				ng-switch="tcObj1.ReqStatusList[tagObj.reqTag]">
+					<span ng-switch-when="passed">&#x2713;</span>
+					<span ng-switch-when="failed" style="color: ORANGE;">&#x2717;</span>
+			</td>
+		</tr>
+		<tr style="border-top: 1px solid #E0E0E0;">
+			<td align="right">Passed Checks</td>
+			<td align="center" ng-repeat="tagObj in curExecStatDetail.reqList">
+				<a class="clickable" ng-show="tagObj.passCount > 0" ng-click="showTagPassMsg(tagObj);">{{tagObj.passCount}}</a><br/>
+			</td>
+		</tr>
+		<tr style="border-bottom: 1px solid #E0E0E0;">
+			<td align="right">Failed Checks</td>
+			<td align="center" ng-class="{failed: tagObj.failCount>0}" ng-repeat="tagObj in curExecStatDetail.reqList">
+				<a class="clickable" ng-show="tagObj.failCount > 0" ng-click="showTagFailMsg(tagObj)">{{tagObj.failCount}}</a>
+			</td>
+		</tr>
+	</tbody>
+</table>

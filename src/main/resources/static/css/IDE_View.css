@@ -1,0 +1,103 @@
+html, body {
+    margin:0;
+    padding:0;
+	padding-left: 0px;
+    height:100%;
+    border:none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small !important;
+	overflow: hidden;
+	background: transparent !important;
+}
+ 			
+.rowHover:hover {
+	background: #EAEAEA;	
+}  
+
+.pageHeader {
+	background-color: #F0EEE3; 
+	padding-top: 5px; 
+	padding-left: 5px;
+	height: 28px;
+	font-weight: bold;
+	font-size: small;
+}
+
+.lastRow {
+	margin-bottom: 5px;
+}
+
+.sectHeader {
+	background: #F0F0F0;
+	height: 23px;
+	font-weight: bold;
+}
+
+.sectSubHeader {
+	background: #F6F6F6;
+	height: 20px;
+	font-weight: bold;
+}
+
+.borderTop {
+	border-top: 1px solid #E0E0E0;
+}
+
+.header {
+	background: #FAFAFA;
+}
+
+#mainDIV {
+	overflow: hidden; 
+	height:100%;
+}
+
+#mainDIV td {
+	padding-left: 5px;
+	padding-top: 4px;
+}
+
+.colLabel {
+	font-style: italic;
+}
+
+.rowGradientBKG {
+	background: linear-gradient(#FAFAFA, #FFFFFF);
+}
+
+span.miniBtn {
+	padding: 2px;
+}
+
+span.miniBtn:hover {
+	background: #FFFFFF;
+}
+
+input, select, textarea {
+	border-radius: 3px;
+	border: 1px solid #999999;
+}
+
+input, textarea {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+select {
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+input.ng-invalid, textarea.ng-invalid, select.ng-invalid { 
+    background:#F0DBA5;
+//    border: 2px red solid;
+}
+
+input:focus, select:focus, textarea:focus {
+	border-color:#66afe9;
+	outline:0;
+	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+	box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)		
+}
+
+

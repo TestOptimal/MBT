@@ -3,6 +3,19 @@
 
 # Log file
 *.log
+log/
+target/
+build/
+work/
+h2db/statsDB.mv.db
+lib/Graphviz
+model/**/report
+model/**/snapscreen
+model/**/temp
+.svn/
+model/**/model.lock
+.DS_Store
+src/main/resources/TO.properties
 
 # BlueJ files
 *.ctxt
@@ -21,4 +34,3 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*

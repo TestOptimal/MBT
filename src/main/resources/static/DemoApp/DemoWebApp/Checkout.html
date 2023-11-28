@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+	<script src="js/webstore.js" type="text/javascript"></script>
+
+
+	<title>WebStore - CheckOut</title>	
+	<script>
+		function calcShipping() {
+			// calculate shipping cost
+		}
+
+		function confirmTest() {
+			if (confirm('visa or master.  Yes for visa, No for Master')) {
+				document.orderForm.paymentType[0].checked = true;
+			}
+			else {
+				document.orderForm.paymentType[1].checked = true;
+			}
+		}
+
+
+
+	function init() {
+		var totalPrice = 0;
+		for (var i in ShoppingCartList) {
+			var prodDesc = getItemDesc(ShoppingCartList[i]);
+			totalPrice += prodDesc.price;
+		}
+		$("#totalPrice").text(totalPrice);
+		$("#itemCount").text(ShoppingCartList.length);
+	}
+
+		
+	</script>
+
+<style>
+	
+	#shoppingcart:hover {
+		background-color: orange;
+	}
+</style>	
+</head>
+<body>
+	<h1>Checkout Page</h1>
+	<table>
+		<tr><td>
+	<form name="orderForm">
+	<div>
+		Order Summary: <span id=itemCount></span> item(s), total cost: $<span id=totalPrice></span>
+	</div>
+<hr>
+	Select a payment type.<br/>
+	<input type="radio" name="paymentType" value="VISA" id="VISA"/>VISA<br/>
+	<input type="radio" name="paymentType" value="MASTER" id="MASTER"/>Master<br/>
+	<input type="radio" name="paymentType" value="AMEx" id="AMEX"/>American Express<br/>
+	
+	Card#: <input type="text" id="CreditCardNum"/><br/>
+	
+	
+	<hr/>
+	Select shipping method:<br/>
+	Shipping Carrier: <select id="shippingMethod">
+		<option value="USPS">USPS</option>
+		<option value="UPS" selected>UPS</option>
+		<option value="FEDEX">FEDEX</option>
+	</select><br>
+	<input type="checkbox" id="receiveEmail" value="emailOK"/>Receive Delivery Information via Email<br>
+	<input type="checkbox" id="receiveNews" value="newsOK"/>Receive Weekely Newsletter<br/>
+	</form>
+	
+	<hr>
+	<button id="placeOrder" onclick="javascript:gotoPage('ThankYou.html');">Place Order</button><br/>
+	<a href="ShoppingCart.html" id="shoppingcart">Back to Shopping Cart</a> 
+	 | <a href="ProductList.html" id="prodList">Continue Shopping</a>
+		</td></tr></table>
+</body>
+
+</html>

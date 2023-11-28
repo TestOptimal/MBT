@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <link href="../css/IDE_View.css" rel="stylesheet">
+	<script type="text/javascript" src="../js/common.js"></script>
+
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+	</script>
+
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		.inputField {
+			width: 200px;
+			line-height: inherit;
+		}
+		
+		textarea.inputField {
+			height: 100px;
+			width: 100%;
+		}
+    </style>
+    
+    <script>
+		MainModule.controller("mainCtrl", function ($scope) {
+			$scope.gMsgList = [];
+			$scope.mbtNode = parent.curAppState.scxml.mbtNode;
+			
+			$scope.refresh = function () {
+				if (!$scope.mbtNode.stopCond) {
+					$scope.mbtNode.stopCond = {};
+				}
+			}
+			
+			$scope.setChanged = function () {
+				parent.curAppState.setModelChanged("Model", true);
+			}
+			
+			$scope.init = function () {
+				$scope.gMsgList = parent.gMsgList;
+		    	$scope.refresh ();
+			}
+			
+			$scope.init();
+		});
+		
+    </script>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV" style="overflow: auto;">
+		<table width="100%" style="margin-bottom: 40px;">
+			<tbody ng-form="propertyForm">
+				<tr><td title="Governs the manner by which test cases and steps are generated to achieve the desired coverage of transitions and paths in the model.">
+						Model Sequencer
+					</td>
+					<td><select class="inputField" ng-model="mbtNode.mode" ng-change="setChanged()">
+							<option value="Random">Random</option>
+							<option value="Optimal">Optimal</option>
+							<option value="Priority">Priority</option>
+							<option value="Pairwise">Pairwise</option>
+							<option value="MCase">MCase</option>
+							<option value="Concurrent">Concurrent</option>
+						</select>
+					</td>
+				</tr>
+				<tr><td title="Sequencer parameters (key=value separated by semi-colon)">
+						Sequencer Parameters
+					</td>
+					<td><input class="inputField" type="text" ng-model="mbtNode.seqParams"
+							 ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<!-- tr><td title="{Number of concurrent threads (virtual users) to execute. Must be less than or equal to Iterations.">
+						Threads (VUs)
+					</td>
+					<td><input class="inputField" type="number" min="0" ng-model="mbtNode.execThreadNum"
+							 ng-change="setChanged()"/></td>
+				</tr>
+				<tr><td title="Delay in number of milliseconds betweeen thread startups">
+						Thread Delay (ms)
+					</td>
+					<td><input class="inputField" type="number" min="0" ng-model="mbtNode.threadSpreadDelay"
+							 ng-change="setChanged()"/></td>
+				</tr -->
+				<tr style="background: #EFEFEF;"><td colspan="2">Model Execution Stop Conditions:</td>
+				</tr>
+				<tr><td align="right" title="Percent of transitions in the model to be coverred.">
+						Transitions (%)
+					</td>
+					<td><input class="inputField" type="number" min="0" max="100" 
+							ng-model="mbtNode.stopCond.transCoverage" ng-change="setChanged()">
+					</td>
+				</tr>
+				<tr><td align="right" title="Percent of requirements to be covered.">Requirements (%)</td>
+					<td><input class="inputField" type="number" min="0" max="100" 
+							ng-model="mbtNode.stopCond.reqCoverage" ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<tr><td align="right" title="Number of transitions to be covered.">
+						Traversal Count
+					</td>
+					<td><input class="inputField" type="number" min="0" ng-model="mbtNode.stopCond.transCount"
+							 ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<tr><td align="right" title="Number of test cases (paths) to be covered.">Test Cases (Paths)</td>
+					<td><input class="inputField" type="number" min="0" ng-model="mbtNode.stopCond.homeRunCount"
+							 ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<tr><td align="right" title="Elapse time in minutes to execute the model.">
+						Elapse Time (mins)
+					</td>
+					<td><input class="inputField" type="number" min="0" ng-model="mbtNode.stopCond.elapseTime"
+							 ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<tr><td align="right" title="Execution should only be stopped at the final state after the stop condition eavaluates to true.">
+						At Final State Only
+					</td>
+					<td><input type="checkbox"  ng-model="mbtNode.stopCond.stopAtFinalOnly"
+							 ng-change="setChanged()"/>
+					</td>
+				</tr>
+				<tr style="background: #EFEFEF;">
+					<td colspan="2">Initialization Scripts <small>(<a href='https://testoptimal.com/v6/apidocs/com/testoptimal/server/model/RunRequest.html#options' target='_blank'>javadoc: initScript</a>)</small>:</td>
+				</tr>
+				<tr><td align="right" colspan="2">
+						<textarea class="inputField" 
+							ng-model="mbtNode.initScript" ng-change="setChanged()">
+					</td>
+				</tr>
+			</tbody>		
+		</table>
+	</div>
+</body>
+</html>

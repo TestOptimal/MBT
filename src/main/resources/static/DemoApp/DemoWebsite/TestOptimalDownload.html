@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<LINK REL="SHORTCUT ICON" HREF="http://testoptimal.com/img/to.ico">
+<META name="description" content="Download TestOptimal 30-Day Trial">
+<META name="keywords" content="testing, test automation, test case generation, model-based testing, regression testing, functional testing, requirements traceability, test coverage, data-driven testing, pairwise testing, scriptless automation, manual testing">
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.js" type="text/javascript"></script>
+<script src="js/jquery-corner.js" type="text/javascript"></script>
+<script src="js/login.js" type="text/javascript"></script>
+<link href="js/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="js/facebox/facebox.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+		$("#moreInfo").corner("notch 5px");
+		$("#download").corner("10px");
+		setCurPage('Download');
+		if (isLoggedIn()) {
+			$("#downloadTrial").removeAttr("disabled").removeClass("disabled");
+		}
+		else {
+			$("#downloadTrial").attr("disabled", true).addClass("disabled");
+			
+		}
+    })
+
+	function sendDownloadLink(downloadType_p) {
+
+		if (!isLoggedIn()) {
+			alertDialog("You must log in to download trial license.");
+			return;
+		}
+
+		if (!checkInputFields()) return;
+		$("#downloadType").val(downloadType_p);
+
+		alertDialog("Thank you for downloading TestOptimal. An email with download link has been sent to " + $("#email").val());
+		return;
+    }
+
+	function checkInputFields() {
+		var incomplete = false;
+		var val = $("#email").val();
+		if (val==undefined || val=="") {
+			$("#email").addClass("exception");
+			incomplete = true;
+		}
+		else $("#email").removeClass("exception");
+
+		val = $("#emailConf").val();
+		if (val==undefined || val=="") {
+			$("#emailConf").addClass("exception");
+			incomplete = true;
+		}
+		else $("#emailConf").removeClass("exception");
+
+		if ($("#email").val()!= $("#emailConf").val()) {
+			$("#emailConf").addClass("exception");
+			$("#email").addClass("exception");
+			incomplete = true;
+		}
+
+		val = $("#firstName").val();
+		if (val==undefined || val=="") {
+			$("#firstName").addClass("exception");
+			incomplete = true;
+		}
+		else $("#firstName").removeClass("exception");
+
+		val = $("#lastName").val();
+		if (val==undefined || val=="") {
+			$("#lastName").addClass("exception");
+			incomplete = true;
+		}
+		else $("#lastName").removeClass("exception");
+
+		val = $("#company").val();
+		if (val==undefined || val=="") {
+			$("#company").addClass("exception");
+			incomplete = true;
+		}
+		else $("#company").removeClass("exception");
+
+		val = $("#country :selected").val();
+		if (val==undefined || val=="") {
+		 	$("#country").addClass("exception");
+			incomplete = true;
+		}
+		else $("#country").removeClass("exception");
+
+		val = $("#state").val();
+		if (val==undefined || val=="") {
+			 $("#state").addClass("exception");
+			incomplete = true;
+		 	 }
+		else $("#state").removeClass("exception");
+
+		val = $("#role :checked").val();
+		if (val==undefined || val=="") {
+			$("#role").addClass("exception");
+			incomplete = true;
+		}
+		else $("#role").removeClass("exception");
+
+		val = $("#how :checked").val();
+		if (val==undefined || val=="") {
+			$("#how").addClass("exception");
+			incomplete = true;
+		}
+		else $("#how").removeClass("exception");
+
+		val = $("#industry option:selected").val();
+		if (val==undefined || val=="") {
+			$("#industry").addClass("exception");
+			incomplete = true;
+		}
+		else $("#industry").removeClass("exception");
+
+		val = $("#mbtGrade :checked").val();
+		if (val==undefined || val=="") {
+			$("#mbtGrade").addClass("exception");
+			incomplete = true;
+		}
+		else $("#mbtGrade").removeClass("exception");
+
+		if ($("#terms").is(":checked")) $("#termsSection").removeClass("exception")
+		else {
+			$("#termsSection").addClass("exception");
+			incomplete = true;
+		}
+
+		if (incomplete) {
+			alertDialog("Oops, you've missed the questions in orange.");
+			return false;
+		}
+		else return true;
+	}
+
+	function alertDialog(msg_p) {
+		$.facebox('<table><tr><td>' + msg_p + '</td></tr></table>');
+	}
+
+</script>
+
+<style>
+  		.exception {
+  			background-color: orange;
+  		}
+
+</style>
+
+<title>Demo WebSite - Downloads</title>
+</head>
+<body>
+
+<div id="loginSection">
+	<table>
+		<tr><td colspan=2 align="right"><span id="closeBtn" onclick="closeLogin()">x</span></td></tr>
+		<tr class=field><td>User ID:</td><td><input type=text value="" id="loginID" class="UserID"/></td></tr>
+		<tr class=field><td>Password:</td><td><input type=password value="" id="password" class="Password"/></td></tr>
+		<tr class=field><td><button id="loginBtn" onclick="login()">Login</button></td><td align="right"></td></tr>
+		<tr><td id="alertMsg" colspan=2 wrap></td></tr>
+	</table>
+</div>
+
+<div id="wrap">
+	<div id="lastPage" style="float:right; positioin:relative;">last visited page: <span class="pageURL"></span></div>
+
+
+<div id="header">
+		<img src="images/TestOptimal.png"/>
+		<span id="slogan">Empowered Innovation</span>
+</div>
+
+<div id="menu">
+<div style="float:left;">
+<ul>
+			<li class="selectSection to-current" id="leftMenu">
+			<a href="TestOptimalHome.html" title="TestOptimal Home Page" id="menuHome">Home</a></li>
+			<li class="selectSection">
+			<a href="TestOptimalFeatures.html" title="TestOptimal Features" id="menuFeature">Features</a></li>
+			<li class="selectSection">
+			<a href="TestOptimalDownload.html" title="Download TestOptimal" id="menuDownload">Download</a></li>
+</ul>
+</div>
+<div style="float: right; position:relative; top: 5px;">
+	<span id="notLoggedIn" style="display:none;">You are not logged in, please <a href="javascript:popupLogin();" id="actionLogin">login</a> or <a href="javascript:popupRegister();" id="popupRegister">register</a></span>
+	<span id="loggedIn"  style="display:none;">Welcome! <span class="displayName"></span> (<span class="UserID"></span>)  <a href="javascript:logoff();" id="actionLogoff">logoff</a></span>
+</div>
+
+</div>
+<div id="contentwrap"  style="margin-left: 10px;">
+
+<div id="content">
+
+<h2>Download 30-day free trial</h2>
+	<div style="border-top: 1px solid #AAAAAA;">
+		<p>To download TestOptimal trial, please fill out the following form. You will receive an email with the download
+		links and trial license keys immediately.</p>
+		<div id="download" style="background-color:#333333; padding: 10px;">
+			<form name="downloadRequest" action="DownloadRequest.php" method="post">
+			<input type=hidden id="screenID" value="Download" />
+			<input type=hidden id="downloadType" name="downloadType" value="trial" />
+			<table>
+				<tr>
+					<td align="left" valign="top" rowspan="2">
+
+						<div id="downloadRequest">
+						<table id="entrytable" cellpadding="1">
+							<tr class="entryrow"><td>Email</td>
+								<td><input type=text class="field" name="email" id="email" size="50"/></td>
+							</tr>
+							<tr class="entryrow">
+								<td algin="right" nowrap>Re-enter Email</td>
+								<td><input type=text class="field" name="emailConf" id="emailConf" size="50"/></td>
+							</tr>
+							<tr class="entryrow">
+								<td algin="right" nowrap>First Name</td>
+								<td><input type=text class="field" name="firstName" id="firstName" size="50"/></td>
+							</tr>
+							<tr class="entryrow">
+								<td algin="right" nowrap>Last Name</td>
+								<td><input type=text class="field" name="lastName" id="lastName" size="50"/></td>
+							</tr>
+							<tr class="entryrow">
+								<td>Company / Organization</td>
+								<td><input type=text class="field" name="company" id="company" size="50"></td>
+							</tr>
+							<tr class="entryrow"><td valign="top">Industry</td>
+								<td valign="top">
+									<select id=industry class="field" name="industry">
+										<option value=""></option>
+										<option value="IT">Software & Information Technology</option>
+										<option value="FIN">Banking & Finance</option>
+										<option value="EDU">Education</option>
+										<option value="GOV">Government</option>
+										<option value="HEAL">Health Care</option>
+										<option value="INS">Insurance</option>
+										<option value="MAN">Manufacturing</option>
+										<option value="OTHER">Other</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="entryrow"><td>Country / Region</td>
+								<td>
+									<SELECT id="country" name="country">
+										<OPTION SELECTED VALUE=""></OPTION>
+										<OPTION VALUE=AFRICA>Africa</OPTION>
+										<OPTION VALUE=ASIA>Asia</OPTION>
+										<OPTION VALUE=AUS>Australia</OPTION>
+										<OPTION VALUE=CAN>Canada</OPTION>
+										<OPTION VALUE=EUROPE>Europe</OPTION>
+										<OPTION VALUE=SAMERICA>South America</OPTION>
+										<OPTION VALUE="USA">United States</OPTION>
+									</SELECT>
+								</td>
+							</tr>
+
+							<tr class="entryrow">
+								<td valign="top" style="border-bottom: 1px solid #444444;">State/Province</td>
+								<td valign="top" style="border-bottom: 1px solid #444444;"><input type=text id="state" class="field" name="state" size="50" /></td>
+							</tr>
+
+
+							<tr class="entryrow"><td valign="top" style="border-bottom: 1px solid #444444;">Your Position / Role</td>
+								<td valign="top" style="border-bottom: 1px solid #444444;">
+									<ul style="list-style: none; padding-left: 2px; margin-top:0px; margin-bottom: 2px; padding-bottom:0px;" id="role" name="role">
+										<li><input type=radio name="role" value="qa">QA</li>
+										<li><input type=radio name="role" value="dev">App Developer</li>
+										<li><input type=radio name="role" value="mgmt">Management</li>
+										<li><input type=radio name="role" value="other">Other</li>
+									</ul>
+								</td>
+							</tr>
+							<tr class="entryrow"><td valign="top" style="border-bottom: 1px solid #444444;">How did you hear<br>about <span class="TestOptimal">TestOptimal</span></td>
+								<td valign="top" style="border-bottom: 1px solid #444444;">
+									<ul style="list-style: none; padding-left: 2px; margin-top:0px; margin-bottom: 2px; padding-bottom:0px;" id="how" name="how">
+										<li><input type=radio name="how" value="ads">Ads</li>
+										<li><input type=radio name="how" value="conference">Conference</li>
+										<li><input type=radio name="how" value="blog">Blog / Discussion Group</li>
+										<li><input type=radio name="how" value="review">Reviews / White Paper</li>
+										<li><input type=radio name="how" value="recommend">Colleagues</li>
+										<li><input type=radio name="how" value="web">Web Search</li>
+										<li><input type=radio name="how" value="cust">Existing Customer</li>
+									</ul>
+								</td>
+							</tr>
+							<tr class="entryrow"><td  valign="top" nowrap style="border-bottom: 1px solid #444444;">Your Knowledge on<br>Model-Based Testing</td>
+								<td valign="top" style="border-bottom: 1px solid #444444;">
+									<ul style="list-style: none; padding-left: 2px; margin-top:0px; margin-bottom: 2px; padding-bottom:0px;" id="mbtGrade" name="mbtGrade">
+										<li><input type=radio name="mbtGrade" value="New">Just heard about it</li>
+										<li><input type=radio name="mbtGrade" value="Novice">Learning</li>
+										<li><input type=radio name="mbtGrade" value="Expert">Expert</li>
+									</ul>
+								</td>
+							</tr>
+							<tr><td colspan=2>
+								<div class="contactnote" style="border-bottom: 1px solid #666666;">
+									<table><tr id="termsSection"><td valign="top"><input type=checkbox id="terms" name="terms"></td>
+										<td valign="top">I agree to the <a href="TestOptimalLicense.pdf">license terms</a> and acknowledge that
+										I may be contacted regarding this download and future software updates of TestOptimal.</td>
+										</tr>
+									</table>
+								</div>
+							</td></tr>
+
+							<tr><td colspan=2>
+								<div style="float:left;">
+									<input type="text" name="trial" id="downloadTrial" title="30-day evaluation license with full feature of ProMBT Edition" onclick="javascript:sendDownloadLink('trial');" value="Download 30-Day Trial">
+								</div>
+								</td>
+							</tr>
+
+						</table>
+					</td>
+				</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="sidebar" style="margin-right: 10px;">
+</div>
+
+<div style="clear: both;"> </div>
+
+</div>
+
+<div id="footer">
+<p>Copyright &copy; <a href="http://testoptimal.com/">TestOptimal, LLC</a></p>
+</div>
+
+</div>
+
+</body>
+</html>

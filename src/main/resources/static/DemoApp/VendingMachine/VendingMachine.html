@@ -1,0 +1,167 @@
+<html>
+
+<head>
+	<style>
+		#main {
+			position: relative;
+			left: 5px;
+			top: 100px;
+			border-radius: 12px;
+			background-color: #659EC7;
+			color: #FFFFFF;
+			width: 375px;
+		}
+		
+		.action:hover, .product:hover {
+			background-color: orange;
+		}
+		
+		.action, .product {
+			padding-left: 4px;
+			padding-right: 4px;
+			border-radius: 8px;
+			border: 1px solid green;
+			background-color: #DDDDDD;
+			color: #333333;
+		}
+		
+		
+		#amount {
+			border-style: groove;
+			border-width: 2px;
+			background-color: #DDDDDD;
+			color: GREEN;
+			font-size: 14px;
+			font-weight: bold;
+			width: 75px;
+			padding-left: 8px;
+		}
+		
+		#message, #productName {
+			width: 350px;
+			height: 25px;
+			color: #00FFFF;
+			font-size: 18px;
+			
+		}
+		
+		#productName {
+			font-weight: bold;
+		}
+		
+		#amountDIV{
+			border-top: 1px solid #333333;
+		}
+	</style>
+  	<script src="js/jquery-1.7.min.js"></script>
+  	<script src="js/jquery.cookie.js"></script>
+	<script>
+	
+		var balance = 0.0;
+		var drinkPrice = 1.0;
+		var msgWelome = "Welcome to <i><b>MBT Drinks</b></i>!  Quarter & HalfDollar Coins Only.";
+		var tmr;
+				
+		$(document).ready(function() {
+			reset();
+			restoreWelcome();
+			
+			$("#addQuarter").click(function() {
+				if (balance >= 1.0) {
+					return;
+				}
+				addToBalance(0.25);
+			});
+
+			$("#addHalfDollar").click(function() {
+				if (balance >= 1.0) {
+					return;
+				}
+				addToBalance(0.50);
+				
+				// planted bug - randomly add 1c
+				if (Math.random() > 0.5) {
+					addToBalance(0.01);
+				}
+			});
+
+			$("#cancel").click(function() {
+				reset();
+				restoreWelcome();
+			});
+
+			$(".product").click(function() {
+				if (balance < 1.0) {
+					return;
+				}
+				if (tmr) {
+					clearTimeout(tmr);
+				}
+				$("#message").hide();
+				$("#productName").html("Enjoy your " + $(this).html());
+				$("#productLabel").show();
+				reset();
+				tmr = setTimeout(restoreWelcome, 1000);
+			});
+		});
+		
+
+		function addToBalance(amnt) {
+			balance += amnt;
+			$("#amount").text(balance.toFixed(2));
+		}
+		
+		function reset() {
+			balance = 0.0;
+			$("#price").text("$" + drinkPrice.toFixed(2));
+			$("#amount").text(balance.toFixed(2));
+		}
+	
+		function restoreWelcome() {
+			$("#productLabel").hide();
+			$("#message").html(msgWelome);
+			$("#message").show();
+		}
+
+		function setDrinkPrice(price) {
+			drinkPrice = price;
+			reset();
+		}
+	</script>
+
+</head>
+
+<body>
+
+	<div style="float: left">
+		<img src="VendingMachine.jpg" width="250px" />
+	</div>
+	<table style="float: left" id="main" cellspacing="3" cellpadding="2">
+		<tr>
+			<td colspan="2"><center><marquee id="message" behavior ="scroll" direction="left"
+			scrollamount="4"></marquee><span id="productLabel">&nbsp;<span id="productName"></span></span></center></td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr id="amountDIV">
+			<td>Deposited:</td><td><div id="amount" style="width: 100px; float:left">0</div><div style="float:left; padding-left: 15px;">Drink for <span id="price"></span></div></td>
+		</tr>
+		<tr>
+			<td>Action:</td>
+			<td><span id="addQuarter" class="action">+ 25&cent;</span> 
+				<span id="addHalfDollar" class="action">+ 50&cent;</span>
+				<span id="cancel" class="action">Cancel</span>
+			</td>
+		</tr>
+		<tr>
+			<td>Choose:</td>
+			<td><span id="Pepsi" class="product"><font color="brown"><i>Pepsi</i></font></span>
+				<span id="MountainDew" class="product"><font color="green"><i>Mtn</i></font><font color="red"><i>Dew</i></font></span>
+				<span id="Coke" class="product"><font color="brown"><i>Coke</i></font></span>
+				<span id="Sprite" class="product"><font color="green"><i>Sprite</i></font></span>
+				<span id="Water" class="product"><font color="#333333"><i>Water</i></font></span>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

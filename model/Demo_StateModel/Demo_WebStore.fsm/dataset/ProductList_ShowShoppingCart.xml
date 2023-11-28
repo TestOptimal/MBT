@@ -1,0 +1,10 @@
+<dataSet>
+  <dsName>ProductList_ShowShoppingCart</dsName>
+  <field>
+    <fieldName>xxx</fieldName>
+    <groupCode>1</groupCode>
+    <domainList/>
+  </field>
+  <genAlgorithm>pairWise</genAlgorithm>
+  <funcName>null</funcName>
+</dataSet>

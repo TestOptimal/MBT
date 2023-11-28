@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>WebStore - Shopping Cart</title>
+	<script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+	<script src="js/webstore.js" type="text/javascript"></script>
+	
+<style>
+	#totalPriceTR td {
+		border-top: 1px solid #333333;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+		color: orange;
+	}
+	
+	
+</style>
+
+<script>
+	function init() {
+		var totalPrice = 0;
+		for (var i in ShoppingCartList) {
+			var prodDesc = getItemDesc(ShoppingCartList[i]);
+			$("<tr id='" + prodDesc.code + "' class='item'><td><a class='removeLink'>remove</a></td><td class='desc'>" + 
+				prodDesc.name + "</td><td class='price'>$" + 
+				prodDesc.price + "</td></tr>").appendTo("#prodListTable");
+			totalPrice += prodDesc.price;
+		}
+		$("<tr id='totalPriceTR'><td colspan=2>Total</td><td class='totalPrice'>$" + 
+			totalPrice + "</td></tr>").appendTo("#prodListTable");
+		
+		$(".removeLink").click(function() {
+			removeItem($(this).parent().parent().attr("id"));
+			gotoPage("ShoppingCart.html");
+		});
+
+		$(".desc").click(function() {
+			gotoPage("ShoppingCart.html?prodCode=" + $(this).parent().attr("id"));
+		});
+		
+		if (ShoppingCartList.length<=0) {
+			$("#checkOutBtn").attr("disabled",true);
+		}
+	}
+	
+</script>
+</head>
+<body>
+	<h1>Shopping Cart</h1>
+	<table id="prodListTable">
+		<tr><th>Action</th><th>Product Name</th><th>Priced</th></tr>
+	</table>
+	<button id="checkOutBtn" onclick="javascript:gotoPage('Checkout.html');">Checkout</button><br>
+	<a href="ProductList.html" id="prodList">Continue Shopping</a>
+</body>
+
+</html>

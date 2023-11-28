@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <link href="FileList.css" rel="stylesheet">
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+		
+		// copyright 2008 - 2020, TestOptimal, LLC, all rights reserved.
+		// webmbtFileLst.js
+
+		MainModule.controller("mainCtrl", function ($scope) {
+			$scope.curFolderInfo;
+			$scope.curAppState = parent.curAppState;
+			$scope.folderList = [];
+				
+			$scope.refresh = function () {
+				$scope.folderList = [];
+				$scope.curAppState.toSvc.FileSvc.getModelFolder(parent.curAppState.scxml.modelName + ".fsm", function (folderInfo) {
+					$scope.folderList.push(folderInfo);
+					$scope.$apply();
+				});
+			}
+
+			$scope.deleteFile = function (fileObj, folder) {
+				parent.confirmDialog("Delete " + fileObj.type + " " + fileObj.name + "?", 
+					function () {
+						$scope.curAppState.toSvc.FileSvc.deleteFile(folder.relativePath, fileObj.name + fileObj.ext, function(results) {
+							parent.curAppState.addMsg({type: "alert", text: "Deleted " + fileObj.name});
+							var idx = folder.fileList.indexOf(fileObj);
+							folder.fileList.splice(idx,1);
+							$scope.$apply();
+						});
+					}
+				);
+			}
+
+			$scope.openFile = function (fileObj, folderObj) {
+				angular.forEach(folderObj.fileList, function(f) {
+					f.selected = false;
+				});
+				
+				fileObj.selected = true;
+				if (fileObj.type=="folder") {
+					$scope.folderList.length = $scope.folderList.indexOf(folderObj)+1;
+					$scope.curAppState.toSvc.FileSvc.getFolder(folderObj.relativePath + "/" + fileObj.name, function (folderInfo) {
+						$scope.folderList.push(folderInfo);
+						$scope.$apply();
+					});
+				}
+				else {
+					var url = parent.curAppState.toSvc.FileSvc.getFileURL (folderObj.relativePath, fileObj.name + fileObj.ext);
+					parent.curAppState.winMgr.openWebPage (url);
+				}
+			}
+			
+			$scope.newFolder = function (folder) {
+				parent.promptDialog ("folder.new", "", function() {
+					var newFolderName = parent.getPromptVal();
+					$scope.curAppState.toSvc.FileSvc.newFolder(folder.relativePath, newFolderName, function(fileInfo){
+						folder.fileList.push(fileInfo);
+						$scope.$apply();
+					});
+				});
+			}
+
+			$scope.pinFolder = function (folder) {
+				$scope.curAppState.curFolder = folder;
+			}
+			
+			$scope.newModel = function (folder, type) {
+				parent.promptDialog ("New " + type, "", function() {
+					var newName = parent.getPromptVal();
+					$scope.curAppState.toSvc.FileSvc.newModel(type, folder.relativePath, newName, function(fileInfo){
+						folder.fileList.push(fileInfo);
+						$scope.openFile (fileInfo, folder);
+					});
+				});
+			}
+
+			$scope.downloadModel = function () {
+				var url = $scope.curAppState.toSvc.FileSvc.getModelDownloadUrl(parent.curAppState.scxml.modelName);
+				parent.curAppState.winMgr.openWebPage (url);
+			}
+
+			$scope.init = function () {
+		    	$scope.refresh ();
+
+		    	parent.curAppState.toWS.wsSubscribe("model.ended", function(packet) {
+					$scope.refresh();
+				}, "Artifact");
+			}
+			
+			setTimeout($scope.init, 40);
+		});
+
+
+		// callback by webmbtMain.js
+		function mainCallbackFunc(action_p, params_p) {
+			var scope = $("body").scope();
+			if (scope) {
+			}
+		}		
+	</script>
+
+<style>
+	.items {
+		height: calc(100% - 25px);
+	}
+	
+	#mainDIV {
+		margin-top: 3px;
+	}
+	
+</style>
+</head>
+<body style="overflow: hidden;" id="Main" ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="tabHeader">
+		Model Artifacts & Files
+		<span class="actions">
+			<span class="miniBtn glyphicon glyphicon-repeat" ng-click="refresh()" style="margin-left: 5px;" title="refresh file list"></span>
+			<span class="miniBtn glyphicon glyphicon-export" ng-click="downloadModel()" style="margin-left: 5px;" title="download model as a zip file"></span>
+		</span>
+	</div>
+	<div id="mainDIV">
+		<div class="folder" ng-repeat="folder in folderList track by $index">
+			<div class="header">
+				<span>{{folder.fileName}}</span>
+			</div>
+			<div class="items">
+				<div class="item" ng-class="{selected: file.selected}" ng-repeat="file in folder.fileList | orderBy: ['name']">
+	   				<img ng-src="../img/{{file.type}}.png"/>
+	        		<span style="cursor: default; position: relative; top: 1px;" 
+	        			title="Last modified: {{file.lastModifiedDate.toLocaleString()}}\npath: {{folder.relativePath}}" 
+	        			ng-click="openFile(file, folder)">{{ file.name }}{{file.ext}}
+	        		</span>
+					<span ng-click="deleteFile(file, folder)" class="miniBtn glyphicon glyphicon-remove" 
+						style="float: right;" title="Delete {{file.type}}">
+					</span>
+				</div>
+			</div>
+		</div>		
+	</div>
+</body>
+</html>

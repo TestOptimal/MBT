@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<link href="css/IDE_View.css" rel="stylesheet">
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+	</script>	
+    <script src="js/utils.js"></script>
+	<script src="js/sys_svc.js"></script>
+    <script>
+    MainModule.controller("mainCtrl", function ($scope, $location, $anchorScroll) {
+    	$scope.licObj = [];
+    	$scope.authPluginList = [];
+    	
+    	$scope.refresh = function () {
+    		parent.curAppState.toSvc.SysSvc.getLicDetails (function (data) {
+				$scope.licObj = data;
+    			$scope.$apply();
+    		});
+    	}
+    	
+    	$scope.saveLic = function () {
+    		$scope.licObj.LicenseAcked = true;
+    		parent.curAppState.toSvc.SysSvc.saveLic($scope.licObj, function (data) {
+    			$scope.licObj = data;
+    			if ($scope.licObj.exceptions.length == 0) {
+    				parent.curAppState.addMsg({type: "info", text: "License key saved, refreshing IDE ..."});
+    				parent.curAppState.winMgr.refresh();
+    			}
+    			$scope.$apply();
+    		});
+    	}
+
+    	$scope.init = function () {
+        	$scope.refresh ();
+    	}
+
+    	$scope.init();
+    });    
+    </script>
+	
+    <style>
+		body {
+			background: transparent !important;
+		}
+
+		#msg {
+			color: blue;
+		}
+		
+		input {
+			width: 300px;
+		}
+		
+		.label {
+			font-weight: bold;
+		}
+		
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV" style="overflow: auto;">
+	<table border="0" width="100%" cellspacing="0" style="margin-bottom: 40px;">
+		<tr><td nowrap>Edition:</td><td>{{licObj.edition}}</td></tr>
+		<tr><td align="left">Sys ID:</td><td>{{licObj.sysID}}</td></tr>
+		<tr><td nowrap>Server URL:</td><td>{{licObj.hostport}}</td></tr>
+		<tr><td nowrap>IP Address:</td><td>{{licObj.ipaddress}}</td></tr>
+		<tr><td nowrap>OS Name:</td><td>{{licObj.osName}}</td></tr>
+		<tr><td nowrap>OS Version:</td><td>{{licObj.osVersion}}</td></tr>
+		<tr><td nowrap>Java Version:</td><td>{{licObj.javaVersion}}</td></tr>
+		<tr><td nowrap>TO Version:</td><td>{{licObj.TestOptimalVersion}} <small>(build: {{licObj.releaseDate}})</small></td></tr>
+		<tr><td nowrap>License Status:</td><td>{{licObj.licStatus}}</td></tr>
+		<tr><td nowrap>Expiration:</td><td style="color: orange;">{{licObj.expireDate}}</td></tr>
+		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licObj.licEmail"/></td></tr>
+		<tr><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
+		<tr style="height: 35px;">
+			<td colspan="2">
+				<div style="color: orange; background: #EEEEEE;" ng-repeat="errMsg in licObj.exceptions track by $index">{{errMsg}}</div>
+			</td>
+		</tr>
+	</table>
+		<div style="position: absolute; left: 3px; bottom: 0px;">
+			<button class="btn btn-primary" ng-click="saveLic()">SAVE</button>
+		</div>
+	</div>
+</body>
+</html>

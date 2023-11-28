@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="../packages/stream-min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+	</script>	
+<script>
+
+MainModule.controller("mainCtrl", function($scope) {
+	// common section
+	$scope.headerHeight = 0;
+	
+    // app specific
+	$scope.curTab;
+    
+	$scope.CUR_EXEC_STATS = {modelName: parent.curAppState.scxml.modelName, execID: -1, statDesc: "Current Execution"};
+    $scope.curExecStats = $scope.CUR_EXEC_STATS;
+	$scope.execStatsList = [];
+    
+    $scope.openExecStats = function (execStats_p) {
+    	$scope.curExecStats = execStats_p;
+		setTimeout(function() {
+				parent.curAppState.winMgr.raiseEvent("refreshExec", [parent.curAppState.scxml.modelName, $scope.curExecStats.mbtSessID]); 
+			}, 10);
+    }
+    
+	$scope.deleteModelExec = function (modelName_p, execID_p) {
+		parent.curAppState.toSvc.StatsSvc.delModelExec (modelName_p, execID_p, function(returnData) {
+			parent.curAppState.addMsg ({ type: "info", text: "deleted model exec for model " + modelName_p + ", execID: " + execID_p});
+			$scope.curExecStats = undefined;
+			parent.curAppState.winMgr.raiseEvent("refreshExec", [parent.curAppState.scxml.modelName, ""]); 
+			$scope.execStatsList = Stream($scope.execStatsList).filter(function(e) {
+				return e.execID != execID_p
+			}).toArray();
+			$scope.$apply();
+		});
+	}
+
+	$scope.refresh = function () {
+		parent.curAppState.toSvc.StatsSvc.modelExecList ($scope.curExecStats.modelName, function(execList_p) {
+			$scope.execStatsList = execList_p;
+			$scope.execStatsList.splice(0,0, $scope.curExecStats);
+			$scope.openExecStats($scope.curExecStats);
+			$scope.$apply();
+		});
+	}
+
+    $scope.openModelScriptLog = function () {
+    	parent.curAppState.winMgr.openWebPage (parent.curAppState.toSvc.RuntimeSvc.getLogUrl($scope.curExecStats.modelName), "Script Log");
+    }
+
+    $scope.openServerLog = function () {
+    	var params = "";
+    	if (parent.curAppState.scxml) {
+    		params = "?modelName=" + parent.curAppState.scxml.modelName;
+    	}
+    	parent.curAppState.winMgr.openWebPage (parent.curAppState.toSvc.FileSvc.getSvrLogUrl() + params, "Server Log");
+    }
+
+    $scope.init = function () {
+		parent.curAppState.winMgr.regEvent("selectTab", function(tabID) {
+			$scope.curTab = (tabID=="Results");
+		});
+
+		parent.curAppState.toWS.wsSubscribe("model.ended", function(packet) {
+			$scope.curExecStats = $scope.CUR_EXEC_STATS;
+			$scope.refresh();
+			$scope.$apply();
+		}, "Results");
+		
+		$scope.refresh();
+    }
+    
+	setTimeout($scope.init,20);
+});
+
+</script>
+
+<script src="../StatsRpt/StatsDetails_app.js"></script>
+
+<style>
+	html,body {
+		height: 100%;
+		overflow: hidden;
+	}
+	
+	#appHeader {
+		height: 25px; 
+		text-align: left;
+		padding-top: 3px;
+		background: #FAFAFA;
+	}
+	
+	#paneContent {
+		height: calc(100% - 25px);
+		overflow: auto;
+	}
+</style>
+
+<body id="Main" ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="appHeader" class="paneTitle">
+		<span>Model Execution</span>
+		<select ng-model="curExecStats" ng-options="execStats.statDesc for execStats in execStatsList"
+			ng-change="openExecStats(curExecStats)"></select>
+		<span class="glyphicon glyphicon-repeat" ng-click="openExecStats(curExecStats)" style="margin-left: 5px;" title="refresh currently open execution stats"></span>
+		<span style="float: right; margin-right: 5px;">
+			<span class="glyphicon glyphicon-warning-sign" ng-click="openModelScriptLog();" style="margin-left: 5px;" title="open MScript/model log file"></span>
+			<span class="glyphicon glyphicon-alert" ng-click="openServerLog();" style="margin-left: 5px;" title="open server log file"></span>
+		</span>
+	</div>
+	<div id="paneContent">
+		<div ng-include="'../StatsRpt/StatsDetails.html'"></div>
+	</div>
+</body>
+</html>

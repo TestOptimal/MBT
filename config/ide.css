@@ -1,0 +1,28 @@
+.class_GREEN.JSD-theme.JSDState-label, 
+.class_GREEN.JSD-trans-label, 
+.class_GREEN.JSD-trans-end  {
+	color: GREEN;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.class_GREEN.JSD-theme.JSD-state,
+.class_GREEN.JSD-trans-seg,
+.class_GREEN.JSD-box.JSD-theme {
+	background: GREEN !important;
+}
+
+.class_ORANGE.JSD-theme.JSDState-label, 
+.class_ORANGE.JSD-trans-label, 
+.class_ORANGE.JSD-trans-end  {
+	color: ORANGE;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.class_ORANGE.JSD-theme.JSD-state,
+.class_ORANGE.JSD-trans-seg,
+.class_ORANGE.JSD-box.JSD-theme {
+	background: ORANGE !important;
+}
+

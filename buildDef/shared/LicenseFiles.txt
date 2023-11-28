@@ -1,0 +1,50 @@
+
+Open Source packages used by TestOptimal (updated 5/25/2020 for release v6):
+
+GraphViz: Common Public License Version 1.0 - http://www.graphviz.org/License.php
+	GraphViz may be downloaded from http://www.graphviz.org/.
+
+jQuery and its plugins Open Source Initiative OSI - The MIT License:Licensing: http://www.opensource.org/licenses/mit-license.php
+	download at http://www.jquery.com/.
+Apache java packages: Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
+	including commons, junit, log4j, commons-net, etc.
+
+Seleninum: Apache java packages: Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
+
+ChromeDriver: http://www.opensource.org/licenses/bsd-license.php, download from http://code.google.com/p/chromedriver/
+
+CodeMirror: http://marijn.haverbeke.nl/codemirror/LICENSE
+
+HtmlUnit: Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
+	download site: http://htmlunit.sourceforge.net/
+
+ACTS (Fireeye) - Pairwise algorithm from NIST (National insitute of Standards and Technology). 
+
+Java Excel API by http://jexcelapi.sourceforge.net/
+	JExcelApi is issued on under the GNU Lesser General Public License.
+
+Groovy and all of packages it uses: antlr, asm, bsf are under Apache open source license
+
+PlantUML.jar - 7948 (Jan. 2, 2013), LGPLv3 License, download at http://plantuml.sourceforge.net/index.html
+
+jsoup-1.7.2.jar - http://jsoup.org/, MIT License
+
+joda-time.jar - http://joda-time.sourceforge.net/, Apache License v2.0
+
+jira*.jar - http://docs.atlassian.com/jira/REST/latest/, creative commons (http://creativecommons.org/licenses/by/2.5/au/)
+
+javassist.jar - MOZILLA PUBLIC LICENSE, Version 1.1
+scannotation.jar - MOZILLA PUBLIC LICENSE, Version 1.1
+
+bootstrap - MIT http://getbootstrap.com/
+angular ui - MIT http://angular-ui.github.io/bootstrap/
+angular.js - MIT http://angularjs.org/
+
+RestAssured, https://code.google.com/p/rest-assured/, Apache License 2.0
+Scribe, https://github.com/fernandezpablo85/scribe-java, MIT License
+
+SikuliX - http://www.sikulix.com/, License: http://creativecommons.org/licenses/by/4.0/deed.en_US
+
+Markdowndeep.js - http://www.toptensoftware.com/markdowndeep/license, apache license
+SpringBoot: https://github.com/spring-projects/spring-boot/blob/master/LICENSE.txt, Apache License 2.0
+H2DB: http://www.h2database.com/html/license.html, Mozilla Public License Version 2.0

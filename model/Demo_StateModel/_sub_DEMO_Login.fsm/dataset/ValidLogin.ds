@@ -1,0 +1,1 @@
+{"dsName":"ValidLogin","fieldList":[{"fieldName":"loginID","dataType":"text","derived":false,"groupCode":"","domainList":["goodID1"]},{"fieldName":"password","dataType":"text","derived":false,"groupCode":"loginID","domainList":["goodPwd1"]}],"overallStrength":"pairWise","dataRows":[{"password":"goodPwd1","loginID":"goodID1","$$hashKey":"object:245"}]}

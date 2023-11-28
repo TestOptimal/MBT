@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+
+	<link rel="stylesheet" href="/webjars/codemirror/lib/codemirror.css">
+	<script src="/webjars/codemirror/lib/codemirror.js"></script>
+	<link rel="stylesheet" href="/webjars/codemirror/addon/hint/show-hint.css">
+	<script src="/webjars/codemirror/addon/hint/show-hint.js"></script>
+	<script src="/webjars/codemirror/addon/selection/active-line.js"></script>
+	<LINK href="MScriptEditorTheme.css" rel="stylesheet" type="text/css">
+	<script src="ScriptUtil.js"></script>
+    
+	<script>
+		window.onerror = function (message, source, lineno, colno, error) {
+			parent.curAppState.addMsg ({
+				text: message + " (" + source + ": " + lineno + "." + colno + ")",
+				error: error
+			});
+		};
+	
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+
+		MainModule.controller("mainCtrl", function ($scope) {
+			$scope.execStatus = {};
+			$scope.curAppState = parent.curAppState;
+			$scope.progressBarWidth = 150;
+			$scope.progressBarHeight = 10;
+			$scope.refreshInterval = 5000;
+			$scope.refreshTimeout;
+			$scope.debug = parent.curAppState.debug;
+
+			$scope.sectionExpanded = {
+				stopCond: true,
+				execStatus: true,
+				debugExpr: true
+			}
+
+			$scope.startAutoRefresh = function () {
+				if ($scope.refreshTimeout) {
+					clearTimeout($scope.refreshTimeout);
+				}
+				$scope.refresh();
+				$scope.refreshTimeout = setTimeout($scope.startAutoRefresh, $scope.refreshInterval);
+			}
+			
+			$scope.stopAutoRefresh = function () {
+				if ($scope.refreshTimeout) {
+					clearTimeout($scope.refreshTimeout);
+				}
+				$scope.refreshTimeout = null;
+				$scope.refresh();
+			}
+			
+			$scope.refresh = function () {
+				$scope.curAppState = parent.curAppState;
+				if ($scope.curAppState.scxml == undefined) {
+					return;
+				}
+				
+				parent.curAppState.toSvc.RuntimeSvc.modelMonitor (parent.curAppState.scxml.modelName, $scope.updateProgress);
+				if (!$scope.curAppState.modelState.running) {
+					clearTimeout($scope.refreshTimeout);
+					$scope.refreshTimeout = null;
+				}
+			}
+			
+			$scope.updateProgress = function (data) {
+				$scope.execStatus = data.execStatus;
+				if ($scope.execStatus) {
+					if ($scope.execStatus.startDT) {
+						$scope.execStatus.startDT = new Date($scope.execStatus.startDT);
+					}
+					if ($scope.execStatus.endDT) {
+						$scope.execStatus.endDT = new Date($scope.execStatus.endDT);
+					}
+					if ($scope.execStatus.execStatus == "STARTED") {
+						$scope.execStatus.execStatus = "RUNNING";
+					}
+					$scope.execStatus.progressPcnt = parseInt($scope.execStatus.progressPcnt);
+					if ($scope.execStatus.progressPcnt >= 100) {
+						$scope.execStatus.progressPcnt = 100;
+					} 
+					
+					$scope.execStatus.transCoverage = parseInt($scope.execStatus.transCoverage);
+					$scope.execStatus.memoryUsedPct = parseInt($scope.execStatus.memoryUsedPct);
+				}
+				$scope.$apply();
+			}
+			
+			$scope.reset = function () {
+				$scope.statusJSON = {};
+			}
+
+			$scope.init = function () {
+				parent.curAppState.toWS.wsSubscribe('model.ended', function (packet) {
+					$scope.stopAutoRefresh();
+				}, "Monitor");
+				
+				parent.curAppState.toWS.wsSubscribe('model.started', function (packet) {
+					$scope.startAutoRefresh();
+				}, "Monitor");
+
+				parent.curAppState.toWS.wsSubscribe('model.paused', function (packet) {
+					$scope.refresh();
+				}, "Monitor");
+
+				parent.curAppState.toWS.wsSubscribe('debug.expr', function (packet) {
+					try {
+						$scope.debug.curExpr.result = JSON.parse(packet.body);
+						for (idx in $scope.debug.curExpr.result) {
+							var row = $scope.debug.curExpr.result[idx];
+							row.result = JSON.stringify (row.result, null, 3)
+						};
+					}
+					catch (err) {
+						$scope.debug.curExpr.result = {expr: $scope.debug.curExpr.expr, 
+								result: JSON.stringify(packet.body, null, 3)};
+					}
+					$scope.debug.curExpr.running = false;
+					$scope.$apply();
+				}, "Monitor");
+
+	       		$scope.loadCAList();
+
+	       		if (parent.curAppState.modelState.running) {
+					$scope.startAutoRefresh();
+				}
+				else $scope.refresh();
+			}
+			
+			$scope.debugRun = function (expr) {
+				$scope.debug.curExpr.expr = expr;
+				$scope.debug.curExpr.result = [];
+				$scope.debug.curExpr.running = true;
+				parent.curAppState.toWS.wsSendModel("expr", expr);
+			}
+			
+			$scope.debugRunAll = function () {
+				$scope.debugRun ($scope.editor.getValue());
+			}
+
+			$scope.debugRunSelected = function () {
+				$scope.debugRun ($scope.editor.getSelection());
+			}
+			
+			$scope.debugRunCurLine = function () {
+				$scope.debugRun ($scope.editor.getLine($scope.editor.getCursor().line));
+			}
+
+
+	    	$scope.loadCAList = function () {
+	    		parent.curAppState.toSvc.SysSvc.getCA (parent.curAppState.scxml.pluginList, function(caList) {
+	    			MScriptHintList = caList;
+	    			for (var k in MScriptHintList) {
+	    				var list = MScriptHintList[k];
+	    				for (var d in list) {
+	    					list[d].className = "caItem";
+	    				}
+	    			}
+	    		});
+	    	}
+	    	
+			$scope.editor = initEditor ($scope.debug.curExpr.script, 
+					function(cm) { // change handler
+						$scope.debug.curExpr.script = $scope.editor.getValue();				
+					}, function(cm) { // focus handler
+						
+					},  0, null);
+			$scope.editor.setOption("extraKeys", {
+				"Cmd-Space": showHintGroovy, 
+				"Ctrl-Space": showHintGroovy
+			});
+			
+			$scope.init();
+		});
+		
+	</script>	
+
+    <style>
+    	.sectSubHeader {
+    		background: #E0E0E0;
+    		font-weight: bold;
+    		height: 32px;
+    		padding-top: 5px;
+    		font-style: italic;
+    	}
+    	
+    	.sectSubHeader td {
+    		border-top: 1px solid #AAAAAA;
+    	}
+    	
+    	.firstCol {
+    		padding-left: 13px !important;
+    	}
+    	
+    	.tableHeader {
+    		background: #F6F6F6;
+    		font-weight: bold;
+    	}
+    	
+    	.colLabel {
+    		font-style: italic;
+    	}
+
+
+    	tr.rowExpr {
+    		background: #EEEEEE;
+    	}
+    	
+    	tr.rowResult {
+    		background: #E0E0E0;
+    	}
+    	
+    	a.cmd {
+    		font-style: italic;
+    		cursor: default; 
+    	}
+		    	
+		.hoverDropdown .dropdown-content {
+			display: none;
+		}		    	
+
+		.dropdown-content {
+			text-align: left;
+		    position: absolute;
+		    left: -8px;
+		    background-color: #f1f1f1;
+		    width: 200px;
+		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		    z-index: 99;
+		    padding-top: 8px;
+		    padding-bottom: 5px;
+		}
+		
+		.dropdown-content .menuItem {
+		    color: black;
+		    padding: 2px 8px;
+		    display: block;
+		    cursor: pointer;
+		    height: 20px;
+		}
+		
+		.dropdown-content .menuItem.extraPaddingTop {
+			padding-top: 8px;
+		}
+		
+		.dropdown-content .menuItem.extraPaddingBottom {
+			padding-bottom: 8px;
+		}
+		
+		.dropdown-content .menuItem:hover {
+			background-color: #ddd;
+		    text-decoration: none;
+		}
+		
+		.hoverDropdown:hover .dropdown-content {
+		    display: block;
+		}
+		
+		.dropdown .menu-label:hover {
+			font-weight: bold;
+		}
+
+		pre {
+			border: none;
+		}
+		
+		.CodeMirror {
+			height: 75px;
+		}
+		
+		.cm-s-to div.CodeMirror-selected { 
+			background: lightblue !important; 
+		}
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV">
+		<div style="height: {{viewHeight}}px; width:100%; overflow: auto;">
+			<table cellspacing="2" cellpadding="2" width="100%">
+				<thead>
+					<tr class="sectSubHeader">
+						<td colspan="6">
+							<img ng-src="../img/{{sectionExpanded.stopCond?'minus.png':'plus.png'}}" style="padding-left: 3px; position:relative; top: -2px;" ng-click="sectionExpanded.stopCond=!sectionExpanded.stopCond"/>
+							Stop Conditions</span><span>{{execStatus.stopMsg}}
+							<span style="float: right; margin-right: 5px;">Sequencer: {{execStatus.mbtMode}}</span>
+						</td>
+					</tr>
+				</thead>
+				<tbody ng-show="sectionExpanded.stopCond">
+					<tr>
+						<td class="colLabel firstCol" title="To stop MBT execution when transition coverage in percent reaches this value">Transitions:</td>
+						<td><span class="field" ng-show="execStatus.stopCond.transCoverage>0"><span>{{execStatus.stopCond.transCoverage}}</span><small>%</small></span></td>
+						<td class="colLabel" title="To stop MBT execution when transition traversals(events) reaches this value">Traversals:</td>
+						<td><span class="field" ng-show="execStatus.stopCond.transCount>0">{{execStatus.stopCond.transCount}}</span></td>
+						<td class="colLabel" title="To stop MBT execution when elapse time has reached this value">Elapse Time:</td>
+						<td><span class="field" ng-show="execStatus.stopCond.elapseTime>0"><span>{{execStatus.stopCond.elapseTime}}</span>&nbsp;<small>(min)</small></span></td>
+					</tr>
+					<tr>
+						<td class="colLabel firstCol" title="To stop MBT execution when requirement (tag) coverage in perentage reaches this value">Requirements:</td>
+						<td class="field"><span ng-show="execStatus.stopCond.reqCoverage>0"><span>{{execStatus.stopCond.reqCoverage}}</span><small>%</small></span></td>
+						<td class="colLabel" title="To stop MBT execution when number of paths (test cases) reaches this value">Test Paths:</td>
+						<td><span class="field" ng-show="execStatus.stopCond.homeRunCount>0">{{execStatus.stopCond.homeRunCount}}</span></td>
+						<td class="colLabel" title="To stop MBT execution when number of exceptions reaches this value"></td>
+						<td><span class="field"></span></td>
+					</tr>
+				</tbody>
+				<thead>
+					<tr class="sectSubHeader">
+						<td colspan="6">
+							<img ng-src="../img/{{sectionExpanded.execStatus?'minus.png':'plus.png'}}" style="padding-left: 3px; position:relative; top: -2px;" ng-click="sectionExpanded.execStatus=!sectionExpanded.execStatus"/>
+							Execution Status: <span class="field">{{execStatus.execStatus}}</span>
+							<span class="glyphicon glyphicon-tint" ng-click="curAppState.winMgr.raiseEvent('showCoverage')"></span>
+						</td>
+					</tr>
+				</thead>
+				<tbody ng-show="sectionExpanded.execStatus">
+					<tr class="progressSection">
+						<td class="colLabel firstCol">Start Time:</td><td><span class="field">{{execStatus.startDT.toLocaleString()}}</span></td>
+						<td class="colLabel">Exec Status:</td><td colspan="3"><span class="field">{{execStatus.execStatus}}</span></td>
+					</tr>
+					<tr>
+						<td class="colLabel firstCol">{{execStatus.endDT?'End Time':'Remaining'}}:</td><td><span class="field">{{execStatus.endDT?execStatus.endDT.toLocaleString():execStatus.remainingTime}}</span></td>
+						<td class="colLabel" valign="top">Progress:</td><td colspan="4">
+							<div style="position:relative; top: 5px; float:left; background: #F0F0F0; border: 1px solid #AAAAAA; width: {{progressBarWidth}}px; height: {{progressBarHeight}}px;">
+								<div style="width: {{execStatus.progressPcnt * progressBarWidth / 100}}px; height: {{progressBarHeight}}px; background: green;"></div>
+							</div>
+							<div style="float: left; padding-left: 3px;" ng-show="execStatus.progressPcnt">{{execStatus.progressPcnt}}%</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="colLabel firstCol" title="Elapse time in minutes">Elapse Time:</td><td><span class="field">{{execStatus.elapseTime}}</span></td>
+						<td class="colLabel">JVM Memory:</td><td><span ng-show="execStatus.memoryUsedPct"><span>{{execStatus.memoryUsedPct}}%</span>&nbsp; of <span class="field" title="Max JVM heap size, set by -Xmx jvm option">{{execStatus.memoryMaxS}}</span>&nbsp;used</span></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div style="width: 100%; overflow: auto; background: #F0F0F0;">
+				<div class="sectSubHeader" style="font-weight: bold;">
+					<img ng-src="../img/{{sectionExpanded.debugExpr?'minus.png':'plus.png'}}" style="padding-left: 3px; position:relative; top: -2px;" ng-click="sectionExpanded.debugExpr=!sectionExpanded.debugExpr"/>
+						Debug Console
+					<span style="float: right;" ng-show="sectionExpanded.debugExpr">
+						<button class="cmd" ng-click="debugRunCurLine()">run line</button>
+						<button class="cmd" ng-click="debugRunSelected()">run selected</button>
+						<button class="cmd" ng-click="debugRunAll()">run all</button>
+					</span>
+				</div>
+				<div ng-show="sectionExpanded.debugExpr">
+					<textarea class="form-control" 
+						disabled class="script" id="scriptEditor"></textarea>
+				</div>
+				<div style="height: 195px; overflow: auto; background: transparent;" ng-show="sectionExpanded.debugExpr">
+					<ul style="padding-left: 30px;">
+						<li ng-repeat="row in debug.curExpr.result">{{row.expr}}:<br/>
+							<prev>{{row.result}}</prev>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

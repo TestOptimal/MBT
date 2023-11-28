@@ -1,0 +1,15 @@
+autonumber "<font color=olivedrab>0</font>"
+skinparam sequence {
+	ArrowColor #111111
+	ArrowFontColor #111111
+	ArrowFontStyle plain
+	
+	LifeLineBorderColor #333333
+	LifeLineBackgroundColor #EEEEEE
+	
+	ParticipantBorderColor #555555
+	ParticipantBackgroundColor #FFFFFF
+	ParticipantFontName plain
+	ParticipantFontSize 15
+	ParticipantFontColor #000000
+}

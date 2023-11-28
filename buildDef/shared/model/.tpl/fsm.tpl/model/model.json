@@ -1,0 +1,37 @@
+{
+  "uid": "U100",
+  "typeCode": "scxml",
+  "desc": "Cloned from templateBasic model",
+  "notepad": "",
+  "childrenStates": [],
+  "testPathGraphType": "FSM",
+  "modelName": "testing mcase",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "",
+  "versionReq": "",
+  "buildNum": 0,
+  "mbtNode": {
+    "uid": "U120",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": true
+    },
+    "execThreadNum": 1,
+    "threadSpreadDelay": 0,
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "catCodes": "",
+  "pluginList": [],
+  "modelType": "FSM",
+  "graphLayout": "Horizontal"
+}

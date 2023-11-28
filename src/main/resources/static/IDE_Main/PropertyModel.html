@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <link href="../css/IDE_View.css" rel="stylesheet">
+	<script type="text/javascript" src="../js/common.js"></script>
+
+	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+		MainModule.controller("mainCtrl", function ($scope) {
+			$scope.gMsgList = [];
+			$scope.scxml = parent.curAppState.scxml;
+			
+			$scope.setChanged = function () {
+				parent.curAppState.setModelChanged("Model", true);
+			}
+			
+			$scope.init = function () {
+				$scope.gMsgList = parent.gMsgList;
+			}
+			
+			$scope.init();
+		});
+	</script>
+
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		.inputField {
+			width: 400px;
+		}
+		
+		textarea.inputField {
+			height: 125px;
+		}
+		
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV" style="overflow: auto;">
+		<table width="100%" style="margin-bottom: 40px;">
+			<tbody ng-form="propertyForm">
+				<tr><td title="{{gMsgList.uid.desc}}">{{gMsgList.uid.code}}</td>
+					<td>{{scxml.uid}}</td>
+				</tr>
+				<tr><td title="{{gMsgList.filename.desc}}">{{gMsgList.filename.code}}</td>
+					<td>{{scxml.modelName}}</td>
+				</tr>
+				<tr><td valign="top" title="{{gMsgList.desc.desc}}">{{gMsgList.desc.code}}</td>
+					<td><textarea class="inputField" required ng-model="scxml.desc" ng-change="setChanged();"></textarea></td>
+				</tr>
+				<tr><td title="{{gMsgList.maxHistoryStat.desc}}">{{gMsgList.maxHistoryStat.code}}</td>
+					<td><input class="inputField" type="number" ng-model="scxml.miscNode.maxHistoryStat" ng-change="setChanged();"/></td>
+				</tr>
+				<tr><td title="Maximun number of test cases (paths) to be saved per model execution">Max Test Cases (Paths)</td>
+					<td><input class="inputField" type="number" ng-model="scxml.miscNode.maxTestCaseNum" ng-change="setChanged();"/></td>
+				</tr>
+				<tr>
+					<td valign="top">Model Notepad</td>
+					<td><textarea class="inputField" ng-model="scxml.notepad" ng-change="setChanged();"></textarea></td>
+				</tr>
+				<tr style="background: #EFEFEF;">
+					<td colspan="2">Model Versions:</td>
+				</tr>
+				<tr><td align="right" title="{{gMsgList.vrsn.desc}}">{{gMsgList.vrsn.code}}</td>
+					<td><input class="inputField" type="text" ng-model="scxml.version" ng-change="setChanged();"/></td>
+				</tr>
+				<tr><td align="right" title="{{gMsgList.versionReq.desc}}">{{gMsgList.versionReq.code}}</td>
+					<td><input class="inputField" type="text" ng-model="scxml.versionReq" ng-change="setChanged();"/></td>
+				</tr>
+				<tr><td align="right" title="{{gMsgList.versionAUT.desc}}">{{gMsgList.versionAUT.code}}</td>
+					<td><input class="inputField" type="text" ng-model="scxml.versionAUT" ng-change="setChanged();"/></td>
+				</tr>
+				<tr><td align="right" title="{{gMsgList.build.desc}}">Build Number</td>
+					<td>{{scxml.buildNum}}</td>
+				</tr>
+			</tbody>		
+		</table>
+	</div>
+</body>
+</html>

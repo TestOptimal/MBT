@@ -1,0 +1,259 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+	<script src="/webjars/angularjs/angular-cookies.js"></script>
+    <script src="/agent/TOServer.js"></script>
+
+<script>
+
+var MainModule = angular.module("Main", ['ngCookies']);
+MainModule.controller("mainCtrl", function($scope, $cookies) {
+    $scope.mqtt = {
+       	URL: "ws://u3a4e3f9.en.emqx.cloud:8083/mqtt",
+       	subTopic: "TO/Agent",
+       	pubTopic: "TO/Server",
+       	username: "demo",
+       	password: "test123",
+       	clientID: "demo_" + Math.floor(Math.random() * 1000000),
+       	message: ''
+    }
+    
+    $scope.execReq = {modelName: "DEMO_MQTT", options: {autoClose: false}};
+    $scope.msgList = [];
+	$scope.tosvr;
+	$scope.username = '';
+	$scope.password = '';
+
+    $scope.connectMQTT = function () {
+    	$scope.mqtt.clientID = $scope.username;
+    	const options = {
+    	  username: $scope.mqtt.username,
+    	  password: $scope.mqtt.password,
+    	  clientId: $scope.mqtt.clientID,
+    	  protocolId: 'MQTT',
+    	  clean: true,
+    	}
+
+    	$scope.addMsg('Connecting to MQTT server: ' + $scope.mqtt.URL);
+    	$scope.mqtt.client = mqtt.connect($scope.mqtt.URL, options);
+
+    	$scope.mqtt.client.on('error', (err) => {
+    	  $scope.addMsg('Connection error: ', err);
+    	  $scope.mqtt.client.end();
+    	})
+
+    	$scope.mqtt.client.on('reconnect', () => {
+    	  $scope.addMsg('Reconnecting to ' + $scope.mqtt.URL + ' ...');
+    	})
+
+    	$scope.mqtt.client.on('connect', () => {
+	        $scope.addMsg("Connected to " + $scope.mqtt.URL + ' as clientID: ' + $scope.mqtt.clientID);
+	        $scope.mqtt.client.subscribe($scope.mqtt.subTopic, {qos: 0});
+	        $scope.addMsg("Subscribed to: " + $scope.mqtt.pubTopic);
+	        $scope.$apply();
+    	})
+    	
+    	$scope.mqtt.client.on('message', (topic, message) => {
+	        $scope.lastMsg = message.toString();
+	        if ($scope.lastMsg.indexOf('Well done!') >= 0) {
+				$scope.msgList.unshift("Model execution completed. Click on ExecSummary to retrieve execution results.");
+				$scope.mqtt.client.end();
+	        }
+	        $scope.addMsg({ topic: topic, message: message.toString()} );
+	        $scope.$apply();
+    	})
+    }
+
+    $scope.sendMessage = function () {
+        $scope.mqtt.client.publish($scope.mqtt.pubTopic, $scope.mqtt.message);
+        $scope.addMsg("message sent: " + $scope.mqtt.message);
+    }
+    
+    $scope.getSummary = function () {
+		$scope.tosvr.getSummary($scope.execReq.modelName).then($scope.addMsg, $scope.addMsg);
+    }
+
+	$scope.startModel = function () {
+		$scope.modelStarted = false;
+        $scope.addMsg("Starting model " + $scope.execReq.modelName);	
+        $scope.execReq.options.initScript = 
+			"$VAR.mqttURL = '" + $scope.mqtt.URL + "';\n" +
+			"$VAR.mqttSubTopic = '" + $scope.mqtt.pubTopic + "';\n" +
+			"$VAR.mqttPubTopic = '" + $scope.mqtt.subTopic + "';\n" +
+			"$VAR.mqttUsername = '" + $scope.mqtt.username + "';\n" +
+			"$VAR.mqttPassword = '" + $scope.mqtt.password + "';\n" +
+			"$VAR.mqttClientID = '" + $scope.mqtt.clientID + "_svr';";
+        
+		$scope.tosvr.execModel($scope.execReq).then(function(retData) {
+			$scope.modelStarted = true;
+			$scope.mbtSessID = retData.mbtSessID;
+			$scope.connectMQTT();
+		}, $scope.addMsg);
+	};
+	
+
+	$scope.stopModel = function () {
+		if ($scope.mqtt.client) $scope.mqtt.client.end();
+		if ($scope.mbtSessID) {
+			$scope.tosvr.stopModelExec($scope.mbtSessID).then(function() {
+				$scope.addMsg("Model Execution Stopped");
+			}, $scope.addMsg);
+		}
+	};
+	
+	$scope.closeModel = function () {
+		if ($scope.mqtt.client) $scope.mqtt.client.end();
+		$scope.modelStarted = false;
+		$scope.msgList.length = 0;
+		$scope.tosvr.closeModel($scope.execReq.modelName).then(function() {
+			$scope.addMsg("Model Closed");
+		}, $scope.addMsg);
+	};
+	
+	$scope.openGraph = function (graphType) {
+		var url = $scope.tosvr.getGraphURL($scope.execReq.modelName, graphType);
+		if (url) {
+			window.open(url, "");
+		}
+		else {
+			$scope.addMsg("model.not.run");
+		}
+	}
+	
+	$scope.addMsg = function (msg) {
+		var json = msg;
+		if (msg instanceof Error) {
+			json = JSON.stringify(msg, Object.getOwnPropertyNames(msg), 2);
+		}
+		else if (typeof msg === 'object') {
+			json = JSON.stringify(msg, null, 2);
+		}
+		$scope.msgList.unshift(json);
+		setTimeout(function() {$scope.$apply();}, 50);
+	}
+	$scope.startModelExec = function () {
+		$scope.msgList.length = 0;
+		if ($scope.username == '' || $scope.password == '') {
+			$scope.addMsg('Please enter username and password to login to TestOptimal server.');
+			return;
+		}
+		$cookies.put("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));
+		$scope.tosvr = new TOServer($scope.svrURL);
+		$scope.tosvr.login($scope.username, $scope.password).then();
+		$scope.tosvr.setDebugCB((msg)=> $scope.addMsg ("DEBUG: " + msg), 2);
+		$scope.tosvr.login($scope.username, $scope.password)
+			.then(() => {
+				$scope.addMsg('connected to TestOptimal server');
+				$scope.connected = true;
+				setTimeout($scope.startModel, 200);
+				$scope.$apply();
+			}, (err) => {
+				$scope.tosvr = undefined;
+				$scope.connected = false;
+				$scope.addMsg(err);
+				$scope.$apply();
+			}
+		);
+	}
+	
+	$scope.init = function() {
+		$scope.svrURL = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+	}
+	
+	$scope.init();
+});
+</script>
+<style>
+	html, body {
+		width: 100%; 
+		height: 100%;
+		overflow: hidden;
+	 	background: #FAFAFA;
+	}
+	
+	.bigField {
+		width: 300px;
+	}
+</style>
+</head>
+
+<body ng-app="Main" ng-controller="mainCtrl">
+    <div style="text-align: center; font-size: x-large; font-weight: bold; background: #F0F0F0;">Model-Based Testing with TestOptimal - MQTT Demo
+    	<small style="margin-left: 15px; font-style: italic;"><a ng-click="showInfo=!showInfo">{{showInfo?"hide info": "more info"}}</a></small>
+    </div>
+    <div ng-show="showInfo" style="position: absolute; width: 100%; top: 75px; height: calc(100% - 75px); font-size: large; padding: 8px; background: #EEEEEE;" 
+    	ng-click="showInfo=false">
+    	This is a demonstration of testing IoT device through MQTT with TestOptimal.  This web page simulates 
+    	a calculator, it receives messages from MQTT broker server published by the device model running on TestOptimal server and
+    	responds (you enter a message) by publishing a response message through MQTT broker back to device model.<br/>
+    	You could redirect MQTT server to use your own MQTT server as well as customize the sub/pub topic.
+    </div>
+	<table class="table" width="100%">
+		<tr>
+			<td><label>TestOptimal Server:</label></td>
+			<td><input type="text" ng-model="svrURL" class="bigField"/></td>
+			<td align="right" style="white-space: nowrap;">
+				<span><label>UserName:</label> <input type="text" ng-model="username" style="width: 100px;"/>
+					<label>Password:</label> <input type="password" ng-model="password" style="width: 100px;"/>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td><label>MQTT Server:</label></td>
+			<td><input type="text" ng-model="mqtt.URL" class="bigField"/></td>
+			<td align="right" style="white-space: nowrap;">
+				<span><label>UserName:</label> <input type="text" ng-model="mqtt.username" style="width: 100px;"/>
+					<label>Password:</label> <input type="password" ng-model="mqtt.password" style="width: 100px;"/>
+				</span>
+			</td>
+		</tr>
+        <tr>
+            <td><label>Model:</label></td>
+            <td><input type="text" ng-model="execReq.modelName" class="bigField"/></td>
+            <td align="right" style="white-space: nowrap;">
+            	<label>Pub. Topic:</label><input type="text" ng-model="mqtt.pubTopic" style="width: 100px;"/>
+            	<label>Sub. Topic:</label><input type="text" ng-model="mqtt.subTopic" style="width: 100px;"/>
+            </td>
+        </tr>
+        <tr>
+           	<td colspan="3">
+ 				<button ng-click="startModelExec()"
+					title="{{connected?'execute script':'Click Connect button to establish connection.'}}">Execute</button> 
+ 				<button ng-click="stopModel()"
+					title="{{connected?'execute script':'Click Connect button to establish connection.'}}">Stop</button> 
+ 				<button ng-click="closeModel()"
+					title="{{connected?'execute script':'Click Connect button to establish connection.'}}">Close</button> 
+				<span style="float: right;">
+					<span>Graphs: 
+						<a ng-click="openGraph('model')">Model</a>
+						<a ng-click="openGraph('sequence')">Test Sequence</a>
+						<a ng-click="openGraph('msc')">Test Case (MSC)</a>
+						<a ng-click="openGraph('coverage')">Coverage</a>
+					</span>
+					<span style="margin-left: 8px; margin-right: 8px;">|</span>
+					<a ng-click="getSummary()">Exec Summary</a>
+					<a href="../api/v1/file/log/tosvr?modelName=DEMO_MQTT" target=_blank>SvrLog</a>
+				</span>
+			</td>
+        </tr>
+        <tr ng-show="modelStarted">
+           	<td><label>Response Message for<br/><i>{{lastMsg}}</i></label></td>
+            <td colspan="2"><textarea class="form-control" style="width: 100%; height: 50px;" ng-model="mqtt.message"></textarea></td>
+            <td>
+               <button ng-click="sendMessage();">send</button>
+         	</td>
+		</tr>
+	</table>
+	<div style="height: calc(100% - 300px); overflow: auto;">
+       	<div ng-repeat="msg in msgList track by $index">
+           	<pre>{{msg}}</pre>
+        </div>
+    </div>
+</body>
+</html>

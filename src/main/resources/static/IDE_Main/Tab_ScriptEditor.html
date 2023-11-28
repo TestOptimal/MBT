@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+
+	<link rel="stylesheet" href="/webjars/codemirror/lib/codemirror.css">
+	<script src="/webjars/codemirror/lib/codemirror.js"></script>
+	<script src="/webjars/codemirror/mode/groovy/groovy.js"></script>
+	<link rel="stylesheet" href="/webjars/codemirror/addon/hint/show-hint.css">
+	<script src="/webjars/codemirror/addon/hint/show-hint.js"></script>
+
+	<script src="/webjars/codemirror/addon/dialog/dialog.js"></script>
+	<script src="/webjars/codemirror/addon/search/searchcursor.js"></script>
+	<script src="/webjars/codemirror/addon/search/search.js"></script>
+	<script src="/webjars/codemirror/addon/scroll/annotatescrollbar.js"></script>
+	<script src="/webjars/codemirror/addon/search/matchesonscrollbar.js"></script>
+	<script src="/webjars/codemirror/addon/search/jump-to-line.js"></script>
+	<script src="/webjars/codemirror/addon/selection/active-line.js"></script>
+
+	<script src="/webjars/codemirror/addon/fold/foldcode.js"></script>
+	<script src="/webjars/codemirror/addon/fold/foldgutter.js"></script>
+	<link rel="stylesheet" href="/webjars/codemirror/addon/fold/foldgutter.css" /> 
+	<script src="/webjars/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="/webjars/codemirror/addon/fold/brace-fold.js"></script>
+	<script src="/webjars/codemirror/addon/fold/indent-fold.js"></script>
+	<link rel="stylesheet" href="/webjars/codemirror/addon/fold/foldgutter.css" /> 
+	<script src="/webjars/codemirror/addon/display/autorefresh.js"></script>
+	
+	<script src="/webjars/codemirror/addon/comment/comment.js"></script>
+
+	<LINK href="MScriptEditorTheme.css" rel="stylesheet" type="text/css">
+	<link href="../packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="/webjars/angularjs/angular.min.js"></script>
+	<script src="../packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+
+    <script src="../packages/stream-min.js"></script>
+	<script src="ScriptUtil.js"></script>
+<script>
+	window.onerror = function (message, source, lineno, colno, error) {
+		parent.curAppState.addMsg ({
+			text: message + " (" + source + ": " + lineno + "." + colno + ")",
+			error: error
+		});
+	};
+
+	var MainModule = angular.module("Main", []);
+</script>	
+	<script src="Tab_ScriptEditor_app.js"></script>
+
+	<style>
+		html,body {
+			background: #FAFAFA;
+		}
+		
+		.icon-ctrl {
+			font-size: x-small;
+			cursor: default;
+		}
+		
+		.icon-ctrl:hover {
+			color: orange;
+		}
+		
+		.caItem {
+			font-size: small;
+		}
+
+		.caItem:hover, .caItem.CodeMirror-hint-active {
+			background: #EAEAEA;
+			color: #000000;
+		}
+		
+		.scriptTab {
+		 	width: 100%;
+		 	border: 0; 
+		 	position: fixed;
+		 	top: 30px;
+		 	height: calc(100% - 30px);
+		 	overflow: hidden;
+		}
+		
+		#rightPane {
+			background: #FAFAFA; 
+			position: absolute; 
+			right: 0px; 
+			top: 30px;  
+			overflow: auto; 
+			border-left: 3px solid #EFEFEF;
+			cursor: default;
+			z-index: 99;
+			padding-top: 3px;
+			padding-left: 8px;
+			padding-right: 25px;
+			scrollbar-width: 10px;
+			height: calc(100% - 30px);
+		}
+		
+		#viewExpender {
+			position: absolute; 
+			top: 50%; 
+			right: 0px; 
+			cursor: default; 
+			z-index: 9999; 
+			font-size: x-large;
+		}
+		
+		#viewExpender:hover {
+			background: ORANGE;
+		}
+		
+		
+		#tabHeader span.tabLabel {
+			padding-left: 3px;
+			padding-bottom: 2px;
+			font-size: x-small;
+			font-style: italic;
+			color: #777777;
+			padding-right: 3px;
+			cursor: default;
+		}
+		
+		#tabHeader span.tabLabel:hover {
+			border-bottom: 1px solid #2980b9;
+		}
+		
+		#tabHeader span.tabLabel.selected {
+			color: #000000;
+			font-weight: bold;
+			font-size: small;
+		}
+		
+		.tabLabel .hoverItem {
+			display: none;
+		}
+		
+		.tabLabel:hover .hoverItem {
+			display: inline;
+		}
+		
+		
+		span.glyphicon.barAtLeft, span.symb.barAtLeft {
+			padding-left: 5px;
+			border-left: 1px solid #333333;
+		}
+	</style>
+</head>
+<body style="overflow: hidden;" id="Main" ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="tabHeader" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 25px; padding-top: 8px;">
+		<div style="font-weight: none; font-style: italic; ">
+			<span id="tabLabelList">
+				<span ng-repeat="script in scriptList" class="tabLabel" ng-class="{selected: script==curScript}" 
+					title="{{script.title}}" ng-if="!script.readonly">
+					<span class="tabLabelText" ng-click="selectScript(script)">{{script.scriptName}}{{script.changed?'*':''}}</span>
+					<span class="hoverItem" ng-hide="script.reserved">
+						<span ng-click="renameScript(script)" title="rename script" 
+							class="icon-ctrl glyphicon glyphicon-pencil">
+						</span>
+						<span ng-click="removeScript(script)" title="delete script" 
+							class="icon-ctrl glyphicon glyphicon-remove">
+						</span>
+					</span>
+				</span>
+			</span>
+			<span class="cmdLink">
+				<span class="glyphicon glyphicon-plus" ng-click="addScript()" style="margin-left: 5px;" title="add a new script"></span>
+			</span>
+			<span id="actionBtn" style="position: absolute; right: 8px; top: 5px;">
+				<span ng-click="editorCmd('find');" title="Find / search, Ctrl-F/Cmd-F" 
+					class="icon-ctrl glyphicon glyphicon-search">
+				</span>
+				<span ng-click="editorCmd('findPrev');" title="Find previous, Shift-Ctrl-G / Shift-Cmd-G"
+					class="icon-ctrl glyphicon glyphicon-chevron-left">
+				</span>
+				<span ng-click="editorCmd('findNext');" title="Find next, Ctrl-G / Cmd-G"
+					class="icon-ctrl glyphicon glyphicon-chevron-right">
+				</span>
+				<span ng-click="editorCmd('replace');" title="Replace, Shift-Ctrl-F / Cmd-Option-F"
+					class="icon-ctrl glyphicon" style="cursor: default; font-family: impact; font-size: small;">R
+				</span>
+	
+				<span ng-click="toggleCommentScript();" title="Toggle comment code selection. Ctrl-/"
+					class="icon-ctrl glyphicon barAtLeft" style="margin-left: 5px; cursor: default; font-family: impact; font-weight: bold; font-size: small;">//
+				</span>
+	
+				<span ng-click="editorCmd('undo');" title="Undo, Ctrl/Cmd-Z" class="icon-ctrl mode symb" 
+					style="position: relative; top: 2px; font-weight: bold; font-size: medium;">&#8630;</span>
+				<span ng-click="editorCmd('redo');" title="Redo, Ctrl/Cmd-Y" class="icon-ctrl mode symb" 
+					style="position: relative; top: 2px; font-weight: bold; font-size: medium;">&#8631;</span>
+
+				<span id="pluginBtn" onclick="parentWinObj.curAppState.openDialog('PropRequirement');" class="icon-ctrl mode symb barAtLeft" 
+					title="View/Edit Model Requirements" style="font-weight: bold; font-size: small;">Req</span>
+				<span onclick="parentWinObj.curAppState.openDialog('InfoScript');" title="Info on Script Editor" 
+					class="icon-ctrl glyphicon glyphicon-info-sign" style="position: relative; top: 2px; font-size: small;">
+				</span>
+			</span>
+		</div>
+	</div>
+	<div class="scriptTab">
+		<textarea disabled class="script" id="scriptEditor" style="border:0;"></textarea>
+	</div>
+	<div id="rightPane" ng-show="viewVisible" style="font-style: italic;">
+		<div style="font-weight: bold; opacity: 0.7; text-align: center; border-bottom: 1px solid #AAAAAA;">Trigger List</div>
+		<ul style="padding-left: 15px;">
+			<li ng-repeat="level1 in viewDataList">
+				<a ng-click="findLine(level1);">{{level1.desc}}</span></a>
+				<ul style="padding-left: 14px;">
+					<li ng-repeat="level2 in level1.children">
+						<a ng-click="findLine(level2);">{{level2.desc}}</a>
+						<ul style="padding-left: 14px;">
+							<li ng-repeat="level3 in level2.children">
+								<a href="#" ng-click="findLine(level3);">{{level3.desc}}</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div id="viewExpender" ng-show="curScript.scriptName=='TRIGGERS'" ng-click="toggleView();">
+		<span ng-show="viewVisible">&rangle;</span>
+		<span ng-hide="viewVisible">&langle;</span>
+	</div>
+</body>
+</html>

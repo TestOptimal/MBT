@@ -1,0 +1,191 @@
+{
+  "page": {
+    "header": {
+      "title": "Test Execution Dashboard",
+      "style": {}
+    },
+    "style": {
+      "background": "#F0F0F0"
+    },
+    "injectStyle": "html, body { background: #F0F0F0;}\n .kpi-num { font-size: xxx-large; font-weight: bold; }\n .kpi-num .suffix {font-size: small;} \n.Code_Passed { color: blue} \n.Code_Failed {color: orange} \n.No-Cover {color: yellow}"
+  },
+  "groups": [
+    {
+      "header": {
+        "title": "Key Performance Indicators (KPIs)",
+        "style": {}
+      },
+      "style": {
+        "width": "100%",
+        "align-items": "center"
+      },
+      "graphs": [
+        {
+          "id": "Gc5060a16",
+          "name": "bugCount",
+          "type": "kpi-number",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Weekly",
+          "expanded": true,
+          "title": "Defects Found",
+          "style": {
+            "tile": {
+              "align-self": "center",
+              "order": 1
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            },
+            "kpiNum": {
+              "align-items": "center"
+            }
+          }
+        },
+        {
+          "id": "Gfa4f61e1",
+          "name": "reqStatus",
+          "type": "pie",
+          "expanded": true,
+          "style": {
+            "tile": {
+              "order": 2,
+              "width": "200px",
+              "align-self": "flex-end"
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            }
+          },
+          "title": "Requirements Status",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Weekly"
+        },
+        {
+          "id": "Gb687c0d5",
+          "name": "tcCount",
+          "type": "donut",
+          "expanded": true,
+          "style": {
+            "tile": {
+              "order": 3,
+              "width": "200px",
+              "align-self": "flex-end"
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            },
+            "kpiNum": {}
+          },
+          "title": "TestCases Stats",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Daily"
+        }
+      ],
+      "expanded": true
+    },
+    {
+      "header": {
+        "title": "Test Execution Trends"
+      },
+      "style": {
+        "width": "100%"
+      },
+      "graphs": [
+        {
+          "id": "G9a01a5c0",
+          "name": "bugTrend",
+          "type": "area-spline",
+          "expanded": true,
+          "style": {
+            "tile": {
+              "order": 3
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            },
+            "kpiNum": {}
+          },
+          "title": "Defects Found",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Daily"
+        },
+        {
+          "id": "G082c10c5",
+          "name": "tcTrend",
+          "type": "area-spline",
+          "expanded": true,
+          "style": {
+            "tile": {
+              "order": 1
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            },
+            "kpiNum": {
+              "align-items": "center"
+            }
+          },
+          "title": "Test Cases Executed",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Daily"
+        },
+        {
+          "id": "Gcd778b38",
+          "name": "execCount",
+          "type": "bar",
+          "style": {
+            "tile": {
+              "align-self": "center",
+              "order": 2
+            },
+            "title": {
+              "text-decoration": "italic",
+              "font-size": "x-large"
+            },
+            "chart": {
+              "display": "flex",
+              "flex-direction": "column",
+              "font-weight": "bold"
+            },
+            "kpiNum": {}
+          },
+          "expanded": true,
+          "title": "Model Executions (weekly)",
+          "projName": "ALL-MODELS",
+          "collectInterval": "Daily"
+        }
+      ],
+      "expanded": true
+    }
+  ]
+}

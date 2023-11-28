@@ -1,0 +1,61 @@
+{
+  "dsName": "ADDITIONS",
+  "fieldList": [
+    {
+      "fieldName": "num1",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "20",
+        "40"
+      ]
+    },
+    {
+      "fieldName": "num2",
+      "dataType": "number",
+      "derived": false,
+      "groupCode": "",
+      "domainList": [
+        "300",
+        "500"
+      ]
+    },
+    {
+      "fieldName": "result",
+      "dataType": "number",
+      "derived": true,
+      "groupCode": "",
+      "domainList": [
+        "num1 + num2"
+      ]
+    }
+  ],
+  "overallStrength": "pairWise",
+  "dataRows": [
+    {
+      "num1": 20,
+      "result": 320,
+      "num2": 300,
+      "$$hashKey": "object:104"
+    },
+    {
+      "num1": 20,
+      "result": 520,
+      "num2": 500,
+      "$$hashKey": "object:105"
+    },
+    {
+      "num1": 40,
+      "result": 340,
+      "num2": 300,
+      "$$hashKey": "object:106"
+    },
+    {
+      "num1": 40,
+      "result": 540,
+      "num2": 500,
+      "$$hashKey": "object:107"
+    }
+  ]
+}

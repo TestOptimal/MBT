@@ -1,0 +1,266 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>TestOptimal</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<LINK REL="SHORTCUT ICON" HREF="favicon.ico">
+    <link href="packages/facebox-1.4/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="packages/facebox-1.4/jquery.facebox.min.js" type="text/javascript"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+	<script src="/webjars/angularjs/angular-cookies.js"></script>
+    <link href="packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<link href="css/IDE_Main.css" rel="stylesheet">
+<style>
+	
+</style>
+<script>
+	var MainModule = angular.module("Main", ['ui.bootstrap','ngCookies']);
+</script>	
+<script src="js/utils.js"></script>
+<script src="js/sys_svc.js"></script>
+	
+<script>
+
+$(document).ready (function () {
+	$(document).keypress(function(event) {
+	    var keycode = (event.keyCode ? event.keyCode : event.which);
+	    if(keycode == '13') {
+	    	$("body").scope().submit();
+    	}
+	});
+});
+
+function getScopeVar () {
+	var scope = angular.element(document.getElementById('Main')).scope();
+	return scope;
+}
+
+var scope;
+var curAppState = {
+	addMsg: function (msgObj_p) {
+		msgObj_p.timestamp = new Date();
+		scope.addMsg(msgObj_p);
+	}
+}
+
+MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrRest, $cookies) {
+	parent.scope = $scope;
+    $scope.headerHeight = 20;
+	$scope.viewHeight = $window.innerHeight;
+	$scope.viewWidth = $window.innerWidth;
+	$scope.rootCurAppState = curAppState;
+	$scope.sysMsg = {
+		SeverityList: { "info": 2, "alert": 10, "warn": 20, "error": 50},
+		msgList: [],
+		mostSevereMsg: undefined,
+		visible: false
+	}
+	$scope.urlBase = location.protocol+'//'+location.hostname+':'+location.port;
+	$scope.emailLocked = false;
+	
+	$scope.title = "Login";
+	$scope.username = "";
+	$scope.password = "";
+	$scope.password2 = "";
+	$scope.reqInd = false;
+	$scope.pwdMatched = true;
+	$scope.loginStyle = {
+  				width: '400px',
+  				left: 'calc(50% - 200px)',
+  				height: '300px',
+  				top: 'calc(50% - 150px)'
+  			}
+
+    $scope.addMsg = function(msgObj_p) {
+    	msgObj_p.severity = $scope.sysMsg.SeverityList[msgObj_p.type];
+    	if (msgObj_p.severity==undefined) msgObj_p.severity = 0;
+    	if (!msgObj_p.timestamp) {
+    		msgObj_p.timestamp = new Date();
+    	}
+		$scope.sysMsg.msgList.unshift(msgObj_p);
+		$scope.sysMsg.visible = true;
+		if ($scope.sysMsg.mostSevereMsg==undefined || $scope.sysMsg.mostSevereMsg.severity <= msgObj_p.severity) {
+			$scope.sysMsg.mostSevereMsg = msgObj_p;
+		}
+		if ($scope.sysMsg.clearMsgTimer) {
+			clearTimeout($scope.sysMsg.clearMsgTimer);
+		}
+		$scope.sysMsg.clearMsgTimer = setTimeout (function() {
+			$scope.sysMsg.visible = false;
+			$scope.$apply();
+		}, 3000);
+	}
+
+    $scope.submit = function () {
+    	if (!$scope.okToSubmit) {
+    		return;
+    	}
+    	var req = {
+    		 method: 'GET',
+    		 url: $scope.urlBase + "/api/v1/sec/" + ($scope.reqInd?"register":"check"),
+    		 headers: {
+    		   'Content-Type': undefined,
+    		   'username': $scope.username,
+    		   'password': $scope.password
+    		 },
+//    		 data: { username: $scope.username, password: $scope.password },
+//    		 transformRequest: function (data, headersGetter) {
+//                       var formData = new FormData();
+//                       angular.forEach(data, function (value, key) {
+//                           formData.append(key, value);
+//                       });
+//                       return formData;
+//                   }
+    		}
+    		$http(req).then(function(response) {
+    				var msgObj = response.data;
+    				if (msgObj.status=="OK") {
+    					var opt = {
+    						domain: location.hostname,
+    						samesite: 'strict' 
+    					}
+    					$cookies.put(location.hostname + "_" + location.port + "_totoken", "Basic " + btoa($scope.username + ":" + $scope.password), opt);
+ //   					$cookies.put("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password), opt);
+			            window.top.location = location.protocol+'//' + location.hostname+':'+location.port + "/ide";
+			    	}
+			    	else {
+			    		$scope.addMsg({type: "warn", text: msgObj.alertMessage});
+			    	}
+		        }, function(err) {
+		        	console.log(err);
+		    		$scope.addMsg({type: "warn", text: err.data.error});
+				});
+    }
+    
+    $scope.pwdChanged = function () {
+    	$scope.pwdMatched = $scope.password === $scope.password2;
+    	$scope.okToSubmit = $scope.reqInd && $scope.pwdMatched && $scope.ack && $scope.username.length > 0
+    			|| !$scope.reqInd && $scope.username.length>0 && $scope.password.length>0;
+    }
+    
+    $scope.init = function () {
+		if (parent.length > 2) {
+			window.parent.location=window.location;
+			return;
+		}
+		
+    	$scope.rootCurAppState.toSvc = {
+    		SysSvc: SysSvc
+    	};
+		SvrRest.token = "";
+    	$.ajax("/api/v1/sec/config", function(data) {
+    		$scope.config = data;
+    		$scope.rootCurAppState.config = $scope.config;
+    		$scope.username = $scope.config.licEmail;
+    		//$scope.emailLocked = $scope.config.licEmail.length>0;
+    		
+    		$scope.ack = $scope.config["License.Ack"];
+   			$scope.title = $scope.ack?"Login":"Create Account"
+    		$scope.reqInd = !$scope.ack;
+   			$scope.loginStyle = {
+   				width: '400px',
+   				left: 'calc(50% - 200px)',
+   				height: $scope.reqInd? '400px': '300px',
+   				top: $scope.reqInd? 'calc(50% - 200px)': 'calc(50% - 150px)'
+   			}
+    	});
+    }
+    
+	$scope.init();
+});
+
+</script>
+<style>
+	label {
+		margin-bottom: 0px !important;
+		margin-top: 10px; 
+	}
+</style>
+</head>
+<body id="Main" ng-app="Main" ng-controller="mainCtrl" ng-cloak >
+	<div id="ideHeader">
+		<center style="height: 100%;">
+			<div id="headerText" style="margin-left: 0px; height: 100%; margin-top: 5px;">
+				TestOptimal IDE
+				<span class="glyphicon glyphicon-stats" style="font-style: italic; color: #555555;"></span>
+			</div>
+		</center>
+	</div>
+	<div id="miniBtnLeft" style="display: inline;">
+		<div id="appMenu">
+			<span class="toIcon">
+				<img src="img/to.png" width="20px"/>
+				<span style="font-size: 5pt; margin-top: 10px;" class="glyphicon glyphicon-chevron-right">
+				</span>
+			</span>
+		</div>
+	</div>
+		
+	<div id="QuickStats">
+		<span id="toVersion">
+			{{config.licEdition}} {{config.TestOptimalVersion}}
+		</span>
+	</div>
+	
+	<div class="dialog" id="dialog" ng-style="loginStyle">
+		<div class="dialogHeader">
+			<span class="dialogTitle">{{title}}</span>
+		</div>
+		<div style="padding: 8px;">
+		    <div>
+		        <label>Email</label>
+		        <i class="fa fa-key">email address you used to request download / license</i>
+		        <input type="email" ng-change="pwdChanged();" ng-disabled="emailLocked"
+		        	class="form-control" ng-model="username" />
+		    </div>
+		    <div>
+		        <label for="password">Password</label>
+		        <i class="fa fa-lock"></i>
+		        <input type="password" ng-change="pwdChanged()"
+		        	class="form-control" ng-model="password" />
+		    </div>
+		    <div ng-show="reqInd">
+		        <label for="password2">Confirm Password</label>
+		        <i class="fa fa-lock">
+		        	<span ng-show="pwdMatched">matched</span>
+		        	<span ng-hide="pwdMatched" style="color: orange;">not matched</span>
+		        </i>
+		        <input type="password" ng-change="pwdChanged()"
+		        	class="form-control" ng-model="password2" />
+		    </div>
+		
+		    <div ng-show="reqInd" style="line-height: 50px; text-align: center;">
+		        <input type="checkbox" ng-model="ack"
+		        	ng-change="pwdChanged()" />
+		        <label for="ack">Accept <a href="https://testoptimal.com/TestOptimalLicense.pdf" target=_blank">TestOptimal License Agreement</a>.</label>
+		    </div>
+		
+		    <div style="text-align: center; margin-top: 15px;">
+		        <button type="submit" ng-disabled="!okToSubmit" ng-click="submit()"
+		        	class="btn btn-primary">Submit</button>
+		    </div>
+		</div>
+	</div>
+	
+	<div id="msgBar" ng-attr-style="width: {{sysMsg.visible?'100%':'8px'}};">
+		<span id="msgBarActions" ng-show="sysMsg.visible">
+			<span class="glyphicon glyphicon-chevron-down" ng-click="sysMsg.visible=false;"></span>
+			<span class="glyphicon glyphicon-erase" ng-click="clearMsg();"></span>
+		</span>
+		<span id="msgExpander" class="msg_{{sysMsg.mostSevereMsg.type}}" 
+			ng-hide="sysMsg.visible && sysMsg.msgList.length>0" ng-click="sysMsg.visible=true;"
+			title="show console messages">&rangle;</span>
+		<ul id="msgList" ng-show="sysMsg.visible">
+			<li ng-repeat="msg in sysMsg.msgList track by $index">
+				<span class="msgItem symb msg_{{msg.type}}">&#9888;</span>
+				<span class="msg">{{msg.text}}</span> 
+				<span style="font-size: x-small;">{{msg.timestamp.toLocaleString()}}</span>
+				<span style="font-size: x-small;" ng-show="msg.source">({{msg.source}})</span>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

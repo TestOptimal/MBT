@@ -1,0 +1,398 @@
+{
+  "uid": "U905",
+  "typeCode": "scxml",
+  "desc": "This model demonstrates test automation to drive AUT remotely using RemoteAgent.",
+  "notepad": "\u003cp\u003eThis model demonstrates test automation to drive AUT remotely using RemoteAgent.\n\u003c/p\u003e\n\u003cp\u003eRemoteAgent allows you to automate testing any types of AUT locally on the same computer as well as remotely on another computer through http protocol.\n\u003c/p\u003e\n\u003cp\u003eIn your model you write simple Groovy script in SCRIPT / TRIGGER to send commands remotely to and receive testing results from your AUT.  The results are then saved with the model execution.\n\u003c/p\u003e\n\u003cp\u003eTo run this demo, open your browser and point to \u003ca href\u003d\"http://localhost:8888/DemoApp/Demo_RemoteAgent.html\" target\u003d_blank\u003ehttp://localhost:8888/DemoApp/Demo_RemoteAgent.html\u003c/a\u003e and click \"Execute\" to remotely start your model.\n\u003c/p\u003e\n\u003cp\u003eThe web page acts as the test harness that interacts with your web app in responding to the remote commands received from the model.\n\u003c/p\u003e",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U911",
+      "notepad": "",
+      "stateID": "End",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 593.0,
+        "top": 168.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "reset calculator",
+      "uid": "U53109842",
+      "notepad": "",
+      "stateID": "state_2",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "done",
+          "uid": "Ub849daa2",
+          "notepad": "",
+          "targetUID": "U911",
+          "event": "trans_state2_end",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "down",
+            "posList": [
+              {
+                "left": 469.0,
+                "top": 280.0
+              },
+              {
+                "left": 630.5,
+                "top": 280.0
+              },
+              {
+                "left": 630.5,
+                "top": 217.0
+              }
+            ],
+            "label": {
+              "left": 18,
+              "top": -37,
+              "width": 121,
+              "height": 28
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 371.0,
+        "top": 228.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "Start state, no quarter or just vended",
+      "uid": "U907",
+      "notepad": "",
+      "stateID": "Start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "start",
+          "uid": "Ue49d6772",
+          "notepad": "",
+          "targetUID": "U53109842",
+          "event": "trans_start_state2",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 205.0,
+                "top": 191.0
+              },
+              {
+                "left": 306.0,
+                "top": 191.0
+              },
+              {
+                "left": 306.0,
+                "top": 256.0
+              },
+              {
+                "left": 370.0,
+                "top": 256.0
+              }
+            ],
+            "label": {
+              "left": 14,
+              "top": 8,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ub774add0",
+          "notepad": "",
+          "targetUID": "U55120633",
+          "event": "trans start_state1",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 205.0,
+                "top": 152.0
+              },
+              {
+                "left": 286.0,
+                "top": 152.0
+              },
+              {
+                "left": 286.0,
+                "top": 78.0
+              },
+              {
+                "left": 369.0,
+                "top": 78.0
+              }
+            ],
+            "label": {
+              "left": 18,
+              "top": -37,
+              "width": 121,
+              "height": 28
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 121.0,
+        "top": 138.0,
+        "width": 86.0,
+        "height": 59.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U55120633",
+      "notepad": "",
+      "stateID": "state_1",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "dataset": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U8027ea9a",
+          "notepad": "",
+          "targetUID": "U911",
+          "event": "trans_state1_end",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 469.0,
+                "top": 82.0
+              },
+              {
+                "left": 630.0,
+                "top": 82.0
+              },
+              {
+                "left": 630.0,
+                "top": 167.0
+              }
+            ],
+            "label": {
+              "left": 18,
+              "top": -37,
+              "width": 121,
+              "height": 28
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U3bcf6e19",
+          "notepad": "",
+          "targetUID": "U53109842",
+          "event": "trans_state1_state2",
+          "weight": 5,
+          "traverseTimes": 1,
+          "dataset": "",
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 431.0,
+                "top": 129.0
+              },
+              {
+                "left": 431.0,
+                "top": 178.0
+              },
+              {
+                "left": 424.0,
+                "top": 178.0
+              },
+              {
+                "left": 424.0,
+                "top": 228.0
+              }
+            ],
+            "label": {
+              "left": -32,
+              "top": 29,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardHint": "",
+          "satisfyingHint": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 371.0,
+        "top": 55.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    }
+  ],
+  "modelName": "DEMO_RemoteTrigger",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "5.3.1",
+  "versionReq": "",
+  "buildNum": 3,
+  "mbtNode": {
+    "uid": "U925",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": true
+    },
+    "execThreadNum": 1,
+    "threadSpreadDelay": 0,
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "pluginList": [
+    "AGENT"
+  ],
+  "modelType": "FSM"
+}

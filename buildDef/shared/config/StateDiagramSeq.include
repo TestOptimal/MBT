@@ -1,0 +1,8 @@
+skinparam state {
+	ArrowColor #777777
+	BorderColor #EEEEEE
+	BackgroundColor #EEEEEE
+	StartColor #97c3d4
+	EndColor #777777
+ 	FontColor #000000
+}

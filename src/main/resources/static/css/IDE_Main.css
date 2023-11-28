@@ -1,0 +1,414 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: #FAFAFA !important;
+}
+
+#helpBtn, #guideBtn {
+	font-weight: bold;
+}
+
+#ideHeader {
+	background: linear-gradient(#F0EEE3, #F0F0F0);
+	height: 25px;
+	width: 100%; 
+	z-index: 5; 
+	position: fixed;
+	font-size: small; 
+	font-style: italic;
+	cursor: default;
+}
+
+#miniBtnLeft {
+	z-index: 10;
+	height: 25px;
+	position: fixed;
+	top: 0px;
+	cursor: pointer;
+	font-size: small;
+}
+
+#headerText {
+	position: relative; 
+	top: -3px; 	
+}
+
+#tabHeader {
+	display: inline; 
+	text-align: center; 
+	width: 100%;
+}
+
+#tabHeader:hover .tabLabel {
+	display: inline;
+}
+
+#tabHeader .tabLabel.tabSelected {
+	display: inline;
+}
+
+
+#appMenu {
+	display: inline;
+	margin-right: 5px;
+}
+
+.menuDisabled, .shortcutItem.menuDisabled {
+	opacity: 0.5;
+}
+
+#appMenu:hover {
+	border-right: 1px solid #2980b9;
+	height: 50px;
+}
+
+#tabInd {
+	 position:relative; 
+	 top: -3px; 
+	 font-size: x-small;
+}
+
+#tabInd span {
+	margin-left: 5px;
+}
+
+#tabHeader span.tabLabel {
+	padding-left: 3px;
+	padding-bottom: 2px;
+	font-size: x-small;
+	font-style: italic;
+	color: #777777;
+	padding-right: 3px;
+}
+
+#tabHeader span.tabLabel:hover {
+	border-bottom: 1px solid #2980b9;
+}
+
+#tabHeader span.tabLabel.tabSelected {
+	color: #000000;
+	font-weight: bold;
+	font-size: small;
+}
+
+#IDE_TABS .tabContainer {
+	border-style: solid;
+	border-color: #dcdcdc;
+	border-width: 0px 1px 1px 1px;
+	background-color: #F0F0F0;
+	z-index: 0;
+}	
+
+#IDE_TABS .tabContainer.curTab {
+	z-index: 1;
+}
+
+#QuickStats {
+	position: absolute;
+	top: 10px;
+	right: 3px;
+	cursor: pointer;
+	font-size: x-small;
+	z-index: 6;
+}
+
+#QuickStats .updatesAvailable {
+	color: ORANGE;
+}
+
+.updatesAvail {
+	color: ORANGE !important;	
+}
+
+#toVersion {
+	font-style: italic;
+}	
+
+span.glyphicon {
+	color: #555555;
+}
+
+span.glyphicon:hover {
+	color: ORANGE !important;
+}
+
+span.glyphicon.disabled {
+	color: #AAAAAA !important;
+}
+	 
+span.glyphicon.savePending {
+	color: orange !important;
+}
+
+span.glyphicon.SyncTimerOff {
+	color: #AAAAAA;
+}
+
+span.glyphicon.extraPadding {
+	padding-left: 5px;
+	border-left: 1px solid #333333;
+}
+
+span.glyphicon.shortcutItem {
+	margin-right: 3px;
+}
+
+
+span.symb:hover {
+	color: ORANGE;
+}
+
+
+
+.selectedSession {
+	font-weight: bold;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding-right: 8px;
+    font-size: small;
+    cursor: default;
+    top: -5px;
+    z-index: 15;
+}
+
+.hoverDropdown .dropdown-content {
+	display: none;
+}
+
+.clickDropdown {
+	top: -1px;
+}
+
+.clickDropdown .dropdown-content {
+	top: 20px;
+}
+
+.dropdown-content {
+	text-align: left;
+    position: absolute;
+    left: -8px;
+    background-color: #f1f1f1;
+    min-width: 130px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 99;
+    padding-top: 8px;
+    padding-bottom: 5px;
+}
+
+.dropdown-content .menuItem {
+    color: black;
+    padding: 2px 8px;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-content .menuItem.extraPaddingTop {
+	padding-top: 8px;
+}
+
+.dropdown-content .menuItem.extraPaddingBottom {
+	padding-bottom: 8px;
+}
+
+.dropdown-content .menuItem:hover {
+	background-color: #ddd;
+    text-decoration: none;
+}
+
+.hoverDropdown:hover .dropdown-content, .hoverDropdown.tourHover .dropdown-content {
+    display: block;
+}
+
+.dropdown .menu-label:hover, .hoverDropdown.tourHover {
+	font-weight: bold;
+}
+
+.dropdown:hover .dropbtn {
+//    background-color: #f1f1f1;
+}
+
+.ui-dialog {
+	border: 1px solid #AAAAAA;
+}
+
+#opaqDiv {
+  opacity: 0.1;
+  filter: alpha(opacity = 10);
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  z-index: 100;
+  display:none;
+  background-color: #DFDFDF;
+}
+
+#facebox {
+	z-index: 1900;
+}
+
+.menuGapTop {
+	margin-top: 8px;
+}
+
+.menuItemCK {
+	float: right; 
+	right: 0px; 
+	position: relative;
+	top: 4px;
+	display: inline;
+}
+
+.dialog {
+	position: absolute; 
+	overflow: visible;
+	border-radius: 5px;
+	border: 1px solid #428bca;
+}
+
+.dialog iframe {
+	position: absolute;
+	top: 30px;
+	background: #FAFAFA;
+    height: calc(100% - 30px);
+    width: 100%;
+}
+
+.dialogHeader {
+	height: 30px;
+	background: #428bca;
+	text-align: center;
+	padding-top: 5px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.dialogHeader .dialogTitle {
+	cursor: move;
+}
+
+.dialogHeader .dialogClose {
+	float: right; 
+	margin-right: 5px; 
+	color: #BBBBBB;
+	cursor: default;
+}
+
+.dialogHeader .dialogClose:hover {
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+
+#appMenu {
+	z-index: 9999;
+}
+#appMenu:hover #appMenuContent, #appMenu.tourHover #appMenuContent {
+	display: inline;
+}
+#appMenu:hover #appMenuInd {
+	display: none;
+}
+
+#appMenuContent {
+	display: none;
+	position: relative;
+	top: 5px;
+	left: 5px;
+}
+
+
+#msgExpander {
+	background: #000000;
+	color: #FFFFFF;
+	width: 10px;
+	text-align: center; 
+	vertical-align: top; 
+	left: 0px; 
+	font-weight: bold;
+}
+
+#msgExpander:hover {
+	width: 15px;
+	height: 20px;
+}
+
+#msgExpander {
+	background: #777777;
+	color: #FFFFFF;
+}
+
+#msgExpander.msg_alert {
+	background: BLACK;
+	color: #FFFFFF;
+}
+
+#msgExpander.msg_warn {
+	background: ORANGE;
+}
+
+#msgExpander.msg_error {
+	background: crimson;
+}
+
+span.sym.msgItem:hover {
+	color: black !important;
+	font-weight: bold;
+}
+
+.msgItem {
+	font-style: italic; 
+	border-radius: 10px; 
+	font-weight: bold; 
+	padding: 3px;
+	background: #FFFFFF;
+	color: #000000;
+}
+
+.msgItem {
+	color: BLACK;
+}
+
+.msgItem.msg_alert {
+	background: BLACK;
+	color: #FFFFFF;
+}
+
+.msgItem.msg_warn {
+	background: orange;
+	color: #FFFFFF;
+}
+
+.msgItem.msg_error {
+	background: crimson;
+	color: #FFFFFF;
+}
+
+#msgBar {
+	background: #E0E0E0; 
+	cursor: default; 
+	position: absolute; 
+	bottom: 0px; 
+	left: 0px; 
+	border-top: 1px solid #AAAAAA;
+	max-height: 15%;
+	min-height: 20px;
+	overflow: auto;
+}
+
+#msgList {
+	padding-left: 5px; 
+	list-style: none;
+}
+
+#msgBarActions {
+	position: fixed; 
+	right: 20px; 
+	bottom: 1px;
+	background: #E0E0E0;	
+}

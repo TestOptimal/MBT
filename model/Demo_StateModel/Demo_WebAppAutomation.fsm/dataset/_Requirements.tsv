@@ -1,0 +1,19 @@
+name	desc	priority
+H1	Accept Half-Dollars	medium
+Q1	Accept Quarters	high
+R1	Cash Return	medium
+R2	Exact Change	high
+DRINK	Dispense Drinks	high
+TASK-1	Task Description	medium
+ACd		medium
+test		medium
+new	new tag	medium
+ddd		medium
+ccccc	d	medium
+xxxxxx	xxxxxxyyyyyy	medium
+mmmmm	MMMMM	medium
+yyyyy	YYY	medium
+vvvvv	vvv	medium
+ZZZZZ	Z	medium
+TTTTT	ttt	medium
+QQQ	QQQQQQQQ	medium

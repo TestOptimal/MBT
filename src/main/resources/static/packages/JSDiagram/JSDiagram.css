@@ -1,0 +1,460 @@
+
+#canvas {
+	background: #ebf5fb;
+}
+
+#canvas.mark {
+	background: #FAEFEF; //#f9ebea;
+}
+
+#canvas.edit {
+	background: #FAFAFA;
+}
+
+.JSD-label, .JSDState-label {
+	position: relative;
+}
+
+div.JSD-state {
+	position: absolute;
+	overflow: hidden;
+	padding: 1px;
+	z-index: 10;
+}
+
+div.JSD-state.JSDState {
+	border: 1px solid #333333;
+	border-radius: 5px;
+	background: #E0E0E0;
+}
+
+div.JSD-state.JSDBranch {
+	background: #E0E0E0;
+	border: none;//1px solid transparent;
+	background: none;
+}
+
+div.JSD-state.JSDSwitch {
+	background: #E0E0E0;
+	border-radius: 10px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	border-left: 5px solid #333333 !important;
+	border-right: 5px solid #333333 !important;
+}
+
+div.JSD-state.JSDSyncbarH, div.JSD-state.JSDSyncbarV {
+	border: none;;
+	background: #333333;
+}
+
+div.JSD-state.JSDSyncbarH .state-label, div.JSD-state.JSDSyncbarV .state-label {
+	display: none;
+}
+
+div.JSD-state.JSDInitial {
+    border-radius: 50%;
+	border: 5px solid #555555;
+	background: #AAAAAA;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+div.JSD-state.JSDFinal {
+    border-radius: 50%;
+	border: 5px double #000000;
+	background: #AAAAAA;
+	width: 100%;
+	height: 100%;
+}
+
+
+div.JSD-state.JSDHover, 
+div.JSD-trans.JSD-trans-seg.JSDHover,
+div.JSD-trans.JSD-trans-label.JSDHover {
+	border: 1px solid ORANGE;
+}
+
+div.JSD-trans.JSD-trans-end.JSDHover {
+	color: ORANGE;
+}
+
+.JSDState-label {
+	text-align: center;
+	width: 100%;
+	color: #000000;
+}
+
+div.JSD-box {
+	border: 1px solid #333333;
+	position: absolute;
+	z-index: 8;
+}
+
+div.JSD-swimlane.horizontal {
+	border-right: 0px;
+	position: absolute;
+	z-index: 6;
+	width: 100%;
+}
+
+div.JSD-swimlane.vertical {
+	border-bottom: 0px;
+	position: absolute;
+	z-index: 6;
+	height: 100%;
+}
+
+div.JSD-swimlane.vertical td.JSD-swimlane-lane {
+	border-bottom: none;
+}
+div.JSD-swimlane.horizontal td.JSD-swimlane-lane {
+	border-right: none;
+}
+	
+div.JSD-swimlane table {
+	border: 0;
+	cellspacing: 0;
+	cellpading: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.rotate {
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 1.5em;
+}
+.rotate div {
+	-moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+	-o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+	-webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
+	filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+	margin-left: -10em;
+	margin-right: -10em;
+}
+
+
+#canvas.addState div.JSD-state {
+	cursor: cell;
+}
+
+#canvas.addState div.JSD-state:hover,
+#canvas.addTrans div.JSD-state:hover,
+#canvas.rerouteTrans div.JSD-state:hover {
+	border: 1px solid orange;
+}
+
+#canvas.addState div.JSD-state.JSD-readonly:hover,
+#canvas.addTrans div.JSD-state.JSD-readonly:hover,
+#canvas.rerouteTrans div.JSD-state.readonly:hover {
+	border: 1px solid #333333;
+}
+	
+#canvas.addBox, #canvas.addSwimlane {
+	cursor: cell;
+}
+
+#canvas div.JSD-ghost-elem {
+	display: none;
+	position: absolute;
+	z-index: 35;
+}
+
+#canvas div.JSD-ghost-elem.JSDGhost-show {
+	display: block;
+}
+
+#JSDResizer-drag, #JSDMover-drag, #JSDLasso-drag {
+	border-radius: 5px;
+	border: 1px dashed #000000;
+	z-index: 50;
+}
+
+
+#JSD-menu {
+	cursor: context-menu;
+	width: 25px;
+	height: 25px;
+	padding: 2px;
+	background: #FFFFFF;
+	border-radius: 13px;
+	z-index: 55 !important;
+	border: 1px solid #AAAAAA;
+}
+
+#JSD-menu img {
+	width: 20px;
+	height: 20px;
+}
+
+#JSDMover {
+	width: 22px;
+	height: 22px;
+	font-size: 14px;
+	cursor: grab;
+	text-align: center;
+	border-radius: 11px;
+	border: 1px solid #AAAAAA;
+	background: #FFFFFF;
+}
+
+#JSDMover:hover {
+	color: ORANGE;
+}
+
+#JSDResizer {
+	cursor: nwse-resize;
+	border-radius: 0 0 5px 0;
+	overflow: hidden;
+	height: 10px;
+	width: 10px;
+}
+
+#JSDResizer div {
+	border-color: green transparent;
+	border-style: solid;
+	border-width: 0px 0px 10px 10px;
+}
+
+#JSDResizer div:hover {
+	border-color: ORANGE transparent;
+}
+
+.JSD-breakpoint {
+	color: ORANGE;
+	cursor: default;
+}
+
+div.JSD-state.selected {
+	border: 1px solid ORANGE;
+}
+
+div.JSD-state.JSD-hiLite-outgoing {
+	border: 1px solid GREEN;
+}
+
+div.JSD-state.JSD-hiLite-incoming {
+	border: 1px solid BLUE;
+}
+
+div.JSD-trans-seg {
+	position: absolute;
+	z-index: 33;
+	background: #333333;
+}
+
+
+div.JSD-trans-end {
+	position: absolute;
+	z-index: 34;
+	font-size: 13px;
+}
+
+div.JSD-trans-seg.selected {
+	background: ORANGE !important;
+}
+
+div.JSD-trans-end.selected, div.JSD-trans-label.selected {
+	color: ORANGE;
+}
+
+div.JSD-trans-label {
+	position: absolute;
+	z-index: 32;
+}
+
+div.JSD-trans.JSD-trans-seg {
+	margin: 2px;
+}
+
+#canvas.edit div.JSD-vertical {
+	cursor: col-resize;
+}
+
+#canvas.edit div.JSD-horizontal {
+	cursor: row-resize;
+}
+
+div.JSD-trans.JSDTrans-moving {
+	background: ORANGE;
+}
+
+span.JSD-tag {
+	background: #CCCCCC;
+	color: #FFFFFF;
+	padding: 1px 5px 2px 2px;
+	margin-left: 3px;
+	border-radius: 0 5px 5px 0;
+}
+
+span.JSD-tag:hover {
+	color: #333333;
+}
+
+.circle {
+	position: absolute;
+	z-index: 50;
+	width: 150px;
+	height: 150px;
+	opacity: 0;
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	transform: scale(0);
+	-webkit-transition: all 0.4s ease-out;
+	-moz-transition: all 0.4s ease-out;
+	transition: all 0.4s ease-out;
+	background: #FFFFFF;
+	border-radius: 75px;
+	border: 1px solid #E0E0E0;
+}
+
+.open.circle {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	transform: scale(1);
+}
+
+.circle span {
+	text-decoration: none;
+	color: #000000;
+	display: block;
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	margin-left: -10px;
+	margin-top: -10px;
+	position: absolute;
+	text-align: center;
+}
+
+.circle span:hover {
+	color: RED;
+}
+
+.circle span.symb {
+	padding-top: 4px;
+}
+
+.menu-button {
+	position: absolute;
+	top: calc(50% - 30px);
+	left: calc(50% - 30px);
+	text-decoration: none;
+	text-align: center;
+	color: #444;
+	border-radius: 50%;
+	display: block;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	padding: 10px;
+	background: #dde;
+}
+
+
+.JSDSwitch-left {
+	position: absolute;
+	border-color: transparent #AAAAAA;
+	border-style: solid;
+	border-width: 5px 5px 5px 0px;
+	height: 0px;
+	width: 0px;
+}
+
+.JSDSwitch-right {
+	position: absolute;
+	border-color: transparent #AAAAAA;
+	border-style: solid;
+	border-width: 5px 0px 5px 5px;
+	height: 0px;
+	width: 0px;
+	right: 0px;
+}
+
+.JSDSwitch-middle {
+	position: absolute;
+	left: 5px;
+	text-align:center;
+	border-top: 1px solid #AAAAAA;
+	border-bottom: 1px solid #AAAAAA;
+	background: #CCCCCC;
+}
+
+.JSDBranch-left {
+	position: absolute;
+ 	border-color: transparent #CCCCCC;
+ 	border-style: solid;
+	height: 0px;
+	width: 0px;
+	left: 1px;
+	top: 0px;
+}
+
+.JSDBranch-middle {
+	position: absolute;
+	text-align:center;
+	width: 100%;
+}
+
+.JSDBranch-right {
+	position: absolute;
+	border-style: solid;
+ 	border-color: transparent #CCCCCC;
+ 	height: 0px;
+	width: 0px;
+	left: 50%;
+	top: 0px;
+}
+
+.JSDHiLite-mark {
+	border: 2px solid RED;
+}
+.JSDHiLite-mark .JSDHiLite-seq {
+	background: RED;
+}
+
+.JSDHiLite-incoming {
+	border: 2px solid GREEN;
+}
+.JSDHiLite-incoming .JSDHiLite-seq {
+	background: GREEN;
+}
+
+.JSDHiLite-outgoing {
+	border: 2px solid BLUE;
+}
+.JSDHiLite-outgoing .JSDHiLite-seq {
+	background: BLUE;
+}
+
+.JSDHiLite-GREEN, .JSDHiLite-GREEN .JSDHiLite-seq {
+	background: GREEN;
+	opacity: 0.3;
+}
+
+.JSDHiLite-PALEGREEN, .JSDHiLite-PALEGREEN .JSDHiLite-seq {
+	background: PALEGREEN;
+	opacity: 0.3;
+}
+
+.JSDHiLite-ORANGE, .JSDHiLite-ORANGE .JSDHiLite-seq {
+	background: ORANGE;
+	opacity: 0.3;
+}
+
+.JSDHiLite-item {
+	z-index: 41;
+}
+
+.JSDHiLite-item .JSDHiLite-seq {
+	color: #FFFFFF;
+}
+
+.glyphicon.JSD-guard {
+	color: blue;
+}
