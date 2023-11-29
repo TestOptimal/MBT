@@ -95,7 +95,26 @@ var curAppState = {
 			curAppState.toSvc.SysSvc.shutdown();
 			curAppState.addMsg({type: "warn", text: 'Shutdown request sent'});
 		});
+	},
+	openSvrLog: function () {
+		if (curAppState.scxml) {
+	    	curAppState.toSvc.FileSvc.getSvrLog (curAppState.scxml.modelName, function(data) {
+				var win = window.open("", "Server Log", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
+				win.document.body.innerHTML = "<pre>" + data + "</pre>";
+			});
+		}
+		else {
+			alertDialog('No model is open');
+			return;
+		}
+	},
+	openModelLog: function () {
+    	curAppState.toSvc.RuntimeSvc.getModelLog (curAppState.scxml.modelName, function(data) {
+			var win = window.open("", "Model Log", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
+			win.document.body.innerHTML = "<pre>" + data + "</pre>";
+		});
 	}
+	
 }
 
 curAppState.winMgr = new WinManager(curAppState);
@@ -233,8 +252,8 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Forum"},
 		support: { menuFunc: "curAppState.winMgr.openWin (curAppState.isCommunity()?'Forum':'Support');", classes: "", label: "Contact Support", title: "submit a support ticket"},
 		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "Manage License", title: "Manage License"},
-		serverLog: { menuFunc: "$scope.openServerLog()", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
-		MScriptLog: {menuFunc: "$scope.openModelScriptLog()", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
+		serverLog: { menuFunc: "curAppState.openServerLog()", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
+		MScriptLog: {menuFunc: "curAppState.openModelLog()", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
 		resetShortcuts: {menuFunc: "$scope.initShortcuts()", label: 'Reset Shortcuts', classes: "extraPaddingTop", title: "Resets toolbar"},
 		swaggerUI: {menuFunc: "curAppState.winMgr.openWebPage('swagger')", label: 'REST API', classes: "", title: "TestOptimal REST API - Swagger UI"},
 		toggleFS: { menuFunc: "toggleFullScreen()", classes: "", title: "Toggle fullscreen", label: "Toggle Fullscreen"},
@@ -507,18 +526,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		}
     };
 
-    $scope.openServerLog = function () {
-    	var params = "";
-    	if (curAppState.scxml) {
-    		params = "?modelName=" + curAppState.scxml.modelName;
-    	}
-    	curAppState.winMgr.openWebPage (FileSvc.getSvrLogUrl() + params, "Server Log");
-    }
-
-    $scope.openModelScriptLog = function () {
-    	curAppState.winMgr.openWebPage (RuntimeSvc.getLogUrl(curAppState.scxml.modelName), "Script Log");
-    }
-    
     $scope.openWin = function (winID) {
     	curAppState.winMgr.openWin (winID);
     }

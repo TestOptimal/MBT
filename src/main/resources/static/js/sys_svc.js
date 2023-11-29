@@ -146,6 +146,11 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		SvrRest.post (FileSvc.base + "folder/" + folderName + "/rename/" + newFolderName, folderPath, successCB, errorCB);
 	};
 	
+	FileSvc.getSvrLog = function (modelName, successCB, errorCB) {
+		SvrRest.get(FileSvc.base + "log/tosvr?modelName=" + modelName, successCB, errorCB);
+	};
+	
+	
 	return FileSvc;
 })
 
@@ -209,8 +214,8 @@ MainModule.factory ('RuntimeSvc', function(SvrRest) {
 		SvrRest.get (RuntimeSvc.base + "model/" + modelName + "/monitor", successCB, errorCB);
 	};
 
-	RuntimeSvc.getLogUrl = function (modelName) {
-		return RuntimeSvc.base + "model/" + modelName + "/log";
+	RuntimeSvc.getModelLog = function (modelName, successCB, errorCB) {
+		SvrRest.get (RuntimeSvc.base + "model/" + modelName + "/log", successCB, errorCB);
 	}
 
 	return RuntimeSvc;

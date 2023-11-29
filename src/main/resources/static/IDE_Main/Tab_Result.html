@@ -52,16 +52,12 @@ MainModule.controller("mainCtrl", function($scope) {
 		});
 	}
 
-    $scope.openModelScriptLog = function () {
-    	parent.curAppState.winMgr.openWebPage (parent.curAppState.toSvc.RuntimeSvc.getLogUrl($scope.curExecStats.modelName), "Script Log");
-    }
 
     $scope.openServerLog = function () {
-    	var params = "";
-    	if (parent.curAppState.scxml) {
-    		params = "?modelName=" + parent.curAppState.scxml.modelName;
-    	}
-    	parent.curAppState.winMgr.openWebPage (parent.curAppState.toSvc.FileSvc.getSvrLogUrl() + params, "Server Log");
+    	parent.curAppState.openSvrLog();
+    }
+    $scope.openModelLog = function () {
+    	parent.curAppState.openModelLog();
     }
 
     $scope.init = function () {
@@ -111,7 +107,7 @@ MainModule.controller("mainCtrl", function($scope) {
 			ng-change="openExecStats(curExecStats)"></select>
 		<span class="glyphicon glyphicon-repeat" ng-click="openExecStats(curExecStats)" style="margin-left: 5px;" title="refresh currently open execution stats"></span>
 		<span style="float: right; margin-right: 5px;">
-			<span class="glyphicon glyphicon-warning-sign" ng-click="openModelScriptLog();" style="margin-left: 5px;" title="open MScript/model log file"></span>
+			<span class="glyphicon glyphicon-warning-sign" ng-click="openModelLog();" style="margin-left: 5px;" title="open MScript/model log file"></span>
 			<span class="glyphicon glyphicon-alert" ng-click="openServerLog();" style="margin-left: 5px;" title="open server log file"></span>
 		</span>
 	</div>
