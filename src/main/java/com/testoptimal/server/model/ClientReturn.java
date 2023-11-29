@@ -4,12 +4,10 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import io.swagger.annotations.ApiModelProperty;
-
 public class ClientReturn {
 	private static Gson gson = new Gson();
 	
-	@ApiModelProperty(notes = "OK for success, others either alert or error")
+//	@ApiModelProperty(notes = "OK for success, others either alert or error")
 	public String status;
 	
 	public String alertMessage;

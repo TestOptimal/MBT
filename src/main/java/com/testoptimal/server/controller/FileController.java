@@ -40,8 +40,6 @@ import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.ModelFile;
 import com.testoptimal.util.ZipUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -54,7 +52,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@Api(tags="File")
+//@Api(tags="File")
 @RequestMapping("/api/v1/file")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -82,7 +80,7 @@ public class FileController {
 		return type;
 	}
 	
-	@ApiOperation(value = "Folder Info", notes="Folder info")
+//	@ApiOperation(value = "Folder Info", notes="Folder info")
 	@RequestMapping(value = "folder/{folderPath}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FolderInfo> getFolder(@PathVariable (name="folderPath", required=false) String folderPath) throws Exception {
 		if (folderPath==null) {
@@ -100,7 +98,7 @@ public class FileController {
 		return new ResponseEntity<>(f, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Model Folder Info", notes="Model top folder")
+//	@ApiOperation(value = "Model Folder Info", notes="Model top folder")
 	@RequestMapping(value = "model/{modelName}", method = RequestMethod.GET)
 	public ResponseEntity<FolderInfo> modelFileList (@PathVariable ("modelName") String modelName,
 			ServletRequest request) throws Exception {
@@ -114,7 +112,7 @@ public class FileController {
 	}
 
 
-	@ApiOperation(value = "All Model List", notes="All models in nested folders")
+//	@ApiOperation(value = "All Model List", notes="All models in nested folders")
 	@RequestMapping(value = "model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<FileInfo>> getAllModels(ServletRequest request) throws Exception {
 		File folderReader = new File(Config.getModelRoot(), "");
@@ -134,7 +132,7 @@ public class FileController {
 		return new ResponseEntity<>(modelList, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "SubModel List", notes="SubModel list")
+//	@ApiOperation(value = "SubModel List", notes="SubModel list")
 	@RequestMapping(value = "submodel", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<String>> getSubModelList(ServletRequest request) throws Exception {
 		File folderReader = new File(Config.getModelRoot(), "");
@@ -150,7 +148,7 @@ public class FileController {
 	 * @param reqInfo_p
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "New Folder", notes="Create a new folder")
+//	@ApiOperation(value = "New Folder", notes="Create a new folder")
 	@RequestMapping(value = "folder/{folderPath}/{fileName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FileInfo> newFolder (@PathVariable(name="folderPath", required=true) String folderPath,
 			@PathVariable (name="fileName", required=true) String fileName) throws Exception {
@@ -165,7 +163,7 @@ public class FileController {
 		return new ResponseEntity<>(f , HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "New Model", notes="Create a new model")
+//	@ApiOperation(value = "New Model", notes="Create a new model")
 	@RequestMapping(value = "model/{modelPath}/{modelName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FileInfo> newModel (@PathVariable(name="modelPath", required=true) String modelPath,
 		@PathVariable(name="modelName", required=true) String modelName) throws Exception {
@@ -198,7 +196,7 @@ public class FileController {
 	 * @param reqInfo_p
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "Delete Model/Folder", notes="Delete a model (fsm or ds) or a folder")
+//	@ApiOperation(value = "Delete Model/Folder", notes="Delete a model (fsm or ds) or a folder")
 	@RequestMapping(value = "file/{folderPath}/{fileName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> deleteFolder (@PathVariable (name="folderPath", required=true) String folderPath,
 			@PathVariable (name="fileName", required=true) String fileName) throws Exception {
@@ -215,7 +213,7 @@ public class FileController {
 		return new ResponseEntity<>(ClientReturn.OK() , HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Server Log", notes="Server Log")
+//	@ApiOperation(value = "Server Log", notes="Server Log")
 	@RequestMapping(value = "log/{logName}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getServerLog (@PathVariable (name="logName", required=true) String logName,
 		@RequestParam (name="modelName", required=false) String modelName) throws Exception {
@@ -238,7 +236,7 @@ public class FileController {
 	
 	
 	// used by IDE_Main/Tab_ModelFiles.html
-	@ApiOperation(value = "Model File", notes="Model file")
+//	@ApiOperation(value = "Model File", notes="Model file")
 	@RequestMapping(value = "file/{folderPath}/{fileName}", method = RequestMethod.GET)
 	public ResponseEntity<UrlResource> modelFileOpen (
 			@PathVariable ("folderPath") String folderPath,
@@ -274,7 +272,7 @@ public class FileController {
     }
 
 	// used by StatsRpt/StatsDetails.html
-	@ApiOperation(value = "Model Articfact", notes="Model articfact/file")
+//	@ApiOperation(value = "Model Articfact", notes="Model articfact/file")
 	@RequestMapping(value = "artifact/{modelName}/{folderPath}/{fileName}", method = RequestMethod.GET)
 	public ResponseEntity<UrlResource> openModelArtifact (
 			@PathVariable ("modelName") String modelName,
@@ -287,7 +285,7 @@ public class FileController {
 		return this.getFile(fPath, fileName);
     }
 	
-	@ApiOperation(value = "Model Download", notes="Model download")
+//	@ApiOperation(value = "Model Download", notes="Model download")
 	@RequestMapping(value = "model/{modelName}/download", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<UrlResource> modelDownload (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -315,7 +313,7 @@ public class FileController {
 		 }    	
     }
 
-	@ApiOperation(value = "Upload model zip", notes="upload model")
+//	@ApiOperation(value = "Upload model zip", notes="upload model")
 	@RequestMapping(value = "upload/{modelName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModel (ServletRequest request,
 		@PathVariable (name="modelName", required=true) String modelName,
@@ -350,7 +348,7 @@ public class FileController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Rename Folder", notes="Rename Folder")
+//	@ApiOperation(value = "Rename Folder", notes="Rename Folder")
 	@RequestMapping(value = "folder/{folderName}/rename/{newFolderName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModel (
 		@PathVariable (name="folderName", required=true) String folderName,
@@ -379,7 +377,7 @@ public class FileController {
 	}
 	
 
-	@ApiOperation(value = "Move File/Folder", notes="Move File/Folder")
+//	@ApiOperation(value = "Move File/Folder", notes="Move File/Folder")
 	@RequestMapping(value = "move", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModel (
 		@RequestBody Map<String,String> moveOpts,
@@ -420,7 +418,7 @@ public class FileController {
 		}
 	}
 	
-	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
+//	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
 	@RequestMapping(value = "ideCss", method = RequestMethod.GET, produces = "text/css" )
 	public ResponseEntity<UrlResource> genModelGraph (ServletRequest request) throws Exception {
 		try {

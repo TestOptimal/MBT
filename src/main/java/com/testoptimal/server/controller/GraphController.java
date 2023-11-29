@@ -34,8 +34,6 @@ import com.testoptimal.stats.StatsMgr;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,14 +43,14 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@Api(tags="Graph")
+//@Api(tags="Graph")
 @RequestMapping("/api/v1/graph")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class GraphController {
 	private static Logger logger = LoggerFactory.getLogger(GraphController.class);
 
-	@ApiOperation(value = "Model Graph", notes="Model graph")
+//	@ApiOperation(value = "Model Graph", notes="Model graph")
 	@RequestMapping(value = "{modelName}/model", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genModelGraph (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -75,7 +73,7 @@ public class GraphController {
 		 }    	
 	}
 	
-	@ApiOperation(value = "Model Coverage", notes="Model Coverage graph")
+//	@ApiOperation(value = "Model Coverage", notes="Model Coverage graph")
 	@RequestMapping(value = "{modelName}/coverage", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genCoverageGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
@@ -106,7 +104,7 @@ public class GraphController {
 		 }    	
 	}
 
-	@ApiOperation(value = "Model Sequence Graph", notes="Model sequence graph")
+//	@ApiOperation(value = "Model Sequence Graph", notes="Model sequence graph")
 	@RequestMapping(value = "{modelName}/sequence", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> genModelSequenceGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
@@ -137,7 +135,7 @@ public class GraphController {
 		 }    	
 	}
 
-	@ApiOperation(value = "Model Traversal MSC", notes="Model traversal MSC")
+//	@ApiOperation(value = "Model Traversal MSC", notes="Model traversal MSC")
 	@RequestMapping(value = "{modelName}/msc", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> modelTravMSC(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,

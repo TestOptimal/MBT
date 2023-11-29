@@ -22,8 +22,6 @@ import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.util.StringUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -34,13 +32,13 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-@Api(tags="Security")
+//@Api(tags="Security")
 @RequestMapping("/api/v1/sec")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DefaultController {
 	private static Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
-	@ApiOperation(value = "check", notes="login")
+//	@ApiOperation(value = "check", notes="login")
 	@RequestMapping(value = "check", method = RequestMethod.POST)
 	public ResponseEntity<ClientReturn> checkPost (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
@@ -50,7 +48,7 @@ public class DefaultController {
 		return this.check(request, username, password, headerUsername, headerPassword);
 	}
 	
-	@ApiOperation(value = "check", notes="login")
+//	@ApiOperation(value = "check", notes="login")
 	@RequestMapping(value = "check", method = RequestMethod.GET)
 	public ResponseEntity<ClientReturn> check (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
@@ -75,7 +73,7 @@ public class DefaultController {
 		}
 	}
 
-	@ApiOperation(value = "register", notes="login")
+//	@ApiOperation(value = "register", notes="login")
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public ResponseEntity<ClientReturn> registerPost (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
@@ -86,7 +84,7 @@ public class DefaultController {
 		return this.register(request, username, password, headerUsername, headerPassword);
 	}
 	
-	@ApiOperation(value = "register", notes="login")
+//	@ApiOperation(value = "register", notes="login")
 	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public ResponseEntity<ClientReturn> register (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
@@ -114,7 +112,7 @@ public class DefaultController {
 		}
 	}
 	
-	@ApiOperation(value = "Config Settings", notes="Config setting list")
+//	@ApiOperation(value = "Config Settings", notes="Config setting list")
 	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
 		HttpSession session = ((HttpServletRequest) request).getSession();

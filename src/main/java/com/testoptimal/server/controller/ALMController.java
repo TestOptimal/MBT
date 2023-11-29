@@ -20,8 +20,6 @@ import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.Requirement;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 
 /**
@@ -30,7 +28,7 @@ import jakarta.servlet.ServletRequest;
  *
  */
 @RestController
-@Api(tags="ALM")
+//@Api(tags="ALM")
 @RequestMapping("/api/v1/alm")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -38,7 +36,7 @@ public class ALMController {
 	private static Logger logger = LoggerFactory.getLogger(ALMController.class);
 
 
-	@ApiOperation(value = "Save Requirement", notes="Save Reguirements")
+//	@ApiOperation(value = "Save Requirement", notes="Save Reguirements")
 	@RequestMapping(value = "{modelName}/requirement", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody List<Requirement> reqList,
@@ -48,7 +46,7 @@ public class ALMController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Requirement", notes="Reguirements")
+//	@ApiOperation(value = "Requirement", notes="Reguirements")
 	@RequestMapping(value = "{modelName}/requirement", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Requirement>> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {

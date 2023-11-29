@@ -19,8 +19,6 @@ import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.stats.DashboardStats;
 import com.testoptimal.stats.StatsMgr;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@Api(tags="Stats")
+//@Api(tags="Stats")
 @RequestMapping("/api/v1/stats")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -38,7 +36,7 @@ public class StatsController {
 
 	private static Logger logger = LoggerFactory.getLogger(StatsController.class);
 		
-	@ApiOperation(value = "Stats getModelExec", notes="Stats getModelExec")
+//	@ApiOperation(value = "Stats getModelExec", notes="Stats getModelExec")
 	@RequestMapping(value = "exec/{modelName}/{mbtSessID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ModelExecDB> getModelExec (@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
@@ -50,7 +48,7 @@ public class StatsController {
 	}
 
 
-	@ApiOperation(value = "Stats getModelExecList", notes="Stats getModelExecList")
+//	@ApiOperation(value = "Stats getModelExecList", notes="Stats getModelExecList")
 	@RequestMapping(value = "exec/{modelName}/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ModelExecDB>> getModelExecList (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -60,7 +58,7 @@ public class StatsController {
 		return new ResponseEntity<>(statsList, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Stats dashboard", notes="Stats dashboard")
+//	@ApiOperation(value = "Stats dashboard", notes="Stats dashboard")
 	@RequestMapping(value = "dashboard", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DashboardStats> getDashboard (ServletRequest request) throws Exception {
 		DashboardStats dstats = StatsMgr.getDashboardStats();

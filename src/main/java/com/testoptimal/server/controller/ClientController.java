@@ -39,8 +39,6 @@ import com.testoptimal.server.model.parser.GherkinModel;
 import com.testoptimal.server.model.parser.ModelParserGherkin;
 import com.testoptimal.util.FileUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,7 +48,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@Api(tags="Client")
+//@Api(tags="Client")
 @RequestMapping("/api/v1/client")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -59,7 +57,7 @@ public class ClientController {
 	public static enum Status { success, error, timeout};
 
 
-	@ApiOperation(value = "Start Model Execution", notes="Start model execution")
+//	@ApiOperation(value = "Start Model Execution", notes="Start model execution")
 	@RequestMapping(value = "model/start", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> startModel (
 			@RequestBody RunRequest runReq, 
@@ -93,7 +91,7 @@ public class ClientController {
 		}
 	}
 
-	@ApiOperation(value = "Stop Model Execution", notes="Stop model execution")
+//	@ApiOperation(value = "Stop Model Execution", notes="Stop model execution")
 	@RequestMapping(value = "model/stop", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void stopModel (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
@@ -108,7 +106,7 @@ public class ClientController {
 		}
 	}
 	
-	@ApiOperation(value = "Next", notes="Get next test step")
+//	@ApiOperation(value = "Next", notes="Get next test step")
 	@RequestMapping(value = "model/next", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestCmd> nextStep (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
@@ -126,7 +124,7 @@ public class ClientController {
 		return new ResponseEntity<>(cmdObj, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Result", notes="Send result to model")
+//	@ApiOperation(value = "Result", notes="Send result to model")
 	@RequestMapping(value = "model/result", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void sendResult (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
@@ -144,7 +142,7 @@ public class ClientController {
 	}
 	
 
-	@ApiOperation(value = "Stats getModelExec", notes="Stats getModelExec")
+//	@ApiOperation(value = "Stats getModelExec", notes="Stats getModelExec")
 	@RequestMapping(value = "model/stats", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> getModelExec (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
@@ -161,7 +159,7 @@ public class ClientController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Upload JSON Model", notes="Upload model in JSON for execution")
+//	@ApiOperation(value = "Upload JSON Model", notes="Upload model in JSON for execution")
 	@RequestMapping(value = "model/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModelJson (
 			@RequestBody String modelJson, 
@@ -198,7 +196,7 @@ public class ClientController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Upload Gherkin Model", notes="Upload model in Gherkin for execution")
+//	@ApiOperation(value = "Upload Gherkin Model", notes="Upload model in Gherkin for execution")
 	@RequestMapping(value = "model/upload/gherkin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModelGherkin (
 			@RequestBody String modelGherkin, 
@@ -275,7 +273,7 @@ public class ClientController {
 //		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 //	}
 //	
-	@ApiOperation(value = "Model Sequence", notes="Generate Test Cases")
+//	@ApiOperation(value = "Model Sequence", notes="Generate Test Cases")
 	@RequestMapping(value = "model/gen", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> modelSeq (
 			@RequestBody RunRequest runReq, 

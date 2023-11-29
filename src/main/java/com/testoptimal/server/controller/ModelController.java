@@ -30,8 +30,6 @@ import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.ModelInfo;
 import com.testoptimal.util.FileUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -42,14 +40,14 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-@Api(tags="Model")
+//@Api(tags="Model")
 @RequestMapping("/api/v1/model")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ModelController {
 	private static Logger logger = LoggerFactory.getLogger(ModelController.class);
 
-	@ApiOperation(value = "Open Model", notes="Open model")
+//	@ApiOperation(value = "Open Model", notes="Open model")
 	@RequestMapping(value = "{modelName}/getModel", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ModelInfo> openModel(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request, Principal principal) throws Exception {
@@ -83,7 +81,7 @@ public class ModelController {
 		return new ResponseEntity<>(openInfo, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Close Model", notes="close a model")
+//	@ApiOperation(value = "Close Model", notes="close a model")
 	@RequestMapping(value = "{modelName}/close", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -92,7 +90,7 @@ public class ModelController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Save Model", notes="Save a model definition")
+//	@ApiOperation(value = "Save Model", notes="Save a model definition")
 	@RequestMapping(value = "{modelName}/saveModel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveModel(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody String modelJson, ServletRequest request) throws Exception {
@@ -119,7 +117,7 @@ public class ModelController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Model Log", notes="Model log file")
+//	@ApiOperation(value = "Model Log", notes="Model log file")
 	@RequestMapping(value = "{modelName}/log", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> modelScripts(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -134,7 +132,7 @@ public class ModelController {
 	
 
 	
-	@ApiOperation(value = "Model Scripts", notes="Model scripts, including submodels")
+//	@ApiOperation(value = "Model Scripts", notes="Model scripts, including submodels")
 	@RequestMapping(value = "{modelName}/getScript", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GroovyScript>> getScripts(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
@@ -146,7 +144,7 @@ public class ModelController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Save Model Scripts", notes="Save model scripts")
+//	@ApiOperation(value = "Save Model Scripts", notes="Save model scripts")
 	@RequestMapping(value = "{modelName}/saveScript", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveScripts(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody List<GroovyScript> scriptList,

@@ -1,8 +1,5 @@
 package com.testoptimal.server.controller;
 
-import java.io.File;
-import java.io.InputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.server.config.ConfigVersion;
-import com.testoptimal.util.FileUtil;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 
@@ -27,14 +19,14 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(tags="Demo")
+//@Api(tags="Demo")
 @RequestMapping("/api/v1/demo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class DemoController {
 	private static Logger logger = LoggerFactory.getLogger(DemoController.class);
 	
-	@ApiOperation(value = "Demo Insurance Premium", notes="Demo insurance premium calculator")
+//	@ApiOperation(value = "Demo Insurance Premium", notes="Demo insurance premium calculator")
 	@RequestMapping(value = "insurance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InsurancePremium> getInsurancePremium (
 		@RequestParam (name="age", required=true) int age,

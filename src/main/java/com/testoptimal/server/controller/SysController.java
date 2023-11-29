@@ -28,8 +28,6 @@ import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.util.StringUtil;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -40,7 +38,7 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-@Api(tags="System")
+//@Api(tags="System")
 @RequestMapping("/api/v1/sys")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -50,7 +48,7 @@ public class SysController {
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	
-	@ApiOperation(value = "Config Settings", notes="Config setting list")
+//	@ApiOperation(value = "Config Settings", notes="Config setting list")
 	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
 		HttpSession session = ((HttpServletRequest) request).getSession();
@@ -74,13 +72,13 @@ public class SysController {
 		return new ResponseEntity<>(retProp, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
+//	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
 	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
 		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Shutdown", notes="Shutdown server")
+//	@ApiOperation(value = "Shutdown", notes="Shutdown server")
 	@RequestMapping(value = "shutdown", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	@PreAuthorize("hasPermission('hasAccess','ADMIN')")
 	public ResponseEntity<ClientReturn> shutdown () throws Exception {
@@ -89,7 +87,7 @@ public class SysController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Model Script CodeAssist", notes="Model script code assist list")
+//	@ApiOperation(value = "Model Script CodeAssist", notes="Model script code assist list")
 	@RequestMapping(value = "CodeAssist/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListModel(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
@@ -99,14 +97,14 @@ public class SysController {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAList(pluginList), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "DataDesign Script CodeAssist", notes="DataDesign script code assist list")
+//	@ApiOperation(value = "DataDesign Script CodeAssist", notes="DataDesign script code assist list")
 	@RequestMapping(value = "CodeAssist/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListData(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListData(pluginList), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Script CodeAssist for expr", notes="script code assist list")
+//	@ApiOperation(value = "Script CodeAssist for expr", notes="script code assist list")
 	@RequestMapping(value = "CodeAssist/expr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CodeAssist>> caListExpr (
 		@RequestBody List<String> expr,
@@ -114,7 +112,7 @@ public class SysController {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListByExpr (expr), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Save Config", notes="save config entries")
+//	@ApiOperation(value = "Save Config", notes="save config entries")
 	@RequestMapping(value = "config", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveConfig (
 			@RequestBody Map<String, String> map) {
