@@ -55,7 +55,8 @@
 				}
 				else {
 					var url = parent.curAppState.toSvc.FileSvc.getFileURL (folderObj.relativePath, fileObj.name + fileObj.ext);
-					parent.curAppState.winMgr.openWebPage (url);
+					//parent.curAppState.winMgr.openWebPage (url);
+					parent.curAppState.openModelFile(folderObj.relativePath, fileObj.name + fileObj.ext);
 				}
 			}
 			

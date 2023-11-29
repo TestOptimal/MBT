@@ -87,6 +87,10 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		var url = FileSvc.base + "file/" + encodeURIComponent(path_p.replace(/\//g, ':')) + "/" + encodeURIComponent(fileName_p);
 		return url;
 	};
+	FileSvc.getFile = function (path_p, fileName_p, successCB, errorCB) {
+		var url = FileSvc.base + "file/" + encodeURIComponent(path_p.replace(/\//g, ':')) + "/" + encodeURIComponent(fileName_p);
+		SvrRest.get(url, successCB, errorCB);
+	};
 
 	FileSvc.move = function (fileName, fromFolder, toFolder, successCB, errorCB) {
 		var url = FileSvc.base + "move";

@@ -26,7 +26,7 @@ MainModule.factory ('SvrRest', function($http, $cookies) {
 			})
 			.then (function(ret) {
 				if (successCB) {
-					successCB(ret.data);
+					successCB(ret.data, ret);
 				}
 			})
 			.catch(function(ret, status) {

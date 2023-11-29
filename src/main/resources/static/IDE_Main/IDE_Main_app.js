@@ -96,25 +96,23 @@ var curAppState = {
 			curAppState.addMsg({type: "warn", text: 'Shutdown request sent'});
 		});
 	},
+	FileViewer: {title: 'abc'},
 	openSvrLog: function () {
-		if (curAppState.scxml) {
-	    	curAppState.toSvc.FileSvc.getSvrLog (curAppState.scxml.modelName, function(data) {
-				var win = window.open("", "Server Log", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
-				win.document.body.innerHTML = "<pre>" + data + "</pre>";
-			});
-		}
-		else {
-			alertDialog('No model is open');
-			return;
-		}
+		curAppState.FileViewer = {type: "ServerLog"};
+		scope.openDialog("FileViewer");
+		scope.$apply();
 	},
 	openModelLog: function () {
-    	curAppState.toSvc.RuntimeSvc.getModelLog (curAppState.scxml.modelName, function(data) {
-			var win = window.open("", "Model Log", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
-			win.document.body.innerHTML = "<pre>" + data + "</pre>";
-		});
-	}
-	
+		curAppState.FileViewer = {type: "ModelLog"};
+		scope.openDialog("FileViewer");
+		scope.$apply();
+	},
+	openModelFile: function (folderPath_p, fileName_p) {
+		curAppState.FileViewer = {type: "ModelFile", folderPath: folderPath_p, fileName: fileName_p};
+		scope.openDialog("FileViewer");
+		scope.$apply();
+	}	
+
 }
 
 curAppState.winMgr = new WinManager(curAppState);
@@ -420,6 +418,12 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 				srcFrame: 'IDE_Main/Welcome.html',
 				width: 600,
 				height: 475
+			},
+			FileViewer: {
+				title: 'File Viewer',
+				srcFrame: 'FileViewer.html',
+				width: 600,
+				height: '85%'
 			}
 		}
 	};

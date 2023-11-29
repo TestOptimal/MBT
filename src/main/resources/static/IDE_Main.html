@@ -171,7 +171,7 @@
 			<span class="dialogTitle">{{dialog.frameDefn.title}}</span>
 			<span class="dialogClose" ng-click="closeDialog();">x</span>
 		</div>
-		<iframe ng-src="{{dialog.frameDefn.srcFrame}}" frameborder="0"></iframe>
+		<iframe id="dialogFrame" ng-src="{{dialog.frameDefn.srcFrame}}" frameborder="0"></iframe>
 	</div>
 
 	<div id="msgBar" ng-attr-style="width: {{sysMsg.visible?'100%':'8px'}};">

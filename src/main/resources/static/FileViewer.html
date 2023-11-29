@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <link href="packages/angular-1.7.8/bootstrap-3.3.6.min.css" rel="stylesheet">
+    <script src="packages/angular-1.7.8/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+    <link href="css/IDE_View.css" rel="stylesheet">
+   	<script>
+		var MainModule = angular.module("Main", ['ui.bootstrap']);
+		MainModule.controller("mainCtrl", function ($scope) {
+			
+			parent.curAppState.winMgr.addWin("FileViewer", window);
+			
+			$scope.init = function () {
+				$scope.asOf = (new Date()).toLocaleTimeString();
+				$scope.textdata = "";
+				if (parent.curAppState.FileViewer.type=="ServerLog") {
+			    	parent.curAppState.toSvc.FileSvc.getSvrLog (parent.curAppState.scxml.modelName, function(data) {
+						$scope.title = "Server Log";
+						$scope.textdata = data;			
+						$scope.$apply();
+					});
+				}
+				else if (parent.curAppState.FileViewer.type=="ModelLog") {
+					parent.curAppState.toSvc.RuntimeSvc.getModelLog(parent.curAppState.scxml.modelName, function(data) {
+						$scope.title = "Model Log";
+						$scope.textdata = data;			
+						$scope.$apply();
+					});
+				}
+				else if (parent.curAppState.FileViewer.type=="ModelFile") {		
+					$scope.title = "Model File";
+					if (parent.curAppState.FileViewer.fileName.endsWith(".png")) {
+						$.get({
+						    url: parent.curAppState.toSvc.FileSvc.getFileURL (parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName),
+						    xhrFields: {
+						      responseType: "blob",
+						    },
+						    success: function(blobData) {
+						      	const objectURL = URL.createObjectURL(blobData);
+						      	$('#img').attr('src', objectURL);
+								$scope.$apply();
+						    }
+						  });
+				 	}
+					else {
+						parent.curAppState.toSvc.FileSvc.getFile(parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName, function(data) {
+							$scope.textdata = data;
+							$scope.$apply();
+						});
+					}
+				}
+			}
+			
+			$scope.init();
+		});
+
+		function mainCallbackFunc(action_p, params_p) {
+			var scope = $("body").scope();
+			if (action_p=="saved" && params_p=="config") {
+				
+			}
+		}		
+	</script>	
+	
+    <style>
+		body {
+			background: transparent !important;
+		}
+		
+		input {
+			width: 400px;
+		}
+		
+    </style>
+</head>
+<body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
+	<div id="mainDIV" style="overflow: auto;">
+		<div style="float: left">{{title}}</div>
+		<div style="float: right; margin-right: 5px; font-style: italic;">as of {{asOf}}</div>
+		<pre style="margin-top: 20px;">{{textdata}}</pre>
+		<img id="img" src=""/>
+	</div>
+
+</body>
+</html>
