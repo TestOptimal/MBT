@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 import javax.net.ServerSocketFactory;
 
-import org.apache.commons.codec.language.Soundex;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -428,37 +427,37 @@ public class StringUtil {
 		ret = ret.substring(0, idx+precisionDigit_p+1);
 		return ret;
 	}
-	
-	/**
-	 * 
-	 * @param string1_p
-	 * @param string2_p like string
-	 * @return true if two strings sound like the same, else false
-	 * @throws Exception
-	 */
-	public static boolean soundAlike (String string1_p, String string2_p) throws Exception {
-		Soundex soundex = new Soundex();
-		String inSound = soundex.encode(string1_p);
-		String cmpSound = soundex.encode(string2_p);
-		if (inSound.equalsIgnoreCase(cmpSound)) return true;
-		else return false;
-	}
-
-	/**
-	 * 
-	 * @param string1_p
-	 * @param string2_p like string
-	 * @param conf_p between 0 and 4 with 0 match anything, 4 being sound exactly the same. invalid value is then 
-	 * defaulted to 4 (exactly sound like)
-	 * @return true if two strings sound like the same with the conf_p specified, else false
-	 * @throws Exception
-	 */
-	public static boolean soundAlike (String string1_p, String string2_p, int conf_p) throws Exception {
-		Soundex soundex = new Soundex();
-		int val = soundex.difference(string1_p, string2_p);
-		if (val <= conf_p) return true;
-		else return false;
-	}
+//	
+//	/**
+//	 * 
+//	 * @param string1_p
+//	 * @param string2_p like string
+//	 * @return true if two strings sound like the same, else false
+//	 * @throws Exception
+//	 */
+//	public static boolean soundAlike (String string1_p, String string2_p) throws Exception {
+//		Soundex soundex = new Soundex();
+//		String inSound = soundex.encode(string1_p);
+//		String cmpSound = soundex.encode(string2_p);
+//		if (inSound.equalsIgnoreCase(cmpSound)) return true;
+//		else return false;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param string1_p
+//	 * @param string2_p like string
+//	 * @param conf_p between 0 and 4 with 0 match anything, 4 being sound exactly the same. invalid value is then 
+//	 * defaulted to 4 (exactly sound like)
+//	 * @return true if two strings sound like the same with the conf_p specified, else false
+//	 * @throws Exception
+//	 */
+//	public static boolean soundAlike (String string1_p, String string2_p, int conf_p) throws Exception {
+//		Soundex soundex = new Soundex();
+//		int val = soundex.difference(string1_p, string2_p);
+//		if (val <= conf_p) return true;
+//		else return false;
+//	}
 
 	/**
 	 * check if two strings are spelled like with up to the number of chars difference.

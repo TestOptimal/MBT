@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.Strings;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.util.StringUtil;
 
@@ -72,7 +71,7 @@ public class TransitionNode implements Comparable<TransitionNode> {
 	private String subModelFinalStateUID = "";
 
 	public boolean matchFinalStateUID (String UID_p) {
-		return Strings.isNullOrEmpty(this.subModelFinalStateUID) || this.subModelFinalStateUID.equals(UID_p);
+		return StringUtil.isEmpty(this.subModelFinalStateUID) || this.subModelFinalStateUID.equals(UID_p);
 	}
 	
 	public String getStereotype () {

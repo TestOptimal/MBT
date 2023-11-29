@@ -2,11 +2,11 @@ package com.testoptimal.exec.FSM;
 
 import java.util.List;
 
-import com.google.common.base.Strings;
 import com.testoptimal.mscript.MbtScriptExecutor;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.util.ArrayUtil;
+import com.testoptimal.util.StringUtil;
 
 import openOptima.network.postman.PostmanArc;
 
@@ -215,8 +215,8 @@ public class Transition extends PostmanArc {
 		TransitionNode forTransNode = forTrans_p.getTransNode();
 
 		// fake trans, trans with guards and trans with no satisfying hint set don't qualify
-		if (this.transNode==null || !Strings.isNullOrEmpty(this.transNode.getGuard())) return false;
-		if (Strings.isNullOrEmpty(this.transNode.getSatisfyingHint())) return false;
+		if (this.transNode==null || !StringUtil.isEmpty(this.transNode.getGuard())) return false;
+		if (StringUtil.isEmpty(this.transNode.getSatisfyingHint())) return false;
 		
 		String [] transHintList = ArrayUtil.splitString(this.transNode.getSatisfyingHint(), ",;");
 		String [] reqHintList = ArrayUtil.splitString(forTransNode.getGuardHint(), ",;");

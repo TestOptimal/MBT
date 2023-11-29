@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.Strings;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.RequirementMgr;
@@ -51,7 +50,7 @@ public class ModelExecDB {
 		this.execSummary.startDT = new java.sql.Timestamp(System.currentTimeMillis());
 		this.execSummary.mbtSequencer = execSetting_p.getCurMbtMode();
 		this.statDesc = (String) execSetting_p.getOption("statDesc");
-		if (Strings.isNullOrEmpty(this.statDesc)) {
+		if (StringUtil.isEmpty(this.statDesc)) {
 			this.statDesc = "Exec " + this.execSummary.startDT;
 		}
 		this.execOptions.putAll(execSetting_p.getOptions());

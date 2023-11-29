@@ -2,10 +2,10 @@ package com.testoptimal.exec.navigator;
 
 import java.util.List;
 
-import com.google.common.base.Strings;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.util.ArrayUtil;
+import com.testoptimal.util.StringUtil;
 
 public class SequencePath {
 	private List<Transition> transList = new java.util.ArrayList<Transition>();
@@ -75,7 +75,7 @@ public class SequencePath {
 	}
 
 	public String getPathDesc() {
-		if (Strings.isNullOrEmpty(this.pathDesc)) {
+		if (StringUtil.isEmpty(this.pathDesc)) {
 			return this.pathId;
 		}
 		else return this.pathDesc;

@@ -1,7 +1,6 @@
 package com.testoptimal.server.controller;
 
 import java.io.File;
-import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
-import com.opencsv.CSVReader;
 import com.testoptimal.db.ExecStateTransDB;
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
@@ -38,7 +36,6 @@ import com.testoptimal.server.model.RunRequest;
 import com.testoptimal.server.model.TestCmd;
 import com.testoptimal.server.model.TestResult;
 import com.testoptimal.server.model.parser.GherkinModel;
-import com.testoptimal.server.model.parser.ModelParserCSV;
 import com.testoptimal.server.model.parser.ModelParserGherkin;
 import com.testoptimal.util.FileUtil;
 
@@ -234,50 +231,50 @@ public class ClientController {
 		
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
-
-	@ApiOperation(value = "Upload Model in CSV", notes="Upload model in CSV format")
-	@RequestMapping(value = "model/upload/csv", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ClientReturn> uploadModelCSV (
-			@RequestParam (name="modelName", required=true) String modelName,
-			@RequestBody String modelCSV, 
-			ServletRequest request) throws Exception {
-		ModelParserCSV parser = new ModelParserCSV();
-		try ( CSVReader reader = new CSVReader(new StringReader(modelCSV));) {
-			List<String[]> r = reader.readAll();
-			if (parser.parse(r)) {
-				
-			}
-			else {
-				throw new Exception ("Upload model in CSV failed to parse: " + parser.getErrMsg());
-			}
-		}
-		ScxmlNode scxml = parser.getScxmlNode();
-		scxml.setModelName(modelName);
-		scxml.autoLayout();
-		logger.info("ClientController.uploadModelTab: " + modelName);
-
-    	String modelRoot = Config.getModelRoot();
-    	this.checkClientFolder("client");
-
-		String modelPath = FileUtil.findModelFolder(modelName);
-    	if (modelPath==null) {
-        	String clientFolderPath = FileUtil.concatFilePath(modelRoot, "client");
-    		modelPath = FileUtil.concatFilePath(clientFolderPath, modelName + ".fsm");
-    		
-    		String tplPath = FileUtil.concatFilePath(modelRoot, ".tpl", "fsm.tpl");
-    		int cnt = FileUtil.copyFolder(tplPath, modelPath, true);
-    		if (cnt <= 0) throw new Exception ("Model create failed");
-    	}
-		String triggerFilePath = FileUtil.concatFilePath(modelPath, "model", "TRIGGERS.gvy");
-		FileUtil.writeToFile(triggerFilePath, parser.getScripts().stream().collect(Collectors.joining("\n")));
-
-		ModelMgr modelMgr = new ModelMgr(modelName);
-		modelPath = modelMgr.getModelFolderPath();
-		scxml.save(modelPath);
-		
-		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
-	}
-	
+//
+//	@ApiOperation(value = "Upload Model in CSV", notes="Upload model in CSV format")
+//	@RequestMapping(value = "model/upload/csv", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<ClientReturn> uploadModelCSV (
+//			@RequestParam (name="modelName", required=true) String modelName,
+//			@RequestBody String modelCSV, 
+//			ServletRequest request) throws Exception {
+//		ModelParserCSV parser = new ModelParserCSV();
+//		try ( CSVReader reader = new CSVReader(new StringReader(modelCSV));) {
+//			List<String[]> r = reader.readAll();
+//			if (parser.parse(r)) {
+//				
+//			}
+//			else {
+//				throw new Exception ("Upload model in CSV failed to parse: " + parser.getErrMsg());
+//			}
+//		}
+//		ScxmlNode scxml = parser.getScxmlNode();
+//		scxml.setModelName(modelName);
+//		scxml.autoLayout();
+//		logger.info("ClientController.uploadModelTab: " + modelName);
+//
+//    	String modelRoot = Config.getModelRoot();
+//    	this.checkClientFolder("client");
+//
+//		String modelPath = FileUtil.findModelFolder(modelName);
+//    	if (modelPath==null) {
+//        	String clientFolderPath = FileUtil.concatFilePath(modelRoot, "client");
+//    		modelPath = FileUtil.concatFilePath(clientFolderPath, modelName + ".fsm");
+//    		
+//    		String tplPath = FileUtil.concatFilePath(modelRoot, ".tpl", "fsm.tpl");
+//    		int cnt = FileUtil.copyFolder(tplPath, modelPath, true);
+//    		if (cnt <= 0) throw new Exception ("Model create failed");
+//    	}
+//		String triggerFilePath = FileUtil.concatFilePath(modelPath, "model", "TRIGGERS.gvy");
+//		FileUtil.writeToFile(triggerFilePath, parser.getScripts().stream().collect(Collectors.joining("\n")));
+//
+//		ModelMgr modelMgr = new ModelMgr(modelName);
+//		modelPath = modelMgr.getModelFolderPath();
+//		scxml.save(modelPath);
+//		
+//		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
+//	}
+//	
 	@ApiOperation(value = "Model Sequence", notes="Generate Test Cases")
 	@RequestMapping(value = "model/gen", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> modelSeq (

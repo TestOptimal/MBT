@@ -67,41 +67,41 @@ public class Util {
 //	
 //	
 
-
-	/**
-	 * 
-	 * returns true if two strings sound like each other.
-	 * 
-	 * <p>
-	 * Example: 
-	 * <pre>$sys.soundAlike ('behavior','behavior')</pre>
-	 * 
-	 * @param string1_p
-	 * @param string2_p 
-	 * @return true if two strings sound like the same, else false
-	 * @throws Exception
-	 */
-	public static boolean soundAlike (String string1_p, String string2_p) throws Exception {
-		return StringUtil.soundAlike(string1_p, string2_p);
-	}
-
-	/**
-	 * returns true if two strings sound alike with the degree of similarity specified.
-	 * 
-	 * <p>
-	 * Example: <pre>$soundAlike ('behavior','behaviour', '4')</pre>
-	 * 
-	 * @param string1_p
-	 * @param string2_p
-	 * @param conf_p between 0 and 4 with 0 match anything, 4 being sound exactly the same. invalid value is 
-	 * 		defaulted to 4 (exactly sound like)
-	 * @return true if two strings sound like the same with the conf_p specified, else false
-	 * @throws Exception
-	 */
-	public static boolean soundAlike (String string1_p, String string2_p, String conf_p) throws Exception {
-		int conf = StringUtil.parseInt(conf_p, 4);
-		return StringUtil.soundAlike(string1_p, string2_p, conf);
-	}
+//
+//	/**
+//	 * 
+//	 * returns true if two strings sound like each other.
+//	 * 
+//	 * <p>
+//	 * Example: 
+//	 * <pre>$sys.soundAlike ('behavior','behavior')</pre>
+//	 * 
+//	 * @param string1_p
+//	 * @param string2_p 
+//	 * @return true if two strings sound like the same, else false
+//	 * @throws Exception
+//	 */
+//	public static boolean soundAlike (String string1_p, String string2_p) throws Exception {
+//		return StringUtil.soundAlike(string1_p, string2_p);
+//	}
+//
+//	/**
+//	 * returns true if two strings sound alike with the degree of similarity specified.
+//	 * 
+//	 * <p>
+//	 * Example: <pre>$soundAlike ('behavior','behaviour', '4')</pre>
+//	 * 
+//	 * @param string1_p
+//	 * @param string2_p
+//	 * @param conf_p between 0 and 4 with 0 match anything, 4 being sound exactly the same. invalid value is 
+//	 * 		defaulted to 4 (exactly sound like)
+//	 * @return true if two strings sound like the same with the conf_p specified, else false
+//	 * @throws Exception
+//	 */
+//	public static boolean soundAlike (String string1_p, String string2_p, String conf_p) throws Exception {
+//		int conf = StringUtil.parseInt(conf_p, 4);
+//		return StringUtil.soundAlike(string1_p, string2_p, conf);
+//	}
 
 	/**
 	 * returns true if two strings are spelled alike with up to specified degree of differences allowed.  

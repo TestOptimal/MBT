@@ -35,6 +35,10 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.headers(headers -> headers.frameOptions().sameOrigin())
+		        .logout(logout -> logout
+		                .logoutUrl("/logout")
+		                .invalidateHttpSession(true)
+		                .deleteCookies("JSESSIONID"))
                 .authorizeHttpRequests(requests -> requests
                 		.requestMatchers("/api/v1/sys/**").authenticated()
                 		.requestMatchers("/api/v1/model/**").authenticated()
@@ -48,10 +52,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/client/**").authenticated()
                         .requestMatchers("/api/v1/alm/**").authenticated()
                         .anyRequest().permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID"))
                 .httpBasic(basic -> basic.authenticationEntryPoint(new AuthenticationEntryPoint() {
                     @Override
                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {

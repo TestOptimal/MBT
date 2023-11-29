@@ -13,6 +13,18 @@
 
   	<name>TestOptimal</name>
   	<url>http://maven.apache.org</url>
+  	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>3.0.13</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -23,11 +35,24 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		
+		-->
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+</dependency>
+				
 		<!-- spring security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,12 +78,13 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured, need to be before lambdaj due to hamcrest conflict-->
+		<!--
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>rest-assured</artifactId>
 		</dependency>
-
-		<!--
+		-->
+		
 	    <dependency>
 	        <groupId>org.seleniumhq.selenium</groupId>
 	        <artifactId>selenium-server</artifactId>
@@ -68,7 +94,6 @@
 	        <groupId>org.seleniumhq.selenium</groupId>
 	        <artifactId>htmlunit-driver</artifactId>
 	    </dependency>
-		-->
 		
 	    <!-- dependency>
 		    <groupId>org.seleniumhq.selenium</groupId>
@@ -77,11 +102,13 @@
 
           	    
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<!--
 		<dependency>
 		    <groupId>com.google.guava</groupId>
 		    <artifactId>guava</artifactId>
 		    <version>29.0-jre</version>
 		</dependency>
+		-->
 
 		<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -131,19 +158,23 @@
 
 
         <!-- https://mvnrepository.com/artifact/org.scannotation/scannotation -->
+		<!--
 		<dependency>
 		    <groupId>org.scannotation</groupId>
 		    <artifactId>scannotation</artifactId>
 		    <version>1.0.3</version>
 		</dependency>
-		        
+	-->
+			        
 		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+		<!--
 		<dependency>
 		    <groupId>net.sourceforge.jexcelapi</groupId>
 		    <artifactId>jxl</artifactId>
 		    <version>2.6.12</version>
 		</dependency>
-		
+		-->
+				
 		<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
 		<dependency>
 		    <groupId>net.sourceforge.plantuml</groupId>
@@ -153,12 +184,13 @@
 		
 		
 		<!-- https://mvnrepository.com/artifact/com.microsoft.azure/azure-client-runtime -->
+		<!--
 		<dependency>
 		    <groupId>com.microsoft.azure</groupId>
 		    <artifactId>azure-client-runtime</artifactId>
 		    <version>1.7.5</version>
 		</dependency>
-
+		-->
 
 		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
 		<dependency>
@@ -168,12 +200,14 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<!--
 		<dependency>
 		    <groupId>joda-time</groupId>
 		    <artifactId>joda-time</artifactId>
 		    <version>2.10.6</version>
 		</dependency>
-				
+		-->
+					
 		<!-- https://mvnrepository.com/artifact/colt/colt -->
 		<dependency>
 		    <groupId>colt</groupId>
@@ -186,20 +220,24 @@
 		    <artifactId>openOptima</artifactId>
 		    <version>1.0.2</version>
 		</dependency>
+		<!--
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-core</artifactId>
 		</dependency>
+		
+		
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		</dependency>	
-		
+		-->		
+		<!--
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>	
-
+	-->
 		<!-- https://mvnrepository.com/artifact/org.webjars/codemirror -->
 		<dependency>
 		    <groupId>org.webjars</groupId>
@@ -222,19 +260,23 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+		<!--
 		<dependency>
 		    <groupId>com.github.ulisesbocchio</groupId>
 		    <artifactId>jasypt-spring-boot-starter</artifactId>
 		    <version>3.0.2</version>
    		</dependency>
-
+		-->
+		
         <!-- https://mvnrepository.com/artifact/org.webjars/d3js -->
+		<!--
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>d3js</artifactId>
             <version>5.9.7</version>
         </dependency>
-        
+		-->
+		        
 		<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
 		<!--
 		<dependency>
@@ -243,10 +285,13 @@
 		    <version>1.2.2</version>
 		</dependency>
 		-->
+
+		<!--		
 	    <dependency>
 	        <groupId>com.fasterxml.jackson.dataformat</groupId>
 	        <artifactId>jackson-dataformat-yaml</artifactId>
 	    </dependency>	    
+	    -->
 	    
 		<!-- https://mvnrepository.com/artifact/io.ultreia/bluecove -->
 		<!-- dependency>
@@ -256,12 +301,14 @@
 		</dependency -->
 		
 		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<!--
 		<dependency>
 		    <groupId>com.opencsv</groupId>
 		    <artifactId>opencsv</artifactId>
 		    <version>5.3</version>
 		</dependency>
-
+		-->
+		
 	</dependencies>
 
 	<properties>
@@ -334,10 +381,6 @@
 							  	<zip destfile="${releaseBuildDir}/TestOptimal_${releaseLabel}_win.zip"
 							       basedir="${releaseBuildDir}/TestOptimal_win"
 							  	/>
-								<delete file="${releaseBuildDir}/TestOptimal_Setup.nsi"/>
-							  	<copy todir="${releaseBuildDir}">
-							  		<fileset dir="buildDef" includes="to_128.ico,TestOptimal_Setup.nsi"/>
-								</copy>							  	
 							  	
 						  		<delete includeEmptyDirs="true" failonerror="false">
 						  		  	<fileset dir="${releaseBuildDir}/TestOptimal_mac/" includes="**"/>
@@ -413,29 +456,6 @@
 			</plugin>
 			
 
-    		<plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>maven-replacer-plugin</artifactId>
-                <version>1.4.1</version>
-                <executions>
-                    <execution>
-                        <id>replaceTokens</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <file>build/TestOptimal_Setup.nsi</file>
-                    <replacements>
-                        <replacement>
-                            <token>RELEASEVERSION</token>
-                            <value>${project.version}</value>
-                        </replacement>
-                    </replacements>
-                </configuration>
-    		</plugin>
 		</plugins>
 	</build>
 	
