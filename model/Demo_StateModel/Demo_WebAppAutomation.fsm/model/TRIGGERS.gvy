@@ -55,6 +55,8 @@ def 'MBT_FAIL' () {
 @TRIGGER('MBT_ERROR')
 def 'MBT_ERROR' () {
 	$SYS.log('System error detected')
+	try { $VAR.wd.close(); } catch (err) { }
+	try { $VAR.wd.quit(); } catch (err) { }
 
 }
 

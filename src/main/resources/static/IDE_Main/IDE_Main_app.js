@@ -244,8 +244,8 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 
 		shutdown: { menuFunc: "curAppState.shutdown()", icon:"glyphicon-off", classes: "extraPaddingTop", title: "Shutdown TestOptimal server", label: "Shutdown"},
 		help: { menuFunc: "curAppState.winMgr.openWin ('Help')", classes: "", title: "TestOptimal online help documentation/wiki", label: "Online Wiki", helpMenu: true},
-		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Forum"},
-		support: { menuFunc: "curAppState.winMgr.openWin (curAppState.isCommunity()?'Forum':'Support');", classes: "", label: "Contact Support", title: "submit a support ticket"},
+		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Discussion Forum"},
+		support: { menuFunc: "curAppState.winMgr.openWin ('Support');", classes: "", label: "Contact Us", title: "submit sales-questions or for ProMBT users support-tickets"},
 		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "System Info", title: "System information"},
 		serverLog: { menuFunc: "curAppState.openServerLog()", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
 		MScriptLog: {menuFunc: "curAppState.openModelLog()", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
@@ -605,7 +605,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		act.name = key;
     	});
 
-    	SysSvc.getConfig (function(data) {
+    	SysSvc.getSysInfo (function(data) {
     		$scope.config = data;
     		
     		$scope.rootCurAppState.config = $scope.config;

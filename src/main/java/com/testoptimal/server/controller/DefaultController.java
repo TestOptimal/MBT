@@ -20,6 +20,7 @@ import com.testoptimal.license.SerialNum;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
+import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
@@ -103,7 +104,8 @@ public class DefaultController {
 			return new ResponseEntity<> (ClientReturn.Alert("Missing username"), HttpStatus.OK);
 		}
 		logger.info("register user: " + username);
-		if (Config.getProperty("License.Ack","N").equals("Y")) {
+		String ack = Config.getProperty("License.Ack","N");
+		if (ack.equalsIgnoreCase("N")) {
 			UserMgr.getInstance().registerUser(username, password);
 			Config.setProperty("License.Ack", "Y");
 			Config.save();			
@@ -119,6 +121,13 @@ public class DefaultController {
 //		logger.info("logout");
 //	}
 
+//	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
+	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
+		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
+	}
+	
+	
 //	@ApiOperation(value = "Config Settings", notes="Config setting list")
 	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {

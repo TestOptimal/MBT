@@ -151,13 +151,17 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     		SysSvc: SysSvc
     	};
 		SvrRest.token = "";
-    	$.ajax("/api/v1/default/config", function(data) {
-    		$scope.config = data;
+    	$http({
+    		 method: 'GET',
+    		 url: "/api/v1/sys/sysinfo"})
+    	.then(function(resp) {
+    		$scope.config = resp.data;
     		$scope.rootCurAppState.config = $scope.config;
-    		$scope.username = $scope.config.licEmail;
-    		//$scope.emailLocked = $scope.config.licEmail.length>0;
+    		$scope.username = $scope.config["License.Email"];
+    		$scope.license_url = $scope.config["License.Agreement.url"];
+    		$scope.license_label = $scope.config["License.Agreement.label"];
     		
-    		$scope.ack = $scope.config["License.Ack"];
+    		$scope.ack = ($scope.config["License.Ack"] || 'N')=='Y';
    			$scope.title = $scope.ack?"Login":"Create Account"
     		$scope.reqInd = !$scope.ack;
    			$scope.loginStyle = {
@@ -166,6 +170,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
    				height: $scope.reqInd? '400px': '300px',
    				top: $scope.reqInd? 'calc(50% - 200px)': 'calc(50% - 150px)'
    			}
+   			$scope.$apply();
     	});
     }
     
@@ -235,7 +240,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 		    <div ng-show="reqInd" style="line-height: 50px; text-align: center;">
 		        <input type="checkbox" ng-model="ack"
 		        	ng-change="pwdChanged()" />
-		        <label for="ack">Accept <a href="https://testoptimal.com/TestOptimalLicense.pdf" target=_blank">TestOptimal License Agreement</a>.</label>
+		        <label for="ack">Accept <a href="{{license_url}}" target="_blank">{{license_label}}</a>.</label>
 		    </div>
 		
 		    <div style="text-align: center; margin-top: 15px;">

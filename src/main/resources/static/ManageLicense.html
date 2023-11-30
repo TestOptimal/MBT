@@ -15,30 +15,26 @@
 	<script src="js/sys_svc.js"></script>
     <script>
     MainModule.controller("mainCtrl", function ($scope, $location, $anchorScroll) {
-    	$scope.licObj = {licReq: false};
+    	$scope.config = parent.curAppState.config;
+    	$scope.licReq = false;
+    	$scope.licEmail = $scope.config["License.Email"];
+    	$scope.licKey;
     	
-    	$scope.refresh = function () {
-    		parent.curAppState.toSvc.SysSvc.getLicDetails (function (data) {
-				$scope.licObj = data;
-				$scope.licObj.licReq = $scope.licObj.edition!='MBT';
+    	$scope.init = function () {
+    		parent.curAppState.toSvc.SysSvc.getSysInfo (function (data) {
+		    	$scope.config = data;
+				$scope.licEmail = $scope.config["License.Email"];
+				$scope.licReq = !parent.curAppState.isCommunity();
     			$scope.$apply();
     		});
     	}
     	
     	$scope.saveLic = function () {
-    		$scope.licObj.LicenseAcked = true;
-    		parent.curAppState.toSvc.SysSvc.saveLic($scope.licObj, function (data) {
-    			$scope.licObj = data;
-    			if ($scope.licObj.exceptions.length == 0) {
-    				parent.curAppState.addMsg({type: "info", text: "License key saved, refreshing IDE ..."});
-    				parent.curAppState.winMgr.refresh();
-    			}
+    		parent.curAppState.toSvc.SysSvc.saveLic($scope.licEmail, $scope.licKey, function (data) {
+				parent.curAppState.addMsg({type: "info", text: "License key saved, refreshing IDE ..."});
+				parent.curAppState.winMgr.refresh();
     			$scope.$apply();
     		});
-    	}
-
-    	$scope.init = function () {
-        	$scope.refresh ();
     	}
 
     	$scope.init();
@@ -67,21 +63,22 @@
 <body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
 	<div id="mainDIV" style="overflow: auto;">
 	<table border="0" width="100%" cellspacing="0" style="margin-bottom: 40px;">
-		<tr><td nowrap>Edition:</td><td>{{licObj.edition}}</td></tr>
-		<tr><td align="left">Sys ID:</td><td>{{licObj.sysID}}</td></tr>
-		<tr><td nowrap>Server URL:</td><td>{{licObj.hostport}}</td></tr>
-		<tr><td nowrap>IP Address:</td><td>{{licObj.ipaddress}}</td></tr>
-		<tr><td nowrap>OS Name:</td><td>{{licObj.osName}}</td></tr>
-		<tr><td nowrap>OS Version:</td><td>{{licObj.osVersion}}</td></tr>
-		<tr><td nowrap>Java Version:</td><td>{{licObj.javaVersion}}</td></tr>
-		<tr><td nowrap>TO Version:</td><td>{{licObj.TestOptimalVersion}} <small>(build: {{licObj.releaseDate}})</small></td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap>License Status:</td><td>{{licObj.licStatus}}</td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{licObj.expireDate}}</td></tr>
+		<tr><td nowrap>Edition:</td><td>{{config["License.Edition"]}}</td></tr>
+		<tr><td align="left">Sys ID:</td><td>{{config["sysID"]}}</td></tr>
+		<tr><td nowrap>Server URL:</td><td>{{config["hostport"]}}</td></tr>
+		<tr><td nowrap>IP Address:</td><td>{{config["ipaddress"]}}</td></tr>
+		<tr><td nowrap>OS Name:</td><td>{{config["osName"]}}</td></tr>
+		<tr><td nowrap>OS Version:</td><td>{{config["osVersion"]}}</td></tr>
+		<tr><td nowrap>Java Version:</td><td>{{config["javaVersion"]}}</td></tr>
+		<tr><td nowrap>TO Version:</td><td>{{config["TestOptimalVersion"]}} <small>(build: {{config["releaseDate"]}})</small></td></tr>
+		<tr ng-show="licObj.licReq"><td nowrap>License Status:</td><td>{{config["License.status"]}}</td></tr>
+		<tr ng-show="licObj.licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{config["expireDate"]}}</td></tr>
 		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licObj.licEmail"/></td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
+		<tr><td nowrap>License:</td><td align="left" colspan="2"><a href="{{config['License.Agreement.url']}}" target="_blank">{{config["License.Agreement.label"]}}</a></td></tr>
+		<tr ng-show="licObj.licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'" target="_blank">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
 		<tr ng-show="licObj.licReq" style="height: 35px;">
 			<td colspan="2">
-				<div style="color: orange; background: #EEEEEE;" ng-repeat="errMsg in licObj.exceptions track by $index">{{errMsg}}</div>
+				<div style="color: orange; background: #EEEEEE;" ng-repeat="errMsg in config["License.exceptions"] track by $index">{{errMsg}}</div>
 			</td>
 		</tr>
 	</table>

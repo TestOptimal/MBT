@@ -262,8 +262,8 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		base: "/api/v1/sys/"
 	};
 	
-	SysSvc.getConfig = function (successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "config", successCB, errorCB);
+	SysSvc.getSysInfo = function (successCB, errorCB) {
+		SvrRest.get (SysSvc.base + "sysinfo", successCB, errorCB);
 	};
 
 	SysSvc.saveConfig = function (configMap, successCB, errorCB) {
@@ -284,12 +284,12 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "template", successCB, errorCB);
 	};
 
-	SysSvc.getLicDetails = function (successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "sysinfo", successCB, errorCB);
-	};
+//	SysSvc.getLicDetails = function (successCB, errorCB) {
+//		SvrRest.get (SysSvc.base + "sysinfo", successCB, errorCB);
+//	};
 
-	SysSvc.saveLic = function (licInfo, successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "lic/save?email=" + licInfo.licEmail + "&licKey=" + encodeURIComponent(licInfo.licKey), successCB, errorCB);
+	SysSvc.saveLic = function (licEmail, licKey, successCB, errorCB) {
+		SvrRest.get (SysSvc.base + "lic/save?email=" + licEmail + "&licKey=" + encodeURIComponent(licKey), successCB, errorCB);
 	};
 
 	SysSvc.about = function (successCB, errorCB) {

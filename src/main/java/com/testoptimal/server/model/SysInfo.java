@@ -25,13 +25,15 @@ public class SysInfo {
 	public String releaseDate;
 	public String edition;
 	public boolean expired;
+	public String licLabel;
+	public String licUrl;
 	
 	
 	
 	public static SysInfo getSysInfo () throws Exception {
 		SysInfo licInfo = new SysInfo ();
 		licInfo.licEmail = Config.getProperty("License.Email", "");
-		licInfo.licKey = Config.getProperty("***", "");
+//		licInfo.licKey = Config.getProperty("***", "");
 		licInfo.licStatus = "Valid";
 		licInfo.hostport = Config.getHostName()+":"+Application.getPort();
 		licInfo.ipaddress = Config.getIpAddress();
@@ -42,6 +44,8 @@ public class SysInfo {
 		licInfo.TestOptimalVersion = Config.versionDesc;
 		licInfo.releaseDate = DateUtil.dateToString(ConfigVersion.getReleaseDate(), ConfigVersion.DateFormat);
 		licInfo.edition = Config.getProperty("License.Edition", "MBT");
+		licInfo.licUrl = Config.getProperty("License.Agreement.url", "https://github.com/TestOptimal/MBT/blob/main/LICENSE");
+		licInfo.licLabel = Config.getProperty("License.Agreement.label", "TestOptimal GPL 3.0");
 		return licInfo;
 	}
 	

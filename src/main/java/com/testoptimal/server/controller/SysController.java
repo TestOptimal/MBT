@@ -21,11 +21,13 @@ import com.testoptimal.client.CodeAssist;
 import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.license.SerialNum;
+import com.testoptimal.server.Application;
 import com.testoptimal.server.AsyncShutdown;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.SysInfo;
+import com.testoptimal.util.DateUtil;
 import com.testoptimal.util.StringUtil;
 
 import jakarta.servlet.ServletRequest;
@@ -44,39 +46,45 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin
 public class SysController {
 	private static Logger logger = LoggerFactory.getLogger(SysController.class);
-	public static final String[] ClientConfigPropList = new String[] { "License.Edition",
+	public static final String[] ClientConfigPropList = new String[] { "License.Edition", "License.exceptions",
+			"License.Agreement.url", "License.Agreement.label", "License.Ack", "License.Email",
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	
 //	@ApiOperation(value = "Config Settings", notes="Config setting list")
-	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		Map<String,Object> retProp = new java.util.HashMap<>();
-		retProp.put("uid", "config");
-		retProp.put("typeCode", "config");
-		retProp.put("License.Ack", StringUtil.isTrue(Config.getProperty("License.Ack"))); 
-
-		retProp.put("TestOptimalVersion", Config.versionDesc);
-		retProp.put("releaseDate", ConfigVersion.getReleaseDate());
-		retProp.put("serialNum", SerialNum.getSerialNum());
-		retProp.put("sequencers", Navigator.getSequencerList());
-
 	    for (String propKey: ClientConfigPropList) {
 	    	String propVal = Config.getProperty(propKey);
 	    	if (propVal!=null) {
 		    	retProp.put(propKey, propVal);
 	    	}
 	    }
+		retProp.put("uid", "config");
+		retProp.put("typeCode", "config");
+		retProp.put("TestOptimalVersion", Config.versionDesc);
+		retProp.put("releaseDate", ConfigVersion.getReleaseDate());
+		retProp.put("serialNum", SerialNum.getSerialNum());
+		retProp.put("sequencers", Navigator.getSequencerList());
+		retProp.put("hostport", Config.getHostName()+":"+Application.getPort());
+		retProp.put("ipaddress", Config.getIpAddress());
+		retProp.put("sysID", Config.getSysID());
+		retProp.put("osName", Config.getOsName());
+		retProp.put("osVersion", Config.getOsVersion());
+		retProp.put("javaVersion",  Config.getJavaVersion());
+		retProp.put("TestOptimalVersion", Config.versionDesc);
+		retProp.put("releaseDate", DateUtil.dateToString(ConfigVersion.getReleaseDate(), ConfigVersion.DateFormat));
 		retProp.put("HttpSessionID", session.getId());
 		return new ResponseEntity<>(retProp, HttpStatus.OK);
 	}
 	
-//	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
-	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
-		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
-	}
+////	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
+//	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
+//		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
+//	}
 	
 //	@ApiOperation(value = "Shutdown", notes="Shutdown server")
 	@RequestMapping(value = "shutdown", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
