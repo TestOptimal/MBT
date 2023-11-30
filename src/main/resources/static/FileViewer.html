@@ -20,20 +20,26 @@
 				if (parent.curAppState.FileViewer.type=="ServerLog") {
 			    	parent.curAppState.toSvc.FileSvc.getSvrLog (parent.curAppState.scxml.modelName, function(data) {
 						$scope.title = "Server Log";
-						$scope.textdata = data;			
+						$scope.filePath = "log/tosvr.log";
+						$scope.textdata = data;
+						$('#textarea').css("display", "block");	
 						$scope.$apply();
 					});
 				}
 				else if (parent.curAppState.FileViewer.type=="ModelLog") {
 					parent.curAppState.toSvc.RuntimeSvc.getModelLog(parent.curAppState.scxml.modelName, function(data) {
 						$scope.title = "Model Log";
+						$scope.filePath = parent.curAppState.scxml.modelName + "/temp/script.log";
 						$scope.textdata = data;			
+						$('#textarea').css("display", "block");	
 						$scope.$apply();
 					});
 				}
 				else if (parent.curAppState.FileViewer.type=="ModelFile") {		
 					$scope.title = "Model File";
+					$scope.filePath = parent.curAppState.FileViewer.folderPath + "/" + parent.curAppState.FileViewer.fileName;
 					if (parent.curAppState.FileViewer.fileName.endsWith(".png")) {
+						$scope.filePath = parent.curAppState.FileViewer.folderPath + "/" + parent.curAppState.FileViewer.fileName;
 						$.get({
 						    url: parent.curAppState.toSvc.FileSvc.getFileURL (parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName),
 						    xhrFields: {
@@ -41,7 +47,7 @@
 						    },
 						    success: function(blobData) {
 						      	const objectURL = URL.createObjectURL(blobData);
-						      	$('#img').attr('src', objectURL);
+						      	$('#img').attr('src', objectURL).css("display", "block");
 								$scope.$apply();
 						    }
 						  });
@@ -49,6 +55,7 @@
 					else {
 						parent.curAppState.toSvc.FileSvc.getFile(parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName, function(data) {
 							$scope.textdata = data;
+							$('#textarea').css("display", "block");	
 							$scope.$apply();
 						});
 					}
@@ -78,11 +85,13 @@
     </style>
 </head>
 <body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
-	<div id="mainDIV" style="overflow: auto;">
-		<div style="float: left">{{title}}</div>
+	<div id="mainDIV">
+		<div style="float: left; margin: 5px; font-weight: bold; font-style: italic;">{{title}}: {{filePath}}</div>
 		<div style="float: right; margin-right: 5px; font-style: italic;">as of {{asOf}}</div>
-		<pre style="margin-top: 20px;">{{textdata}}</pre>
-		<img id="img" src=""/>
+		<div style="margin: 5px; margin-top: 20px; width: calc(100% - 10px); height: calc(100% - 30px); overflow: auto;">
+			<pre id="textarea" style="display: none; overflow: visible; border: 0px;">{{textdata}}</pre>
+			<img id="img" style="display: none; margin: auto;" src=""/>			
+		</div>
 	</div>
 
 </body>

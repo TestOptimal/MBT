@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.security.UserMgr;
+import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
 import jakarta.servlet.ServletRequest;
@@ -32,8 +34,8 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-//@Api(tags="Security")
-@RequestMapping("/api/v1/sec")
+//@Api(tags="Default")
+@RequestMapping("/api/v1/default")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DefaultController {
 	private static Logger logger = LoggerFactory.getLogger(DefaultController.class);
@@ -111,7 +113,12 @@ public class DefaultController {
 			return new ResponseEntity<> (ClientReturn.Alert("User already registered"), HttpStatus.OK);			
 		}
 	}
-	
+//
+//	@RequestMapping(value = "logout", method = RequestMethod.GET)
+//	public void logout (ServletRequest request) throws Exception {
+//		logger.info("logout");
+//	}
+
 //	@ApiOperation(value = "Config Settings", notes="Config setting list")
 	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
@@ -157,5 +164,19 @@ public class DefaultController {
 //	         }
 //	      }.start();
 //	}
+	
+
+//	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
+	@RequestMapping(value = "ideCss", method = RequestMethod.GET, produces = "text/css" )
+	public ResponseEntity<UrlResource> genModelGraph (ServletRequest request) throws Exception {
+		try {
+			String fPath = FileUtil.concatFilePath(Config.getConfigPath(), "ide.css");
+	    	return FileController.getFile(fPath, "ide.css");
+ 		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 }
 

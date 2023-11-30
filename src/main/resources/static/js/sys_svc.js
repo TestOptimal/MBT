@@ -266,10 +266,6 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "config", successCB, errorCB);
 	};
 
-	SysSvc.getConfig = function (successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "config", successCB, errorCB);
-	};
-
 	SysSvc.saveConfig = function (configMap, successCB, errorCB) {
 		SvrRest.put (SysSvc.base + "config", configMap, successCB, errorCB);
 	};

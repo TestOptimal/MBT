@@ -100,7 +100,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     	}
     	var req = {
     		 method: 'GET',
-    		 url: $scope.urlBase + "/api/v1/sec/" + ($scope.reqInd?"register":"check"),
+    		 url: $scope.urlBase + "/api/v1/default/" + ($scope.reqInd?"register":"check"),
     		 headers: {
     		   'Content-Type': undefined,
     		   'username': $scope.username,
@@ -151,7 +151,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     		SysSvc: SysSvc
     	};
 		SvrRest.token = "";
-    	$.ajax("/api/v1/sec/config", function(data) {
+    	$.ajax("/api/v1/default/config", function(data) {
     		$scope.config = data;
     		$scope.rootCurAppState.config = $scope.config;
     		$scope.username = $scope.config.licEmail;

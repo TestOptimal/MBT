@@ -255,9 +255,15 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		resetShortcuts: {menuFunc: "$scope.initShortcuts()", label: 'Reset Shortcuts', classes: "extraPaddingTop", title: "Resets toolbar"},
 		swaggerUI: {menuFunc: "curAppState.winMgr.openWebPage('swagger')", label: 'REST API', classes: "", title: "TestOptimal REST API - Swagger UI"},
 		toggleFS: { menuFunc: "toggleFullScreen()", classes: "", title: "Toggle fullscreen", label: "Toggle Fullscreen"},
-		logout: { menuFunc: "document.location = '/logout';", classes: "", title: "Logout", label: "Logout"},
+		logout: { menuFunc: "$scope.logout()", classes: "", title: "Logout", label: "Logout"},
 		welcome: { menuFunc: "$scope.openDialog('Welcome');", classes: "", title: "open Welcome", label: "Welcome"},
 	};
+	
+	$scope.logout = function () {
+		$cookies.put(location.hostname + "_" + location.port + "_totoken", "", {domain: location.hostname, samesite: 'strict'});
+		$.ajax("/logout");
+		document.location = '/IDE_Login.html';	
+	}
 	
 	$scope.menuFile ={ 
 		name: "FILE", label: "FILE", 
@@ -422,7 +428,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 			FileViewer: {
 				title: 'File Viewer',
 				srcFrame: 'FileViewer.html',
-				width: 600,
+				width: '75%',
 				height: '85%'
 			}
 		}

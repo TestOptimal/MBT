@@ -243,10 +243,10 @@ public class FileController {
 			@PathVariable ("fileName") String fileName) throws Exception {
 		folderPath = folderPath.replace(":", "/");
 		String fPath = FileUtil.concatFilePath(Config.getModelRoot(), folderPath, fileName);
-		return this.getFile(fPath, fileName);
+		return getFile(fPath, fileName);
 	}
 	
-	private ResponseEntity<UrlResource> getFile (String fPath, String fileName) throws Exception {
+	public static ResponseEntity<UrlResource> getFile (String fPath, String fileName) throws Exception {
 		FileUtil.sanctionFilePath (fPath);
 		UrlResource resource = new UrlResource((new File(fPath)).toURI());
 		if (resource.exists() || resource.isReadable()) {
@@ -282,7 +282,7 @@ public class FileController {
 		ModelMgr modelMgr = new ModelMgr(modelName);
 				
 		String fPath = FileUtil.concatFilePath(modelMgr.getFolderPath(), folderPath, fileName);
-		return this.getFile(fPath, fileName);
+		return getFile(fPath, fileName);
     }
 	
 //	@ApiOperation(value = "Model Download", notes="Model download")
@@ -417,17 +417,17 @@ public class FileController {
 			return new ResponseEntity<>(ClientReturn.Alert("Move failed, check SvrLog file for details"), HttpStatus.OK);
 		}
 	}
-	
-//	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
-	@RequestMapping(value = "ideCss", method = RequestMethod.GET, produces = "text/css" )
-	public ResponseEntity<UrlResource> genModelGraph (ServletRequest request) throws Exception {
-		try {
-			String fPath = FileUtil.concatFilePath(Config.getConfigPath(), "ide.css");
-	    	return this.getFile(fPath, "ide.css");
- 		}
-		catch (Exception e) {
-			return null;
-		}
-	}
+//	
+////	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
+//	@RequestMapping(value = "ideCss", method = RequestMethod.GET, produces = "text/css" )
+//	public ResponseEntity<UrlResource> genModelGraph (ServletRequest request) throws Exception {
+//		try {
+//			String fPath = FileUtil.concatFilePath(Config.getConfigPath(), "ide.css");
+//	    	return this.getFile(fPath, "ide.css");
+// 		}
+//		catch (Exception e) {
+//			return null;
+//		}
+//	}
 
 }

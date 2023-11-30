@@ -27,8 +27,4 @@ public class WebRedirectController {
 	public String idePage() {
 		return this.getStarterPage();
 	}
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public String dashboardPage() {
-		return "redirect:Dashboard_Main.html";
-	}
 }
