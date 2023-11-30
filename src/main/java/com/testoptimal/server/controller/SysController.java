@@ -44,7 +44,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin
 public class SysController {
 	private static Logger logger = LoggerFactory.getLogger(SysController.class);
-	public static final String[] ClientConfigPropList = new String[] {
+	public static final String[] ClientConfigPropList = new String[] { "License.Edition",
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	

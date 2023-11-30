@@ -141,8 +141,7 @@ function WinManager (curAppState_p) {
 		winEventList = {};
 		regWin("Help", 'https://testoptimal.com/v6/wiki');
 		regWin("Support", 'https://testoptimal.com/support');
-		regWin("Dashboard", '../Dashboard_Main.html');
-		regWin("Forum", "https://testoptimal.com/forum");
+		regWin("Forum", "https://github.com/TestOptimal/MBT/discussions");
 		regWin("APIDOCS", "https://testoptimal.com/v6/apidocs/");
 		regWin("Download", "https://testoptimal.com/#Download");
 	}

@@ -15,12 +15,12 @@
 	<script src="js/sys_svc.js"></script>
     <script>
     MainModule.controller("mainCtrl", function ($scope, $location, $anchorScroll) {
-    	$scope.licObj = [];
-    	$scope.authPluginList = [];
+    	$scope.licObj = {licReq: false};
     	
     	$scope.refresh = function () {
     		parent.curAppState.toSvc.SysSvc.getLicDetails (function (data) {
 				$scope.licObj = data;
+				$scope.licObj.licReq = $scope.licObj.edition!='MBT';
     			$scope.$apply();
     		});
     	}
@@ -75,19 +75,19 @@
 		<tr><td nowrap>OS Version:</td><td>{{licObj.osVersion}}</td></tr>
 		<tr><td nowrap>Java Version:</td><td>{{licObj.javaVersion}}</td></tr>
 		<tr><td nowrap>TO Version:</td><td>{{licObj.TestOptimalVersion}} <small>(build: {{licObj.releaseDate}})</small></td></tr>
-		<tr><td nowrap>License Status:</td><td>{{licObj.licStatus}}</td></tr>
-		<tr><td nowrap>Expiration:</td><td style="color: orange;">{{licObj.expireDate}}</td></tr>
+		<tr ng-show="licObj.licReq"><td nowrap>License Status:</td><td>{{licObj.licStatus}}</td></tr>
+		<tr ng-show="licObj.licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{licObj.expireDate}}</td></tr>
 		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licObj.licEmail"/></td></tr>
-		<tr><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
-		<tr style="height: 35px;">
+		<tr ng-show="licObj.licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
+		<tr ng-show="licObj.licReq" style="height: 35px;">
 			<td colspan="2">
 				<div style="color: orange; background: #EEEEEE;" ng-repeat="errMsg in licObj.exceptions track by $index">{{errMsg}}</div>
 			</td>
 		</tr>
 	</table>
-		<div style="position: absolute; left: 3px; bottom: 0px;">
+		<div ng-show="licObj.licReq" style="position: absolute; left: 3px; bottom: 0px;">
 			<button class="btn btn-primary" ng-click="saveLic()">SAVE</button>
-		</div>
+		</div">
 	</div>
 </body>
 </html>

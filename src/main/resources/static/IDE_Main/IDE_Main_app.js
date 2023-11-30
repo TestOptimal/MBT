@@ -14,7 +14,7 @@ var curAppState = {
 	},
 	winMgr: {},
 	modelState: { running: false },
-	edition: "Community",
+	edition: "MBT",
 	curFolder: {path: "", name: ""},
 	getCurFolder: function () {
 		if (curAppState.curFolder && curAppState.curFolder.path) {
@@ -84,11 +84,8 @@ var curAppState = {
 		exprList: [],
 		curExpr: { script: "" }
 	},
-	isRuntime: function() {
-		return curAppState.config.licEdition == "Runtime";
-	},
 	isCommunity: function() {
-		return curAppState.config.licEdition=="Community";
+		return curAppState.config["License.Edition"]=="MBT";
 	},
 	shutdown: function () {
 		confirmDialog("Shut down TestOptimal Server?", function() {
@@ -249,7 +246,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		help: { menuFunc: "curAppState.winMgr.openWin ('Help')", classes: "", title: "TestOptimal online help documentation/wiki", label: "Online Wiki", helpMenu: true},
 		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Forum"},
 		support: { menuFunc: "curAppState.winMgr.openWin (curAppState.isCommunity()?'Forum':'Support');", classes: "", label: "Contact Support", title: "submit a support ticket"},
-		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "Manage License", title: "Manage License"},
+		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "System Info", title: "System information"},
 		serverLog: { menuFunc: "curAppState.openServerLog()", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
 		MScriptLog: {menuFunc: "curAppState.openModelLog()", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
 		resetShortcuts: {menuFunc: "$scope.initShortcuts()", label: 'Reset Shortcuts', classes: "extraPaddingTop", title: "Resets toolbar"},
@@ -366,7 +363,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 				height: 500
 			},
 			License: {
-				title: 'Manage License',
+				title: 'System Info',
 				srcFrame: 'ManageLicense.html',
 				width: 500,
 				height: 450,
@@ -472,14 +469,12 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 
     $scope.flags = {
     	hasPluginBA: false,
-    	isRuntime: false,
     	showNewFeature: false,
     	isModelOpen: false,
     	noModelOpen: true,
     	modelChanged: false,
     	selectedTabID: "",
     	syncTimerOn: true,
-    	communityEdition: true,
 		modelEditorMode: 'edit'
     }
     
@@ -568,7 +563,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 				$scope.flags.modelChanged = false;
 				$scope.flags.isModelOpen = true;
 				$scope.flags.noModelOpen = false;
-				$scope.flags.communityEdition = $scope.rootCurAppState.isCommunity();
 				modelInfo.model = JSON.parse(modelInfo.modelJson);
 				var scxmlNode = modelInfo.model;
 				$scope.rootCurAppState.setModelInfo(modelInfo);
@@ -618,7 +612,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		$scope.initWS();
     		
     		$scope.flags.showNewFeature = $scope.config.showNewReleaseFeatures;
-    		$scope.flags.isRuntime = $scope.rootCurAppState.isRuntime();
     		
     		$scope.shortcutList.length = 0;
     		$scope.initShortcuts($scope.config[$scope.shortcutKey]);
