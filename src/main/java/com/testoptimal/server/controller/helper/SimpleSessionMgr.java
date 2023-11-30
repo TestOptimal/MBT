@@ -48,4 +48,9 @@ public class SimpleSessionMgr extends SessionMgr {
 		Optional<ModelRunner> opt = this.MbtSessionList.stream().filter(s -> s.getMbtSessionID().equals(mbtSessId_p)).findFirst();
 		return opt.orElse(null);
 	}
+
+	@Override
+	public boolean closeModel(ModelRunner modelExec_p) {
+		return this.MbtSessionList.remove(modelExec_p);
+	}
 }

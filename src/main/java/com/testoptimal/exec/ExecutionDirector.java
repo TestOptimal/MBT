@@ -111,6 +111,7 @@ public final class ExecutionDirector extends Thread {
 			this.trigerMBTAction(TravBase.TriggerType.start);
 			String msg = "Started model " + modelMgr.getModelName();
 			logger.info(msg);
+			
 			this.navigator.navigate();
 			
 			this.execStats.complete();
@@ -128,6 +129,12 @@ public final class ExecutionDirector extends Thread {
 			this.mScriptLogger.close();
 		}
 		catch (Throwable e) {
+			try {
+				this.trigerMBTAction(TravBase.TriggerType.start);
+			}
+			catch (Throwable e2) {
+				// ok
+			}
 			this.execListener.mbtErrored(new MBTAbort(e.getMessage()));
 			this.execListener.mbtAbort();
 		}

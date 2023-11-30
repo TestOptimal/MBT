@@ -29,7 +29,7 @@ import com.testoptimal.util.StringUtil;
 public final class Config {
 	private static Logger logger = LoggerFactory.getLogger(Config.class);
 
-	public static final String copyright = "Copyright 2008 - 2020 TestOptimal, LLC.  All rights reserved.";
+	public static final String copyright = "Copyright 2008 - 2023 TestOptimal, LLC.  All rights reserved.";
 	public final static String versionDesc = ConfigVersion.getReleaseLabel(); // majorVersion + "." + ConfigVersion.minorVersion + "." + ConfigVersion.buildNum;
 	
     private static String logPath;

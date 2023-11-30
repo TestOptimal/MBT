@@ -115,9 +115,13 @@ public class IdeSvc {
     	String httpSessionId = this.getHttpSessionId(accessor);
     	
     	ModelRunnerIDE sess = (ModelRunnerIDE) SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessionId);
- 	   	if (sess != null && sess.isRunning()) {
-   			sess.resumeRun();
-   			return;
+ 	   	if (sess != null) {
+ 	   		if (sess.isRunning()) {
+	   			sess.resumeRun();
+	   			return;
+ 	   		}
+ 	   		sess.stopMbt();
+ 	   		SessionMgr.getInstance().closeModel(sess);
    		}
 
  	   	// start model execution
@@ -144,9 +148,13 @@ public class IdeSvc {
     	req.modelName = modelName;
     	String httpSessionId = this.getHttpSessionId(accessor);
     	ModelRunnerIDE sess = (ModelRunnerIDE) SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessionId);
- 	   	if (sess != null && sess.isRunning()) {
-   			sess.resumeDebug();
-   			return;
+ 	   	if (sess != null) {
+ 	   		if (sess.isRunning()) {
+	   			sess.stepOver();
+	   			return;
+ 	   		}
+ 	   		sess.stopMbt();
+ 	   		SessionMgr.getInstance().closeModel(sess);
    		}
  	   	try {
  			sess = new ModelRunnerIDE(httpSessionId, new ModelMgr(req.modelName));
@@ -176,7 +184,7 @@ public class IdeSvc {
     	ModelRunner sess = (ModelRunnerIDE) SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessID);
  	   	if (sess !=null) {
  		   sess.stopMbt();
- 		   SessionMgr.getInstance().closeModel(modelName, httpSessID);
+ 		   SessionMgr.getInstance().closeModel(sess);
 	   	}
 	   	else {
  			this.sendIdeMessageLocal(accessor, ModelNotRunning);

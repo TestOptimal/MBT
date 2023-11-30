@@ -18,6 +18,9 @@ public abstract class SessionMgr {
 	// closes model
 	public abstract ModelRunner closeModel (String modelName_p, String sessId_p);
 	
+	
+	// close model session
+	public abstract boolean closeModel (ModelRunner modelExec_p);
 
 	// returns a list of model MbtStarter currently opened by the session id
 	public abstract List<ModelRunner> getMbtStarterForUserSession(String sessId_p);

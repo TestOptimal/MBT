@@ -847,7 +847,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	$scope.debugModel = function () {
 		$scope.rootCurAppState.playModel = false;
 		$scope.sysMsg.msgList = [];
-		//if ($scope.rootCurAppState.modelState.running) {
+		//if ($scope.rootCurAppState..runn.running) {
 		//	$scope.rootCurAppState.toWS.wsSendModel("resumeDebug", $scope.rootCurAppState.scxml.modelName);
 		//}
 		//else {
@@ -860,12 +860,12 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 			$scope.rootCurAppState.playModelDelay = parseInt(getPromptVal());
 			$scope.rootCurAppState.playModel = true;
 			$scope.sysMsg.msgList = [];
-			if ($scope.rootCurAppState.modelState.running) {
-				$scope.rootCurAppState.toWS.wsSendModel("stepOver", $scope.rootCurAppState.scxml.modelName);
-			}
-			else {
+//			if ($scope.rootCurAppState.modelState.running) {
+//				$scope.rootCurAppState.toWS.wsSendModel("stepOver", $scope.rootCurAppState.scxml.modelName);
+//			}
+//			else {
 				$scope.rootCurAppState.toWS.wsSendModel("debugModel", $scope.getRunRequest(true));
-			}
+//			}
 		});
 		$scope.rootCurAppState.selectTab("Model");
 	}

@@ -45,13 +45,13 @@ public class ModelRunnerIDE extends ModelRunner {
 		}
 	}
 
-	public void resumeDebug () {
-		this.debugMode = true;
-		this.pauseNext = false;
-		synchronized(this) {
-			this.notify();
-		}
-	}
+//	public void resumeDebug () {
+//		this.debugMode = true;
+//		this.pauseNext = false;
+//		synchronized(this) {
+//			this.notify();
+//		}
+//	}
 	
 	public void stepOver () {
 		this.debugMode = true;

@@ -24,7 +24,7 @@ function TOWS () {
 	    }, function (err) {
 			if (stompClient) {
 				console.log("Lost ws connection", new Date());
-		    	alertDialog("Lost connection to TestOptimal Server. Refresh browser to be reconnected.");
+		    	alertDialog("Lost connection to TestOptimal Server. Click File/Logout to be reconnected.");
 			}
 	    });
 	}

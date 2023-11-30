@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,7 @@ public abstract class ModelRunner implements ExecListener {
 	public String getMbtSessionID() { return this.mbtSessId; }
 
 	protected ModelRunner(String httpSessId_p, ModelMgr modelMgr_p) throws Exception {
+		if (StringUtil.isEmpty(httpSessId_p)) throw new Exception ("Invalid (null) session id, logout and try again");
 		this.httpSessId = httpSessId_p;
 		this.mbtSessId = RandomStringUtils.randomAlphanumeric(10);
 		this.modelMgr = modelMgr_p;

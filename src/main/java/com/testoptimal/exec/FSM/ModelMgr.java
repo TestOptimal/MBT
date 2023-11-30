@@ -238,7 +238,7 @@ public class ModelMgr {
 		if (!modelFolderPath_p.endsWith("/") && !modelFolderPath_p.endsWith("\\")) {
 			modelFolderPath_p += File.separator;
 		}
-		for (String name: new String[] {"model", "dataset", "report", "temp", "snapscreen", "uimap"}) {
+		for (String name: new String[] {"model", "dataset", "report", "temp", "snapscreen", "stats"}) {
 			File file = new File (modelFolderPath_p + name);
 			if (!file.exists()) {
 				file.mkdir();
