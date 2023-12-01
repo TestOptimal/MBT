@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +24,10 @@ import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.license.SerialNum;
 import com.testoptimal.server.Application;
-import com.testoptimal.server.AsyncShutdown;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
-import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.util.DateUtil;
-import com.testoptimal.util.StringUtil;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
@@ -41,7 +40,6 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-//@Api(tags="System")
 @RequestMapping("/api/v1/sys")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
@@ -52,8 +50,7 @@ public class SysController {
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	
-//	@ApiOperation(value = "Config Settings", notes="Config setting list")
-	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "sysinfo", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		Map<String,Object> retProp = new java.util.HashMap<>();
@@ -81,25 +78,18 @@ public class SysController {
 		return new ResponseEntity<>(retProp, HttpStatus.OK);
 	}
 	
-////	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
-//	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
-//		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
+	
+//	@SecurityRequirement(name = "basicAuth")
+//	@GetMapping(value = "shutdown", produces = MediaType.APPLICATION_JSON_VALUE)
+////	@PreAuthorize("hasPermission('hasAccess','ADMIN')")
+//	public ResponseEntity<ClientReturn> shutdown () throws Exception {
+//		AsyncShutdown aShut = new AsyncShutdown(50);
+//		aShut.start();
+//		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 //	}
 	
-//	@ApiOperation(value = "Shutdown", notes="Shutdown server")
 	@SecurityRequirement(name = "basicAuth")
-	@RequestMapping(value = "shutdown", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@PreAuthorize("hasPermission('hasAccess','ADMIN')")
-	public ResponseEntity<ClientReturn> shutdown () throws Exception {
-		AsyncShutdown aShut = new AsyncShutdown(50);
-		aShut.start();
-		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
-	}
-	
-//	@ApiOperation(value = "Model Script CodeAssist", notes="Model script code assist list")
-	@SecurityRequirement(name = "basicAuth")
-	@RequestMapping(value = "CodeAssist/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "CodeAssist/model", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListModel(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
 		if (pluginList==null) {
@@ -108,26 +98,23 @@ public class SysController {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAList(pluginList), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "DataDesign Script CodeAssist", notes="DataDesign script code assist list")
 	@SecurityRequirement(name = "basicAuth")
-	@RequestMapping(value = "CodeAssist/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "CodeAssist/data", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListData(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListData(pluginList), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Script CodeAssist for expr", notes="script code assist list")
 	@SecurityRequirement(name = "basicAuth")
-	@RequestMapping(value = "CodeAssist/expr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "CodeAssist/expr", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CodeAssist>> caListExpr (
 		@RequestBody List<String> expr,
 		ServletRequest request) throws Exception {
 		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListByExpr (expr), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Save Config", notes="save config entries")
 	@SecurityRequirement(name = "basicAuth")
-	@RequestMapping(value = "config", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "config", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveConfig (
 			@RequestBody Map<String, String> map) {
 		try {

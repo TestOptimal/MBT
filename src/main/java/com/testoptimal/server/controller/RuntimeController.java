@@ -13,10 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -48,7 +49,6 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-//@Api(tags="Runtime")
 @RequestMapping("/api/v1/runtime")
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -56,8 +56,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class RuntimeController {
 	private static Logger logger = LoggerFactory.getLogger(RuntimeController.class);
 
-//	@ApiOperation(value = "Model List deployed at this runtime server", notes="Model list at this server")
-	@RequestMapping(value = "model/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<String>> listModel() throws Exception {
 		String modelFolder = Config.getModelRoot();
 		List<ModelFile> modelList = ModelFile.getAllModelList(new File(modelFolder));
@@ -66,8 +65,7 @@ public class RuntimeController {
 	}
 
 
-//	@ApiOperation(value = "Running Model List", notes="Running model list")
-	@RequestMapping(value = "session/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SessionInfo>> listSessions (ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 
@@ -75,8 +73,7 @@ public class RuntimeController {
 		return new ResponseEntity<>(sessList , HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Execute Model (Async)", notes="Async run model")
-	@RequestMapping(value = "model/run/async", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/run/async", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> runModelAsync (
 			@RequestBody RunRequest runReq, 
 			ServletRequest request) throws Exception, MBTAbort {
@@ -111,8 +108,7 @@ public class RuntimeController {
 		}
 	}
 	
-//	@ApiOperation(value = "Model Execution Monitor", notes="Execution monitor")
-	@RequestMapping(value = "model/{modelName}/monitor", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/monitor", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ExecStatusInfo> monitorStats (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -125,8 +121,7 @@ public class RuntimeController {
 		return new ResponseEntity<>(execInfo, HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Stop All Models", notes="Stop all models")
-	@RequestMapping(value = "session/stop", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/stop", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> interruptAllSessions (
 		ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -134,8 +129,7 @@ public class RuntimeController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Close All Models", notes="Stop and close all models")
-	@RequestMapping(value = "session/close", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/close", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeAllSessions (
 		ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -143,8 +137,7 @@ public class RuntimeController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Stop Model", notes="Stop model")
-	@RequestMapping(value = "session/{mbtSessionID}/stop", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/{mbtSessionID}/stop", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeSession (
 			@PathVariable (name="mbtSessionID", required=true) String mbtSessID,
 		ServletRequest request) throws Exception {
@@ -153,8 +146,7 @@ public class RuntimeController {
 	}
 
 	
-//	@ApiOperation(value = "Server Mbt Session Status", notes="Server Mbt sessionStatus")
-	@RequestMapping(value = "session/{mbtSessionID}/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/{mbtSessionID}/status", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ExecutionStatus> sessionStatus (ServletRequest request,
 			@PathVariable (name="mbtSessionID", required=true) String mbtSessID) throws Exception {
 		ModelRunner sessObj = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
@@ -166,8 +158,7 @@ public class RuntimeController {
 		return new ResponseEntity <> (sessObj.getExecStatus(), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Model Script Log", notes="Model Script Log")
-	@RequestMapping(value = "model/{modelName}/log", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	@GetMapping(value = "model/{modelName}/log", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getScriptLog (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -183,8 +174,7 @@ public class RuntimeController {
 	}
 
 
-//	@ApiOperation(value = "Model Screenshot File", notes="Model screenshot file by snapTime")
-	@RequestMapping(value = "model/{modelName}/screenshot/{snapTime}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "model/{modelName}/screenshot/{snapTime}", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> getModelScreenshotBySnapTime  (@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="snapTime", required=true) String snapTime,
 			ServletRequest request) throws Exception {
@@ -210,8 +200,7 @@ public class RuntimeController {
 		throw new Exception ("snapscreen.file.notfound");
    	}
 	
-//	@ApiOperation(value = "Close Model Execution", notes="Closes model execution")
-	@RequestMapping(value = "model/{modelName}/close", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/close", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
 		ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();

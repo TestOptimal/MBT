@@ -87,12 +87,6 @@ var curAppState = {
 	isCommunity: function() {
 		return curAppState.config["License.Edition"]=="MBT";
 	},
-	shutdown: function () {
-		confirmDialog("Shut down TestOptimal Server?", function() {
-			curAppState.toSvc.SysSvc.shutdown();
-			curAppState.addMsg({type: "warn", text: 'Shutdown request sent'});
-		});
-	},
 	FileViewer: {title: ''},
 	openSvrLog: function (skipApply_p) {
 		curAppState.FileViewer = {type: "ServerLog"};
@@ -242,7 +236,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		playback: { menuFunc: "openPlayback()", classes: "extraPaddingTop", label: "Play Recording", title: "Playback screen recording. Screen recording is started by MScript function $startScreenRecording(...)."},
 		showCoverage: { menuFunc: "curAppState.winMgr.raiseEvent('showCoverage')", toolbar: true, icon: "glyphicon-tint", classes: "", label: "Show Coverage", hide: "noModelOpen", title: "Show model execution coverage"},
 
-		shutdown: { menuFunc: "curAppState.shutdown()", icon:"glyphicon-off", classes: "extraPaddingTop", title: "Shutdown TestOptimal server", label: "Shutdown"},
 		help: { menuFunc: "curAppState.winMgr.openWin ('Help')", classes: "", title: "TestOptimal online help documentation/wiki", label: "Online Wiki", helpMenu: true},
 		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Discussion Forum"},
 		support: { menuFunc: "curAppState.winMgr.openWin ('Support');", classes: "", label: "Contact Us", title: "submit sales-questions or for ProMBT users support-tickets"},
@@ -309,8 +302,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		  $scope.actionList.manageLic,
 	      $scope.actionList.toggleFS,
 	      $scope.actionList.serverLog,
-	      $scope.actionList.swaggerUI,
-	      $scope.actionList.shutdown
+	      $scope.actionList.swaggerUI
 	  ]
 	};
 

@@ -8,9 +8,10 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,14 +36,12 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-//@Api(tags="Default")
 @RequestMapping("/api/v1/default")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DefaultController {
 	private static Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
-//	@ApiOperation(value = "check", notes="login")
-	@RequestMapping(value = "check", method = RequestMethod.POST)
+	@PostMapping("check")
 	public ResponseEntity<ClientReturn> checkPost (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
 			@RequestParam (name="password", required=false) String password,
@@ -51,8 +50,7 @@ public class DefaultController {
 		return this.check(request, username, password, headerUsername, headerPassword);
 	}
 	
-//	@ApiOperation(value = "check", notes="login")
-	@RequestMapping(value = "check", method = RequestMethod.GET)
+	@GetMapping("check")
 	public ResponseEntity<ClientReturn> check (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
 			@RequestParam (name="password", required=false) String password,
@@ -76,8 +74,7 @@ public class DefaultController {
 		}
 	}
 
-//	@ApiOperation(value = "register", notes="login")
-	@RequestMapping(value = "register", method = RequestMethod.POST)
+	@PostMapping("register")
 	public ResponseEntity<ClientReturn> registerPost (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
 			@RequestParam (name="password", required=false) String password,
@@ -87,8 +84,7 @@ public class DefaultController {
 		return this.register(request, username, password, headerUsername, headerPassword);
 	}
 	
-//	@ApiOperation(value = "register", notes="login")
-	@RequestMapping(value = "register", method = RequestMethod.GET)
+	@GetMapping("register")
 	public ResponseEntity<ClientReturn> register (ServletRequest request,
 			@RequestParam (name="username", required=false) String username,
 			@RequestParam (name="password", required=false) String password,
@@ -115,21 +111,14 @@ public class DefaultController {
 			return new ResponseEntity<> (ClientReturn.Alert("User already registered"), HttpStatus.OK);			
 		}
 	}
-//
-//	@RequestMapping(value = "logout", method = RequestMethod.GET)
-//	public void logout (ServletRequest request) throws Exception {
-//		logger.info("logout");
-//	}
 
-//	@ApiOperation(value = "Get SysInfo", notes="Get SysInfo")
-	@RequestMapping(value = "sysinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "sysinfo", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SysInfo> getSysInfo() throws Exception {
 		return new ResponseEntity<>(SysInfo.getSysInfo(), HttpStatus.OK);
 	}
 	
 	
-//	@ApiOperation(value = "Config Settings", notes="Config setting list")
-	@RequestMapping(value = "config", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "config", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getConfigList(ServletRequest request) throws Exception {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		Map<String,Object> retProp = new java.util.HashMap<>();
@@ -148,35 +137,11 @@ public class DefaultController {
 		    	retProp.put(propKey, propVal);
 	    	}
 	    }
-	    
-//	    List<String> pList = PluginMgr.getAllPluginList().stream()
-//				.map(p-> p.getPluginID())
-//				.collect(Collectors.toList());
-//		retProp.put("pluginList", pList);
 		retProp.put("HttpSessionID", session.getId());
 		return new ResponseEntity<>(retProp, HttpStatus.OK);
 	}
 	
-
-//	private void notifyUserRegistration (String userID_p) {
-//		 new Thread() {
-//	         public void run() {
-//	     		Map<String,Object> params = new java.util.HashMap<>();
-//	    		params.put("userID", userID_p);
-////	    		try {
-////	    			String msg = TOServerMgr.callTOAction("userRegistry", params);
-////	    			System.out.println(msg);
-////	    		}
-////	    		catch (Throwable e) {
-////	    			System.out.printf(e.getLocalizedMessage());
-////	    		}
-//	         }
-//	      }.start();
-//	}
-	
-
-//	@ApiOperation(value = "IDE Custom CSS", notes="IDE CSS")
-	@RequestMapping(value = "ideCss", method = RequestMethod.GET, produces = "text/css" )
+	@GetMapping(value = "ideCss", produces = "text/css" )
 	public ResponseEntity<UrlResource> genModelGraph (ServletRequest request) throws Exception {
 		try {
 			String fPath = FileUtil.concatFilePath(Config.getConfigPath(), "ide.css");
@@ -186,6 +151,5 @@ public class DefaultController {
 			return null;
 		}
 	}
-
 }
 

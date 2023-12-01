@@ -12,9 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,7 +50,6 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-//@Api(tags="Client")
 @RequestMapping("/api/v1/client")
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -58,9 +58,7 @@ public class ClientController {
 	private static Logger logger = LoggerFactory.getLogger(ClientController.class);
 	public static enum Status { success, error, timeout};
 
-
-//	@ApiOperation(value = "Start Model Execution", notes="Start model execution")
-	@RequestMapping(value = "model/start", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/start", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> startModel (
 			@RequestBody RunRequest runReq, 
 			ServletRequest request) throws Exception, MBTAbort {
@@ -93,8 +91,7 @@ public class ClientController {
 		}
 	}
 
-//	@ApiOperation(value = "Stop Model Execution", notes="Stop model execution")
-	@RequestMapping(value = "model/stop", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/stop", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void stopModel (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception, MBTAbort {
@@ -108,8 +105,7 @@ public class ClientController {
 		}
 	}
 	
-//	@ApiOperation(value = "Next", notes="Get next test step")
-	@RequestMapping(value = "model/next", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/next", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestCmd> nextStep (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
 			@RequestParam (name="timeoutMillis", required=false) int timeoutMillis,
@@ -126,15 +122,13 @@ public class ClientController {
 		return new ResponseEntity<>(cmdObj, HttpStatus.OK);
 	}
 	
-//	@ApiOperation(value = "Result", notes="Send result to model")
-	@RequestMapping(value = "model/result", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/result", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void sendResult (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
 			@RequestBody TestResult result,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
 		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
-		TestCmd cmdObj;
 		if (mbtSess!=null && mbtSess.isRunning()) {
 			mbtSess.sendResult(result);
 		}
@@ -144,8 +138,7 @@ public class ClientController {
 	}
 	
 
-//	@ApiOperation(value = "Stats getModelExec", notes="Stats getModelExec")
-	@RequestMapping(value = "model/stats", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/stats", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> getModelExec (
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -161,8 +154,7 @@ public class ClientController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Upload JSON Model", notes="Upload model in JSON for execution")
-	@RequestMapping(value = "model/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/upload", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModelJson (
 			@RequestBody String modelJson, 
 			ServletRequest request) throws Exception {
@@ -198,8 +190,7 @@ public class ClientController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Upload Gherkin Model", notes="Upload model in Gherkin for execution")
-	@RequestMapping(value = "model/upload/gherkin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/upload/gherkin", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> uploadModelGherkin (
 			@RequestBody String modelGherkin, 
 			ServletRequest request) throws Exception {
@@ -232,7 +223,6 @@ public class ClientController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 //
-//	@ApiOperation(value = "Upload Model in CSV", notes="Upload model in CSV format")
 //	@RequestMapping(value = "model/upload/csv", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<ClientReturn> uploadModelCSV (
 //			@RequestParam (name="modelName", required=true) String modelName,
@@ -275,8 +265,8 @@ public class ClientController {
 //		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 //	}
 //	
-//	@ApiOperation(value = "Model Sequence", notes="Generate Test Cases")
-	@RequestMapping(value = "model/gen", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@PostMapping(value = "model/gen", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> modelSeq (
 			@RequestBody RunRequest runReq, 
 			ServletRequest request) throws Exception, MBTAbort {

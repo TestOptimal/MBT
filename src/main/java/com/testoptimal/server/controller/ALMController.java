@@ -2,16 +2,15 @@ package com.testoptimal.server.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,17 +28,12 @@ import jakarta.servlet.ServletRequest;
  *
  */
 @RestController
-//@Api(tags="ALM")
 @RequestMapping("/api/v1/alm")
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ALMController {
-	private static Logger logger = LoggerFactory.getLogger(ALMController.class);
-
-
-//	@ApiOperation(value = "Save Requirement", notes="Save Reguirements")
-	@RequestMapping(value = "{modelName}/requirement", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody List<Requirement> reqList,
 			ServletRequest request) throws Exception {
@@ -48,8 +42,7 @@ public class ALMController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Requirement", notes="Reguirements")
-	@RequestMapping(value = "{modelName}/requirement", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Requirement>> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr = new ModelMgr(modelName);

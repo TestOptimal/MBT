@@ -11,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,7 +42,6 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 @RestController
-//@Api(tags="Model")
 @RequestMapping("/api/v1/model")
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -49,8 +49,7 @@ import jakarta.servlet.http.HttpSession;
 public class ModelController {
 	private static Logger logger = LoggerFactory.getLogger(ModelController.class);
 
-//	@ApiOperation(value = "Open Model", notes="Open model")
-	@RequestMapping(value = "{modelName}/getModel", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{modelName}/getModel", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ModelInfo> openModel(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request, Principal principal) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -83,8 +82,7 @@ public class ModelController {
 		return new ResponseEntity<>(openInfo, HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Close Model", notes="close a model")
-	@RequestMapping(value = "{modelName}/close", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{modelName}/close", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -92,8 +90,7 @@ public class ModelController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-//	@ApiOperation(value = "Save Model", notes="Save a model definition")
-	@RequestMapping(value = "{modelName}/saveModel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "{modelName}/saveModel", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveModel(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody String modelJson, ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -119,8 +116,7 @@ public class ModelController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	
-//	@ApiOperation(value = "Model Log", notes="Model log file")
-	@RequestMapping(value = "{modelName}/log", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	@GetMapping(value = "{modelName}/log", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> modelScripts(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
@@ -133,9 +129,7 @@ public class ModelController {
 	}
 	
 
-	
-//	@ApiOperation(value = "Model Scripts", notes="Model scripts, including submodels")
-	@RequestMapping(value = "{modelName}/getScript", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{modelName}/getScript", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GroovyScript>> getScripts(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr = new ModelMgr(modelName);
@@ -146,8 +140,8 @@ public class ModelController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "Save Model Scripts", notes="Save model scripts")
-	@RequestMapping(value = "{modelName}/saveScript", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@PostMapping(value = "{modelName}/saveScript", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveScripts(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody List<GroovyScript> scriptList,
 			ServletRequest request) throws Exception {
@@ -158,6 +152,4 @@ public class ModelController {
 		IdeSvc.sendIdeData(session.getId(), "saved", "Script");
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
-	
-
 }

@@ -2,14 +2,13 @@ package com.testoptimal.server.controller;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WebRedirectController {
 	private static String StarterPage = "IDE_Main.html";
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/")
 	public String defaultStarterPage() {
 		return "redirect:IDE_Login.html";
 	}
@@ -19,11 +18,11 @@ public class WebRedirectController {
 	   return "redirect:" + url;
 	}
    
-	@RequestMapping(value = "/swagger", method = RequestMethod.GET)
+	@GetMapping("/swagger")
 	public String swaggerPage() {
 		return "redirect:swagger-ui.html";
 	}
-	@RequestMapping(value = "/ide", method = RequestMethod.GET)
+	@GetMapping("/ide")
 	public String idePage() {
 		return this.getStarterPage();
 	}

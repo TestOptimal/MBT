@@ -296,10 +296,6 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "about", successCB, errorCB);
 	};
 
-	SysSvc.shutdown = function (successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "shutdown", successCB, errorCB);
-	};
-	
 	SysSvc.getCA = function (pluginList, successCB, errorCB) {
 		if (pluginList==undefined) pluginList = [];
 		SvrRest.get (SysSvc.base + "CodeAssist/model?pluginList=" + pluginList.join(","), successCB, errorCB);

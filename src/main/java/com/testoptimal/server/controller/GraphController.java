@@ -11,9 +11,9 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +44,6 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-//@Api(tags="Graph")
 @RequestMapping("/api/v1/graph")
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -52,8 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GraphController {
 	private static Logger logger = LoggerFactory.getLogger(GraphController.class);
 
-//	@ApiOperation(value = "Model Graph", notes="Model graph")
-	@RequestMapping(value = "{modelName}/model", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE )
+	@GetMapping(value = "{modelName}/model", produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genModelGraph (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr =  new ModelMgr(modelName);
@@ -75,8 +73,7 @@ public class GraphController {
 		 }    	
 	}
 	
-//	@ApiOperation(value = "Model Coverage", notes="Model Coverage graph")
-	@RequestMapping(value = "{modelName}/coverage", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE )
+	@GetMapping(value = "{modelName}/coverage", produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genCoverageGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -106,8 +103,7 @@ public class GraphController {
 		 }    	
 	}
 
-//	@ApiOperation(value = "Model Sequence Graph", notes="Model sequence graph")
-	@RequestMapping(value = "{modelName}/sequence", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "{modelName}/sequence", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> genModelSequenceGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -137,8 +133,7 @@ public class GraphController {
 		 }    	
 	}
 
-//	@ApiOperation(value = "Model Traversal MSC", notes="Model traversal MSC")
-	@RequestMapping(value = "{modelName}/msc", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "{modelName}/msc", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> modelTravMSC(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {

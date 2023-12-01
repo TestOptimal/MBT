@@ -5,12 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -19,15 +14,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @RestController
-//@Api(tags="Demo")
 @RequestMapping("/api/v1/demo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class DemoController {
 	private static Logger logger = LoggerFactory.getLogger(DemoController.class);
 	
-//	@ApiOperation(value = "Demo Insurance Premium", notes="Demo insurance premium calculator")
-	@RequestMapping(value = "insurance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "insurance", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InsurancePremium> getInsurancePremium (
 		@RequestParam (name="age", required=true) int age,
 		@RequestParam (name="atFaultClaims", required=true) int atFaultClaims,
