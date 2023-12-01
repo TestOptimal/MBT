@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.Gson;
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.stats.DashboardStats;
 import com.testoptimal.stats.StatsMgr;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -35,6 +37,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 //@Api(tags="Stats")
 @RequestMapping("/api/v1/stats")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class StatsController {
@@ -64,6 +67,8 @@ public class StatsController {
 	}
 	
 //	@ApiOperation(value = "Stats dashboard", notes="Stats dashboard")
+//	@OpenAPIDefinition(info = @Info(title = "Foos API", version = "v1"))
+//	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "dashboard", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DashboardStats> getDashboard (ServletRequest request) throws Exception {
 		DashboardStats dstats = StatsMgr.getDashboardStats();

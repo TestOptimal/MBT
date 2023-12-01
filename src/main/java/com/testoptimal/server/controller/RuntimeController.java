@@ -37,6 +37,7 @@ import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.ModelFile;
 import com.testoptimal.util.StringUtil;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -49,6 +50,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 //@Api(tags="Runtime")
 @RequestMapping("/api/v1/runtime")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class RuntimeController {

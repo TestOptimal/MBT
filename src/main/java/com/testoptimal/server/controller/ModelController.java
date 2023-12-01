@@ -30,6 +30,7 @@ import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.ModelInfo;
 import com.testoptimal.util.FileUtil;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +43,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 //@Api(tags="Model")
 @RequestMapping("/api/v1/model")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ModelController {

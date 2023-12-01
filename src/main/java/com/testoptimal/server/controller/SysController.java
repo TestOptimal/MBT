@@ -30,6 +30,7 @@ import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.util.DateUtil;
 import com.testoptimal.util.StringUtil;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -87,6 +88,7 @@ public class SysController {
 //	}
 	
 //	@ApiOperation(value = "Shutdown", notes="Shutdown server")
+	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "shutdown", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	@PreAuthorize("hasPermission('hasAccess','ADMIN')")
 	public ResponseEntity<ClientReturn> shutdown () throws Exception {
@@ -96,6 +98,7 @@ public class SysController {
 	}
 	
 //	@ApiOperation(value = "Model Script CodeAssist", notes="Model script code assist list")
+	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "CodeAssist/model", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListModel(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
@@ -106,6 +109,7 @@ public class SysController {
 	}
 
 //	@ApiOperation(value = "DataDesign Script CodeAssist", notes="DataDesign script code assist list")
+	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "CodeAssist/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, List<CodeAssist>>> caListData(@RequestParam (name="pluginList", required=false) List<String> pluginList,
 		ServletRequest request) throws Exception {
@@ -113,6 +117,7 @@ public class SysController {
 	}
 
 //	@ApiOperation(value = "Script CodeAssist for expr", notes="script code assist list")
+	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "CodeAssist/expr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CodeAssist>> caListExpr (
 		@RequestBody List<String> expr,
@@ -121,6 +126,7 @@ public class SysController {
 	}
 
 //	@ApiOperation(value = "Save Config", notes="save config entries")
+	@SecurityRequirement(name = "basicAuth")
 	@RequestMapping(value = "config", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> saveConfig (
 			@RequestBody Map<String, String> map) {

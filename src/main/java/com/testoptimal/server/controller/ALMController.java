@@ -20,6 +20,7 @@ import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.Requirement;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 
 /**
@@ -30,6 +31,7 @@ import jakarta.servlet.ServletRequest;
 @RestController
 //@Api(tags="ALM")
 @RequestMapping("/api/v1/alm")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ALMController {

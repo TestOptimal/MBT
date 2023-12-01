@@ -34,6 +34,7 @@ import com.testoptimal.stats.StatsMgr;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,6 +46,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 //@Api(tags="Graph")
 @RequestMapping("/api/v1/graph")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class GraphController {

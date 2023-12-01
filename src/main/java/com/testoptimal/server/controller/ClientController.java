@@ -39,6 +39,7 @@ import com.testoptimal.server.model.parser.GherkinModel;
 import com.testoptimal.server.model.parser.ModelParserGherkin;
 import com.testoptimal.util.FileUtil;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,6 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 //@Api(tags="Client")
 @RequestMapping("/api/v1/client")
+@SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ClientController {
