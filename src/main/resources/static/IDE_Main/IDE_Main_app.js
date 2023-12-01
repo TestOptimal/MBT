@@ -93,16 +93,16 @@ var curAppState = {
 			curAppState.addMsg({type: "warn", text: 'Shutdown request sent'});
 		});
 	},
-	FileViewer: {title: 'abc'},
-	openSvrLog: function () {
+	FileViewer: {title: ''},
+	openSvrLog: function (skipApply_p) {
 		curAppState.FileViewer = {type: "ServerLog"};
 		scope.openDialog("FileViewer");
-		scope.$apply();
+		if (!skipApply_p) scope.$apply();
 	},
-	openModelLog: function () {
+	openModelLog: function (skipApply_p) {
 		curAppState.FileViewer = {type: "ModelLog"};
 		scope.openDialog("FileViewer");
-		scope.$apply();
+		if (!skipApply_p) scope.$apply();
 	},
 	openModelFile: function (folderPath_p, fileName_p) {
 		curAppState.FileViewer = {type: "ModelFile", folderPath: folderPath_p, fileName: fileName_p};
@@ -247,8 +247,8 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Discussion Forum"},
 		support: { menuFunc: "curAppState.winMgr.openWin ('Support');", classes: "", label: "Contact Us", title: "submit sales-questions or for ProMBT users support-tickets"},
 		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "System Info", title: "System information"},
-		serverLog: { menuFunc: "curAppState.openServerLog()", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
-		MScriptLog: {menuFunc: "curAppState.openModelLog()", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
+		serverLog: { menuFunc: "curAppState.openSvrLog(true)", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
+		MScriptLog: {menuFunc: "curAppState.openModelLog(true)", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
 		resetShortcuts: {menuFunc: "$scope.initShortcuts()", label: 'Reset Shortcuts', classes: "extraPaddingTop", title: "Resets toolbar"},
 		swaggerUI: {menuFunc: "curAppState.winMgr.openWebPage('swagger')", label: 'REST API', classes: "", title: "TestOptimal REST API - Swagger UI"},
 		toggleFS: { menuFunc: "toggleFullScreen()", classes: "", title: "Toggle fullscreen", label: "Toggle Fullscreen"},

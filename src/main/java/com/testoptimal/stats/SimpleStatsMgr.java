@@ -18,19 +18,21 @@ public class SimpleStatsMgr implements ManageStats {
 		Gson gson = new Gson();
 		File[] flist = FileUtil.getFileList(modelMgr_p.getStatsFolderPath());
 		List<ModelExecDB> retList = Arrays.asList(flist).stream()
-		.filter(f -> f.getName().endsWith(".json"))
-		.map(f -> {
-			try {
-				ModelExecDB execStats = gson.fromJson(FileUtil.readFile(f.getAbsolutePath()).toString(), ModelExecDB.class);
-				return execStats;
-			}
-			catch (Exception e) {
-				// skip
-				return null;
-			}
-		}).filter(s -> s!=null).collect(Collectors.toList());
+			.filter(f -> f.getName().endsWith(".json"))
+			.map(f -> {
+				try {
+					ModelExecDB execStats = gson.fromJson(FileUtil.readFile(f.getAbsolutePath()).toString(), ModelExecDB.class);
+					return execStats;
+				}
+				catch (Exception e) {
+					// skip
+					return null;
+				}
+			})
+			.filter(s -> s!=null)
+			.collect(Collectors.toList());
 		retList.sort((o1, o2) -> o1.execSummary.startDT.compareTo(o2.execSummary.startDT));
-		Collections.reverse(retList);
+		Collections.reverse(retList); // latest first
 		return retList;
 	}
 
@@ -45,7 +47,7 @@ public class SimpleStatsMgr implements ManageStats {
 		Gson gson = new Gson();
 		String statsJson = gson.toJson(execStats_p);
 		FileUtil.writeToFile(execStats_p.filePath, statsJson);
-		
+		StatsMgr.purgeStats(execStats_p.modelName);
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class SimpleStatsMgr implements ManageStats {
 			})
 			.filter(f -> f!=null)
 			.count();
-		return 0;
+		return deleted;
 	}
 
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html> 
 <html>
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -38,7 +38,7 @@
 				else if (parent.curAppState.FileViewer.type=="ModelFile") {		
 					$scope.title = "Model File";
 					$scope.filePath = parent.curAppState.FileViewer.folderPath + "/" + parent.curAppState.FileViewer.fileName;
-					if (parent.curAppState.FileViewer.fileName.endsWith(".png")) {
+					if (parent.curAppState.FileViewer.fileName.endsWith(".png") || parent.curAppState.FileViewer.fileName.endsWith(".jpg")) {
 						$scope.filePath = parent.curAppState.FileViewer.folderPath + "/" + parent.curAppState.FileViewer.fileName;
 						$.get({
 						    url: parent.curAppState.toSvc.FileSvc.getFileURL (parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName),
@@ -54,6 +54,9 @@
 				 	}
 					else {
 						parent.curAppState.toSvc.FileSvc.getFile(parent.curAppState.FileViewer.folderPath, parent.curAppState.FileViewer.fileName, function(data) {
+							if (typeof data != "string") {
+								data = JSON.stringify(data, null, 3);
+							}
 							$scope.textdata = data;
 							$('#textarea').css("display", "block");	
 							$scope.$apply();

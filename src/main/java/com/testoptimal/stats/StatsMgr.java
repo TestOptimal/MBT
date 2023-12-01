@@ -79,29 +79,21 @@ public class StatsMgr {
 		});
 		return dstats;
 	}
-	
-	public static int purgeStats(Date purgeDate_p, int keepNum_p) {
-		List<String> modelList = FileUtil.getModelList(new File(Config.getModelRoot()), false);
-		int modelCount = (int) modelList.stream().map(m -> {
-			try {
-				ModelMgr modelMgr = new ModelMgr(m.substring(0, m.lastIndexOf(".")));
-				List<String> mbtSessList = statsMgr.getStatsList(modelMgr).stream()
-						.filter(s -> s.execSummary.startDT.before(purgeDate_p))
-						.limit(keepNum_p)
-						.map(s -> s.mbtSessID)
-						.collect(Collectors.toList());
-				int deletedCount = statsMgr.deleteStats(m, mbtSessList);
-				return deletedCount;
-			}
-			catch (Exception e) {
-				//
-				logger.error(e.getMessage());
-				return 0;
-			}
-		})
-		.filter(c -> c > 0).count();
-		
-		
-		return modelCount;
+
+	public static int purgeStats(String modelName_p) {
+		try {
+			ModelMgr modelMgr = new ModelMgr(modelName_p);
+			int keepNum = modelMgr.getScxmlNode().getMiscNode().getMaxHistoryStat();
+			List<String> mbtSessList = statsMgr.getStatsList(modelMgr).stream()
+					.skip(keepNum)
+					.map(s -> s.mbtSessID)
+					.collect(Collectors.toList());
+			int deletedCount = statsMgr.deleteStats(modelName_p, mbtSessList);
+			return deletedCount;
+		}
+		catch (Exception e) {
+			logger.warn("Error cleaning up stats for model " + modelName_p);
+			return 0;
+		}
 	}
 }

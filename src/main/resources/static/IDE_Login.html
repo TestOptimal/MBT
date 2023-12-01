@@ -52,20 +52,13 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 	$scope.viewHeight = $window.innerHeight;
 	$scope.viewWidth = $window.innerWidth;
 	$scope.rootCurAppState = curAppState;
-	$scope.sysMsg = {
-		SeverityList: { "info": 2, "alert": 10, "warn": 20, "error": 50},
-		msgList: [],
-		mostSevereMsg: undefined,
-		visible: false
-	}
+	$scope.sysMsg = undefined;
 	$scope.urlBase = location.protocol+'//'+location.hostname+':'+location.port;
-	$scope.emailLocked = false;
 	
 	$scope.title = "Login";
 	$scope.username = "";
 	$scope.password = "";
 	$scope.password2 = "";
-	$scope.reqInd = false;
 	$scope.pwdMatched = true;
 	$scope.loginStyle = {
   				width: '400px',
@@ -73,26 +66,6 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
   				height: '300px',
   				top: 'calc(50% - 150px)'
   			}
-
-    $scope.addMsg = function(msgObj_p) {
-    	msgObj_p.severity = $scope.sysMsg.SeverityList[msgObj_p.type];
-    	if (msgObj_p.severity==undefined) msgObj_p.severity = 0;
-    	if (!msgObj_p.timestamp) {
-    		msgObj_p.timestamp = new Date();
-    	}
-		$scope.sysMsg.msgList.unshift(msgObj_p);
-		$scope.sysMsg.visible = true;
-		if ($scope.sysMsg.mostSevereMsg==undefined || $scope.sysMsg.mostSevereMsg.severity <= msgObj_p.severity) {
-			$scope.sysMsg.mostSevereMsg = msgObj_p;
-		}
-		if ($scope.sysMsg.clearMsgTimer) {
-			clearTimeout($scope.sysMsg.clearMsgTimer);
-		}
-		$scope.sysMsg.clearMsgTimer = setTimeout (function() {
-			$scope.sysMsg.visible = false;
-			$scope.$apply();
-		}, 3000);
-	}
 
     $scope.submit = function () {
     	if (!$scope.okToSubmit) {
@@ -106,14 +79,6 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     		   'username': $scope.username,
     		   'password': $scope.password
     		 },
-//    		 data: { username: $scope.username, password: $scope.password },
-//    		 transformRequest: function (data, headersGetter) {
-//                       var formData = new FormData();
-//                       angular.forEach(data, function (value, key) {
-//                           formData.append(key, value);
-//                       });
-//                       return formData;
-//                   }
     		}
     		$http(req).then(function(response) {
     				var msgObj = response.data;
@@ -123,22 +88,21 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     						samesite: 'strict' 
     					}
     					$cookies.put(location.hostname + "_" + location.port + "_totoken", "Basic " + btoa($scope.username + ":" + $scope.password), opt);
- //   					$cookies.put("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password), opt);
 			            window.top.location = location.protocol+'//' + location.hostname+':'+location.port + "/ide";
 			    	}
 			    	else {
-			    		$scope.addMsg({type: "warn", text: msgObj.alertMessage});
+			    		$scope.sysMsg = msgObj.alertMessage;
 			    	}
 		        }, function(err) {
 		        	console.log(err);
-		    		$scope.addMsg({type: "warn", text: err.data.error});
+		    		$scope.sysMsg = err.data.error;
 				});
     }
     
     $scope.pwdChanged = function () {
     	$scope.pwdMatched = $scope.password === $scope.password2;
-    	$scope.okToSubmit = $scope.reqInd && $scope.pwdMatched && $scope.ack && $scope.username.length > 0
-    			|| !$scope.reqInd && $scope.username.length>0 && $scope.password.length>0;
+    	$scope.okToSubmit = $scope.registerInd && $scope.pwdMatched && $scope.username.length > 0
+    			|| !$scope.registerInd && $scope.username.length>0 && $scope.password.length>0;
     }
     
     $scope.init = function () {
@@ -160,17 +124,14 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     		$scope.username = $scope.config["License.Email"];
     		$scope.license_url = $scope.config["License.Agreement.url"];
     		$scope.license_label = $scope.config["License.Agreement.label"];
-    		
-    		$scope.ack = ($scope.config["License.Ack"] || 'N')=='Y';
    			$scope.title = $scope.ack?"Login":"Create Account"
-    		$scope.reqInd = !$scope.ack;
+    		$scope.registerInd = !$scope.username;
    			$scope.loginStyle = {
    				width: '400px',
    				left: 'calc(50% - 200px)',
-   				height: $scope.reqInd? '400px': '300px',
-   				top: $scope.reqInd? 'calc(50% - 200px)': 'calc(50% - 150px)'
+   				height: $scope.registerInd? '400px': '300px',
+   				top: $scope.registerInd? 'calc(50% - 200px)': 'calc(50% - 150px)'
    			}
-//   			$scope.$apply();
     	});
     }
     
@@ -217,8 +178,8 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 		<div style="padding: 8px;">
 		    <div>
 		        <label>Email</label>
-		        <i class="fa fa-key">email address you used to request download / license</i>
-		        <input type="email" ng-change="pwdChanged();" ng-disabled="emailLocked"
+		        <i class="fa fa-key">email address as login id</i>
+		        <input type="email" ng-change="pwdChanged();"
 		        	class="form-control" ng-model="username" />
 		    </div>
 		    <div>
@@ -227,7 +188,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 		        <input type="password" ng-change="pwdChanged()"
 		        	class="form-control" ng-model="password" />
 		    </div>
-		    <div ng-show="reqInd">
+		    <div ng-show="registerInd">
 		        <label for="password2">Confirm Password</label>
 		        <i class="fa fa-lock">
 		        	<span ng-show="pwdMatched">matched</span>
@@ -236,13 +197,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 		        <input type="password" ng-change="pwdChanged()"
 		        	class="form-control" ng-model="password2" />
 		    </div>
-		
-		    <div ng-show="reqInd" style="line-height: 50px; text-align: center;">
-		        <input type="checkbox" ng-model="ack"
-		        	ng-change="pwdChanged()" />
-		        <label for="ack">Accept <a href="{{license_url}}" target="_blank">{{license_label}}</a>.</label>
-		    </div>
-		
+				
 		    <div style="text-align: center; margin-top: 15px;">
 		        <button type="submit" ng-disabled="!okToSubmit" ng-click="submit()"
 		        	class="btn btn-primary">Submit</button>
@@ -255,17 +210,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 			<span class="glyphicon glyphicon-chevron-down" ng-click="sysMsg.visible=false;"></span>
 			<span class="glyphicon glyphicon-erase" ng-click="clearMsg();"></span>
 		</span>
-		<span id="msgExpander" class="msg_{{sysMsg.mostSevereMsg.type}}" 
-			ng-hide="sysMsg.visible && sysMsg.msgList.length>0" ng-click="sysMsg.visible=true;"
-			title="show console messages">&rangle;</span>
-		<ul id="msgList" ng-show="sysMsg.visible">
-			<li ng-repeat="msg in sysMsg.msgList track by $index">
-				<span class="msgItem symb msg_{{msg.type}}">&#9888;</span>
-				<span class="msg">{{msg.text}}</span> 
-				<span style="font-size: x-small;">{{msg.timestamp.toLocaleString()}}</span>
-				<span style="font-size: x-small;" ng-show="msg.source">({{msg.source}})</span>
-			</li>
-		</ul>
+		<span>{{sysMsg}}</span>
 	</div>
 </body>
 </html>
