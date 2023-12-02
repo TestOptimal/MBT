@@ -26,8 +26,7 @@ public class TransitionNode implements Comparable<TransitionNode> {
 	private String event = "";
 	private int weight = 5;
 	private int traverseTimes = 1;
-//	private String dataset = "";
-	
+
 //	private String color = "";
 //	private String textColor = "";
 	private boolean hideName = false;
@@ -120,8 +119,6 @@ public class TransitionNode implements Comparable<TransitionNode> {
 		return this.maxMillis; 
 	}
 	
-//	public String getDataSet () { return this.dataset; }
-		
 	public String getGuard() {
 		return this.guard;
 	}

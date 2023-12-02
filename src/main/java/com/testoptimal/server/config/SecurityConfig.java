@@ -45,7 +45,6 @@ public class SecurityConfig {
                 		.requestMatchers("/api/v1/model/**").authenticated()
                 		.requestMatchers("/api/v1/runtime/**").authenticated()
                 		.requestMatchers("/api/v1/stats/**").authenticated()
-                		.requestMatchers("/api/v1/file/file/**").permitAll()
                 		.requestMatchers("/api/v1/file/**").authenticated()
                         .requestMatchers("/api/v1/client/**").authenticated()
                         .requestMatchers("/api/v1/alm/**").authenticated()

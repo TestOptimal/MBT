@@ -14,16 +14,14 @@ import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 public class PageMgr {
 	private Map<String, Page> allPageMap = new java.util.HashMap<String,Page>();
 
+
 	/**
-	 * finds and returns the page object
-	 * @param name_p
-	 * @return
+	 * returns page object for the page name specified.
+	 * 
+	 * @param pageName_p
 	 */
-	public Page page (String name_p) throws MBTAbort {
+	public Page page (String name_p) {
 		Page page = this.allPageMap.get(name_p);
-		if (page==null) {
-			throw new MBTAbort("Page not found: " + name_p);
-		}
 		return page;
 	}
 	

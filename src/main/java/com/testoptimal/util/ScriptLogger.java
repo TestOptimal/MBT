@@ -33,7 +33,7 @@ public class ScriptLogger {
 		file.createNewFile();
 		FileWriter fw = new FileWriter(file);
 		this.outWriter = new BufferedWriter(fw);
-		this.writeTimestamp = Config.getProperty("log.mscript.timestamp", "true").equalsIgnoreCase("true");
+		this.writeTimestamp = StringUtil.isTrue(Config.getProperty("log.model.timestamp", "true"));
 	}
 	
 	public void log (String msg_p) { 

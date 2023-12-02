@@ -46,7 +46,10 @@
 </head>
 <body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
 	<div id="mainDIV" style="overflow: auto;">
-		<div style="text-align: right; margin-right: 5px; font-style: italic;">As of: {{dashboard.collectDate}}</div>
+		<div style="margin-right: 5px; font-style: italic;">
+			<span>As of: {{dashboard.collectDate}}</span>
+			<span style="float: right;"><a href="https://github.com/TestOptimal/MBT/blob/main/src/main/resources/static/Dashboard.html" target=_blank>help make this pretty</a></span>	
+		</div>
 		<table width="100%">
 			<thead>
 				<tr>

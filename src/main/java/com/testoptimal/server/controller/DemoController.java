@@ -22,12 +22,12 @@ public class DemoController {
 	
 	@GetMapping(value = "insurance", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InsurancePremium> getInsurancePremium (
-		@RequestParam (name="age", required=true) int age,
-		@RequestParam (name="atFaultClaims", required=true) int atFaultClaims,
+		@RequestParam (name="age", required=true) double age,
+		@RequestParam (name="atFaultClaims", required=true) double atFaultClaims,
 		@RequestParam (name="goodStudent", required=true) boolean goodStudent,
 		@RequestParam (name="nonDrinker", required=true) boolean nonDrinker) throws Exception {
 		
-		InsurancePremium prem = new InsurancePremium (age, atFaultClaims, goodStudent, nonDrinker);
+		InsurancePremium prem = new InsurancePremium ((int)age, (int)atFaultClaims, goodStudent, nonDrinker);
 		prem.calc();
 		return new ResponseEntity<>(prem, HttpStatus.OK);
 	}

@@ -1,40 +1,40 @@
 // Model Triggers
 import com.testoptimal.mscript.groovy.TRIGGER
 import org.openqa.selenium.By;
- 
 import org.openqa.selenium.WebDriver;
-// import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-// import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-// import com.testoptimal.plugin.selenium.WebDriverAssist;
+
+// This script automates the testing of a webpage (Vending machine) and 
+// at the same time outputs a test case report (stored in "report" folder
 
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	$SYS.log('current browser is: ' + $SYS.getExecDir().getExecSetting().getOption('ideBrowser'));
+	ideBrowser = $SYS.getExecSetting().getOption('ideBrowser');
+	$SYS.log('current browser is: ' + ideBrowser);
    $SYS.log ('mbt started. ');
-// 	$VAR.wd = new HtmlUnitDriver();
-
-// 	WebDriverManager.safaridriver().setup()
-	$VAR.wd = new SafariDriver();
-
-// 	WebDriverManager.chromedriver().setup()
-// 	$VAR.wd = new ChromeDriver();
-
-// 	WebDriverManager.firefoxdriver().setup()
-// 	$VAR.wd = new FirefoxDriver();
 	
-	$VAR.outFile = new File ($SYS.getModelFolderPath() + '/report/test_out.html');
+	// test with current browser, or you can choose to test with specific browser
+	switch (ideBrowser) {
+		case 'Safari':
+			$VAR.wd = new SafariDriver();
+			break;
+		case 'Chrome':
+			$VAR.wd = new ChromeDriver();
+			break;
+		case 'Firefox':
+			$VAR.wd = new FirefoxDriver();
+			break;
+		default:
+			$VAR.wd = new HtmlUnitDriver();
+	}
+	
+	$VAR.outFile = new File ($SYS.getModelMgr().getReportFolderPath() + '/test_out.html');
    $VAR.outFile << '<html><body><H1>Test Output</H1>\n';
    $VAR.outFile << '<ol>\n';
-	$SYS.log($DATASET*.key);
-	
-	$SYS.log('datasets: ' + ($SYS.listDataSets().size()));
-	
 }
-
 
 @TRIGGER('MBT_END')
 def 'MBT_END' () {
@@ -43,21 +43,11 @@ def 'MBT_END' () {
 	try { $VAR.wd.quit(); } catch (err) { }
 }
 
-@TRIGGER('MBT_FAIL')
-def 'MBT_FAIL' () {
-   // Failure detected
-	$SYS.log('Failure detected')
-// 	WebDriverAssist wdAssist = new WebDriverAssist($VAR.wd);
-//    wdAssist.snapScreen($SYS.getModelFolderPath() + '/snapscreen');
-	
-}
-
 @TRIGGER('MBT_ERROR')
 def 'MBT_ERROR' () {
-	$SYS.log('System error detected')
+	$SYS.log('System error detected, model exec aborted')
 	try { $VAR.wd.close(); } catch (err) { }
 	try { $VAR.wd.quit(); } catch (err) { }
-
 }
 
 @TRIGGER('U1062')

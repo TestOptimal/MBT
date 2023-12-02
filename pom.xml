@@ -85,14 +85,19 @@
    
    
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured, need to be before lambdaj due to hamcrest conflict-->
-		<!--
+<dependency>
+<groupId>io.rest-assured</groupId>
+<artifactId>rest-assured</artifactId>
+</dependency>
+		
+<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+<!--
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>rest-assured</artifactId>
 		</dependency>
-		-->
-		
-<!--
+
+
 	    <dependency>
 	        <groupId>org.seleniumhq.selenium</groupId>
 	        <artifactId>selenium-server</artifactId>

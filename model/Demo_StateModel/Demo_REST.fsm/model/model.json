@@ -145,7 +145,7 @@
           "targetUID": "Ubdd9d5d3",
           "event": "testScenario",
           "weight": 5,
-          "traverseTimes": 1,
+          "traverseTimes": 10,
           "hideName": false,
           "posInfo": {
             "startDir": "right",
