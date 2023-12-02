@@ -590,7 +590,8 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		ModelSvc: ModelSvc,
     		AlmSvc: AlmSvc,
     		RuntimeSvc: RuntimeSvc,
-    		StatsSvc: StatsSvc
+    		StatsSvc: StatsSvc,
+    		SvrRest: SvrRest
     	};
     	
 		angular.forEach ($scope.actionList, function (act, key) {

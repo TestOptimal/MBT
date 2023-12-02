@@ -45,6 +45,7 @@
 						    xhrFields: {
 						      responseType: "blob",
 						    },
+						    headers: parent.curAppState.toSvc.SvrRest.getHeaders(),
 						    success: function(blobData) {
 						      	const objectURL = URL.createObjectURL(blobData);
 						      	$('#img').attr('src', objectURL).css("display", "block");
