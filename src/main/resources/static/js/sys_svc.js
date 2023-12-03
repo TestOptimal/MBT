@@ -150,8 +150,8 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		SvrRest.post (FileSvc.base + "folder/" + folderName + "/rename/" + newFolderName, folderPath, successCB, errorCB);
 	};
 	
-	FileSvc.getSvrLog = function (modelName, successCB, errorCB) {
-		SvrRest.get(FileSvc.base + "log/tosvr?modelName=" + modelName, successCB, errorCB);
+	FileSvc.getSvrLog = function (successCB, errorCB) {
+		SvrRest.get(FileSvc.base + "log/tosvr", successCB, errorCB);
 	};
 	
 	

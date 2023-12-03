@@ -71,18 +71,18 @@
 		<tr><td nowrap>OS Version:</td><td>{{config["osVersion"]}}</td></tr>
 		<tr><td nowrap>Java Version:</td><td>{{config["javaVersion"]}}</td></tr>
 		<tr><td nowrap>TO Version:</td><td>{{config["TestOptimalVersion"]}} <small>(build: {{config["releaseDate"]}})</small></td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap>License Status:</td><td>{{config["License.status"]}}</td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{config["expireDate"]}}</td></tr>
-		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licObj.licEmail"/></td></tr>
+		<tr ng-show="licReq"><td nowrap>License Status:</td><td>{{config["License.status"]}}</td></tr>
+		<tr ng-show="licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{config["expireDate"]}}</td></tr>
+		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licEmail"/></td></tr>
 		<tr><td nowrap>License:</td><td align="left" colspan="2"><a href="{{config['License.Agreement.url']}}" target="_blank">{{config["License.Agreement.label"]}}</a></td></tr>
-		<tr ng-show="licObj.licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'" target="_blank">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
-		<tr ng-show="licObj.licReq" style="height: 35px;">
+		<tr ng-show="licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'" target="_blank">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
+		<tr ng-show="licReq" style="height: 35px;">
 			<td colspan="2">
-				<div style="color: orange; background: #EEEEEE;" ng-repeat="errMsg in config["License.exceptions"] track by $index">{{errMsg}}</div>
+				<div style="color: orange; background: #EEEEEE;">{{config["License.exceptions"]}}</div>
 			</td>
 		</tr>
 	</table>
-		<div ng-show="licObj.licReq" style="position: absolute; left: 3px; bottom: 0px;">
+		<div ng-show="licReq" style="position: absolute; left: 3px; bottom: 0px;">
 			<button class="btn btn-primary" ng-click="saveLic()">SAVE</button>
 		</div">
 	</div>

@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
+import com.testoptimal.stats.TagExec;
 
 public class TravTrans extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravTrans.class);
@@ -56,9 +58,15 @@ public class TravTrans extends TravBase {
 //			}
 //		}
 		
-		if (!this.execDir.isGenOnly()) {
-			scriptExec.getGroovyEngine().callTrigger(this.curTransNode.modelName(), "ALL_TRANS");
-			scriptExec.getGroovyEngine().callTrigger(this.curTransNode.modelName(), this.curTransNode.getUID());
+		try {
+			if (!this.execDir.isGenOnly()) {
+				scriptExec.getGroovyEngine().callTrigger(this.curTransNode.modelName(), "ALL_TRANS");
+				scriptExec.getGroovyEngine().callTrigger(this.curTransNode.modelName(), this.curTransNode.getUID());
+			}
+		}
+		catch (MBTException e) {
+			this.tagExecList.add(new TagExec( this.scriptExec, "Error", false, 
+					e.getMessage(), null, this.curTransNode.getParentStateNode().getStateID(), this.curTrans.getEventId(),this.getCurUID()));
 		}
 		
 //		// execute additional script function

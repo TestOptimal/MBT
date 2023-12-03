@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,11 +14,14 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.testoptimal.mcase.MCase;
 import com.testoptimal.mscript.Sys;
 import com.testoptimal.mscript.Util;
+import com.testoptimal.page.Page;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.plugin.RandPlugin;
+import com.testoptimal.scxml.ScxmlNode;
 
 public class CodeAssistMgr {
 	private static Logger logger = LoggerFactory.getLogger(CodeAssistMgr.class);
@@ -61,17 +65,14 @@ public class CodeAssistMgr {
 		varCAList.add(new CodeAssist("get variable", "varname", ""));
 		CA_CacheList.put("VAR", varCAList);
 
-		TOP_CA_NAMES.add("DATASET");
-		List<CodeAssist> datasetCAList = new java.util.ArrayList<>();
-		datasetCAList.add(new CodeAssist("get dataset", "dsname", ""));
-		CA_CacheList.put("DATASET", datasetCAList);
+//		TOP_CA_NAMES.add("DATASET");
+//		List<CodeAssist> datasetCAList = new java.util.ArrayList<>();
+//		datasetCAList.add(new CodeAssist("get dataset", "dsname", ""));
+//		CA_CacheList.put("DATASET", datasetCAList);
 
-		TOP_CA_NAMES.add("RAND");
-		CA_CacheList.put("RAND", getMScriptMethods(RandPlugin.class));
-
-//		for (PluginInfo pluginObj: PluginMgr.getAllPluginList()) {
-//			CA_CacheList.put(pluginObj.getPluginID(), getMScriptMethods(pluginObj.getPluginClass()));
-//		}
+//		TOP_CA_NAMES.add("RAND");
+//		CA_CacheList.put("RAND", getMScriptMethods(RandPlugin.class));
+//
 
 		CA_CacheMapList = new java.util.HashMap<>(CA_CacheList.size());
 		CA_CacheList.entrySet().stream()
@@ -152,12 +153,8 @@ public class CodeAssistMgr {
 		List<CodeAssist> topLevel = new java.util.ArrayList<CodeAssist>();
 		topLevel.add(new CodeAssist("$UTIL", "$UTIL.", "$UTIL"));
 		topLevel.add(new CodeAssist("$VAR", "$VAR.", "$VAR"));
-		topLevel.add(new CodeAssist("$DATASET", "$DATASET.", "$DATASET"));
+//		topLevel.add(new CodeAssist("$DATASET", "$DATASET.", "$DATASET"));
 		topLevel.add(new CodeAssist("$RAND", "$RAND.", "$RAND"));
-//		for (String pluginID: pluginList_p) {
-//			String pluginIDUp = pluginID.toUpperCase();
-//			topLevel.add(new CodeAssist("$" + pluginIDUp, "$" + pluginIDUp + ".", pluginIDUp));
-//		}
 		caList.put("TOPLEVEL", topLevel);
 		Collections.sort(topLevel);
 		return caList;

@@ -1,7 +1,6 @@
 package com.testoptimal.mscript;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,12 +8,9 @@ import java.util.stream.Collectors;
 import com.testoptimal.db.ExecStateTransDB;
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.db.TestCaseStepDB;
-import com.testoptimal.exception.MBTAbort;
-import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.mcase.MCase;
@@ -22,10 +18,8 @@ import com.testoptimal.mcase.MCaseMgr;
 import com.testoptimal.page.Page;
 import com.testoptimal.page.PageMgr;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
-import com.testoptimal.server.config.Config;
 import com.testoptimal.stats.TagExec;
 
 /**
@@ -489,6 +483,9 @@ public class Sys {
 	public PageMgr getPageMgr () {
 		return this.scriptExec.getPageMgr();
 	}
+	public Page page (String name_p) {
+		return this.scriptExec.getPageMgr().getPage(name_p);
+	}
 
 	/**
 	 * returns MCaseMgr which manages all MCases created/registered for the model execution.
@@ -498,7 +495,17 @@ public class Sys {
 	public MCaseMgr getMCaseMgr () {
 		return this.scriptExec.getMCaseMgr();
 	}
-	
+	public MCase mcase (String name_p) {
+		return this.scriptExec.getMCaseMgr().getMCase(name_p);
+	}
+
+	public DataSet dataset (String name_p) {
+		return this.execDir.getDataSetList().stream().filter(d -> d.dsName.equals(name_p)).findFirst().orElse(null);
+	}
+	public List<DataSet> datasets () {
+		return this.execDir.getDataSetList();
+	}
+
 	/**
 	 * returns current test path name.
 	 */

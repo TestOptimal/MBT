@@ -18,7 +18,7 @@
 				$scope.asOf = (new Date()).toLocaleTimeString();
 				$scope.textdata = "";
 				if (parent.curAppState.FileViewer.type=="ServerLog") {
-			    	parent.curAppState.toSvc.FileSvc.getSvrLog (parent.curAppState.scxml.modelName, function(data) {
+			    	parent.curAppState.toSvc.FileSvc.getSvrLog (function(data) {
 						$scope.title = "Server Log";
 						$scope.filePath = "log/tosvr.log";
 						$scope.textdata = data;

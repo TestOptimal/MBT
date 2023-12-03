@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.util.FileUtil;
@@ -131,7 +132,7 @@ public class GroovyEngine {
     	}
     }
     
-    public boolean callTrigger (String modelName_p, String uid_p) throws MBTAbort {
+    public boolean callTrigger (String modelName_p, String uid_p) throws MBTAbort, MBTException {
     	if (this.noOp) return false;
 
     	List<GroovyScriptExec> gExecList = this.gScriptExecMapList.get(modelName_p);
@@ -142,8 +143,11 @@ public class GroovyEngine {
 					return true;
 				}
     		}
+    		catch (ScriptRuntimeException es) {
+    			throw new MBTException(es.toString());
+    		}
     		catch (Exception e) {
-    			throw new MBTAbort(e.getMessage());
+    			throw new MBTException(e.getMessage());
     		}
     	}
     	return false;

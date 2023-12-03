@@ -202,15 +202,12 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
 		        <button type="submit" ng-disabled="!okToSubmit" ng-click="submit()"
 		        	class="btn btn-primary">Submit</button>
 		    </div>
+		    
+		    <div>
+				{{sysMsg}}
+			</div>
 		</div>
 	</div>
 	
-	<div id="msgBar" ng-attr-style="width: {{sysMsg.visible?'100%':'8px'}};">
-		<span id="msgBarActions" ng-show="sysMsg.visible">
-			<span class="glyphicon glyphicon-chevron-down" ng-click="sysMsg.visible=false;"></span>
-			<span class="glyphicon glyphicon-erase" ng-click="clearMsg();"></span>
-		</span>
-		<span>{{sysMsg}}</span>
-	</div>
 </body>
 </html>

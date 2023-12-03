@@ -88,8 +88,8 @@ public class MbtScriptExecutor implements MScriptInterface {
 		this.groovyEngine.addSysProperty("$SYS", this.sysObj);
 		this.groovyEngine.addSysProperty("$UTIL", new Util());
 		this.groovyEngine.addSysProperty("$VAR", this.varMap);
-		this.groovyEngine.addSysProperty("$DATASET", this.dsMap);
-		this.groovyEngine.addSysProperty("$RAND", new RandPlugin());
+//		this.groovyEngine.addSysProperty("$DATASET", this.dsMap);
+//		this.groovyEngine.addSysProperty("$RAND", new RandPlugin());
 		
 		// create GroovyScript object for main model
 		List<GroovyScript> scriptList = this.execDirector.getScriptList();

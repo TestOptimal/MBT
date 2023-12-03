@@ -94,11 +94,6 @@ public final class ScxmlNode {
 		return this.miscNode;
 	}
 		
-//	private List<String> pluginList = new java.util.ArrayList<>();
-//	public List<String> getPluginList() {
-//		return this.pluginList;
-//	}
-	
 	private String modelType = "FSM";
 	public void setModelType (String modelType_p) {
 		this.modelType = modelType_p;

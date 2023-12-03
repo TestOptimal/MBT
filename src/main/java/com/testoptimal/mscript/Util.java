@@ -1,6 +1,7 @@
 package com.testoptimal.mscript;
 
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.plugin.RandPlugin;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.Config.OS;
@@ -8,6 +9,9 @@ import com.testoptimal.util.MailUtil;
 
 @IGNORE_INHERITED_METHOD
 public class Util {
+	private static RandPlugin randPlugin = new RandPlugin();
+
+	
 	/**
 	 * send mail.  Requires javaMail setup in system config (mail.*) for javaMail prop
 	 * (see https://docs.genesys.com/Documentation/ESEmail/latest/Admin/EmSJavaMail)
@@ -20,14 +24,6 @@ public class Util {
 	public static void sendMail(String fromAddress, String toAddress, String subject, String messageText) 
 		throws Exception {
 		MailUtil.sendMail(fromAddress, toAddress, subject, messageText);
-	}
-	
-	/**
-	 * returns the root file folder that contains models
-	 * @return
-	 */
-	public static String getModelRoot () {
-		return Config.getModelRoot();
 	}
 	
 	/**
@@ -79,6 +75,10 @@ public class Util {
 	 */
 	public static int getPort() {
 		return Application.getPort();
+	}
+	
+	public static RandPlugin getRandom() {
+		return randPlugin;
 	}
 	
 }

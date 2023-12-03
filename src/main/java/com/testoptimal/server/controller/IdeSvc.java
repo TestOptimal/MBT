@@ -150,7 +150,7 @@ public class IdeSvc {
     	ModelRunnerIDE sess = (ModelRunnerIDE) SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessionId);
  	   	if (sess != null) {
  	   		if (sess.isRunning()) {
-	   			sess.stepOver();
+	   			sess.resumeDebug();
 	   			return;
  	   		}
  	   		sess.stopMbt();

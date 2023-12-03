@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.scxml.StateNode;
+import com.testoptimal.stats.TagExec;
 
 public class TravState extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravState.class);
@@ -54,11 +56,17 @@ public class TravState extends TravBase {
 		
 		
 	private void execState () throws MBTAbort {
-		if (!this.execDir.isGenOnly()) {
-			String modelName = this.curState.getStateNode().modelName();
-			this.scriptExec.getGroovyEngine().callTrigger(modelName, "ALL_STATES");
-			this.scriptExec.getGroovyEngine().callTrigger(modelName, this.curStateNode.getUID());
+		try {
+			if (!this.execDir.isGenOnly()) {
+				String modelName = this.curState.getStateNode().modelName();
+				this.scriptExec.getGroovyEngine().callTrigger(modelName, "ALL_STATES");
+				this.scriptExec.getGroovyEngine().callTrigger(modelName, this.curStateNode.getUID());
+			}
 		}
+		catch (MBTException e) {
+			this.tagExecList.add(new TagExec( this.scriptExec, "Error", false, 
+					e.getMessage(), null, this.curState.getStateId(), null, this.getCurUID()));
+		}			
 	}
 
 //	private TravBase postState (State curState_p) throws Exception, MBTAbort {

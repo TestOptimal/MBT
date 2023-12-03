@@ -8,8 +8,8 @@ import com.google.gson.Gson;
 def 'MBT_START' () {
 	$VAR.baseURL = "http://localhost:" + $UTIL.getPort() + "/api/v1/demo/insurance";
 	$SYS.log('REST URL is: ' + $VAR.baseURL);
-	$SYS.log($DATASET.keySet());
-	$VAR.ds = $DATASET.PremiumScenarios;
+	$SYS.log($SYS.datasets()*.dsName);
+	$VAR.ds = $SYS.dataset('PremiumScenarios');
 	$SYS.log("Dataset rows: " + $VAR.ds.rows.size());
 	$SYS.log("Dataset coloums: " + $VAR.ds.colList);
 // 	api_response = io.restassured.RestAssured.given().auth().preemptive().basic("my id", "my password")

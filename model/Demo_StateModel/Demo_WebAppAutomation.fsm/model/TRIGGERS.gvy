@@ -6,6 +6,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 // This script automates the testing of a webpage (Vending machine) and 
 // at the same time outputs a test case report (stored in "report" folder
@@ -19,16 +20,19 @@ def 'MBT_START' () {
 	// test with current browser, or you can choose to test with specific browser
 	switch (ideBrowser) {
 		case 'Safari':
-			$VAR.wd = new SafariDriver();
+// 			WebDriverManager.safaridriver().setup();
+			$VAR.webDriver = new SafariDriver();
 			break;
 		case 'Chrome':
-			$VAR.wd = new ChromeDriver();
+// 			WebDriverManager.chromedriver().setup();
+			$VAR.webDriver = new ChromeDriver();
 			break;
 		case 'Firefox':
-			$VAR.wd = new FirefoxDriver();
+// 			WebDriverManager.firefoxdriver().setup();
+			$VAR.webDriver = new FirefoxDriver();
 			break;
 		default:
-			$VAR.wd = new HtmlUnitDriver();
+			$VAR.webDriver = new HtmlUnitDriver();
 	}
 	
 	$VAR.outFile = new File ($SYS.getModelMgr().getReportFolderPath() + '/test_out.html');
@@ -39,23 +43,22 @@ def 'MBT_START' () {
 @TRIGGER('MBT_END')
 def 'MBT_END' () {
 	$VAR.outFile << '</ol></body></html>\n';
-	try { $VAR.wd.close(); } catch (err) { }
-	try { $VAR.wd.quit(); } catch (err) { }
+	try { $VAR.webDriver.close(); } catch (err) { }
+	try { $VAR.webDriver.quit(); } catch (err) { }
 }
 
 @TRIGGER('MBT_ERROR')
 def 'MBT_ERROR' () {
 	$SYS.log('System error detected, model exec aborted')
-	try { $VAR.wd.close(); } catch (err) { }
-	try { $VAR.wd.quit(); } catch (err) { }
+	try { $VAR.webDriver.close(); } catch (err) { }
+	try { $VAR.webDriver.quit(); } catch (err) { }
 }
 
 @TRIGGER('U1062')
 def 'Start' () {
 	$SYS.log('getting url ' + 'http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
-	$VAR.wd.get('http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
-   $VAR.wd.findElement(By.id('cancel')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+	$SYS.page('MainPage').perform('go', 'http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
+   bal = $SYS.page('MainPage').perform('getBalance');
 	$SYS.log('bal: ' + bal);
    if (!bal.equals('0.00') && !bal.equals('0')) {
       $SYS.addReqFailed ('Cancel failed to reset balance to 0.00', 'Cancel', 'CANCEL-FAILED');
@@ -68,8 +71,8 @@ def 'Start: add25'() {
 	$VAR.outFile << '<li><span>Test Case ' + $SYS.getPathName() + '</span>\n<ul>\n';
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
 	
-   $VAR.wd.findElement(By.id('addQuarter')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('25c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('0.25')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $SYS.addReqPassed("Q!", passMsg);
@@ -85,8 +88,8 @@ def 'Start: add50'() {
 	$VAR.outFile << '<li><span>Test Case ' + $SYS.getPathName() + '</span>\n<ul>\n';
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
 	
-   $VAR.wd.findElement(By.id('addHalfDollar')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('25c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $SYS.addReqPassed("Q!", passMsg);
@@ -100,8 +103,8 @@ def 'Start: add50'() {
 @TRIGGER('U1065')
 def 'V25Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $VAR.wd.findElement(By.id('addQuarter')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('25c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $SYS.addReqPassed("Q1", passMsg);
@@ -115,8 +118,8 @@ def 'V25Cents: add25'() {
 @TRIGGER('U1066')
 def 'V25Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $VAR.wd.findElement(By.id('addHalfDollar')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('50c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $SYS.addReqPassed("H1", passMsg);
@@ -130,8 +133,8 @@ def 'V25Cents: add50'() {
 @TRIGGER('U1067')
 def 'V50Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $VAR.wd.findElement(By.id('addQuarter')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('25c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $SYS.addReqPassed("Q1", passMsg);
@@ -145,8 +148,8 @@ def 'V50Cents: add25'() {
 @TRIGGER('U1068')
 def 'V50Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $VAR.wd.findElement(By.id('addHalfDollar')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('50c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one HalfDollor passed, balance confirmed: " + bal;
       $SYS.addReqPassed("H1", passMsg);
@@ -160,8 +163,8 @@ def 'V50Cents: add50'() {
 @TRIGGER('U1069')
 def 'V75Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $VAR.wd.findElement(By.id('addQuarter')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('25c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $SYS.addReqPassed("Q1", passMsg);
@@ -175,8 +178,8 @@ def 'V75Cents: add25'() {
 @TRIGGER('U1070')
 def 'V75Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $VAR.wd.findElement(By.id('addHalfDollar')).click();
-   bal = $VAR.wd.findElement(By.id('amount')).getText();
+   $SYS.page('MainPage').element('50c').perform('click');
+   bal = $SYS.page('MainPage').perform('getBalance');
    if (bal.equals('1.25')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $SYS.addReqPassed("H1", passMsg);
@@ -194,20 +197,20 @@ def 'V125Cents: return25'() {
 
 @TRIGGER('U1071')
 def 'Choose Drink: discharge'() {
-   $VAR.wd.findElement(By.id($DATASET.DrinkChoices.get('Drink'))).click();
-   drinkDisplayed = $VAR.wd.findElement(By.id('productName')).getText();
-   drinkExpected = $DATASET.DrinkChoices.get('DrinkCheckText');
+   drinkCodeSelected = $SYS.dataset('DrinkChoices').get('Drink');
+   drinkTextExpected = $SYS.dataset('DrinkChoices').get('DrinkCheckText');
+   $SYS.page('MainPage').perform('chooseDrink', drinkCodeSelected);
+	drinkDispensed = $SYS.page('MainPage').perform('getDrinkDispensed');
+   bal = $SYS.page('MainPage').perform('getBalance');
 	
-	$DATASET.DrinkChoices.next();
-	
-   if (drinkDisplayed.indexOf(drinkExpected)>=0) {
-      $SYS.addReqPassed ('DRINK', 'Correct drink has been dispensed: ' + drinkExpected);
+   if (drinkDispensed.indexOf(drinkTextExpected)>=0) {
+      $SYS.addReqPassed ('DRINK', 'Correct drink has been dispensed: ' + drinkTextExpected);
    }
    else {
-      failMsg = 'Incorrect drink was dispensed. Selected ' + drinkExpected + ', got this instead: ' + drinkDisplayed;
+      failMsg = 'Incorrect drink was dispensed. Selected ' + drinkTextExpected + ', got this instead: ' + drinkDispensed;
       $SYS.addReqFailed ('DRINK', failMsg, 'Vend-BUG');
    }
-   $VAR.outFile << '<li>Step: select a drink: ' + drinkExpected + ' </li>\n';
+   $VAR.outFile << '<li>Step: select a drink: ' + drinkTextExpected + ' </li>\n';
 }
 
 @TRIGGER('U1061')

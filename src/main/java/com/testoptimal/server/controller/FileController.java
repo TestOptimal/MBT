@@ -198,24 +198,11 @@ public class FileController {
 		return new ResponseEntity<>(ClientReturn.OK() , HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "log/{logName}", produces = MediaType.TEXT_PLAIN_VALUE)
-	public String getServerLog (@PathVariable (name="logName", required=true) String logName,
-		@RequestParam (name="modelName", required=false) String modelName) throws Exception {
-		String logFilePath = "log" + File.separator + logName + ".log";
-		FileUtil.sanctionFilePath (logFilePath);
+	@GetMapping(value = "log/tosvr", produces = MediaType.TEXT_PLAIN_VALUE)
+	public String getServerLog () throws Exception {
+		String logFilePath = "log/tosvr.log";
 		StringBuffer ret = FileUtil.readFile(logFilePath);
-		if (Strings.isBlank(modelName)) {
-			return logFilePath + "\n\n" + ret;
-		}
-		else {
-			int lastIdx = ret.lastIndexOf("Starting model " + modelName + "\n");
-			if (lastIdx>0) {
-				return logFilePath + "\n\n" + ret.substring(lastIdx, ret.length());
-			}
-			else {
-				return logFilePath + "\n\n" + ret;
-			}
-		}
+		return logFilePath + "\n\n" + ret;
     }
 	
 	

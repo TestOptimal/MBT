@@ -20,7 +20,7 @@ public class PageMgr {
 	 * 
 	 * @param pageName_p
 	 */
-	public Page page (String name_p) {
+	public Page getPage (String name_p) {
 		Page page = this.allPageMap.get(name_p);
 		return page;
 	}
