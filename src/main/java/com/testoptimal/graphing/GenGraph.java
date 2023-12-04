@@ -85,18 +85,18 @@ public class GenGraph {
 		if (homeStateList.isEmpty()) throw new MBTException ("unable to find initial node");
 		String homeStateUID = homeStateList.get(0).getUID();
 		
-		Map<String, ExecStateTrans>  stateTransMap = modelExec.getStateTransMap();
+//		Map<String, ExecStateTrans>  stateTransMap = modelExec.getStateTransMap();
 		
 		modelExec.getCurTestCase().stepList.stream()
-			.filter( s-> stateTransMap.get(s.UID).type.equalsIgnoreCase("state"))
+			.filter( s-> modelExec.stateMap.containsKey(s.UID))
 			.forEach ( s -> {
-				ExecStateTrans stateTrans = stateTransMap.get(s.UID);
+				ExecStateTrans stateTrans = modelExec.stateMap.get(s.UID);
 				StateNode stateNode = scxml.findStateByUID(stateTrans.UID);
 				String fromStereotype = stateNode.getStereotype();
 				msc.addMsgNode("", stateTrans.stateName, stateTrans.UID, fromStereotype);
 			});
 		
-		List<TestCaseStep> stepList = modelExec.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
+		List<TestCaseStep> stepList = modelExec.getCurTestCase().stepList.stream().filter(s->modelExec.transMap.containsKey(s.UID)).collect(Collectors.toList());
 		for (int i=stepList.size()-1; i>=0; i--) {
 			TestCaseStep stepStats = stepList.get(i);
 			TransitionNode transNode = scxml.findTransByUID(stepStats.UID);

@@ -35,7 +35,7 @@ public class TravState extends TravBase {
 			this.execDir.trigerMBTAction(TravBase.TriggerType.fail);
 		}
 		long perfMillis = System.currentTimeMillis() - startMillis;
-		statsCollector.addTestStep(perfMillis, this.curStateNode.getUID(), this.tagExecList);
+		statsCollector.addTestStepState(perfMillis, this.curStateNode.getUID(), this.tagExecList);
 		if (this.curState.isModelFinal()) {
 			statsCollector.getCurTestCase().completeTestCase();
 		}

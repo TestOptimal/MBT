@@ -42,12 +42,12 @@ public class ModelExecSummary {
 	
 	@JsonIgnore
 	public void summarize(ModelExec modelExec_p) {
-		this.stateCovered = (int) modelExec_p.stateTransList.stream().filter(s -> s.transName == null)
+		this.stateCovered = (int) modelExec_p.stateMap.values().stream()
 				.filter(s -> s.passCount + s.failCount >= s.minTravRequired).count();
-		this.transCovered = (int) modelExec_p.stateTransList.stream().filter(s -> s.transName != null)
+		this.transCovered = (int) modelExec_p.transMap.values().stream()
 				.filter(s -> s.passCount + s.failCount >= s.minTravRequired).count();
-		this.stateTraversal = modelExec_p.stateTransList.stream().filter(s -> s.transName == null).collect(Collectors.summingInt(s -> s.passCount+s.failCount));
-		this.transTraversal = modelExec_p.stateTransList.stream().filter(s -> s.transName != null).collect(Collectors.summingInt(s -> s.passCount+s.failCount));
+		this.stateTraversal = modelExec_p.stateMap.values().stream().collect(Collectors.summingInt(s -> s.passCount+s.failCount));
+		this.transTraversal = modelExec_p.transMap.values().stream().collect(Collectors.summingInt(s -> s.passCount+s.failCount));
 		
 		this.reqNum = modelExec_p.reqList.size();
 		this.reqPassed = (int) modelExec_p.reqList.stream().filter(r -> r.passCount > 0 && r.failCount == 0).count();

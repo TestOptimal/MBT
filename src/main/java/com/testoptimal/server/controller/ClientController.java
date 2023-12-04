@@ -305,21 +305,16 @@ public class ClientController {
 	
 	private RunResult makeReuslts (ModelExec modelExec_p) {
 		RunResult result = new RunResult ();
-		Map<String, ExecStateTrans> stateTransMap = new java.util.HashMap<>();
 		result.results.put("MbtMode", modelExec_p.execSummary.mbtSequencer);
 		result.results.put("Status", modelExec_p.execSummary.status);
 		result.results.put("ExecTime", new java.util.Date());
 		result.results.put("ExecOptions", modelExec_p.execOptions);
 		
-		modelExec_p.stateTransList.stream().forEach(s -> {
-			stateTransMap.put(s.UID, s);
-		});
 		List<List<String[]>> pathList = modelExec_p.tcList.stream()
 			.map(tc -> {
 				List<String[]> path = new java.util.ArrayList<String[]>(); 
 				path = tc.stepList.stream()
-					.map(s -> stateTransMap.get(s.UID))
-					.filter(s -> s.type.equalsIgnoreCase("TRANS"))
+					.map(s -> modelExec_p.transMap.get(s.UID))
 					.map (s -> new String[] {s.stateName, s.transName, (s.failCount>0?"failed":"passed")})
 					.collect(Collectors.toList());
 				return path;
@@ -333,23 +328,23 @@ public class ClientController {
 		result.results.put("tcFailed", String.valueOf(tcFailed));
 
 		
-		int transCovered = modelExec_p.stateTransList.stream()
-			.filter(s -> s.type.equalsIgnoreCase("TRANS") && s.passCount + s.failCount > 0)
+		int transCovered = modelExec_p.transMap.values().stream()
+			.filter(s -> s.passCount + s.failCount > 0)
 			.collect(Collectors.toList()).size();
 		result.results.put("transCovered", String.valueOf(transCovered));
 
-		int transSatisfied = modelExec_p.stateTransList.stream()
-				.filter(s -> s.type.equalsIgnoreCase("TRANS") && s.passCount > 0 && s.passCount + s.failCount >= s.minTravRequired)
+		int transSatisfied = modelExec_p.transMap.values().stream()
+				.filter(s -> s.passCount > 0 && s.passCount + s.failCount >= s.minTravRequired)
 				.collect(Collectors.toList()).size();
 		result.results.put("transSatisfied", String.valueOf(transSatisfied));
 
-		int transFailed = modelExec_p.stateTransList.stream()
-				.filter(s -> s.type.equalsIgnoreCase("TRANS") && s.failCount > 0)
+		int transFailed = modelExec_p.transMap.values().stream()
+				.filter(s -> s.failCount > 0)
 				.collect(Collectors.toList()).size();
 		result.results.put("transFailed", String.valueOf(transFailed));
 		
-		int stateCovered = modelExec_p.stateTransList.stream()
-				.filter(s -> s.type.equalsIgnoreCase("STATE") && s.passCount > 0)
+		int stateCovered = modelExec_p.stateMap.values().stream()
+				.filter(s -> s.passCount > 0)
 				.collect(Collectors.toList()).size();
 		result.results.put("stateCovered", String.valueOf(stateCovered));
 

@@ -109,16 +109,15 @@ public class Exec {
 	 */
 	public String trace(int maxTraceCount_p, String delimiter_p) throws Exception {
 		ModelExec collStat = this.execDir.getExecStats();
-		Map<String, ExecStateTrans> transMap = collStat.getStateTransMap();
 		List<TestCaseStep> stepList = collStat.getCurTestCase().stepList.stream()
-				.filter(s-> transMap.get(s.UID).type.equalsIgnoreCase("trans"))
+				.filter(s-> collStat.transMap.containsKey(s.UID))
 				.collect(Collectors.toList());
 		
 		if (maxTraceCount_p > 0 && stepList.size() > maxTraceCount_p) {
 			stepList = stepList.subList(0, maxTraceCount_p);
 		}
 		
-		return stepList.stream().map(s -> transMap.get(s.UID).transName + ":" + s.UID)
+		return stepList.stream().map(s -> collStat.transMap.get(s.UID).transName + ":" + s.UID)
 			.collect (Collectors.joining(delimiter_p));
 	}
 

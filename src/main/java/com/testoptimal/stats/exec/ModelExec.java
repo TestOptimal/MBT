@@ -31,7 +31,8 @@ public class ModelExec {
 	
 	public List<ExecTestCase> tcList = new java.util.ArrayList<>();
 	public List<ExecReq> reqList = new java.util.ArrayList<>();
-	public List<ExecStateTrans> stateTransList = new java.util.ArrayList<>();
+	public Map<String, ExecStateTrans> stateMap = new java.util.HashMap<>();
+	public Map<String, ExecStateTrans> transMap = new java.util.HashMap<>();
 		
 	private transient AtomicInteger tcCounter = new AtomicInteger(0);
 		private transient ExecTestCase curTestCase;
@@ -61,11 +62,11 @@ public class ModelExec {
 		this.execOptions.put("Server", Config.getHostName());
 		
 		scxml.getAllStates().stream().forEach(s -> {
-			this.stateTransList.add(new ExecStateTrans(s));
-			this.stateTransList.addAll(s.getTransitions().stream().map(t-> new ExecStateTrans(t)).collect(Collectors.toList()));
+			this.stateMap.put(s.getUID(), new ExecStateTrans(s));
+			s.getTransitions().stream().forEach(t-> this.transMap.put(t.getUID(), new ExecStateTrans(t)));
 		});
-		this.execSummary.stateNum = (int) this.stateTransList.stream().filter(s -> s.transName == null).count();
-		this.execSummary.transNum = this.stateTransList.size() - this.execSummary.stateNum;
+		this.execSummary.stateNum = (int) this.stateMap.size();
+		this.execSummary.transNum = this.transMap.size();
 		
 		try {
 			this.reqList = RequirementMgr.getInstance().getRequirement(modelMgr_p).stream().map(r -> new ExecReq(r.name, r.priority)).collect(Collectors.toList());
@@ -89,11 +90,15 @@ public class ModelExec {
 	
 
 	@JsonIgnore
-	public void addTestStep (long perfMillis_p, String UID_p, List<TagExec> checkList_p) {
-		Optional<ExecStateTrans> e = this.stateTransList.stream().filter(s -> UID_p.equals(s.UID)).findFirst();
-		if (e.isPresent()) {
-			this.curTestCase.addStep(perfMillis_p, e.get(), checkList_p);
-		}
+	public void addTestStepState (long perfMillis_p, String UID_p, List<TagExec> checkList_p) {
+		this.addTestStep(perfMillis_p, this.stateMap.get(UID_p), checkList_p);
+	}
+	public void addTestStepTrans (long perfMillis_p, String UID_p, List<TagExec> checkList_p) {
+		this.addTestStep(perfMillis_p, this.transMap.get(UID_p), checkList_p);
+	}
+	private void addTestStep (long perfMillis_p, ExecStateTrans st_p, List<TagExec> checkList_p) {
+		this.curTestCase.addStep(perfMillis_p, st_p, checkList_p);
+
 		Map<String, List<TagExec>> checkMap = checkList_p.stream().collect(Collectors.groupingBy(c -> c.getReqTag()));
 		checkMap.keySet().forEach( t -> {
 			Optional<ExecReq> rOpt = this.reqList.stream().filter(r -> r.reqTag.equals(t)).findFirst();
@@ -123,10 +128,5 @@ public class ModelExec {
 		}
 		this.execSummary.endDT = new java.util.Date();
 		this.execSummary.summarize(this);
-	}
-	
-	@JsonIgnore
-	public Map<String, ExecStateTrans>getStateTransMap() {
-		return this.stateTransList.stream().collect(Collectors.toMap(st -> st.UID, st -> st));
 	}
 }

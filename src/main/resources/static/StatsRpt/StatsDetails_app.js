@@ -29,20 +29,20 @@ MainModule.controller("detailsCtrl", function ($scope) {
 					$scope.curExecStatDetail.execSummary.endDT = new Date($scope.curExecStatDetail.execSummary.endDT).toLocaleString();
 				}
 				
-				$scope.stateTransMap = Stream($scope.curExecStatDetail.stateTransList).groupBy(function (s) {
-					return s.stateTransUID;
-				});
+				$scope.stateTransMap = Object.assign({}, $scope.curExecStatDetail.stateMap, $scope.curExecStatDetail.transMap);
+				$scope.stateTransList = Object.values($scope.stateTransMap);
 				for (var s in $scope.stateTransMap) {
-					var stat = $scope.stateTransMap[s][0];
+					var stat = $scope.stateTransMap[s];
 					$scope.stateTransMap[s] = stat;
-					if (stat.maxMillis-stat.minMillis>0) {
-						stat.histoMidPos = Math.round(($scope.rspBarWidth-2) * (stat.avgMillis-stat.minMillis)/(stat.maxMillis-stat.minMillis));
+					millisWindow = (stat.maxMillis || 0) - (stat.minMillis || 0);
+					if (millisWindow > 0) {
+						stat.histoMidPos = Math.round(($scope.rspBarWidth-2) * millisWindow/millisWindow);
 					}
 				}
 				var sMap = Stream($scope.curExecStatDetail.tcList).flatMap(function(tcObj){
 						return tcObj.stepList;
 					}).groupBy(function (step) {
-						return step.stateTransUID;
+						return step.UID;
 					});
 				for ( var k in  sMap) {
 					$scope.stateTransMap[k].msgMap = Stream(sMap[k])
@@ -78,7 +78,7 @@ MainModule.controller("detailsCtrl", function ($scope) {
 				
 				Stream($scope.curExecStatDetail.tcList).forEach(function(tcObj) {
 					Stream(tcObj.stepList).forEach(function(stepObj) {
-						var t = $scope.stateTransMap[stepObj.stateTransUID];
+						var t = $scope.stateTransMap[stepObj.UID];
 						stepObj.type = t.type;
 						stepObj.stateName = t.stateName;
 						stepObj.transName = t.transName;

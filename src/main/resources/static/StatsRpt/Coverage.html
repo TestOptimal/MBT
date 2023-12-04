@@ -63,7 +63,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="statObj in curExecStatDetail.stateTransList | filter: {type: stateTransFilter}" class="rowHover">
+			<tr ng-repeat="statObj in stateTransList | filter: {type: stateTransFilter}" class="rowHover">
 				<td class="firstCol"><span>{{statObj.stateName}}</span><span ng-show="statObj.type=='trans'">: {{statObj.transName}}</span></td>
 				<td align="center">{{statObj.passCount + statObj.failCount}}</td>
 				<td>

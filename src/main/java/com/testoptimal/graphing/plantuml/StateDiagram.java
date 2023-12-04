@@ -70,8 +70,8 @@ public class StateDiagram {
 	public static String genTraversalGraph (ModelExec collStat_p, ModelMgr modelMgr_p, 
 			ModelExec modelExec_p, String filePath_p) throws Exception {
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
-		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
-		List<TestCaseStep> stepList = collStat_p.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
+//		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
+		List<TestCaseStep> stepList = collStat_p.getCurTestCase().stepList.stream().filter(s-> modelExec_p.transMap.containsKey(s.UID)).collect(Collectors.toList());
 
 		
 		String orient = ""; // default
@@ -84,7 +84,7 @@ public class StateDiagram {
 		List<TransitionNode> transList = new java.util.ArrayList<>();
 
 		for (TestCaseStep stepObj: stepList) {
-			if (stateTransMap.get(stepObj.UID).type.equalsIgnoreCase("state")) {
+			if (modelExec_p.stateMap.containsKey(stepObj.UID)) {
 				continue;
 			}
 			TransitionNode transObj = scxml.findTransByUID(stepObj.UID);
@@ -169,7 +169,7 @@ public class StateDiagram {
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
 		List<TestCaseStep> stepList = modelExec_p.tcList.stream().flatMap(tc -> tc.stepList.stream()).collect(Collectors.toList());
 
-		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
+//		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
 		String orient = "";
 		boolean includeAllState = StringUtil.isTrue(Config.getProperty("Graph.traversal.allstate"));
 
@@ -180,7 +180,7 @@ public class StateDiagram {
 		List<TransitionNode> transList = new java.util.ArrayList<>();
 
 		for (TestCaseStep stepObj: stepList) {
-			if (stateTransMap.get(stepObj.UID).type.equalsIgnoreCase("state")) {
+			if (modelExec_p.stateMap.containsKey(stepObj.UID)) {
 				continue;
 			}
 			TransitionNode transObj = scxml.findTransByUID(stepObj.UID);

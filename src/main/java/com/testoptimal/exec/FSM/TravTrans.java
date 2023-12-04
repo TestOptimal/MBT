@@ -36,7 +36,7 @@ public class TravTrans extends TravBase {
 		}
 		long perfMillis = System.currentTimeMillis() - startMillis;
 		ModelExec statsCollector = this.execDir.getExecStats();
-		statsCollector.addTestStep(perfMillis, this.curTransNode.getUID(),  this.tagExecList);
+		statsCollector.addTestStepTrans(perfMillis, this.curTransNode.getUID(),  this.tagExecList);
 		this.execDir.getExecListener().exitTrans(this.curTrans);
 		return !this.hasFailed();
 	}
