@@ -34,6 +34,7 @@ public class TransitionNode implements Comparable<TransitionNode> {
 	private PosInfo posInfo;
 	private Map<String,String> css = new java.util.HashMap<String,String>();
 	
+	// used for graphing (determing shapes and styles)
 	private String stereotype = "";
 
 	/**

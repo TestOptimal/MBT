@@ -1,5 +1,7 @@
 package com.testoptimal.page;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.testoptimal.exception.MBTAbort;
@@ -12,7 +14,7 @@ import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
  */
 @IGNORE_INHERITED_METHOD
 public class PageMgr {
-	private Map<String, Page> allPageMap = new java.util.HashMap<String,Page>();
+	private List<Page> pageList = new ArrayList<Page>();
 
 
 	/**
@@ -21,8 +23,7 @@ public class PageMgr {
 	 * @param pageName_p
 	 */
 	public Page getPage (String name_p) {
-		Page page = this.allPageMap.get(name_p);
-		return page;
+		return this.pageList.stream().filter(p -> p.getName().equals(name_p)).findFirst().orElse(null);
 	}
 	
 	/**
@@ -31,26 +32,17 @@ public class PageMgr {
 	 * @param name_p
 	 */
 	public Page addPage (String name_p) throws MBTAbort {
-		if (this.allPageMap.containsKey(name_p)) throw new MBTAbort ("Page " + name_p + " already exists");
+		if (this.getPage(name_p)!=null) throw new MBTAbort ("Page " + name_p + " already exists");
 		Page page = new Page(name_p);
-		this.allPageMap.put(name_p, page);
+		this.pageList.add(page);
 		return page;
 	}
 	
 	/**
-	 * returns the count of page objects.
-	 * 
+	 * returns the list of all page objects.
 	 * @return
 	 */
-	public int pageCount () {
-		return this.allPageMap.size();
-	}
-
-	/**
-	 * returns the Map array of all page objects.
-	 * @return
-	 */
-	public Map<String, Page> getPageMap () {
-		return this.allPageMap;
+	public List<Page> getPageList () {
+		return this.pageList;
 	}
 }

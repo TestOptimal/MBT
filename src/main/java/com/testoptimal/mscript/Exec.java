@@ -8,15 +8,14 @@ import java.util.stream.Collectors;
 import com.testoptimal.db.ExecStateTransDB;
 import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.db.TestCaseStepDB;
+import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.mcase.MCase;
-import com.testoptimal.mcase.MCaseMgr;
 import com.testoptimal.page.Page;
-import com.testoptimal.page.PageMgr;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
@@ -30,13 +29,13 @@ import com.testoptimal.stats.TagExec;
  *
  */
 @IGNORE_INHERITED_METHOD
-public class Sys {
+public class Exec {
 	private MbtScriptExecutor scriptExec;
 	private ModelMgr modelMgr;
 	private ExecutionDirector execDir;
 	private ExecutionSetting execSetting;
 
-	public Sys(MbtScriptExecutor scriptExec_p) {
+	public Exec(MbtScriptExecutor scriptExec_p) {
 		this.scriptExec = scriptExec_p;
 		this.modelMgr = this.scriptExec.getModelMgr();
 		this.execDir = this.scriptExec.getExecDirector();
@@ -475,37 +474,32 @@ public class Sys {
 	}
 		
 
-	/**
-	 * returns PageMgr which manages all page objects created/registered for the model execution.
-	 * 
-	 * @return
-	 */
-	public PageMgr getPageMgr () {
-		return this.scriptExec.getPageMgr();
+	public List<Page> pages() {
+		return this.scriptExec.getPageMgr().getPageList();
+	}
+	public Page addPage (String name_p) throws MBTAbort {
+		return this.scriptExec.getPageMgr().addPage(name_p);
 	}
 	public Page page (String name_p) {
 		return this.scriptExec.getPageMgr().getPage(name_p);
 	}
 
-	/**
-	 * returns MCaseMgr which manages all MCases created/registered for the model execution.
-	 * 
-	 * @return
-	 */
-	public MCaseMgr getMCaseMgr () {
-		return this.scriptExec.getMCaseMgr();
+	public List<MCase> MCases () {
+		return this.scriptExec.getMCaseMgr().getMCaseList();
+	}
+	public MCase addMCase (String name_p) {
+		return this.scriptExec.getMCaseMgr().addMCase(name_p);
 	}
 	public MCase mcase (String name_p) {
 		return this.scriptExec.getMCaseMgr().getMCase(name_p);
 	}
 
-	public DataSet dataset (String name_p) {
-		return this.execDir.getDataSetList().stream().filter(d -> d.dsName.equals(name_p)).findFirst().orElse(null);
-	}
 	public List<DataSet> datasets () {
 		return this.execDir.getDataSetList();
 	}
-
+	public DataSet dataset (String name_p) {
+		return this.execDir.getDataSetList().stream().filter(d -> d.dsName.equals(name_p)).findFirst().orElse(null);
+	}
 	/**
 	 * returns current test path name.
 	 */

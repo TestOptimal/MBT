@@ -45,7 +45,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 	private GroovyEngine groovyEngine;
 	
 	private ExecutionDirector execDirector;
-	private Sys sysObj;
+	private Exec execObj;
 
 	public GroovyEngine getScriptEngine() { return this.groovyEngine; }
 
@@ -58,8 +58,8 @@ public class MbtScriptExecutor implements MScriptInterface {
 		return this.modelMgr; 
 	}
 	
-	public Sys getSys() {
-		return this.sysObj;
+	public Exec getSys() {
+		return this.execObj;
 	}
 	
 	public ExecutionDirector getExecDirector() { 
@@ -73,7 +73,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 		this.execDirector = execDirector_p;
 		this.modelMgr = this.execDirector.getExecSetting().getModelMgr();
 		this.pageMgr = new PageMgr();
-		this.sysObj = new Sys(this);
+		this.execObj = new Exec(this);
 		this.mCaseMgr = new MCaseMgr();
 	}
 	
@@ -85,7 +85,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 		}
 		
 		// these must be defined to CodeAssist.genCAList for Script Editor
-		this.groovyEngine.addSysProperty("$SYS", this.sysObj);
+		this.groovyEngine.addSysProperty("$EXEC", this.execObj);
 		this.groovyEngine.addSysProperty("$UTIL", new Util());
 		this.groovyEngine.addSysProperty("$VAR", this.varMap);
 //		this.groovyEngine.addSysProperty("$DATASET", this.dsMap);
@@ -140,7 +140,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 	}
 	
 	public void addReqCheck(String tag_p, boolean passed_p, String msg_p, String assertID_p) throws Exception {
-		StateNode curState = this.sysObj.getCurState();
+		StateNode curState = this.execObj.getCurState();
 		String uid = curState.getUID();
 		Transition trans = this.execDirector.getSequenceNavigator().getCurTravObj().getCurTrans();
 		String transID = null;
@@ -155,11 +155,11 @@ public class MbtScriptExecutor implements MScriptInterface {
 	public Object runMScript (String script_p) throws Exception {
 		return this.groovyEngine.evalExpr("DynamicExpr", script_p);
 	}
-	
-	public Sys getSysObj() {
-		return this.sysObj;
-	}
-	
+//	
+//	public Exec getSysObj() {
+//		return this.execObj;
+//	}
+//	
 	public MCaseMgr getMCaseMgr() {
 		return this.mCaseMgr;
 	}

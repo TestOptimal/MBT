@@ -42,11 +42,6 @@ public class StateNode implements Comparable<StateNode> {
 	
 	private String stereotype = "";
 
-	private String dataset = "";
-	public String getDataSet() {
-		return this.dataset;
-	}
-	
 	/**
 	 * name of the model to be attatched to this state.
 	 */

@@ -14,6 +14,7 @@ import com.testoptimal.exec.navigator.StopMonitor;
 import com.testoptimal.mscript.DataSet;
 import com.testoptimal.mscript.MbtScriptExecutor;
 import com.testoptimal.mscript.groovy.GroovyScript;
+import com.testoptimal.mscript.groovy.ScriptRuntimeException;
 import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.config.Config;
@@ -129,13 +130,15 @@ public final class ExecutionDirector extends Thread {
 			this.mScriptLogger.close();
 		}
 		catch (Throwable e) {
+			String errMsg = e instanceof ScriptRuntimeException? ((ScriptRuntimeException) e).toString(): e.getMessage();
+			
 			try {
 				this.trigerMBTAction(TravBase.TriggerType.start);
 			}
 			catch (Throwable e2) {
 				// ok
 			}
-			this.execListener.mbtErrored(new MBTAbort(e.getMessage()));
+			this.execListener.mbtErrored(new MBTAbort(errMsg));
 			this.execListener.mbtAbort();
 		}
 	}	

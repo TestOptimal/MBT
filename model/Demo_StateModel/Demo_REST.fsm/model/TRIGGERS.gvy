@@ -7,11 +7,11 @@ import com.google.gson.Gson;
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
 	$VAR.baseURL = "http://localhost:" + $UTIL.getPort() + "/api/v1/demo/insurance";
-	$SYS.log('REST URL is: ' + $VAR.baseURL);
-	$SYS.log($SYS.datasets()*.dsName);
-	$VAR.ds = $SYS.dataset('PremiumScenarios');
-	$SYS.log("Dataset rows: " + $VAR.ds.rows.size());
-	$SYS.log("Dataset coloums: " + $VAR.ds.colList);
+	$EXEC.log('REST URL is: ' + $VAR.baseURL);
+	$EXEC.log($EXEC.datasets()*.dsName);
+	$VAR.ds = $EXEC.dataset('PremiumScenarios');
+	$EXEC.log("Dataset rows: " + $VAR.ds.rows.size());
+	$EXEC.log("Dataset coloums: " + $VAR.ds.colList);
 // 	api_response = io.restassured.RestAssured.given().auth().preemptive().basic("my id", "my password")
 	api_response = io.restassured.RestAssured.given()
 		.param("age", 32)
@@ -22,7 +22,7 @@ def 'MBT_START' () {
 		.get($VAR.baseURL)
 		.then()
 		.extract().asPrettyString();
-	$SYS.log(api_response);
+	$EXEC.log(api_response);
 }
 
 
@@ -38,12 +38,12 @@ def 'runREST: testScenario'() {
 			.then().assertThat().statusCode(200).extract().path("premium");
 		ExpectedPremium = $VAR.ds.get('ExpectedPremium').toDouble();
 		if (prem == ExpectedPremium) {
-			$SYS.addReqPassed('Scenario_' + ($VAR.ds.idx+1), 'Passed, prem = ' + prem);
+			$EXEC.addReqPassed('Scenario_' + ($VAR.ds.idx+1), 'Passed, prem = ' + prem);
 		}
       else throw new Exception ("Failed, expecting premium " + ExpectedPremium + ", received " + prem);
 	}
 	catch (Throwable e) {
-		$SYS.addReqFailed('Scenario_' + ($VAR.ds.idx+1), e.getMessage() + ": " + (new Gson()).toJson($VAR.ds.rows.get($VAR.ds.idx)));
+		$EXEC.addReqFailed('Scenario_' + ($VAR.ds.idx+1), e.getMessage() + ": " + (new Gson()).toJson($VAR.ds.rows.get($VAR.ds.idx)));
 	}
 	$VAR.ds.next();
 }

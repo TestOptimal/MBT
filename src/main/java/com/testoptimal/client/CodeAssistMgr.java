@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.testoptimal.mcase.MCase;
-import com.testoptimal.mscript.Sys;
+import com.testoptimal.mscript.Exec;
 import com.testoptimal.mscript.Util;
 import com.testoptimal.page.Page;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
@@ -53,9 +53,9 @@ public class CodeAssistMgr {
 	 */
 	private static void initCAList () throws Exception {
 		CA_CacheList = new java.util.HashMap<>();
-		CA_CacheList.put("SYS", getMScriptMethods(Sys.class));
+		CA_CacheList.put("EXEC", getMScriptMethods(Exec.class));
 		
-		TOP_CA_NAMES.add("SYS");
+		TOP_CA_NAMES.add("EXEC");
 		CA_CacheList.put("UTIL", getMScriptMethods(Util.class));
 		
 		TOP_CA_NAMES.add("UTIL");

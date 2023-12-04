@@ -58,10 +58,4 @@ public class MCaseMgr {
 		else return list.get(0);
 	}
 	
-	public MCase getMCase (int mcaseIdx_p) {
-		int caseNum = this.mcaseList.size();
-		if (caseNum == 0) return null;
-		if (mcaseIdx_p < 0 || mcaseIdx_p >= caseNum) return this.mcaseList.get(caseNum-1);
-		else return this.mcaseList.get(mcaseIdx_p);
-	}
 }

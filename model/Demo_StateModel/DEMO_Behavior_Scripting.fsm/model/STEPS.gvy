@@ -13,13 +13,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 @STEP('Take a screenshot')
 def takeScreenshot () {
-	$SYS.log('screenshot not implemented');
+	$EXEC.log('screenshot not implemented');
 //    $VAR.webDriver.snapScreen('');
 }
 
 @STEP('Trace last {steps} steps')
 def takeTrace (steps) {
-   $SYS.log('Steps to reproduce bug: ' + $SYS.trace(Integer.parseInt(steps), ';'));
+   $EXEC.log('Steps to reproduce bug: ' + $EXEC.trace(Integer.parseInt(steps), ';'));
 }
 
 @STEP('Close browser')
@@ -65,7 +65,7 @@ def clickCancel() {
 def checkBalance (balExp) {
     bal = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (!bal.equals(balExp)) {
-        $SYS.addReqFailed ('Balance check failed: Expecting ' + balExp + ', actual ' + bal, 'Cancel', 'CANCEL-FAILED');
+        $EXEC.addReqFailed ('Balance check failed: Expecting ' + balExp + ', actual ' + bal, 'Cancel', 'CANCEL-FAILED');
     }
 }
 
@@ -88,33 +88,33 @@ def checkBalance (balExp, reqTag) {
     def balActual = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (balActual.equals(balExp)) {
         passMsg = "Requirement " + reqTag + " passed, balance confirmed: " + balExp;
-        $SYS.addReqPassed(reqTag, passMsg);
+        $EXEC.addReqPassed(reqTag, passMsg);
     }
     else {
         failMsg = "Requirement " + reqTag + " failed, expecting balance of " + balExp + ", but got " + balActual;
-        $SYS.addReqFailed(reqTag, failMsg);
+        $EXEC.addReqFailed(reqTag, failMsg);
     }
 }
 
 @STEP('Assert {num} cents is returned')
 def checkReturn (num) {
-    $SYS.addTestOutput('Step: check return change ' + num + ' cents');
+    $EXEC.addTestOutput('Step: check return change ' + num + ' cents');
 }
       
 @STEP('Choose a drink')
 def chooseDrink () {
-	$VAR.webDriver.findElement(By.id($SYS.dataset('DrinkChoices').get('Drink'))).click();
+	$VAR.webDriver.findElement(By.id($EXEC.dataset('DrinkChoices').get('Drink'))).click();
 }
 
 @STEP('Assert correct drink is dispensed, covering requirement {reqTag}')
 def checkDrinkDispensed (reqTag) {
     drinkDisplayed = $VAR.webDriver.findElement(By.id('productName')).getText();
-    drinkExpected = $SYS.dataset('DrinkChoices').get('DrinkCheckText');
+    drinkExpected = $EXEC.dataset('DrinkChoices').get('DrinkCheckText');
     if (drinkDisplayed.indexOf(drinkExpected)>=0) {
-        $SYS.addReqPassed (reqTag, 'Correct drink has been dispensed: ' + drinkExpected);
+        $EXEC.addReqPassed (reqTag, 'Correct drink has been dispensed: ' + drinkExpected);
     }
     else {
         failMsg = 'Incorrect drink was dispensed. Expecting ' + drinkExpected + ', got this instead: ' + drinkDisplayed;
-        $SYS.addReqFailed (reqTag, failMsg);
+        $EXEC.addReqFailed (reqTag, failMsg);
     }
 }

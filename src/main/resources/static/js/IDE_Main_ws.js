@@ -23,8 +23,11 @@ function TOWS () {
 	        wsConnected();
 	    }, function (err) {
 			if (stompClient) {
-				console.log("Lost ws connection", new Date());
-		    	alertDialog("Lost connection to TestOptimal Server. Click File/Logout to be reconnected.");
+				console.log ("Lost ws connection", new Date());
+		    	confirmDialog ("Lost connection to TestOptimal Server. Click OK to lougout and re-login.", function() {
+					$.ajax("/logout");
+					document.location = "/IDE_Login.html";
+				});
 			}
 	    });
 	}

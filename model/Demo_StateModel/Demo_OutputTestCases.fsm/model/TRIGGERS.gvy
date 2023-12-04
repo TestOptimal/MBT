@@ -5,7 +5,7 @@ import com.testoptimal.mscript.groovy.TRIGGER
 
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	$VAR.outFile = new File ($SYS.getModelMgr().getReportFolderPath() + '/test_out.html');
+	$VAR.outFile = new File ($EXEC.getModelMgr().getReportFolderPath() + '/test_out.html');
    $VAR.outFile << '<html><body><H1>Garage Door Test Cases</H1>\n';
    $VAR.outFile << '<ol>\n';
 }
@@ -18,7 +18,7 @@ def 'MBT_END' () {
 
 @TRIGGER('Ua1e78163')
 def 'Start: start'() {
-	$VAR.outFile << '<li><span>Test Case ' + $SYS.getPathName() + '</span>\n<ul>\n';
+	$VAR.outFile << '<li><span>Test Case ' + $EXEC.getPathName() + '</span>\n<ul>\n';
 }
 
 
@@ -32,8 +32,8 @@ def 'Door Up: controlEvent'() {
 }
 @TRIGGER('U716f4461')
 def 'Door Up: end'() {
-   $SYS.genMSC('TestCase ' + $SYS.getPathName(), $SYS.getPathName());
-   $VAR.outFile << "<li><img src='" + $SYS.getPathName() + ".png'/></li>\n";
+   $EXEC.genMSC('TestCase ' + $EXEC.getPathName(), $EXEC.getPathName());
+   $VAR.outFile << "<li><img src='" + $EXEC.getPathName() + ".png'/></li>\n";
    $VAR.outFile << '</ul></li>\n';
 }
 
@@ -98,5 +98,3 @@ def 'Door Stopped Openning' () {
 def 'Door Stopped Openning: controlEvent'() {
    $VAR.outFile << '<li>Step: Push button</li>\n';
 }
-
-
