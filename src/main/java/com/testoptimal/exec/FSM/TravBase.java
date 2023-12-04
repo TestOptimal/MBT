@@ -101,7 +101,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            requirement tag name
+	 *            requirement tag
 	 * @param condition_p
 	 * 			  boolean condition
 	 * @param failMsg_p
@@ -124,7 +124,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param condition_p
 	 * 			  boolean condition
 	 * @param failMsg_p
@@ -152,7 +152,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param condition_p
 	 * 			  boolean condition
 	 * @param failMsg_p
@@ -170,7 +170,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param condition_p
 	 * 			  boolean condition
 	 * @param failMsg_p
@@ -193,7 +193,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param msg_p
 	 *            message to be added to this check.
 	 * 
@@ -209,7 +209,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param msg_p
 	 *            message to be added to this check.
 	 * @param assertID_p
@@ -230,7 +230,7 @@ abstract public class TravBase {
 	 * <p>
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param msg_p
 	 *            message to be added to this check.
 	 */
@@ -248,7 +248,7 @@ abstract public class TravBase {
 	 * system.
 	 * 
 	 * @param tag_p
-	 *            one single tag id
+	 *            requirement tag
 	 * @param msg_p
 	 *            message to be added to this check.
 	 * @param assertID_p

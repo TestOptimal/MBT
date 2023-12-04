@@ -12,14 +12,11 @@ import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.mcase.MCase;
 import com.testoptimal.page.Page;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-import com.testoptimal.scxml.StateNode;
-import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.stats.TagExec;
 
 /**
@@ -55,7 +52,6 @@ public class Exec {
 	 */
 	public void abort(String msg_p) throws Exception {
 		this.execDir.interrupt();
-//		this.scriptExec.addReqCheck(null, false, msg_p, null);
 		throw new Exception(msg_p);
 	}
 		
@@ -219,59 +215,6 @@ public class Exec {
 		return file.getName();
 	}
 
-//	/**
-//	 * change the current transition's guard at runtime. The transition <code>guard</code> and <code>set</code>
-//	 * work together. A transition with the matching <code>set</code> will
-//	 * satisfy the current transition's guard when traversed.
-//	 * 
-//	 * <p>Attention: Not all sequencers support guard and set.
-//	 * </p>
-//	 * Example:
-//	 * 
-//	 * <pre>
-//	 * $SYS.setCurTransGuard('Mode', 'mode1')
-//	 * </pre>
-//	 * <p>
-//	 * The above example sets the guard <code>Mode</code> on the current transition to value
-//	 * <code>mode1</code>. 
-//	 * </p>
-//	 * <p>
-//	 * The assumption is that when the transition with the matching satisfying hint
-//	 * is traversed, it will make the guard condition to true and this this
-//	 * transition can be traverse next.
-//	 *
-//	 * @param name_p
-//	 * @param value_p
-//	 */
-//	public void setTransGuard(String name_p, String value_p) {
-//		Transition transObj = this.execDir.getSequenceNavigator().getCurTravObj().getCurTrans();
-//		if (transObj != null) {
-////			transObj.getTransNode().setGuard(name_p, value_p);
-//		}
-//	}
-//	
-//
-//	/**
-//	 * change the current transition's <code>set</code> at runtime. 
-//	 * 
-//	 * Example:
-//	 * 
-//	 * <pre>
-//	 * $SYS.setCurTransSet('Mode', 'value2')
-//	 * </pre>
-//	 * <p>
-//	 * 
-//	 * @param name_p
-//	 * @param value_p
-//	 */
-//	public void setCurTransSet(String name_p, String value_p) {
-//		Transition transObj = this.execDir.getSequenceNavigator().getCurTravObj().getCurTrans();
-//		if (transObj != null) {
-////			transObj.getTransNode().setSet(name_p, value_p);
-//		}
-//	}
-
-
 	/**
 	 * initialize random number generator used by the sequencer to the specific
 	 * seed. By default system uses the default seed for the random number
@@ -289,173 +232,6 @@ public class Exec {
 	public void setSeed(long seed_p) {
 		this.execSetting.setSeed(seed_p);
 	}
-//
-//	/**
-//	 * performs the assert on the condition passed in to be true.  If check is
-//	 * successful, add positive check on the requirement tag, else add a negative
-//	 * check on the requirement tag with the failMsg_p passed in.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param condition_p
-//	 * 			  boolean condition
-//	 * @param failMsg_p
-//	 *            message to be added to this check if condition_p is false.
-//	 * 
-//	 */
-//	public void assertTrue (String tag_p, boolean condition_p, String failMsg_p) throws Exception {
-//		if (condition_p) {
-//			this.scriptExec.addReqCheck(tag_p, true, null, null);
-//		}
-//		else {
-//			this.scriptExec.addReqCheck(tag_p, false, failMsg_p, null);
-//		}
-//	}
-//
-//	/**
-//	 * performs the assert on the condition passed in to be true.  If check is
-//	 * successful, add positive check on the requirement tag, else add a negative
-//	 * check on the requirement tag with the failMsg_p passed in.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param condition_p
-//	 * 			  boolean condition
-//	 * @param failMsg_p
-//	 *            message to be added to this check if condition_p is false
-//	 * @param assertID_p
-//	 *            user assigned unique id for this specific call, this is usually
-//	 *            used to find the same defect in the defect system from previous
-//	 *            runs.
-//	 * 
-//	 */
-//	public void assertTrue (String tag_p, boolean condition_p, String failMsg_p, String assertID_p) throws Exception {
-//		if (condition_p) {
-//			this.scriptExec.addReqCheck(tag_p, true, null, assertID_p);
-//		}
-//		else {
-//			this.scriptExec.addReqCheck(tag_p, false, failMsg_p, assertID_p);
-//		}
-//	}
-//
-//
-//	/**
-//	 * performs the assert on the condition passed in to be false.  If check is
-//	 * successful, add positive check on the requirement tag, else add a negative
-//	 * check on the requirement tag with the failMsg_p passed in.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param condition_p
-//	 * 			  boolean condition
-//	 * @param failMsg_p
-//	 *            message to be added to this check if condition_p is true.
-//	 * 
-//	 */
-//	public void assertFalse (String tag_p, boolean condition_p, String failMsg_p) throws Exception {
-//		this.assertTrue(tag_p, !condition_p, failMsg_p);
-//	}
-//
-//	/**
-//	 * performs the assert on the condition passed in to be false.  If check is
-//	 * successful, add positive check on the requirement tag, else add a negative
-//	 * check on the requirement tag with the failMsg_p passed in.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param condition_p
-//	 * 			  boolean condition
-//	 * @param failMsg_p
-//	 *            message to be added to this check if condition_p is true
-//	 * @param assertID_p
-//	 *            user assigned unique id for this specific call, this is usually
-//	 *            used to find the same defect in the defect system from previous
-//	 *            runs.
-//	 * 
-//	 */
-//	public void assertFalse (String tag_p, boolean condition_p, String failMsg_p, String assertID_p) throws Exception {
-//		this.assertTrue(tag_p, !condition_p, failMsg_p, assertID_p);
-//	}
-//
-//	
-//	/**
-//	 * adds a successful requirement check/validation message to the requirement
-//	 * stat. A requirement may undergo several checks/validations per traversal of
-//	 * the state/transition.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param msg_p
-//	 *            message to be added to this check.
-//	 * 
-//	 */
-//	public void addReqPassed(String tag_p, String msg_p) throws Exception {
-//		this.scriptExec.addReqCheck(tag_p, true, msg_p, null);
-//	}
-//
-//	/**
-//	 * adds a successful requirement check/validation message to the requirement
-//	 * stat. A requirement may undergo several checks/validations per traversal of
-//	 * the state/transition.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param msg_p
-//	 *            message to be added to this check.
-//	 * @param assertID_p
-//	 *            user assigned unique id for this specific call, this is usually
-//	 *            used to find the same defect in the defect system from previous
-//	 *            runs.
-//	 * 
-//	 */
-//	public void addReqPassed(String tag_p, String msg_p, String assertID_p) throws Exception {
-//		this.scriptExec.addReqCheck(tag_p, true, msg_p, assertID_p);
-//	}
-//
-//	/**
-//	 * adds a failed requirement check/validation message to the requirement stat. A
-//	 * requirement may undergo many checks/validations per traversal of the
-//	 * state/transition with some passed and some failed. Call this method for each
-//	 * failed check and call $sys.addReqPassed () for each successful check.
-//	 * <p>
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param msg_p
-//	 *            message to be added to this check.
-//	 */
-//	public void addReqFailed(String tag_p, String msg_p) throws Exception {
-//		this.scriptExec.addReqCheck(tag_p, false, msg_p, null);
-//	}
-//
-//	/**
-//	 * adds a failed requirement check/validation message to the requirement stat. A
-//	 * requirement may undergo many checks/validations per traversal of the
-//	 * state/transition with some passed and some failed. Call this method for each
-//	 * failed check and call $sys.addReqPassed () for each successful check.
-//	 * 
-//	 * The assertID_p is specified to uniquely identify this failed check in defect
-//	 * system.
-//	 * 
-//	 * @param tag_p
-//	 *            one single tag id
-//	 * @param msg_p
-//	 *            message to be added to this check.
-//	 * @param assertID_p
-//	 *            user assigned unique id for this specific call, this is usually
-//	 *            used to find the same defect in the defect system from previous
-//	 *            runs.
-//	 * 
-//	 */
-//	public void addReqFailed(String tag_p, String msg_p, String assertID_p) throws Exception {
-//		this.scriptExec.addReqCheck(tag_p, false, msg_p, assertID_p);
-//	}
 
 	/**
 	 * returns the model execution stats collection object.
@@ -514,33 +290,13 @@ public class Exec {
 		return this.scriptExec.getPathName();
 	}
 
-//
-//	/**
-//	 * returns the state node.
-//	 * 
-//	 * @param stateID_p state id or state uid
-//	 */
-//	public StateNode findState (String stateID_p) {
-//		StateNode state = this.modelMgr.getScxmlNode().findState(stateID_p);
-//		if (state==null) state = this.modelMgr.getScxmlNode().findStateByUID(stateID_p);
-//		return state;
-//	}
-//	
-//	/**
-//	 * returns current state object
-//	 */
-//	public StateNode getCurState() {
-//		return this.execDir.getSequenceNavigator().getCurTravObj().getCurState().getStateNode();
-//	}
-//	
-//	/**
-//	 * returns the current state
-//	 */
-//	public TransitionNode getCurTransition () {
-//		Transition t = this.execDir.getSequenceNavigator().getCurTravObj().getCurTrans();
-//		return (t==null)? null: t.getTransNode();
-//	}
 
+	/**
+	 * returns the current traversal object which is a wrapper of either state or transition.  Use this
+	 * traversal object to log success/failure.
+	 * 
+	 * @return
+	 */
 	public TravBase getCurTraverseObj() {
 		return this.execDir.getSequenceNavigator().getCurTravObj();
 	}
