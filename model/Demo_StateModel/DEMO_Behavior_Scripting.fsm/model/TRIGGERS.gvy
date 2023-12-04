@@ -1,20 +1,26 @@
 // Model Triggers
 import com.testoptimal.mscript.groovy.TRIGGER
-
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	>> Open Firefox browser
+	>> Open Safari browser
 }
+
+@TRIGGER('MBT_END')
+def 'MBT_END' () {
+	>> Close browser
+}
+
+@TRIGGER('MBT_ERROR')
+def 'MBT_ERROR' () {
+	>> Take a screenshot
+	>> Close browser
+}
+
 
 @TRIGGER('MBT_FAIL')
 def 'MBT_FAIL' () {
     >> Take a screenshot
     >> Trace last 3 steps
-}
-
-@TRIGGER('MBT_ERROR')
-def 'MBT_ERROR' () {
-    >> Take a screenshot
 }
 
 @TRIGGER('U1062')

@@ -2,12 +2,19 @@
 // Call steps with following syntax:
 //  >> Take a screenshot
 import com.testoptimal.mscript.groovy.STEP
-import org.openqa.selenium.By;
 import com.testoptimal.exception.MBTException
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 @STEP('Take a screenshot')
 def takeScreenshot () {
-   $SELENIUM.snapScreen('');
+	$SYS.log('screenshot not implemented');
+//    $VAR.webDriver.snapScreen('');
 }
 
 @STEP('Trace last {steps} steps')
@@ -15,41 +22,48 @@ def takeTrace (steps) {
    $SYS.log('Steps to reproduce bug: ' + $SYS.trace(Integer.parseInt(steps), ';'));
 }
 
+@STEP('Close browser')
+def close() {
+	try { $VAR.webDriver.close(); } catch (err) { }
+	try { $VAR.webDriver.quit(); } catch (err) { }
+}
+
 @STEP('Open {browserType} browser')
 def setBrowserType (String browserType) {
-	switch(browserType.toLowerCase()) {
-		case ['firefox','ff']:
-			$SELENIUM.setBrowserFirefox();
+	
+		// test with current browser, or you can choose to test with specific browser
+	switch (browserType) {
+		case 'Safari':
+// 			WebDriverManager.safaridriver().setup();
+			$VAR.webDriver = new SafariDriver();
 			break;
-		case ['ie','internetexplorer']:
-			$SELENIUM.setBrowserIE();
+		case 'Chrome':
+// 			WebDriverManager.chromedriver().setup();
+			$VAR.webDriver = new ChromeDriver();
 			break;
-		case ['safari']:
-			$SELENIUM.setBrowserSafari();
+		case 'Firefox':
+// 			WebDriverManager.firefoxdriver().setup();
+			$VAR.webDriver = new FirefoxDriver();
 			break;
-		case ['htmlunit']:
-			$SELENIUM.setBrowserHtmlunit();
-			break;
-		case ['chrome']:
 		default:
-			$SELENIUM.setBrowserChrome();
-			break;
+			$VAR.webDriver = new HtmlUnitDriver();
 	}
+
 }
 
 @STEP('Goto webpage {urlPage}')
 def gotoURL (String urlPage) {
-	$SELENIUM.getWebDriver().get('http://localhost:' + $UTIL.getPort() + '/' + urlPage);
+	$VAR.webDriver.get('http://localhost:' + $UTIL.getPort() + '/' + urlPage);
 }
 
 @STEP('Click on Cancel button')
 def clickCancel() {
-	$SELENIUM.getWebDriver().findElement(By.id('cancel')).click()
+	$VAR.webDriver.findElement(By.id('cancel')).click()
 }
 
 @STEP('Assert that balance is set to {balExp}') 
 def checkBalance (balExp) {
-    bal = $SELENIUM.getWebDriver().findElement(By.id('amount')).getText();
+    bal = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (!bal.equals(balExp)) {
         $SYS.addReqFailed ('Balance check failed: Expecting ' + balExp + ', actual ' + bal, 'Cancel', 'CANCEL-FAILED');
     }
@@ -59,10 +73,10 @@ def checkBalance (balExp) {
 def addCoin (String coin) {
 	switch(coin.toLowerCase()) {
 		case 'quarter':
-			 $SELENIUM.getWebDriver().findElement(By.id('addQuarter')).click();
+			 $VAR.webDriver.findElement(By.id('addQuarter')).click();
 			break;
 		case 'halfdollar':
-			 $SELENIUM.getWebDriver().findElement(By.id('addHalfDollar')).click();
+			 $VAR.webDriver.findElement(By.id('addHalfDollar')).click();
 			break;
 		default:
 			throw MBTException ('Invalid coin ' + coin);
@@ -71,7 +85,7 @@ def addCoin (String coin) {
 
 @STEP('Assert balance is {balExp} for covering requirement {reqTag}')
 def checkBalance (balExp, reqTag) {
-    def balActual = $SELENIUM.getWebDriver().findElement(By.id('amount')).getText();
+    def balActual = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (balActual.equals(balExp)) {
         passMsg = "Requirement " + reqTag + " passed, balance confirmed: " + balExp;
         $SYS.addReqPassed(reqTag, passMsg);
@@ -89,13 +103,13 @@ def checkReturn (num) {
       
 @STEP('Choose a drink')
 def chooseDrink () {
-	$SELENIUM.getWebDriver().findElement(By.id($SYS.getData('Drink'))).click();
+	$VAR.webDriver.findElement(By.id($SYS.dataset('DrinkChoices').get('Drink'))).click();
 }
 
 @STEP('Assert correct drink is dispensed, covering requirement {reqTag}')
 def checkDrinkDispensed (reqTag) {
-    drinkDisplayed = $SELENIUM.getWebDriver().findElement(By.id('productName')).getText();
-    drinkExpected = $SYS.getData('DrinkCheckText');
+    drinkDisplayed = $VAR.webDriver.findElement(By.id('productName')).getText();
+    drinkExpected = $SYS.dataset('DrinkChoices').get('DrinkCheckText');
     if (drinkDisplayed.indexOf(drinkExpected)>=0) {
         $SYS.addReqPassed (reqTag, 'Correct drink has been dispensed: ' + drinkExpected);
     }
