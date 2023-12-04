@@ -35,7 +35,7 @@ def 'MBT_START' () {
 			$VAR.webDriver = new HtmlUnitDriver();
 	}
 	
-	$VAR.outFile = new File ($EXEC.getModelMgr().getReportFolderPath() + '/test_out.html');
+	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
    $VAR.outFile << '<html><body><H1>Test Output</H1>\n';
    $VAR.outFile << '<ol>\n';
 }
@@ -61,7 +61,7 @@ def 'Start' () {
    bal = $EXEC.page('MainPage').perform('getBalance');
 	$EXEC.log('bal: ' + bal);
    if (!bal.equals('0.00') && !bal.equals('0')) {
-      $EXEC.addReqFailed ('Cancel failed to reset balance to 0.00', 'Cancel', 'CANCEL-FAILED');
+      $EXEC.getCurTraverseObj().addReqFailed ('Cancel failed to reset balance to 0.00', 'Cancel', 'CANCEL-FAILED');
       $EXEC.abort('Cancel does not work!!!');
    }
 }
@@ -75,11 +75,11 @@ def 'Start: add25'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.25')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("Q!", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("Q!", passMsg);
    }
    else {
       failMsg = "Insert one Quarter failed, expecting balance of 0.25, but got " + bal;
-      $EXEC.addReqFailed("Q1", failMsg, 'QUARTER-0-25');
+      $EXEC.getCurTraverseObj().addReqFailed("Q1", failMsg, 'QUARTER-0-25');
    }
 }
 
@@ -92,11 +92,11 @@ def 'Start: add50'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("Q!", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("Q!", passMsg);
    }
    else {
       failMsg = "Insert one HalfDollar failed, expecting balance of 0.50, but got " + bal;
-      $EXEC.addReqFailed("Q1", failMsg, 'QUARTER-0-50');
+      $EXEC.getCurTraverseObj().addReqFailed("Q1", failMsg, 'QUARTER-0-50');
    }
 }
 
@@ -107,11 +107,11 @@ def 'V25Cents: add25'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("Q1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
    }
    else {
       failMsg = "Insert one Quarter failed, expecting balance of 0.50, but got " + bal;
-      $EXEC.addReqFailed("Q1", failMsg, 'QUARTER-25-50');
+      $EXEC.getCurTraverseObj().addReqFailed("Q1", failMsg, 'QUARTER-25-50');
    }
 }
 
@@ -122,11 +122,11 @@ def 'V25Cents: add50'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("H1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
    }
    else {
       failMsg = "Insert one HalfDollar failed, expecting balance of 0.75, but got " + bal;
-      $EXEC.addReqFailed("H1", failMsg, 'QUARTER-25-75');
+      $EXEC.getCurTraverseObj().addReqFailed("H1", failMsg, 'QUARTER-25-75');
    }
 }
 
@@ -137,11 +137,11 @@ def 'V50Cents: add25'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("Q1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
    }
    else {
       failMsg = "Insert one Quarter failed, expecting balance of 0.75, but got " + bal;
-      $EXEC.addReqFailed("Q1", failMsg, 'QUARTER-50-25');
+      $EXEC.getCurTraverseObj().addReqFailed("Q1", failMsg, 'QUARTER-50-25');
    }
 }
 
@@ -152,11 +152,11 @@ def 'V50Cents: add50'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one HalfDollor passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("H1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
    }
    else {
       failMsg = "Insert one HalfDollar failed, expecting balance of 1.00, but got " + bal;
-      $EXEC.addReqFailed("H1", failMsg, 'QUARTER-0-50');
+      $EXEC.getCurTraverseObj().addReqFailed("H1", failMsg, 'QUARTER-0-50');
    }
 }
 
@@ -167,11 +167,11 @@ def 'V75Cents: add25'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("Q1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
    }
    else {
       failMsg = "Insert one Quarter failed, expecting balance of 1.00, but got " + bal;
-      $EXEC.addReqFailed("Q1", failMsg, 'QUARTER-75-25');
+      $EXEC.getCurTraverseObj().addReqFailed("Q1", failMsg, 'QUARTER-75-25');
    }
 }
 
@@ -182,11 +182,11 @@ def 'V75Cents: add50'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('1.25')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
-      $EXEC.addReqPassed("H1", passMsg);
+      $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
    }
    else {
       failMsg = "Insert one HalfDollar failed, expecting balance of 1.25, but got " + bal;
-      $EXEC.addReqFailed("H1", failMsg, 'QUARTER-75-50');
+      $EXEC.getCurTraverseObj().addReqFailed("H1", failMsg, 'QUARTER-75-50');
    }
 }
 
@@ -204,11 +204,11 @@ def 'Choose Drink: discharge'() {
    bal = $EXEC.page('MainPage').perform('getBalance');
 	
    if (drinkDispensed.indexOf(drinkTextExpected)>=0) {
-      $EXEC.addReqPassed ('DRINK', 'Correct drink has been dispensed: ' + drinkTextExpected);
+      $EXEC.getCurTraverseObj().addReqPassed ('DRINK', 'Correct drink has been dispensed: ' + drinkTextExpected);
    }
    else {
       failMsg = 'Incorrect drink was dispensed. Selected ' + drinkTextExpected + ', got this instead: ' + drinkDispensed;
-      $EXEC.addReqFailed ('DRINK', failMsg, 'Vend-BUG');
+      $EXEC.getCurTraverseObj().addReqFailed ('DRINK', failMsg, 'Vend-BUG');
    }
    $VAR.outFile << '<li>Step: select a drink: ' + drinkTextExpected + ' </li>\n';
 }

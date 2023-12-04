@@ -38,12 +38,12 @@ def 'runREST: testScenario'() {
 			.then().assertThat().statusCode(200).extract().path("premium");
 		ExpectedPremium = $VAR.ds.get('ExpectedPremium').toDouble();
 		if (prem == ExpectedPremium) {
-			$EXEC.addReqPassed('Scenario_' + ($VAR.ds.idx+1), 'Passed, prem = ' + prem);
+			$EXEC.getCurTraverseObj().addReqPassed('Scenario_' + ($VAR.ds.idx+1), 'Passed, prem = ' + prem);
 		}
       else throw new Exception ("Failed, expecting premium " + ExpectedPremium + ", received " + prem);
 	}
 	catch (Throwable e) {
-		$EXEC.addReqFailed('Scenario_' + ($VAR.ds.idx+1), e.getMessage() + ": " + (new Gson()).toJson($VAR.ds.rows.get($VAR.ds.idx)));
+		$EXEC.getCurTraverseObj().addReqFailed('Scenario_' + ($VAR.ds.idx+1), e.getMessage() + ": " + (new Gson()).toJson($VAR.ds.rows.get($VAR.ds.idx)));
 	}
 	$VAR.ds.next();
 }

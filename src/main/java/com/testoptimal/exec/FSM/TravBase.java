@@ -64,8 +64,10 @@ abstract public class TravBase {
 	
 	public abstract boolean travRun() throws MBTAbort;
 	
-	public void addTagExec (TagExec tagExec_p) {
-		this.tagExecList.add(tagExec_p);
+	public void addTagExec (String tag_p, boolean passed_p, String msg_p, String assertID_p) {
+		String transID = this.getCurTrans()==null? null: this.getCurTrans().getTransNode().getUID();
+		TagExec tagExec = new TagExec(this.scriptExec, tag_p, passed_p, msg_p, assertID_p, this.getCurState().getStateId(), transID, this.getCurUID());
+		this.tagExecList.add(tagExec);
 	}
 	
 	public boolean hasFailed () {
@@ -90,4 +92,172 @@ abstract public class TravBase {
 	
 	public abstract String genPausedAt();
 	
+	
+
+	/**
+	 * performs the assert on the condition passed in to be true.  If check is
+	 * successful, add positive check on the requirement tag, else add a negative
+	 * check on the requirement tag with the failMsg_p passed in.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            requirement tag name
+	 * @param condition_p
+	 * 			  boolean condition
+	 * @param failMsg_p
+	 *            message to be added to this check if condition_p is false.
+	 * 
+	 */
+	public void assertTrue (String tag_p, boolean condition_p, String failMsg_p) throws Exception {
+		if (condition_p) {
+			this.addTagExec(tag_p, true, null, null);
+		}
+		else {
+			this.addTagExec(tag_p, false, failMsg_p, null);
+		}
+	}
+
+	/**
+	 * performs the assert on the condition passed in to be true.  If check is
+	 * successful, add positive check on the requirement tag, else add a negative
+	 * check on the requirement tag with the failMsg_p passed in.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param condition_p
+	 * 			  boolean condition
+	 * @param failMsg_p
+	 *            message to be added to this check if condition_p is false
+	 * @param assertID_p
+	 *            user assigned unique id for this specific call, this is usually
+	 *            used to find the same defect in the defect system from previous
+	 *            runs.
+	 * 
+	 */
+	public void assertTrue (String tag_p, boolean condition_p, String failMsg_p, String assertID_p) throws Exception {
+		if (condition_p) {
+			this.addTagExec(tag_p, true, null, assertID_p);
+		}
+		else {
+			this.addTagExec(tag_p, false, failMsg_p, assertID_p);
+		}
+	}
+
+
+	/**
+	 * performs the assert on the condition passed in to be false.  If check is
+	 * successful, add positive check on the requirement tag, else add a negative
+	 * check on the requirement tag with the failMsg_p passed in.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param condition_p
+	 * 			  boolean condition
+	 * @param failMsg_p
+	 *            message to be added to this check if condition_p is true.
+	 * 
+	 */
+	public void assertFalse (String tag_p, boolean condition_p, String failMsg_p) throws Exception {
+		this.assertTrue(tag_p, !condition_p, failMsg_p);
+	}
+
+	/**
+	 * performs the assert on the condition passed in to be false.  If check is
+	 * successful, add positive check on the requirement tag, else add a negative
+	 * check on the requirement tag with the failMsg_p passed in.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param condition_p
+	 * 			  boolean condition
+	 * @param failMsg_p
+	 *            message to be added to this check if condition_p is true
+	 * @param assertID_p
+	 *            user assigned unique id for this specific call, this is usually
+	 *            used to find the same defect in the defect system from previous
+	 *            runs.
+	 * 
+	 */
+	public void assertFalse (String tag_p, boolean condition_p, String failMsg_p, String assertID_p) throws Exception {
+		this.assertTrue(tag_p, !condition_p, failMsg_p, assertID_p);
+	}
+
+	
+	/**
+	 * adds a successful requirement check/validation message to the requirement
+	 * stat. A requirement may undergo several checks/validations per traversal of
+	 * the state/transition.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param msg_p
+	 *            message to be added to this check.
+	 * 
+	 */
+	public void addReqPassed(String tag_p, String msg_p) throws Exception {
+		this.addTagExec(tag_p, true, msg_p, null);
+	}
+
+	/**
+	 * adds a successful requirement check/validation message to the requirement
+	 * stat. A requirement may undergo several checks/validations per traversal of
+	 * the state/transition.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param msg_p
+	 *            message to be added to this check.
+	 * @param assertID_p
+	 *            user assigned unique id for this specific call, this is usually
+	 *            used to find the same defect in the defect system from previous
+	 *            runs.
+	 * 
+	 */
+	public void addReqPassed(String tag_p, String msg_p, String assertID_p) throws Exception {
+		this.addTagExec(tag_p, true, msg_p, assertID_p);
+	}
+
+	/**
+	 * adds a failed requirement check/validation message to the requirement stat. A
+	 * requirement may undergo many checks/validations per traversal of the
+	 * state/transition with some passed and some failed. Call this method for each
+	 * failed check and call $sys.addReqPassed () for each successful check.
+	 * <p>
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param msg_p
+	 *            message to be added to this check.
+	 */
+	public void addReqFailed(String tag_p, String msg_p) throws Exception {
+		this.addTagExec(tag_p, false, msg_p, null);
+	}
+
+	/**
+	 * adds a failed requirement check/validation message to the requirement stat. A
+	 * requirement may undergo many checks/validations per traversal of the
+	 * state/transition with some passed and some failed. Call this method for each
+	 * failed check and call $sys.addReqPassed () for each successful check.
+	 * 
+	 * The assertID_p is specified to uniquely identify this failed check in defect
+	 * system.
+	 * 
+	 * @param tag_p
+	 *            one single tag id
+	 * @param msg_p
+	 *            message to be added to this check.
+	 * @param assertID_p
+	 *            user assigned unique id for this specific call, this is usually
+	 *            used to find the same defect in the defect system from previous
+	 *            runs.
+	 * 
+	 */
+	public void addReqFailed(String tag_p, String msg_p, String assertID_p) throws Exception {
+		this.addTagExec(tag_p, false, msg_p, assertID_p);
+	}
 }

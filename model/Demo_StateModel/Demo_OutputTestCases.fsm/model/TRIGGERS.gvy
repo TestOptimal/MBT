@@ -5,7 +5,7 @@ import com.testoptimal.mscript.groovy.TRIGGER
 
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	$VAR.outFile = new File ($EXEC.getModelMgr().getReportFolderPath() + '/test_out.html');
+	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
    $VAR.outFile << '<html><body><H1>Garage Door Test Cases</H1>\n';
    $VAR.outFile << '<ol>\n';
 }

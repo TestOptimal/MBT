@@ -139,18 +139,18 @@ public class MbtScriptExecutor implements MScriptInterface {
 		return this.pageMgr;
 	}
 	
-	public void addReqCheck(String tag_p, boolean passed_p, String msg_p, String assertID_p) throws Exception {
-		StateNode curState = this.execObj.getCurState();
-		String uid = curState.getUID();
-		Transition trans = this.execDirector.getSequenceNavigator().getCurTravObj().getCurTrans();
-		String transID = null;
-		if (trans!=null && trans.getTransNode()!=null) {
-			transID = trans.getTransNode().getDesc();			
-			uid = trans.getTransNode().getUID();
-		}
-		TagExec tagExec = new TagExec(this, tag_p, passed_p, msg_p, assertID_p, curState.getStateID(), transID, uid);
-		this.execDirector.getSequenceNavigator().getCurTravObj().addTagExec(tagExec);
-	}
+//	public void addReqCheck(String tag_p, boolean passed_p, String msg_p, String assertID_p) throws Exception {
+//		StateNode curState = this.execObj.getCurState();
+//		String uid = curState.getUID();
+//		Transition trans = this.execDirector.getSequenceNavigator().getCurTravObj().getCurTrans();
+//		String transID = null;
+//		if (trans!=null && trans.getTransNode()!=null) {
+//			transID = trans.getTransNode().getDesc();			
+//			uid = trans.getTransNode().getUID();
+//		}
+//		TagExec tagExec = new TagExec(this, tag_p, passed_p, msg_p, assertID_p, curState.getStateID(), transID, uid);
+//		this.execDirector.getSequenceNavigator().getCurTravObj().addTagExec(tagExec);
+//	}
 
 	public Object runMScript (String script_p) throws Exception {
 		return this.groovyEngine.evalExpr("DynamicExpr", script_p);

@@ -65,7 +65,7 @@ def clickCancel() {
 def checkBalance (balExp) {
     bal = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (!bal.equals(balExp)) {
-        $EXEC.addReqFailed ('Balance check failed: Expecting ' + balExp + ', actual ' + bal, 'Cancel', 'CANCEL-FAILED');
+        $EXEC.getCurTraverseObj().addReqFailed ('Balance check failed: Expecting ' + balExp + ', actual ' + bal, 'Cancel', 'CANCEL-FAILED');
     }
 }
 
@@ -88,17 +88,17 @@ def checkBalance (balExp, reqTag) {
     def balActual = $VAR.webDriver.findElement(By.id('amount')).getText();
     if (balActual.equals(balExp)) {
         passMsg = "Requirement " + reqTag + " passed, balance confirmed: " + balExp;
-        $EXEC.addReqPassed(reqTag, passMsg);
+        $EXEC.getCurTraverseObj().addReqPassed(reqTag, passMsg);
     }
     else {
         failMsg = "Requirement " + reqTag + " failed, expecting balance of " + balExp + ", but got " + balActual;
-        $EXEC.addReqFailed(reqTag, failMsg);
+        $EXEC.getCurTraverseObj().addReqFailed(reqTag, failMsg);
     }
 }
 
 @STEP('Assert {num} cents is returned')
 def checkReturn (num) {
-    $EXEC.addTestOutput('Step: check return change ' + num + ' cents');
+    $EXEC.log('Step: check return change ' + num + ' cents');
 }
       
 @STEP('Choose a drink')
@@ -115,6 +115,6 @@ def checkDrinkDispensed (reqTag) {
     }
     else {
         failMsg = 'Incorrect drink was dispensed. Expecting ' + drinkExpected + ', got this instead: ' + drinkDisplayed;
-        $EXEC.addReqFailed (reqTag, failMsg);
+        $EXEC.getCurTraverseObj().addReqFailed (reqTag, failMsg);
     }
 }
