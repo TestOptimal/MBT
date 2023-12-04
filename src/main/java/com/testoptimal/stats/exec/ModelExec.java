@@ -1,4 +1,4 @@
-package com.testoptimal.db;
+package com.testoptimal.stats.exec;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import com.testoptimal.stats.ModelExecSummary;
 import com.testoptimal.stats.TagExec;
 import com.testoptimal.util.StringUtil;
 
-public class ModelExecDB {
+public class ModelExec {
 	public static enum Status {passed, failed};
 	
 	public String modelName; // this is set for informational only, does not get written to database.
@@ -29,15 +29,15 @@ public class ModelExecDB {
 	
 	public Map<String, Object> execOptions = new java.util.HashMap<>();
 	
-	public List<ExecTestCaseDB> tcList = new java.util.ArrayList<>();
-	public List<ExecReqDB> reqList = new java.util.ArrayList<>();
-	public List<ExecStateTransDB> stateTransList = new java.util.ArrayList<>();
+	public List<ExecTestCase> tcList = new java.util.ArrayList<>();
+	public List<ExecReq> reqList = new java.util.ArrayList<>();
+	public List<ExecStateTrans> stateTransList = new java.util.ArrayList<>();
 		
 	private transient AtomicInteger tcCounter = new AtomicInteger(0);
-		private transient ExecTestCaseDB curTestCase;
+		private transient ExecTestCase curTestCase;
 	private transient int maxTestCaseNum = 1;
 
-	public ModelExecDB (String mbtSessID_p, ModelMgr modelMgr_p, ExecutionSetting execSetting_p) {
+	public ModelExec (String mbtSessID_p, ModelMgr modelMgr_p, ExecutionSetting execSetting_p) {
 		this.modelName = modelMgr_p.getModelName();
 		this.mbtSessID = mbtSessID_p;
 		this.filePath = modelMgr_p.getStatsFolderPath() + this.mbtSessID + ".json";
@@ -61,14 +61,14 @@ public class ModelExecDB {
 		this.execOptions.put("Server", Config.getHostName());
 		
 		scxml.getAllStates().stream().forEach(s -> {
-			this.stateTransList.add(new ExecStateTransDB(s));
-			this.stateTransList.addAll(s.getTransitions().stream().map(t-> new ExecStateTransDB(t)).collect(Collectors.toList()));
+			this.stateTransList.add(new ExecStateTrans(s));
+			this.stateTransList.addAll(s.getTransitions().stream().map(t-> new ExecStateTrans(t)).collect(Collectors.toList()));
 		});
 		this.execSummary.stateNum = (int) this.stateTransList.stream().filter(s -> s.transName == null).count();
 		this.execSummary.transNum = this.stateTransList.size() - this.execSummary.stateNum;
 		
 		try {
-			this.reqList = RequirementMgr.getInstance().getRequirement(modelMgr_p).stream().map(r -> new ExecReqDB(r.name, r.priority)).collect(Collectors.toList());
+			this.reqList = RequirementMgr.getInstance().getRequirement(modelMgr_p).stream().map(r -> new ExecReq(r.name, r.priority)).collect(Collectors.toList());
 		}
 		catch (Exception e) {
 			//
@@ -77,9 +77,9 @@ public class ModelExecDB {
 
 	
 	@JsonIgnore
-	public ExecTestCaseDB newTestCase () {
+	public ExecTestCase newTestCase () {
 		String tcName = StringUtil.genTCName("TC_", tcCounter.addAndGet(1), 6);
-		this.curTestCase = new ExecTestCaseDB(tcName);
+		this.curTestCase = new ExecTestCase(tcName);
 		this.tcList.add(this.curTestCase);
 		if (this.tcList.size() >= this.maxTestCaseNum) {
 			this.tcList = this.tcList.subList(this.tcList.size() - this.maxTestCaseNum, this.maxTestCaseNum);
@@ -90,19 +90,19 @@ public class ModelExecDB {
 
 	@JsonIgnore
 	public void addTestStep (long perfMillis_p, String UID_p, List<TagExec> checkList_p) {
-		Optional<ExecStateTransDB> e = this.stateTransList.stream().filter(s -> UID_p.equals(s.UID)).findFirst();
+		Optional<ExecStateTrans> e = this.stateTransList.stream().filter(s -> UID_p.equals(s.UID)).findFirst();
 		if (e.isPresent()) {
 			this.curTestCase.addStep(perfMillis_p, e.get(), checkList_p);
 		}
 		Map<String, List<TagExec>> checkMap = checkList_p.stream().collect(Collectors.groupingBy(c -> c.getReqTag()));
 		checkMap.keySet().forEach( t -> {
-			Optional<ExecReqDB> rOpt = this.reqList.stream().filter(r -> r.reqTag.equals(t)).findFirst();
-			ExecReqDB req;
+			Optional<ExecReq> rOpt = this.reqList.stream().filter(r -> r.reqTag.equals(t)).findFirst();
+			ExecReq req;
 			if (rOpt.isPresent()) {
 				req = rOpt.get();
 			}
 			else {
-				req = new ExecReqDB(t, "medium");
+				req = new ExecReq(t, "medium");
 				this.reqList.add(req);
 			}
 			req.passCount += checkMap.get(t).stream().filter(s -> s.isPassed()).count();
@@ -112,7 +112,7 @@ public class ModelExecDB {
 	
 
 	@JsonIgnore
-	public ExecTestCaseDB getCurTestCase () {
+	public ExecTestCase getCurTestCase () {
 		return this.curTestCase;
 	}
 	
@@ -126,7 +126,7 @@ public class ModelExecDB {
 	}
 	
 	@JsonIgnore
-	public Map<String, ExecStateTransDB>getStateTransMap() {
+	public Map<String, ExecStateTrans>getStateTransMap() {
 		return this.stateTransList.stream().collect(Collectors.toMap(st -> st.UID, st -> st));
 	}
 }

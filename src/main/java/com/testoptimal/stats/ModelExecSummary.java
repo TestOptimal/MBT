@@ -4,8 +4,8 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.ModelExecDB.Status;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.ModelExec.Status;
 
 public class ModelExecSummary {
 	public String modelName;
@@ -17,7 +17,7 @@ public class ModelExecSummary {
 	public java.util.Date endDT;	
 	
 	public String mbtSequencer;
-	public ModelExecDB.Status status;
+	public ModelExec.Status status;
 
 	public int stateNum = 0;
 	public int stateCovered = 0;
@@ -41,7 +41,7 @@ public class ModelExecSummary {
 	
 	
 	@JsonIgnore
-	public void summarize(ModelExecDB modelExec_p) {
+	public void summarize(ModelExec modelExec_p) {
 		this.stateCovered = (int) modelExec_p.stateTransList.stream().filter(s -> s.transName == null)
 				.filter(s -> s.passCount + s.failCount >= s.minTravRequired).count();
 		this.transCovered = (int) modelExec_p.stateTransList.stream().filter(s -> s.transName != null)

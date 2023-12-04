@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.stats.DashboardStats;
 import com.testoptimal.stats.StatsMgr;
+import com.testoptimal.stats.exec.ModelExec;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
@@ -33,21 +33,21 @@ import jakarta.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class StatsController {
 	@GetMapping(value = "exec/{modelName}/{mbtSessID}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ModelExecDB> getModelExec (@PathVariable (name="modelName", required=true) String modelName,
+	public ResponseEntity<ModelExec> getModelExec (@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		ModelMgr modelMgr = new ModelMgr(modelName);
-		ModelExecDB modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
+		ModelExec modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
 		return new ResponseEntity<>(modelExec, HttpStatus.OK);
 	}
 
 
 	@GetMapping(value = "exec/{modelName}/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ModelExecDB>> getModelExecList (@PathVariable (name="modelName", required=true) String modelName,
+	public ResponseEntity<List<ModelExec>> getModelExecList (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr = new ModelMgr(modelName);
-		List<ModelExecDB> statsList = StatsMgr.getInstance().getStatsList(modelMgr);
+		List<ModelExec> statsList = StatsMgr.getInstance().getStatsList(modelMgr);
 		return new ResponseEntity<>(statsList, HttpStatus.OK);
 	}
 	

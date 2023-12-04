@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.TestCaseStepDB;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.graphing.GraphState;
@@ -17,6 +14,9 @@ import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.server.config.Config;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.TestCaseStep;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
@@ -67,11 +67,11 @@ public class StateDiagram {
 	 * generate state diagram for traversal graph - should be migrated to use ActivityDiagram when we can set color for each trans.
 	 * @return image file path
 	 */
-	public static String genTraversalGraph (ModelExecDB collStat_p, ModelMgr modelMgr_p, 
-			ModelExecDB modelExec_p, String filePath_p) throws Exception {
+	public static String genTraversalGraph (ModelExec collStat_p, ModelMgr modelMgr_p, 
+			ModelExec modelExec_p, String filePath_p) throws Exception {
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
-		Map<String,ExecStateTransDB> stateTransMap = modelExec_p.getStateTransMap();
-		List<TestCaseStepDB> stepList = collStat_p.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
+		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
+		List<TestCaseStep> stepList = collStat_p.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
 
 		
 		String orient = ""; // default
@@ -83,14 +83,14 @@ public class StateDiagram {
 		List<StateNode> graphStateList = new java.util.ArrayList<StateNode>();
 		List<TransitionNode> transList = new java.util.ArrayList<>();
 
-		for (TestCaseStepDB stepObj: stepList) {
+		for (TestCaseStep stepObj: stepList) {
 			if (stateTransMap.get(stepObj.UID).type.equalsIgnoreCase("state")) {
 				continue;
 			}
 			TransitionNode transObj = scxml.findTransByUID(stepObj.UID);
 			StateNode stateObj = transObj.getParentStateNode();
 			transList.add(transObj);
-			if (stepObj.status != ModelExecDB.Status.passed) {
+			if (stepObj.status != ModelExec.Status.passed) {
 				colorList.put(String.valueOf(i), "red");
 			}
 			i++;
@@ -165,11 +165,11 @@ public class StateDiagram {
 	
 	// Traversal Graph
 	public static String genTraversalGraph (ModelMgr modelMgr_p, 
-			ModelExecDB modelExec_p, String filePath_p) throws Exception {
+			ModelExec modelExec_p, String filePath_p) throws Exception {
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
-		List<TestCaseStepDB> stepList = modelExec_p.tcList.stream().flatMap(tc -> tc.stepList.stream()).collect(Collectors.toList());
+		List<TestCaseStep> stepList = modelExec_p.tcList.stream().flatMap(tc -> tc.stepList.stream()).collect(Collectors.toList());
 
-		Map<String,ExecStateTransDB> stateTransMap = modelExec_p.getStateTransMap();
+		Map<String,ExecStateTrans> stateTransMap = modelExec_p.getStateTransMap();
 		String orient = "";
 		boolean includeAllState = StringUtil.isTrue(Config.getProperty("Graph.traversal.allstate"));
 
@@ -179,14 +179,14 @@ public class StateDiagram {
 		List<StateNode> graphStateList = new java.util.ArrayList<StateNode>();
 		List<TransitionNode> transList = new java.util.ArrayList<>();
 
-		for (TestCaseStepDB stepObj: stepList) {
+		for (TestCaseStep stepObj: stepList) {
 			if (stateTransMap.get(stepObj.UID).type.equalsIgnoreCase("state")) {
 				continue;
 			}
 			TransitionNode transObj = scxml.findTransByUID(stepObj.UID);
 			StateNode stateObj = transObj.getParentStateNode();
 			transList.add(transObj);
-			if (stepObj.status != ModelExecDB.Status.passed) {
+			if (stepObj.status != ModelExec.Status.passed) {
 				colorList.put(String.valueOf(i), "red");
 			}
 			i++;

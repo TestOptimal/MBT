@@ -1,4 +1,4 @@
-package com.testoptimal.mscript;
+package com.testoptimal.exec.mscript;
 
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.plugin.RandPlugin;

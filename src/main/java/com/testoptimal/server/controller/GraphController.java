@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.graphing.plantuml.MSC_Graph;
@@ -31,6 +29,8 @@ import com.testoptimal.scxml.SwimlaneNode.Lane;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.stats.StatsMgr;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
@@ -81,7 +81,7 @@ public class GraphController {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		String imgFilePath = "", imgFileName;
 		String folderPath = modelMgr.getTempFolderPath();
-		ModelExecDB modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
+		ModelExec modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
 		if (modelExec==null) {
 			 IdeSvc.sendIdeMessage(httpSessID, new IdeMessage("error", "Model execution not found", "GraphController.genModelSequenceGraph"));
 			 throw new Exception ("No model execution is currently open");
@@ -113,7 +113,7 @@ public class GraphController {
 		String imgFilePath = "";
 
 		String graphFilePath = "";
-		ModelExecDB modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
+		ModelExec modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
 		if (modelExec==null) {
 			 IdeSvc.sendIdeMessage(httpSessID, new IdeMessage("error", "Model execution not found", "GraphController.genModelSequenceGraph"));
 			 throw new Exception ("No model execution is currently open");
@@ -141,7 +141,7 @@ public class GraphController {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		String imgFolder = modelMgr.getTempFolderPath();
 		String imgFileName = "travMSC.png";
-		ModelExecDB modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
+		ModelExec modelExec = StatsMgr.findModelExec(modelMgr, mbtSessID, httpSessID);
 		if (modelExec==null) {
 			IdeSvc.sendIdeMessage(httpSessID, new IdeMessage("warn", "moel.stats.not.found", "GraphControler"));
 			throw new MBTException ("model.stats.not.found");
@@ -168,7 +168,7 @@ public class GraphController {
 		 }    	
 	}
 	
-	public static Map<String, String> getCoverageColorList(ModelExecDB mbtStat_p) throws Exception {
+	public static Map<String, String> getCoverageColorList(ModelExec mbtStat_p) throws Exception {
 		
 		String SatisfiedColor = "darkgreen";
 		String PartialColor = "gold";
@@ -197,12 +197,12 @@ public class GraphController {
 	 * @return true if successful, false if failed.
 	 * @throws Exception
 	 */
-	private static boolean genTravMSC(ModelMgr modelMgr_p, ModelExecDB modelExec_p, String imgFilePath_p) throws Exception {
+	private static boolean genTravMSC(ModelMgr modelMgr_p, ModelExec modelExec_p, String imgFilePath_p) throws Exception {
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
 		String chartTitle = "Test Sequence Diagram";
 		MSC_Graph msc = new MSC_Graph(chartTitle);
 		
-		final Map<String, ExecStateTransDB> stateTransMap = new java.util.HashMap<>(modelExec_p.stateTransList.size());
+		final Map<String, ExecStateTrans> stateTransMap = new java.util.HashMap<>(modelExec_p.stateTransList.size());
 		modelExec_p.stateTransList.stream().forEach( s -> {
 			stateTransMap.put(s.UID, s);
 		});
@@ -212,7 +212,7 @@ public class GraphController {
 			tc.stepList.stream()
 				.filter(s -> stateTransMap.get(s.UID).type.equalsIgnoreCase("state"))
 				.forEach(s -> {
-					ExecStateTransDB stateTrans = stateTransMap.get(s.UID);
+					ExecStateTrans stateTrans = stateTransMap.get(s.UID);
 					StateNode stateNode = scxml.findStateByUID(stateTrans.UID);
 					String fromStereotype = stateNode.getStereotype();
 					ScxmlNode stateScxmlNode = stateNode.getScxmlNode();
@@ -247,13 +247,13 @@ public class GraphController {
 		// add messages
 		modelExec_p.tcList.stream().forEach(tc -> {
 			tc.stepList.stream().filter(s -> stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).forEach(s -> {
-				ExecStateTransDB stateTrans = stateTransMap.get(s.UID);
+				ExecStateTrans stateTrans = stateTransMap.get(s.UID);
 				TransitionNode transNode = scxml.findTransByUID(stateTrans.UID);
 				StateNode stateNode = transNode.getParentStateNode();
 				String transStereotype = null;
 				String msg = (transNode==null || transNode.isHideName())?"":stateTrans.transName;
 				msg += " <b><i><size:11>T1</size></i></b>";
-				String color = s.status==ModelExecDB.Status.passed? null:"#FF1100"; // red
+				String color = s.status==ModelExec.Status.passed? null:"#FF1100"; // red
 				msc.addMsg (stateNode.getUID(), transNode.getTargetUID(), msg, transStereotype, color, -1, tc.tcName);
 			});
 		});

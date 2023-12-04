@@ -1,5 +1,5 @@
 // Model's Trigger script
-import com.testoptimal.mscript.groovy.TRIGGER
+import com.testoptimal.exec.mscript.TRIGGER
 import com.google.gson.Gson;
 
 // --- Ctrl/Cmd-I to insert a trigger for a state or transition in the model.

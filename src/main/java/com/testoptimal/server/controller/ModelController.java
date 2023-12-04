@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.mscript.groovy.GroovyScript;
+import com.testoptimal.exec.mscript.groovy.GroovyScript;
 import com.testoptimal.scxml.DataTemplate;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.controller.helper.SessionMgr;

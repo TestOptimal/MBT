@@ -13,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-import com.testoptimal.mscript.DataSet;
-import com.testoptimal.mscript.groovy.GroovyScript;
+import com.testoptimal.exec.mscript.groovy.GroovyScript;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.server.config.Config;

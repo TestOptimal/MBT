@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
 
 public class SimpleStatsMgr implements ManageStats {
 
 	@Override
-	public List<ModelExecDB> getStatsList(ModelMgr modelMgr_p) throws Exception {
+	public List<ModelExec> getStatsList(ModelMgr modelMgr_p) throws Exception {
 		Gson gson = new Gson();
 		File[] flist = FileUtil.getFileList(modelMgr_p.getStatsFolderPath());
-		List<ModelExecDB> retList = Arrays.asList(flist).stream()
+		List<ModelExec> retList = Arrays.asList(flist).stream()
 			.filter(f -> f.getName().endsWith(".json"))
 			.map(f -> {
 				try {
-					ModelExecDB execStats = gson.fromJson(FileUtil.readFile(f.getAbsolutePath()).toString(), ModelExecDB.class);
+					ModelExec execStats = gson.fromJson(FileUtil.readFile(f.getAbsolutePath()).toString(), ModelExec.class);
 					return execStats;
 				}
 				catch (Exception e) {
@@ -37,13 +37,13 @@ public class SimpleStatsMgr implements ManageStats {
 	}
 
 	@Override
-	public ModelExecDB getStats(ModelMgr modelMgr_p, String mbtSessID_p) throws Exception {
+	public ModelExec getStats(ModelMgr modelMgr_p, String mbtSessID_p) throws Exception {
 		Gson gson = new Gson();
-		return gson.fromJson(FileUtil.readFile(modelMgr_p.getStatsFolderPath() + mbtSessID_p + ".json").toString(), ModelExecDB.class);
+		return gson.fromJson(FileUtil.readFile(modelMgr_p.getStatsFolderPath() + mbtSessID_p + ".json").toString(), ModelExec.class);
 	}
 
 	@Override
-	public void save(ModelExecDB execStats_p) throws Exception {
+	public void save(ModelExec execStats_p) throws Exception {
 		Gson gson = new Gson();
 		String statsJson = gson.toJson(execStats_p);
 		FileUtil.writeToFile(execStats_p.filePath, statsJson);

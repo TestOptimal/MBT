@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.controller.helper.SessionMgr;
+import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
 
 public class StatsMgr {
@@ -36,9 +36,9 @@ public class StatsMgr {
 		return statsMgr;
 	}
 	
-	public static ModelExecDB findModelExec (ModelMgr modelMgr_p, String mbtSessID_p, String httpSessID_p) throws Exception {
+	public static ModelExec findModelExec (ModelMgr modelMgr_p, String mbtSessID_p, String httpSessID_p) throws Exception {
 		ModelRunner mbtSess;
-		ModelExecDB modelExec = null;
+		ModelExec modelExec = null;
 		if (mbtSessID_p.equals("undefined")) {
 			mbtSess = SessionMgr.getInstance().getMbtStarterForModel(modelMgr_p.getModelName(), httpSessID_p);
 			if (mbtSess != null && mbtSess.getExecDirector().getExecStats() != null) {
@@ -53,7 +53,7 @@ public class StatsMgr {
 		}
 		if (modelExec == null) {
 			if (mbtSessID_p.equals("undefined")) {
-				Optional <ModelExecDB> opt = StatsMgr.getInstance().getStatsList(modelMgr_p).stream().findFirst();
+				Optional <ModelExec> opt = StatsMgr.getInstance().getStatsList(modelMgr_p).stream().findFirst();
 				modelExec = opt.orElse(null);
 			}
 			else {

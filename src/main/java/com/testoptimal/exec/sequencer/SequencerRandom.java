@@ -13,9 +13,9 @@ import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.Sequencer;
 import com.testoptimal.exec.navigator.TraversalCount;
-import com.testoptimal.mscript.MbtScriptExecutor;
 
 import openOptima.graph.Edge;
 

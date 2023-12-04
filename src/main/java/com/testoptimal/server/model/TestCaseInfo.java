@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ExecTestCaseDB;
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.TestCaseStepDB;
-import com.testoptimal.db.TestCaseStepItemDB;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ExecTestCase;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.TestCaseStep;
+import com.testoptimal.stats.exec.TestCaseStepItem;
 import com.testoptimal.util.StringUtil;
 
 public class TestCaseInfo {
 	public String tcName;
-	public ModelExecDB.Status status = ModelExecDB.Status.failed;
+	public ModelExec.Status status = ModelExec.Status.failed;
 	public List<StepInfo> stepList = new java.util.ArrayList<>();
 
-	public TestCaseInfo (ExecTestCaseDB tcObj_p, Map<String, ExecStateTransDB> stateTransMap_p) {
+	public TestCaseInfo (ExecTestCase tcObj_p, Map<String, ExecStateTrans> stateTransMap_p) {
 		this.tcName = tcObj_p.tcName;
 		this.status = tcObj_p.status;
 		
@@ -32,10 +32,10 @@ public class TestCaseInfo {
 		public String stateName;
 		public String transName;
 		public String UID;
-		public ModelExecDB.Status status;
+		public ModelExec.Status status;
 		public List<ReqExecInfo> reqExecList;
-		public StepInfo (TestCaseStepDB step_p, Map<String, ExecStateTransDB> stateTransMap_p) {
-			ExecStateTransDB stateTrans = stateTransMap_p.get(step_p.UID);
+		public StepInfo (TestCaseStep step_p, Map<String, ExecStateTrans> stateTransMap_p) {
+			ExecStateTrans stateTrans = stateTransMap_p.get(step_p.UID);
 			this.stateName = stateTrans.stateName;
 			this.transName = stateTrans.transName;
 			this.UID = stateTrans.UID;
@@ -49,10 +49,10 @@ public class TestCaseInfo {
 	public class ReqExecInfo {
 		public String assertCode;
 		public String reqTag;
-		public ModelExecDB.Status status;
+		public ModelExec.Status status;
 		public String checkMsg;
 		
-		public ReqExecInfo (TestCaseStepItemDB item_p) {
+		public ReqExecInfo (TestCaseStepItem item_p) {
 			this.assertCode = item_p.assertCode;
 			this.reqTag = StringUtil.isEmpty(item_p.reqTag)?"empty":item_p.reqTag;
 			this.checkMsg = item_p.checkMsg;

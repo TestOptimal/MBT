@@ -1,23 +1,24 @@
-package com.testoptimal.mscript;
+package com.testoptimal.exec.mscript;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.TestCaseStepDB;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
+import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
+import com.testoptimal.exec.mcase.MCase;
 import com.testoptimal.graphing.GenGraph;
-import com.testoptimal.mcase.MCase;
 import com.testoptimal.page.Page;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.stats.TagExec;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.TestCaseStep;
 
 /**
  * <p>
@@ -107,9 +108,9 @@ public class Exec {
 	 * @throws Exception
 	 */
 	public String trace(int maxTraceCount_p, String delimiter_p) throws Exception {
-		ModelExecDB collStat = this.execDir.getExecStats();
-		Map<String, ExecStateTransDB> transMap = collStat.getStateTransMap();
-		List<TestCaseStepDB> stepList = collStat.getCurTestCase().stepList.stream()
+		ModelExec collStat = this.execDir.getExecStats();
+		Map<String, ExecStateTrans> transMap = collStat.getStateTransMap();
+		List<TestCaseStep> stepList = collStat.getCurTestCase().stepList.stream()
 				.filter(s-> transMap.get(s.UID).type.equalsIgnoreCase("trans"))
 				.collect(Collectors.toList());
 		
@@ -238,8 +239,8 @@ public class Exec {
 	 * @return
 	 * @throws Exception
 	 */
-	public ModelExecDB getStats() throws Exception {
-		ModelExecDB modelExec = this.scriptExec.getExecDirector().getExecStats();
+	public ModelExec getStats() throws Exception {
+		ModelExec modelExec = this.scriptExec.getExecDirector().getExecStats();
 		return modelExec;
 	}
 

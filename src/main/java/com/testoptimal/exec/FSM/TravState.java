@@ -3,12 +3,12 @@ package com.testoptimal.exec.FSM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.stats.TagExec;
+import com.testoptimal.stats.exec.ModelExec;
 
 public class TravState extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravState.class);
@@ -26,7 +26,7 @@ public class TravState extends TravBase {
 	public boolean travRun() throws MBTAbort {
 		this.execDir.getExecListener().enterState(this.curState);
 		long startMillis = System.currentTimeMillis();
-		ModelExecDB statsCollector = this.execDir.getExecStats();
+		ModelExec statsCollector = this.execDir.getExecStats();
 		if (this.curState.isModelInitial()) {
 			statsCollector.newTestCase();
 		}

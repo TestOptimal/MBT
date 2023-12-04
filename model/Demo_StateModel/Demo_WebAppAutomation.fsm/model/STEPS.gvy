@@ -1,2 +1,2 @@
 // Script
-import com.testoptimal.mscript.groovy.STEP
+import com.testoptimal.exec.mscript.STEP

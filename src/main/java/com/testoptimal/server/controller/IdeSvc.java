@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.ModelRunnerIDE;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.mscript.MbtScriptExecutor;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;

@@ -1,5 +1,5 @@
 // Model Triggers
-import com.testoptimal.mscript.groovy.TRIGGER
+import com.testoptimal.exec.mscript.TRIGGER
 
 // This script output the generated test cases and test steps to a file in "report" folder
 

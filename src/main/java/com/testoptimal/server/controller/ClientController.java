@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.ModelRunnerAgent;
@@ -38,6 +36,8 @@ import com.testoptimal.server.model.TestCmd;
 import com.testoptimal.server.model.TestResult;
 import com.testoptimal.server.model.parser.GherkinModel;
 import com.testoptimal.server.model.parser.ModelParserGherkin;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -143,7 +143,7 @@ public class ClientController {
 			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelExecDB modelExec = null;
+		ModelExec modelExec = null;
 		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
 		if (mbtSess == null || mbtSess.getExecDirector().getExecStats()==null) {
 			throw new Exception ("Model closed? No execution results found for model session " + mbtSessID);
@@ -283,7 +283,7 @@ public class ClientController {
 		SessionMgr.getInstance().addMbtStarter(sess);
 		sess.startMbt(false, runReq.mbtMode, runReq.options);
 
-		ModelExecDB modelExec = sess.getExecDirector().getExecStats();
+		ModelExec modelExec = sess.getExecDirector().getExecStats();
 		RunResult result = this.makeReuslts(modelExec);
 		result.execMillis = System.currentTimeMillis() - startMS;
 		logger.info("model exec ended, mbtSessID: " + sess.getMbtSessionID());
@@ -303,9 +303,9 @@ public class ClientController {
 	}
 	
 	
-	private RunResult makeReuslts (ModelExecDB modelExec_p) {
+	private RunResult makeReuslts (ModelExec modelExec_p) {
 		RunResult result = new RunResult ();
-		Map<String, ExecStateTransDB> stateTransMap = new java.util.HashMap<>();
+		Map<String, ExecStateTrans> stateTransMap = new java.util.HashMap<>();
 		result.results.put("MbtMode", modelExec_p.execSummary.mbtSequencer);
 		result.results.put("Status", modelExec_p.execSummary.status);
 		result.results.put("ExecTime", new java.util.Date());
@@ -328,7 +328,7 @@ public class ClientController {
 		result.results.put("pathList", pathList);
 
 		int tcFailed = modelExec_p.tcList.stream()
-				.filter(tc -> tc.status == ModelExecDB.Status.failed)
+				.filter(tc -> tc.status == ModelExec.Status.failed)
 				.collect(Collectors.toList()).size();
 		result.results.put("tcFailed", String.valueOf(tcFailed));
 

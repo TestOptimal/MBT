@@ -3,13 +3,13 @@ package com.testoptimal.exec.FSM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.stats.TagExec;
+import com.testoptimal.stats.exec.ModelExec;
 
 public class TravTrans extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravTrans.class);
@@ -35,7 +35,7 @@ public class TravTrans extends TravBase {
 			this.execDir.trigerMBTAction(TravBase.TriggerType.fail);
 		}
 		long perfMillis = System.currentTimeMillis() - startMillis;
-		ModelExecDB statsCollector = this.execDir.getExecStats();
+		ModelExec statsCollector = this.execDir.getExecStats();
 		statsCollector.addTestStep(perfMillis, this.curTransNode.getUID(),  this.tagExecList);
 		this.execDir.getExecListener().exitTrans(this.curTrans);
 		return !this.hasFailed();

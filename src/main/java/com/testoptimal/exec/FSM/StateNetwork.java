@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.graphing.plantuml.StateDiagram;
-import com.testoptimal.mscript.MbtScriptExecutor;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;

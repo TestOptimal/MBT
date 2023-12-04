@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript.groovy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -15,6 +15,7 @@ import org.codehaus.groovy.runtime.StackTraceUtils;
 import org.codehaus.groovy.syntax.SyntaxException;
 
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exec.mscript.TRIGGER;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyRuntimeException;

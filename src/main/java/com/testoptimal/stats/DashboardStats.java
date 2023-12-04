@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.ModelExecDB.Status;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.ModelExec.Status;
 
 public class DashboardStats {
 	public Date collectDate = new Date();
@@ -14,7 +14,7 @@ public class DashboardStats {
 	public StatsSummary last24HrStats = new StatsSummary();
 	public StatsSummary latestRunStats = new StatsSummary();
 	
-	public void addModelExec(List<ModelExecDB> modelExecList_p) {
+	public void addModelExec(List<ModelExec> modelExecList_p) {
 		if (modelExecList_p.isEmpty()) return;
 		Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

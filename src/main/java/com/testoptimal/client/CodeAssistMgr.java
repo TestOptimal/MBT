@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.mcase.MCase;
-import com.testoptimal.mscript.Exec;
-import com.testoptimal.mscript.Util;
+import com.testoptimal.exec.mcase.MCase;
+import com.testoptimal.exec.mscript.Exec;
+import com.testoptimal.exec.mscript.Util;
 import com.testoptimal.page.Page;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;

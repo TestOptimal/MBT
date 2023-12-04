@@ -2,7 +2,7 @@ package com.testoptimal.stats;
 
 import java.util.List;
 
-import com.testoptimal.mscript.MbtScriptExecutor;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.util.StringUtil;
 
 /**

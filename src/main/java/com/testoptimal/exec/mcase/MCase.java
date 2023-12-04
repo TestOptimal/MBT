@@ -1,4 +1,4 @@
-package com.testoptimal.mcase;
+package com.testoptimal.exec.mcase;
 
 import java.util.List;
 

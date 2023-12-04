@@ -1,4 +1,4 @@
-package com.testoptimal.mscript;
+package com.testoptimal.exec.mscript;
 
 import java.util.List;
 import java.util.Map;
@@ -7,14 +7,14 @@ import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.db.ExecTestCaseDB;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
+import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.Transition;
-import com.testoptimal.mcase.MCaseMgr;
-import com.testoptimal.mscript.groovy.GroovyEngine;
-import com.testoptimal.mscript.groovy.GroovyScript;
+import com.testoptimal.exec.mcase.MCaseMgr;
+import com.testoptimal.exec.mscript.groovy.GroovyEngine;
+import com.testoptimal.exec.mscript.groovy.GroovyScript;
 import com.testoptimal.page.PageMgr;
 import com.testoptimal.plugin.MScriptInterface;
 import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
@@ -23,6 +23,7 @@ import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.stats.TagExec;
+import com.testoptimal.stats.exec.ExecTestCase;
 import com.testoptimal.util.StringUtil;
 
 /**
@@ -182,14 +183,14 @@ public class MbtScriptExecutor implements MScriptInterface {
 	}
 	
 	public void setPathName (String name_p) {
-		ExecTestCaseDB tcObj = this.getExecDirector().getExecStats().getCurTestCase();
+		ExecTestCase tcObj = this.getExecDirector().getExecStats().getCurTestCase();
 		if (tcObj!=null) {
 			tcObj.tcName = name_p;
 		}
 	}
 	
 	public String getPathName () {
-		ExecTestCaseDB tcObj = this.getExecDirector().getExecStats().getCurTestCase();
+		ExecTestCase tcObj = this.getExecDirector().getExecStats().getCurTestCase();
 		if (tcObj!=null) {
 			return tcObj.tcName;
 		}

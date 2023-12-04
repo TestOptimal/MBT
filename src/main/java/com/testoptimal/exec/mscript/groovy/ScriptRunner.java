@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript.groovy;
 
 import com.testoptimal.server.config.Config;
 import com.testoptimal.util.FileUtil;

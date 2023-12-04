@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript.groovy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.mscript.STEP;
+import com.testoptimal.exec.mscript.StepMethod;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.util.FileUtil;
 

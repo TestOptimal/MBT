@@ -1,4 +1,4 @@
-package com.testoptimal.mscript;
+package com.testoptimal.exec.FSM;
 
 import java.io.File;
 import java.util.ArrayList;

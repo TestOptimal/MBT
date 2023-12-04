@@ -1,7 +1,7 @@
 // BBD Steps Definition. 
 // Call steps with following syntax:
 //  >> Take a screenshot
-import com.testoptimal.mscript.groovy.STEP
+import com.testoptimal.exec.mscript.STEP
 import com.testoptimal.exception.MBTException
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

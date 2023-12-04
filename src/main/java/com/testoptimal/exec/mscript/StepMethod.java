@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript;
 
 import static java.util.stream.Collectors.toList;
 

@@ -5,20 +5,20 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.db.ModelExecDB;
 import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
+import com.testoptimal.exec.mscript.groovy.GroovyScript;
+import com.testoptimal.exec.mscript.groovy.ScriptRuntimeException;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.exec.navigator.StopMonitor;
-import com.testoptimal.mscript.DataSet;
-import com.testoptimal.mscript.MbtScriptExecutor;
-import com.testoptimal.mscript.groovy.GroovyScript;
-import com.testoptimal.mscript.groovy.ScriptRuntimeException;
 import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.stats.StatsMgr;
+import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.ScriptLogger;
 import com.testoptimal.util.misc.JVMStatus;
 
@@ -58,7 +58,7 @@ public final class ExecutionDirector extends Thread {
 		return this.execSetting;
 	}
 	
-	private ModelExecDB execStats;
+	private ModelExec execStats;
 
 	public ExecutionDirector (ExecListener execListener_p) {
 		this.execListener = execListener_p;
@@ -96,7 +96,7 @@ public final class ExecutionDirector extends Thread {
 		this.mScriptLogger = new ScriptLogger(this.getExecSetting().getModelMgr().getTempFolderPath() + "script.log");
 
 		this.mbtSession = mbtSession_p;
-		this.execStats = new ModelExecDB (this.getMbtSessionID(), modelMgr, this.execSetting);
+		this.execStats = new ModelExec (this.getMbtSessionID(), modelMgr, this.execSetting);
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public final class ExecutionDirector extends Thread {
 	}
 	
 
-	public ModelExecDB getExecStats() {
+	public ModelExec getExecStats() {
 		return this.execStats;
 	}
 	

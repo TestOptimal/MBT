@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript.groovy;
 
 import java.io.File;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.testoptimal.exec.mscript.StepMethod;
 import com.testoptimal.util.ArrayUtil;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.misc.SysLogger;

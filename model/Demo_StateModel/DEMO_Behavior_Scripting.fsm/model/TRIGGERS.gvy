@@ -1,5 +1,5 @@
 // Model Triggers
-import com.testoptimal.mscript.groovy.TRIGGER
+import com.testoptimal.exec.mscript.TRIGGER
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
 	>> Open Safari browser

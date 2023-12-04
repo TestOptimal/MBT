@@ -14,7 +14,7 @@ import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.FSM.TravState;
 import com.testoptimal.exec.FSM.TravTrans;
-import com.testoptimal.mscript.MbtScriptExecutor;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 
 public class Navigator {
 	private static Map<String, Constructor> seqConstructorMap = new HashMap<>();

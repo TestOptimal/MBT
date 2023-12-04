@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.db.ExecStateTransDB;
-import com.testoptimal.db.ModelExecDB;
-import com.testoptimal.db.TestCaseStepDB;
 import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.FSM.ModelMgr;
@@ -15,6 +12,9 @@ import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
+import com.testoptimal.stats.exec.ExecStateTrans;
+import com.testoptimal.stats.exec.ModelExec;
+import com.testoptimal.stats.exec.TestCaseStep;
 import com.testoptimal.util.FileUtil;
 
 /**
@@ -59,7 +59,7 @@ public class GenGraph {
 //			}
 //		}
 		
-		ModelExecDB collStat = execDir_p.getExecStats();
+		ModelExec collStat = execDir_p.getExecStats();
 		String imgFilePath = FileUtil.concatFilePath(modelMgr.getReportFolderPath(),  graphFileName_p);
 		String graphFilePath = StateDiagram.genTraversalGraph(collStat, modelMgr, collStat, imgFilePath);
 		return graphFilePath;
@@ -74,7 +74,7 @@ public class GenGraph {
 	}
 	
 	public static boolean genLastHomeRunMSC (String chartLabel_p, ModelMgr modelMgr_p, ExecutionDirector execDir_p, String imgFilePath_p, String skinName_p, String bkgColor_p) throws Exception {
-		ModelExecDB modelExec = execDir_p.getExecStats();
+		ModelExec modelExec = execDir_p.getExecStats();
 		// add messages to MSC chart object
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
 		
@@ -85,20 +85,20 @@ public class GenGraph {
 		if (homeStateList.isEmpty()) throw new MBTException ("unable to find initial node");
 		String homeStateUID = homeStateList.get(0).getUID();
 		
-		Map<String, ExecStateTransDB>  stateTransMap = modelExec.getStateTransMap();
+		Map<String, ExecStateTrans>  stateTransMap = modelExec.getStateTransMap();
 		
 		modelExec.getCurTestCase().stepList.stream()
 			.filter( s-> stateTransMap.get(s.UID).type.equalsIgnoreCase("state"))
 			.forEach ( s -> {
-				ExecStateTransDB stateTrans = stateTransMap.get(s.UID);
+				ExecStateTrans stateTrans = stateTransMap.get(s.UID);
 				StateNode stateNode = scxml.findStateByUID(stateTrans.UID);
 				String fromStereotype = stateNode.getStereotype();
 				msc.addMsgNode("", stateTrans.stateName, stateTrans.UID, fromStereotype);
 			});
 		
-		List<TestCaseStepDB> stepList = modelExec.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
+		List<TestCaseStep> stepList = modelExec.getCurTestCase().stepList.stream().filter(s->stateTransMap.get(s.UID).type.equalsIgnoreCase("trans")).collect(Collectors.toList());
 		for (int i=stepList.size()-1; i>=0; i--) {
-			TestCaseStepDB stepStats = stepList.get(i);
+			TestCaseStep stepStats = stepList.get(i);
 			TransitionNode transNode = scxml.findTransByUID(stepStats.UID);
 			String fromStateUID = transNode.getParentStateNode().getUID();
 			String toStateUID = transNode.getTargetUID();

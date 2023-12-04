@@ -1,4 +1,4 @@
-package com.testoptimal.mscript.groovy;
+package com.testoptimal.exec.mscript.groovy;
 
 public class ScriptRuntimeException extends Exception {
 	private String scriptName;

@@ -1,9 +1,9 @@
-package com.testoptimal.db;
+package com.testoptimal.stats.exec;
 
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
 
-public class ExecStateTransDB {
+public class ExecStateTrans {
 	public String UID;
 	public String stateName;
 	public String transName;
@@ -17,7 +17,7 @@ public class ExecStateTransDB {
 	public Integer maxMillis;
 	public int slowCount;
 	
-	public ExecStateTransDB(StateNode state_p) {
+	public ExecStateTrans(StateNode state_p) {
 		this.UID = state_p.getUID();
 		this.stateName = state_p.getStateID();
 		this.type = "state";
@@ -28,7 +28,7 @@ public class ExecStateTransDB {
 		}
 	}
 
-	public ExecStateTransDB(TransitionNode trans_p) {
+	public ExecStateTrans(TransitionNode trans_p) {
 		this.stateName = trans_p.getParentStateNode().getStateID();
 		this.transName = trans_p.getEvent();
 		this.type = "trans";
