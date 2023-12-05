@@ -1,1 +1,0 @@
-{"dsName":"DrinkChoices","fields":[{"fieldName":"Drink","group":"","domain":["Pepsi","DietPepsi","MtnDew","Mist","Brisk"]}],"algorithm":"pairWise","rows":[{"Drink":"Pepsi"},{"Drink":"DietPepsi"},{"Drink":"MtnDew"},{"Drink":"Mist"},{"Drink":"Brisk"}],"autoRefresh":false,"threadingEnabled":false,"regenRequired":false,"random":false}

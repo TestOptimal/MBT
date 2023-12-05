@@ -36,7 +36,6 @@
           "event": "tran",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "right",
@@ -112,7 +111,6 @@
           "event": "500-749",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "left",
@@ -160,7 +158,6 @@
           "event": "at least 750",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "up",
@@ -204,7 +201,6 @@
           "event": "less than 500",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -285,7 +281,6 @@
           "event": "trans_U167",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "right",
@@ -392,7 +387,6 @@
           "event": "submitRequest",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -472,7 +466,6 @@
           "event": "checkCredit",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -548,7 +541,6 @@
           "event": "trans_U164",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "down",
@@ -624,7 +616,6 @@
           "event": "request approved",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -668,7 +659,6 @@
           "event": "request denied",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -744,7 +734,6 @@
           "event": "trans_U157",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "right",
@@ -793,10 +782,10 @@
       "css": {}
     }
   ],
-  "modelName": "DEMO_WorkflowTesting",
+  "modelName": "Demo_WorkflowTesting",
   "version": "1.0",
   "versionAUT": "",
-  "versionTO": "5.3.1",
+  "versionTO": "7.0.3",
   "versionReq": "",
   "buildNum": 6,
   "mbtNode": {
@@ -805,8 +794,6 @@
     "stopCond": {
       "stopAtFinalOnly": true
     },
-    "execThreadNum": 1,
-    "threadSpreadDelay": 0,
     "seqParams": ""
   },
   "miscNode": {
@@ -842,8 +829,5 @@
     ],
     "boxes": []
   },
-  "pluginList": [
-    "SEQOUT"
-  ],
   "modelType": "FSM"
 }

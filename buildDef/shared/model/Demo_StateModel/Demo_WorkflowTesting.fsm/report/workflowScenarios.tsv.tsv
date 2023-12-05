@@ -1,9 +1,0 @@
-TC_ID	STEP_NUM	AT_STATE	PERFORM	ASSERT
-TC0001	1	Loan Request Queue	Loan Request Queue:Select a loan request from the list	Loan Request Queue:Load List contains at least 5 pending requests (Loan.List )
-TC0001	2	Loan Request Queue	submitRequest:Click submit button to submit the request for approval	Request Credit Report:Check request is submitted (Loan.Submit )
-TC0002	1	Loan Request Queue	Loan Request Queue:Select a loan request from the list	Loan Request Queue:Load List contains at least 5 pending requests (Loan.List )
-TC0002	2	Loan Request Queue	submitRequest:Click submit button to submit the request for approval	Request Credit Report:Check request is submitted (Loan.Submit )
-TC0003	1	Loan Request Queue	Loan Request Queue:Select a loan request from the list	Loan Request Queue:Load List contains at least 5 pending requests (Loan.List )
-TC0003	2	Loan Request Queue	submitRequest:Click submit button to submit the request for approval	Request Credit Report:Check request is submitted (Loan.Submit )
-TC0004	1	Loan Request Queue	Loan Request Queue:Select a loan request from the list	Loan Request Queue:Load List contains at least 5 pending requests (Loan.List )
-TC0004	2	Loan Request Queue	submitRequest:Click submit button to submit the request for approval	Request Credit Report:Check request is submitted (Loan.Submit )

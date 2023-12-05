@@ -10,7 +10,6 @@
       "desc": "",
       "uid": "U478",
       "notepad": "",
-      "annot": "",
       "stateID": "DownloadPage",
       "isFinal": false,
       "isInitial": false,
@@ -33,12 +32,10 @@
           "desc": "",
           "uid": "U504",
           "notepad": "",
-          "annot": "",
           "targetUID": "U475",
           "event": "startLogin",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -82,12 +79,10 @@
           "desc": "",
           "uid": "U505",
           "notepad": "",
-          "annot": "",
           "targetUID": "U479",
           "event": "toDownload",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "down",
@@ -141,7 +136,6 @@
       "desc": "",
       "uid": "U479",
       "notepad": "",
-      "annot": "",
       "stateID": "End",
       "isFinal": true,
       "isInitial": false,
@@ -173,7 +167,6 @@
       "desc": "",
       "uid": "U476",
       "notepad": "",
-      "annot": "",
       "stateID": "FeaturePage",
       "isFinal": false,
       "isInitial": false,
@@ -196,12 +189,10 @@
           "desc": "",
           "uid": "U500",
           "notepad": "",
-          "annot": "",
           "targetUID": "U475",
           "event": "startLogin",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -245,12 +236,10 @@
           "desc": "",
           "uid": "U501",
           "notepad": "",
-          "annot": "",
           "targetUID": "U479",
           "event": "toFeature",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "left",
@@ -304,7 +293,6 @@
       "desc": "",
       "uid": "U477",
       "notepad": "",
-      "annot": "",
       "stateID": "HomePage",
       "isFinal": false,
       "isInitial": false,
@@ -327,12 +315,10 @@
           "desc": "",
           "uid": "U502",
           "notepad": "",
-          "annot": "",
           "targetUID": "U475",
           "event": "startLogin",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -376,12 +362,10 @@
           "desc": "",
           "uid": "U503",
           "notepad": "",
-          "annot": "",
           "targetUID": "U479",
           "event": "toHomePage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": true,
           "posInfo": {
             "startDir": "left",
@@ -435,7 +419,6 @@
       "desc": "",
       "uid": "U475",
       "notepad": "",
-      "annot": "",
       "stateID": "LoginSubModel",
       "isFinal": false,
       "isInitial": false,
@@ -458,12 +441,10 @@
           "desc": "",
           "uid": "U499",
           "notepad": "",
-          "annot": "",
           "targetUID": "U478",
           "event": "toDownloadPage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "left",
@@ -503,12 +484,10 @@
           "desc": "",
           "uid": "U498",
           "notepad": "",
-          "annot": "",
           "targetUID": "U476",
           "event": "toFeaturePage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "left",
@@ -548,12 +527,10 @@
           "desc": "LoginSuccessExit",
           "uid": "U497",
           "notepad": "",
-          "annot": "",
           "targetUID": "U477",
           "event": "toHomePage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "up",
@@ -589,7 +566,7 @@
           "guardHint": "",
           "satisfyingHint": "",
           "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
+          "subModelFinalStateUID": "U25657b8f"
         }
       ],
       "position": {
@@ -607,7 +584,6 @@
       "desc": "",
       "uid": "U474",
       "notepad": "",
-      "annot": "",
       "stateID": "Start",
       "isFinal": false,
       "isInitial": true,
@@ -630,12 +606,10 @@
           "desc": "",
           "uid": "U496",
           "notepad": "",
-          "annot": "",
           "targetUID": "U478",
           "event": "DownloadPage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -675,12 +649,10 @@
           "desc": "",
           "uid": "U495",
           "notepad": "",
-          "annot": "",
           "targetUID": "U476",
           "event": "FeaturePage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -720,12 +692,10 @@
           "desc": "",
           "uid": "U494",
           "notepad": "",
-          "annot": "",
           "targetUID": "U477",
           "event": "HomePage",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -770,10 +740,10 @@
       "css": {}
     }
   ],
-  "modelName": "DEMO_WithSubModel",
+  "modelName": "Demo_WithSubModel",
   "version": "1.0",
   "versionAUT": "",
-  "versionTO": "5.3.1",
+  "versionTO": "7.0.3",
   "versionReq": "",
   "buildNum": 0,
   "mbtNode": {
@@ -782,8 +752,6 @@
     "stopCond": {
       "stopAtFinalOnly": false
     },
-    "execThreadNum": 1,
-    "threadSpreadDelay": 0,
     "seqParams": ""
   },
   "miscNode": {
@@ -795,8 +763,5 @@
     "swimlanes": [],
     "boxes": []
   },
-  "pluginList": [
-    "SELENIUM"
-  ],
   "modelType": "FSM"
 }
