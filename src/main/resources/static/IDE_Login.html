@@ -73,7 +73,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     	}
     	var req = {
     		 method: 'GET',
-    		 url: $scope.urlBase + "/api/v1/default/" + ($scope.reqInd?"register":"check"),
+    		 url: $scope.urlBase + "/api/v1/default/" + ($scope.password2?"register":"check"),
     		 headers: {
     		   'Content-Type': undefined,
     		   'username': $scope.username,

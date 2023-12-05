@@ -46,7 +46,7 @@ import jakarta.servlet.http.HttpSession;
 public class SysController {
 	private static Logger logger = LoggerFactory.getLogger(SysController.class);
 	public static final String[] ClientConfigPropList = new String[] { "License.Edition", "License.exceptions",
-			"License.Agreement.url", "License.Agreement.label", "License.Ack", "License.Email",
+			"License.Agreement.url", "License.Agreement.label", "License.Email",
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	
@@ -90,19 +90,16 @@ public class SysController {
 	
 	@SecurityRequirement(name = "basicAuth")
 	@GetMapping(value = "CodeAssist/model", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, List<CodeAssist>>> caListModel(@RequestParam (name="pluginList", required=false) List<String> pluginList,
+	public ResponseEntity<Map<String, List<CodeAssist>>> caListModel(
 		ServletRequest request) throws Exception {
-		if (pluginList==null) {
-			pluginList = new java.util.ArrayList<>();
-		}
-		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAList(pluginList), HttpStatus.OK);
+		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAList(), HttpStatus.OK);
 	}
 
 	@SecurityRequirement(name = "basicAuth")
 	@GetMapping(value = "CodeAssist/data", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, List<CodeAssist>>> caListData(@RequestParam (name="pluginList", required=false) List<String> pluginList,
+	public ResponseEntity<Map<String, List<CodeAssist>>> caListData(
 		ServletRequest request) throws Exception {
-		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListData(pluginList), HttpStatus.OK);
+		return new ResponseEntity<>(CodeAssistMgr.getMScriptCAListData(), HttpStatus.OK);
 	}
 
 	@SecurityRequirement(name = "basicAuth")

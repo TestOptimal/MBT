@@ -155,7 +155,7 @@
 
 
 	    	$scope.loadCAList = function () {
-	    		parent.curAppState.toSvc.SysSvc.getCA (parent.curAppState.scxml.pluginList, function(caList) {
+	    		parent.curAppState.toSvc.SysSvc.getCA (function(caList) {
 	    			MScriptHintList = caList;
 	    			for (var k in MScriptHintList) {
 	    				var list = MScriptHintList[k];

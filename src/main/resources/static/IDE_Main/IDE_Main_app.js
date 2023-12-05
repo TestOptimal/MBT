@@ -460,7 +460,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	}
 
     $scope.flags = {
-    	hasPluginBA: false,
     	showNewFeature: false,
     	isModelOpen: false,
     	noModelOpen: true,

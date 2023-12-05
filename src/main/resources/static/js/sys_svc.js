@@ -296,13 +296,12 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "about", successCB, errorCB);
 	};
 
-	SysSvc.getCA = function (pluginList, successCB, errorCB) {
-		if (pluginList==undefined) pluginList = [];
-		SvrRest.get (SysSvc.base + "CodeAssist/model?pluginList=" + pluginList.join(","), successCB, errorCB);
+	SysSvc.getCA = function (successCB, errorCB) {
+		SvrRest.get (SysSvc.base + "CodeAssist/model", successCB, errorCB);
 	};
 	
-	SysSvc.getCAData = function (pluginList, successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "CodeAssist/data?pluginList=" + pluginList.join(","), successCB, errorCB);
+	SysSvc.getCAData = function (successCB, errorCB) {
+		SvrRest.get (SysSvc.base + "CodeAssist/data", successCB, errorCB);
 	};
 
 	SysSvc.getCAListByExpr = function (pathList, successCB, errorCB) {

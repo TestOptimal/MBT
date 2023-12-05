@@ -131,24 +131,19 @@ public class CodeAssistMgr {
 	}
 	
 
-	public static Map<String, List<CodeAssist>> getMScriptCAList (List<String> pluginList_p) throws Exception {
+	public static Map<String, List<CodeAssist>> getMScriptCAList () throws Exception {
 		Map<String, List<CodeAssist>> caList = new TreeMap<String, List<CodeAssist>>();
 		List<CodeAssist> topLevel = new java.util.ArrayList<CodeAssist>();
 		for (String n: TOP_CA_NAMES) {
 			String m = "$" + n;
 			topLevel.add(new CodeAssist(m, m + ".", m));
 		}
-		for (String pluginID: pluginList_p) {
-			String pluginIDUp = pluginID.toUpperCase();
-			topLevel.add(new CodeAssist("$" + pluginIDUp, "$" + pluginIDUp + ".", pluginIDUp));
-		}
-		
 		caList.put("TOPLEVEL", topLevel);
 		Collections.sort(topLevel);
 		return caList;
 	}
 	
-	public static Map<String, List<CodeAssist>> getMScriptCAListData (List<String> pluginList_p) throws Exception {
+	public static Map<String, List<CodeAssist>> getMScriptCAListData () throws Exception {
 		Map<String, List<CodeAssist>> caList = new TreeMap<String, List<CodeAssist>>();
 		List<CodeAssist> topLevel = new java.util.ArrayList<CodeAssist>();
 		topLevel.add(new CodeAssist("$UTIL", "$UTIL.", "$UTIL"));

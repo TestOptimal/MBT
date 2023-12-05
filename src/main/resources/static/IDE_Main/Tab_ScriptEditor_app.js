@@ -123,7 +123,7 @@ MainModule.controller('mainCtrl', function ($scope) {
 	}
 	
 	$scope.loadCAList = function () {
-		parentWinObj.curAppState.toSvc.SysSvc.getCA ([], function(caList) {
+		parentWinObj.curAppState.toSvc.SysSvc.getCA (function(caList) {
 			MScriptHintList = caList;
 			for (var k in MScriptHintList) {
 				var list = MScriptHintList[k];

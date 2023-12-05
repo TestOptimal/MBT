@@ -61,16 +61,11 @@ public class DefaultController {
 			password = headerPassword;
 		}
 		logger.info("logging in user: " + username);
-		if (!StringUtil.isTrue(Config.getProperty("License.Ack"))) {
-			return new ResponseEntity<> (ClientReturn.Alert("Not authorized"), HttpStatus.OK);
+		if (UserMgr.getInstance().authenticate(username, password)) {
+			return new ResponseEntity<> (ClientReturn.OK(), HttpStatus.OK);
 		}
 		else {
-			if (UserMgr.getInstance().authenticate(username, password)) {
-				return new ResponseEntity<> (ClientReturn.OK(), HttpStatus.OK);
-			}
-			else {
-				return new ResponseEntity<> (ClientReturn.Alert("Invalid email or password"), HttpStatus.OK);
-			}
+			return new ResponseEntity<> (ClientReturn.Alert("Invalid email or password"), HttpStatus.OK);
 		}
 	}
 
@@ -100,16 +95,9 @@ public class DefaultController {
 			return new ResponseEntity<> (ClientReturn.Alert("Missing username"), HttpStatus.OK);
 		}
 		logger.info("register user: " + username);
-		String ack = Config.getProperty("License.Ack","N");
-		if (ack.equalsIgnoreCase("N")) {
-			UserMgr.getInstance().registerUser(username, password);
-			Config.setProperty("License.Ack", "Y");
-			Config.save();			
-			return new ResponseEntity<> (ClientReturn.OK(), HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<> (ClientReturn.Alert("User already registered"), HttpStatus.OK);			
-		}
+		UserMgr.getInstance().registerUser(username, password);
+		Config.save();			
+		return new ResponseEntity<> (ClientReturn.OK(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "sysinfo", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -124,7 +112,6 @@ public class DefaultController {
 		Map<String,Object> retProp = new java.util.HashMap<>();
 		retProp.put("uid", "config");
 		retProp.put("typeCode", "config");
-		retProp.put("License.Ack", StringUtil.isTrue(Config.getProperty("License.Ack"))); 
 
 		retProp.put("TestOptimalVersion", Config.versionDesc);
 		retProp.put("releaseDate", ConfigVersion.getReleaseDate());

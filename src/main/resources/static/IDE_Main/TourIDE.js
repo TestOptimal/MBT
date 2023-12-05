@@ -254,7 +254,7 @@ guidedTourList.script = function() {
 		},
 		{ title: "Editor Toolbar", 
 		  element: $("#tab_Script").contents().find("#actionBtn"), 
-		  content: "<p>Toolbar provides quick access to some of the editor functions divided in three groups.</p><ul><li>Find/Replace - search for selected text or by regExp</li><li>Comment/Undo/Redo - toggle code comment and undo/redo las changes</li><li>Plugin - activate plugins</li></ul></p><p>Recommended reading on Script Editor <span class='glyphicon glyphicon-info-sign'/>.</p>",
+		  content: "<p>Toolbar provides quick access to some of the editor functions divided in three groups.</p><ul><li>Find/Replace - search for selected text or by regExp</li><li>Comment/Undo/Redo - toggle code comment and undo/redo las changes</li><li>Req - manage requirements</li></ul></p><p>Recommended reading on Script Editor <span class='glyphicon glyphicon-info-sign'/>.</p>",
 		  placement: "bottom",
 		  onShown: frameAdjust
 		},
@@ -269,7 +269,7 @@ guidedTourList.script = function() {
 		},
 		{ title: "Code Assist", 
 		  orphan: true,
-		  content: "<p>Ctrl-Space opens code assist (hint) list.</p><p>Code assist list is context sensitive:</p>on a blank line or after dollar-sign ($)<ul><li>$SYS - access to model execution</li><li>$UTIL - utility functions</li><li>$VAR - define/access user variables</li><li>plugins - activated plugins (more on this later)</li></ul></p><p>after character dot (.): lists java functions.</p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and try to enter following using code assist: <pre>$VAR.os = $UTIL.getOsName();if ($VAR.os == 'windows') {\n  $SYS.log('Successfully detected Windows OS');\n}\nelse {\n  $SYS.log('Detected non-Windows OS: ' + $UTIL.camelCase($VAR.os));\n}</pre></li></p>",
+		  content: "<p>Ctrl-Space opens code assist (hint) list.</p><p>Code assist list is context sensitive:</p>on a blank line or after dollar-sign ($)<ul><li>$EXEC - access to model execution</li><li>$UTIL - utility functions</li><li>$VAR - define/access user variables</li><li>Req - manage requirements (more on this later)</li></ul></p><p>after character dot (.): lists java functions.</p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and try to enter following using code assist: <pre>$VAR.os = $UTIL.getOsName();if ($VAR.os == 'windows') {\n  $SYS.log('Successfully detected Windows OS');\n}\nelse {\n  $SYS.log('Detected non-Windows OS: ' + $UTIL.camelCase($VAR.os));\n}</pre></li></p>",
 		},
 		{ title: "Trigger Listing", 
 		  element: $("#tab_Script").contents().find("#viewExpender"), 
@@ -281,25 +281,17 @@ guidedTourList.script = function() {
 			setTimeout('shiftGuideStep(' + stepNum + ', 0, -150, 1000)', 800);
 		  }
 		},
-		{ title: "Plugins", 
-		  element: $("#tab_Script").contents().find("#pluginBtn"), 
-		  content: "<p>Plugins allow your script to perform automation and interaction with exteral systems / devices.</p>They must be activated for the model before they can be used in the script</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and click on button 'P' to open Plugin Activation dialog.</p>",
+		{ title: "Requirements", 
+		  element: $("#tab_Script").contents().find("#reqBtn"), 
+		  content: "<p>Requirements popup allows you to define/view requirements to be referenced in MScript.</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and click on button 'Req' to open Requirement popup.</p>",
 		  placement: "left",
 		  onShown: function(tour) {
 			frameAdjust(tour, -10, -10);
 		  }
 		},
-		{ title: "Activate Plugins", 
-		  element: "#dialog", 
-		  content: "<p>These are the plugins currently loaded into system.</p><p>You may add your own plugins as well.</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and activate a few plugins and close the dialog.</p>",
-		  placement: "left",
-		  onHide: function(tour) {
-			parent.closeDialog();
-		  }
-		},
-		{ title: "Plugin Code Assist", 
+		{ title: "Requirement Code Assist", 
 		  orphan: true, 
-		  content: "<p>Activated plugins are automatically added to the code assist list.</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and bring up code assist and confirm the plugins you have activated are listed.</p><p>You would call the plugin functions like you do with $SYS and $UTIL functcions.</p>",
+		  content: "<p>Requirements are automatically added to the code assist list Ctri-R / Cmd-R.</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and bring up code assist.</p>",
 		},
 		{ title: "What's Next?", 
 		  orphan: true,
@@ -381,7 +373,7 @@ guidedTourList.trackReq = function() {
 		},
 		{ title: "Requirement Check in Script", 
 		  orphan: true, 
-		  content: "<p>Requirements are validated in states and transitions TRIGGER script.</p><p>Your script will determine if the requirement has passed or failed and will add the validation result to the model execution results.</p><p>$SYS plugin provides a set of functions to do just that: </ul><li>$SYS.addReqPassed(...)</li><li>$SYS.addReqFailed(...)</li></ul></p><p>The script would look like:<pre>if ( check requirement passed ) {\n  $SYS.addReqPassed('tag', 'msg');\n}\nelse {\n  $SYS.addReqFailed('tag','msg');\n}</pre></p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and try it on a state or transition TRIGGER.</p>",
+		  content: "<p>Requirements are validated in states and transitions TRIGGER script.</p><p>Your script will determine if the requirement has passed or failed and will add the validation result to the model execution results. $EXEC.getCurTraverseObj() provides a set of functions to record test pass/failure.</p></ul><li>addReqPassed(...)</li><li>addReqFailed(...)</li></ul></p><p>The script would look like:<pre>if ( check requirement passed ) {\n  addReqPassed('tag', 'msg');\n}\nelse {\n  addReqFailed('tag','msg');\n}</pre></p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and try it on a state or transition TRIGGER.</p>",
 		  onShow: function (tour) {
 			curAppState.selectTab("Script");
 		  }
