@@ -9,6 +9,7 @@ FROM eclipse-temurin:17-jre-alpine
 #RUN apt-get install zip unzip
 
 RUN apk add --no-cache wget unzip
+RUN apk add --no-cache graphviz
 
 RUN java --version
 
