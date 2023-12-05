@@ -30,7 +30,11 @@ MainModule.controller("detailsCtrl", function ($scope) {
 				}
 				
 				$scope.stateTransMap = Object.assign({}, $scope.curExecStatDetail.stateMap, $scope.curExecStatDetail.transMap);
-				$scope.stateTransList = Object.values($scope.stateTransMap);
+				$scope.stateTransList = Object.values($scope.stateTransMap).sort(function(a,b) {
+					return ((a.stateName < b.stateName) ? -1 : ((a.stateName > b.stateName) ? 1 : 
+							((a.transName || '') < (b.transName || '')?-1:(a.transName || '') > (b.transName || '')?1:0  )
+						));
+				});
 				for (var s in $scope.stateTransMap) {
 					var stat = $scope.stateTransMap[s];
 					$scope.stateTransMap[s] = stat;
