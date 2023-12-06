@@ -283,24 +283,24 @@ public class ModelMgr {
 	}
 	
 	public List<DataSet> getDataSetList () throws Exception {
-		List<DataSet> retList = DataSet.readModelDataSets(this.getDatasetFolderPath());
+		List<DataSet> dsList = DataSet.readModelDataSets(this.getDatasetFolderPath());
 		Map<String, DataSet> dsMap = new java.util.HashMap<>();
-		retList.stream().forEach(d -> dsMap.put(d.dsName, d));
+		dsList.stream().forEach(d -> dsMap.put(d.dsName, d));
 		for (ScxmlNode scxml: this.getSubModelList()) {
 			String subModelName = scxml.getModelName();
 			String subModelFolder = FileUtil.findModelFolder(subModelName);
 			if (subModelFolder==null) throw new Exception ("Submodel not found: " + subModelName);
-			List<DataSet> subList = DataSet.readModelDataSets(subModelFolder + "model" + File.separator + "dataset");
-			Stream<DataSet> dupList = subList.stream().filter(d -> dsMap.containsKey(d.dsName));
-			Stream<DataSet> newList = subList.stream().filter(d -> !dsMap.containsKey(d.dsName));
-			retList.addAll(newList.collect(Collectors.toList()));
-			newList.forEach(d -> {
-				retList.add(d);
+			List<DataSet> subList = DataSet.readModelDataSets(subModelFolder + "dataset");
+			List<DataSet> dupList = subList.stream().filter(d -> dsMap.containsKey(d.dsName)).collect(Collectors.toList());
+			List<DataSet> newList = subList.stream().filter(d -> !dsMap.containsKey(d.dsName)).collect(Collectors.toList());
+			dsList.addAll(newList);
+			newList.stream().forEach(d -> {
+				dsList.add(d);
 				dsMap.put(d.dsName, d);
 			});
-			dupList.forEach(d -> dsMap.get(d.dsName).rows.addAll(d.rows));
+			dupList.stream().forEach(d -> dsMap.get(d.dsName).rows.addAll(d.rows));
 		}
-		return retList;
+		return dsList;
 	}
 
 	public List<GroovyScript> getScriptForExec () throws Exception {

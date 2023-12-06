@@ -22,7 +22,7 @@ public class DataSet {
 	public String dsName;
 	public String filePath;
 	public List<String> colList;
-	public List<String []> rows = new ArrayList();
+	public List<String []> rows = new ArrayList<>();
 	public int idx = 0;
 
 	public static List<DataSet> readModelDataSets (String datasetFolderPath_p) throws Exception {
@@ -33,7 +33,7 @@ public class DataSet {
 				retList.add(new DataSet(f.getAbsolutePath()));
 			}
 			catch (Exception e) {
-				throw new Exception("Failed to load dataset " + f.getName(), e);
+				logger.warn("Failed to load dataset " + f.getName(), e);
 			}
 		}
 		return retList;
@@ -55,6 +55,12 @@ public class DataSet {
 			logger.info("Converting old dataset file " + this.filePath);
 			Gson gs = new Gson();
 			DataSetDef ds = (DataSetDef) gs.fromJson(FileUtil.readFile(filePath_p).toString(), DataSetDef.class);
+			if (ds.fieldList==null) {
+				ds.fieldList = new ArrayList<Field>();
+			}
+			if (ds.dataRows==null) {
+				ds.dataRows = new ArrayList<Map<String, Object>>();
+			}
 			this.colList = ds.fieldList.stream().map(n -> n.fieldName).collect(Collectors.toList());
 			this.rows = ds.dataRows.stream().map(r -> 
 				this.colList.stream().map(c -> r.get(c).toString())

@@ -314,4 +314,8 @@ public class Exec {
 	public ExecutionSetting getExecSetting() {
 		return this.execSetting;
 	}
+	
+	public String getModelName() {
+		return this.modelMgr.getModelName();
+	}
 }
