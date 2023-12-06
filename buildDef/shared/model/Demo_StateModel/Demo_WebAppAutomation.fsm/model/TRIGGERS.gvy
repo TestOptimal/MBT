@@ -15,7 +15,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 def 'MBT_START' () {
 	ideBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
 	$EXEC.log('current browser is: ' + ideBrowser);
-   $EXEC.log ('mbt started. ');
+//    $EXEC.log ('mbt started. ');
+ 	ideBrowser = 'html';
 	
 	// test with current browser, or you can choose to test with specific browser
 	switch (ideBrowser) {
@@ -24,15 +25,16 @@ def 'MBT_START' () {
 			$VAR.webDriver = new SafariDriver();
 			break;
 		case 'Chrome':
-// 			WebDriverManager.chromedriver().setup();
+			WebDriverManager.chromedriver().setup();
 			$VAR.webDriver = new ChromeDriver();
 			break;
 		case 'Firefox':
-// 			WebDriverManager.firefoxdriver().setup();
+			WebDriverManager.firefoxdriver().setup();
 			$VAR.webDriver = new FirefoxDriver();
 			break;
 		default:
 			$VAR.webDriver = new HtmlUnitDriver();
+			$VAR.webDriver.setJavascriptEnabled(true);
 	}
 	
 	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
@@ -88,7 +90,7 @@ def 'Start: add50'() {
 	$VAR.outFile << '<li><span>Test Case ' + $EXEC.getPathName() + '</span>\n<ul>\n';
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
 	
-   $EXEC.page('MainPage').element('25c').perform('click');
+   $EXEC.page('MainPage').element('50c').perform('click');
    bal = $EXEC.page('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;

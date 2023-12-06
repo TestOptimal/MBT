@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +15,7 @@ import com.testoptimal.server.controller.IdeSvc;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.util.ArrayUtil;
 import com.testoptimal.util.FileUtil;
+import com.testoptimal.util.StringUtil;
 
 public abstract class ModelRunner implements ExecListener {
 	protected static Logger logger = LoggerFactory.getLogger(ModelRunner.class);
