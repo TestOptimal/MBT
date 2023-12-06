@@ -89,9 +89,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 		this.groovyEngine.addSysProperty("$EXEC", this.execObj);
 		this.groovyEngine.addSysProperty("$UTIL", new Util());
 		this.groovyEngine.addSysProperty("$VAR", this.varMap);
-//		this.groovyEngine.addSysProperty("$DATASET", this.dsMap);
-//		this.groovyEngine.addSysProperty("$RAND", new RandPlugin());
-		
+
 		// create GroovyScript object for main model
 		List<GroovyScript> scriptList = this.execDirector.getScriptList();
 		this.execDirector.getDataSetList().forEach(d -> this.dsMap.put(d.dsName, d));
@@ -109,58 +107,20 @@ public class MbtScriptExecutor implements MScriptInterface {
 		return this.groovyEngine;
 	}
 
-	/**
-	 * perform the cleanup including causing all plugins to be closed/destroyed.
-	 * <p>use this method to perform any cleanup you might want to do before the execution is completed.
-	 * A typical use might be to write a record to database to indicate the execution completed and time
-	 * of completion.
-	 * </p>
-	 */
 	public void close () {
 		if (!this.execDirector.getExecSetting().isGenOnly()) {
 
 		}
 	}
 
-	/**
-	 * Sets the value for the variable. If null value_p passed in, it will act as removal.
-	 * 
-	 * @param varName_p
-	 * @param value_p
-	 */
-	public void setVar(String varName_p, Object value_p) {
-		this.varMap.put(varName_p, value_p);
-	}
-
-	public Object getVar (String varName_p) {
-		return this.varMap.get(varName_p);
-	}
-
 	public PageMgr getPageMgr() {
 		return this.pageMgr;
 	}
 	
-//	public void addReqCheck(String tag_p, boolean passed_p, String msg_p, String assertID_p) throws Exception {
-//		StateNode curState = this.execObj.getCurState();
-//		String uid = curState.getUID();
-//		Transition trans = this.execDirector.getSequenceNavigator().getCurTravObj().getCurTrans();
-//		String transID = null;
-//		if (trans!=null && trans.getTransNode()!=null) {
-//			transID = trans.getTransNode().getDesc();			
-//			uid = trans.getTransNode().getUID();
-//		}
-//		TagExec tagExec = new TagExec(this, tag_p, passed_p, msg_p, assertID_p, curState.getStateID(), transID, uid);
-//		this.execDirector.getSequenceNavigator().getCurTravObj().addTagExec(tagExec);
-//	}
-
 	public Object runMScript (String script_p) throws Exception {
 		return this.groovyEngine.evalExpr("DynamicExpr", script_p);
 	}
-//	
-//	public Exec getSysObj() {
-//		return this.execObj;
-//	}
-//	
+
 	public MCaseMgr getMCaseMgr() {
 		return this.mCaseMgr;
 	}
