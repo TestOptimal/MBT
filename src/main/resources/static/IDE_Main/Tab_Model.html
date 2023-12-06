@@ -568,61 +568,29 @@
 						</select>
 					</div>
 				</div>
-			<div ng-hide="curPropNodeData.curNodeData.isInitial || curPropNodeData.curNodeData.isFinal">
-				<div class="form-group row">
-					<label class="col-sm-4 col-form-label" title="{{gMsgList.maxMillis.desc}}">{{gMsgList.maxMillis.code}}</label>
-					<div class="col-sm-8">
-						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.maxMillis" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+				<div ng-hide="curPropNodeData.curNodeData.isInitial || curPropNodeData.curNodeData.isFinal">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label" title="{{gMsgList.maxMillis.desc}}">{{gMsgList.maxMillis.code}}</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.maxMillis" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+					</div>
+					<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
+						<label class="col-sm-4 col-form-label" title="{{gMsgList.subModelFilter.desc}}">{{gMsgList.subModelFilter.code}}</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.subModelFilter" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
+					</div>
+					<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
+						<label class="col-sm-4 col-form-label" title="Toggle hide/show children states">Hide Children States</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="checkbox" 
+								ng-change="curPropNodeData.changed_hideSubstates= true;"
+								ng-model="curPropNodeData.curNodeData.hideSubstates" 
+								ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+						</div>
 					</div>
 				</div>
-				<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
-					<label class="col-sm-4 col-form-label" title="{{gMsgList.subModelFilter.desc}}">{{gMsgList.subModelFilter.code}}</label>
-					<div class="col-sm-8">
-						<input class="form-control" type="text" ng-model="curPropNodeData.curNodeData.subModelFilter" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
-					</div>
-				</div>
-				<div class="form-group row" ng-hide="curPropNodeData.curNodeData.subModel.length<=0">
-					<label class="col-sm-4 col-form-label" title="Toggle hide/show children states">Hide Children States</label>
-					<div class="col-sm-8">
-						<input class="form-control" type="checkbox" 
-							ng-change="curPropNodeData.changed_hideSubstates= true;"
-							ng-model="curPropNodeData.curNodeData.hideSubstates" 
-							ng-readonly="curPropNodeData.curNodeData.readOnly"/>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-sm-12 col-form-label">Concurrent State Properties:</label>
-				</div>
-				<div class="form-group row">
-					<span class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.activateType.desc}}">Activation</span>
-					<div class="col-sm-8">
-						<select class="form-control" ng-model="curPropNodeData.curNodeData.activateType" ng-readonly="curPropNodeData.curNodeData.readOnly">
-							<option value="TRAV_COUNT" title="activate this state by counting &#013;traversals of incoming transitions">Traversals - default</option>
-							<option value="TRANS_COUNT" title="activate this state by counting &#013;incoming transitions that are covered">Transitions</option>
-							<option value="VAR" title="activate this state by setting &#013;user variable $SYS._ACTIVATE_{{curPropNodeData.curNodeData.stateID}} to true">By Variable</option>
-							<option value="WEIGHT" title="activate this state when sum of &#013;weights of transition traversals &#013;exceeded the specified value">Sum of Weights</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group row">
-					<span class="subFieldLabel col-sm-4" title="{{gMsgList.activateThreshold.desc}}">Threashold</span>
-					<div class="col-sm-8">
-						<input class="form-control" type="number" ng-model="curPropNodeData.curNodeData.activateThreshold" ng-readonly="curPropNodeData.curNodeData.readOnly"/>
-					</div>
-				</div>
-				<div class="form-group row">
-					<span class="subFieldLabel col-sm-4" title="{{gMsgList.firingType.desc}}">Firing Trans</span>
-					<div class="col-sm-8">
-						<select class="form-control" ng-model="curPropNodeData.curNodeData.firingType" ng-readonly="curPropNodeData.curNodeData.readOnly">
-							<option value="RANDOM" title="randomly select one transition from &#013;the outgoing transitions to fire">Random - default</option>
-							<option value="VAR" title="fire outgoing transition with name &#013;matching the value of user variable $SYS._FIRING_{{curPropNodeData.curNodeData.stateID}}">By Variable</option>
-							<option value="ALL" title="fire all outgoing transitions">ALL</option>
-						</select>
-					</div>
-				</div>
-
-			</div>
 				
 				<div class="form-group row">
 					<label class="col-sm-4 col-form-label">Notepad</label>
@@ -702,21 +670,7 @@
 					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.guard.desc}}">{{gMsgList.guard.code}}</label>
 					<div class="col-sm-8">
 						<input id="transGuard" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.guard"
-							 ng-readonly="curPropNodeData.curNodeData.readOnly" placeHolder="e.g. $VAR.var1 == 'val1'"/>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.guardHint.desc}}">{{gMsgList.guardHint.code}}</label>
-					<div class="col-sm-8">
-						<input id="transGuardHint" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.guardHint"
-							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="subFieldLabel col-sm-4 col-form-label" title="{{gMsgList.satisfyingHint.desc}}">{{gMsgList.satisfyingHint.code}}</label>
-					<div class="col-sm-8">
-						<input id="transSatisfyingHint" class="form-control" type="text" ng-model="curPropNodeData.curNodeData.satisfyingHint"
-							 ng-readonly="curPropNodeData.curNodeData.readOnly"/>
+							 ng-readonly="curPropNodeData.curNodeData.readOnly" placeHolder="Example: $VAR.var1 == 5"/>
 					</div>
 				</div>
 				<div class="form-group row" ng-show="isSubModelState(curPropNodeData.curNodeData.parentuid)">
