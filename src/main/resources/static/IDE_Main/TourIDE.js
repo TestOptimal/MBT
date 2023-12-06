@@ -51,7 +51,7 @@ guidedTourList.ide = function () {
 		},
 		{ title: "Tabs", 
 		  element: $('#tabHeader'), 
-		  content: "<p>Tab labels will be displayed when a model is open.</p><p>State Model: <li>MODEL<li>SCRIPT<li>REQUIREMENT<li>RESULT<li>ARTIFACT</p><p>Combinatorial Model: <li>DEFINE<li>GENERATE<li>SCRIPT<li>EXECUTE</li></ul>", 
+		  content: "<p>Tab labels will be displayed when a model is open.</p><p><ul><li>MODEL<li>SCRIPT<li>RESULT<li>ARTIFACT</ul></p>", 
 		  placement: "bottom", 
 		},
 		{ title: "Dashboard", 
@@ -134,7 +134,7 @@ guidedTourList.ide = function () {
 		},
 		{ title: "Model List", 
 		  element: "#dialog", 
-		  content: "<p>Demo models are organized in two folders:</p><ul><li>Demo_CombinatorialTesting<li>Demo_StateModel</ul></p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and click on these two folders to review the DEMO models in each folder.</p><p>To open a model, just click on the model name. But do it after this tutorial is completed.</p><p>", 
+		  content: "<p>Demo models are in folder Demo_StateModel</p><p><span class='glyphicon glyphicon-thumbs-up'/> Go ahead and click on these two folders to review the DEMO models in each folder.</p><p>To open a model, just click on the model name. But do it after this tutorial is completed.</p><p>", 
 		  placement: "right",
 		  onShown: function(tour) {
 				var stepNum = tour.getCurrentStep();
