@@ -65,10 +65,6 @@ public class ModelMgr {
 		return FileUtil.concatFilePath(this.folderPath, "dataset") + File.separator;
 	}
 	
-	public String getScreenshotFolderPath () {
-		return FileUtil.concatFilePath(this.folderPath, "snapscreen") + File.separator;
-	}
-
 	public ScxmlNode getScxmlNode() { 
 		return this.scxmlNode; 
 	}
@@ -237,7 +233,7 @@ public class ModelMgr {
 		if (!modelFolderPath_p.endsWith("/") && !modelFolderPath_p.endsWith("\\")) {
 			modelFolderPath_p += File.separator;
 		}
-		for (String name: new String[] {"model", "dataset", "report", "temp", "snapscreen", "stats"}) {
+		for (String name: new String[] {"model", "dataset", "report", "temp", "stats"}) {
 			File file = new File (modelFolderPath_p + name);
 			if (!file.exists()) {
 				file.mkdir();

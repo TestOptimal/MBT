@@ -57,10 +57,7 @@ public abstract class ModelRunner implements ExecListener {
     	}
 
 		try {
-			File folder = new File (this.modelMgr.getScreenshotFolderPath());
-			if (folder.exists()) FileUtil.recursiveDelete (folder);
-			folder.mkdir();
-			folder = new File (this.modelMgr.getTempFolderPath());
+			File folder = new File (this.modelMgr.getTempFolderPath());
 			if (folder.exists()) FileUtil.recursiveDelete (folder);
 			folder.mkdir();
 			folder = new File (this.modelMgr.getReportFolderPath());
@@ -70,7 +67,7 @@ public abstract class ModelRunner implements ExecListener {
 			if (!folder.exists()) folder.mkdir();
 		}
 		catch (Exception e) {
-			logger.error("Failed cleaning up snapscreens before starting model " 
+			logger.error("Failed setting model for execution " 
 				+ this.modelMgr.getModelName(), e);
 		}
 

@@ -173,33 +173,6 @@ public class RuntimeController {
 		}
 	}
 
-
-	@GetMapping(value = "model/{modelName}/screenshot/{snapTime}", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<UrlResource> getModelScreenshotBySnapTime  (@PathVariable (name="modelName", required=true) String modelName,
-			@PathVariable (name="snapTime", required=true) String snapTime,
-			ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessID);
-		ModelMgr modelMgr = mbtSess.getModelMgr();
-		String snapScreenPath = modelMgr.getScreenshotFolderPath();
-		File folderReader = new File(snapScreenPath, "");
-	    String[] fileList = folderReader.list();
-	    if (StringUtil.isEmpty(snapTime)) {
-	    	throw new Exception ("snapscreen.snaptime.missing");
-	    }
-	    String snapToken = "_" + snapTime + ".";
-		for (int i = 0; fileList != null && i < fileList.length; i++) {
-			if (fileList[i].contains(snapToken)) {
-				File screenFile = new File(snapScreenPath + fileList[i]);
-	    		UrlResource resource = new UrlResource(screenFile.toURI());
-			    return ResponseEntity.ok()
-		            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-		            .body(resource);
-			}
-		}
-		throw new Exception ("snapscreen.file.notfound");
-   	}
-	
 	@GetMapping(value = "model/{modelName}/close", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
 		ServletRequest request) throws Exception {

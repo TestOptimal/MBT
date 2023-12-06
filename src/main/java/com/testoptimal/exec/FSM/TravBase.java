@@ -78,10 +78,6 @@ abstract public class TravBase {
 		return this.tagExecList.stream().filter(t -> !t.isPassed()).collect(Collectors.toList());
 	}
 	
-	public void addSnapID (long snapMillis_p) {
-		this.tagExecList.stream().forEach(t -> t.addSnapScreen(snapMillis_p));
-	}
-	
 	public MStep getMStep () {
 		return this.stepObj;
 	}

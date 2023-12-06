@@ -422,7 +422,7 @@
       "color": "",
       "textColor": "",
       "stereotype": "M",
-      "subModel": "_sub_DEMO_Login",
+      "subModel": "DEMO_Login_SubModel",
       "hideSubstates": false,
       "maxMillis": 2147483647,
       "activateType": "TRAV_COUNT",
@@ -734,7 +734,7 @@
       "css": {}
     }
   ],
-  "modelName": "Demo_WithSubModel",
+  "modelName": "DEMO_Login_MainModel",
   "version": "1.0",
   "versionAUT": "",
   "versionTO": "7.0.3",

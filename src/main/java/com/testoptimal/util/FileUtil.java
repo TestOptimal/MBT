@@ -613,12 +613,6 @@ public class FileUtil {
 					if (file.exists())
 						return file;
 					break;
-				case 'S':
-					folderPath = FileUtil.concatFilePath(modelFolderPath_p, "snapscreen");
-					file = new File(FileUtil.concatFilePath(folderPath, filePath_p));
-					if (file.exists())
-						return file;
-					break;
 			}
 		}
 		return null;

@@ -197,15 +197,6 @@ public class MbtScriptExecutor implements MScriptInterface {
 		else return null;
 	}
 	
-
-	public String genSnapScreenFilePath (long snapMillis_p) throws Exception {
-		StringBuffer fileName =  new StringBuffer();
-		ModelMgr modelMgr = this.getModelMgr();
-		fileName.append(modelMgr.getScreenshotFolderPath());
-		fileName.append("snap_").append(snapMillis_p);
-		return fileName.toString();
-	}
-	
 	public Map<String, Object> getVarMap() {
 		return this.varMap;
 	}

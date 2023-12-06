@@ -121,14 +121,4 @@ public class TagExec implements Comparable<TagExec> {
 		return this.trace;
 	}
 	
-	public void addSnapScreen(long snapMillis_p) {
-		if (!this.passed) {
-			if (this.execMsg==null || this.execMsg.equals("null")) {
-				System.out.println("Null execMsg but failed");
-			}
-			else {
-				this.execMsg += "@snapTS:" + snapMillis_p + "@";
-			}
-		}
-	}
 }

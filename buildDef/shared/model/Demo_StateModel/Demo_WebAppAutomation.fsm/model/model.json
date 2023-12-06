@@ -749,7 +749,7 @@
       "css": {}
     }
   ],
-  "modelName": "Demo_WebAppAutomation",
+  "modelName": "DEMO_WebAppAutomation",
   "version": "1.0",
   "versionAUT": "",
   "versionTO": "7.0.3",
@@ -758,9 +758,7 @@
   "mbtNode": {
     "uid": "U1074",
     "mode": "Optimal",
-    "initScript": "$EXEC.log(\"SSSSS\")",
     "stopCond": {
-      "reqCoverage": 100,
       "stopAtFinalOnly": true
     },
     "seqParams": ""
