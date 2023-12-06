@@ -673,7 +673,7 @@ MainModule.controller("mainCtrl", function ($scope) {
 
 		$scope.gMsgList = parentWinObj.gMsgList;
 		$scope.subModelList = parent.curAppState.toSvc.FileSvc.getSubmodelList(function(subList) {
-			$scope.subModelList = subList;
+			$scope.subModelList = Stream(subList).filter(function(m) { return m!=$scope.scxmlNode.modelName;}).toArray();
 		});
 		
 		$scope.isEnterprise = parentWinObj.curAppState.config.realprodlevel=="Enterprise";

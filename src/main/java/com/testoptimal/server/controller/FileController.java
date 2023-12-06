@@ -124,7 +124,7 @@ public class FileController {
 	@GetMapping(value = "submodel", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<String>> getSubModelList(ServletRequest request) throws Exception {
 		File folderReader = new File(Config.getModelRoot(), "");
-		List<String> subModelList = FileUtil.getModelList(folderReader, true)
+		List<String> subModelList = FileUtil.getModelList(folderReader, false) // all models can be submodels
 			.stream()
 			.map( f -> f.endsWith(".fsm")?f.substring(0, f.length()-4):f)
 			.collect(Collectors.toList());
