@@ -16,7 +16,7 @@ def 'MBT_START' () {
 	ideBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
 	$EXEC.log('current browser is: ' + ideBrowser);
 //    $EXEC.log ('mbt started. ');
- 	ideBrowser = 'html';
+ 	ideBrowser = 'Firefox';
 	
 	// test with current browser, or you can choose to test with specific browser
 	switch (ideBrowser) {

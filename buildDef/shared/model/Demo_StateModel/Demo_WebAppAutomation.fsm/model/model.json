@@ -17,7 +17,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -36,7 +35,6 @@
           "event": "discharge",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "DrinkChoices",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -97,7 +95,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -128,7 +125,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -147,7 +143,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -195,7 +190,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -252,7 +246,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -271,7 +264,6 @@
           "event": "toDrink",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -332,7 +324,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -351,7 +342,6 @@
           "event": "return25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -408,7 +398,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -427,7 +416,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -471,7 +459,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -532,7 +519,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -551,7 +537,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "up",
@@ -595,7 +580,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -656,7 +640,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -675,7 +658,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -719,7 +701,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -771,17 +752,17 @@
   "modelName": "Demo_WebAppAutomation",
   "version": "1.0",
   "versionAUT": "",
-  "versionTO": "6.0.29",
+  "versionTO": "7.0.3",
   "versionReq": "",
   "buildNum": 7,
   "mbtNode": {
     "uid": "U1074",
     "mode": "Optimal",
+    "initScript": "$EXEC.log(\"SSSSS\")",
     "stopCond": {
+      "reqCoverage": 100,
       "stopAtFinalOnly": true
     },
-    "execThreadNum": 1,
-    "threadSpreadDelay": 0,
     "seqParams": ""
   },
   "miscNode": {
@@ -793,8 +774,5 @@
     "swimlanes": [],
     "boxes": []
   },
-  "pluginList": [
-    "SELENIUM"
-  ],
   "modelType": "FSM"
 }
