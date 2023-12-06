@@ -40,7 +40,10 @@ MainModule.controller("detailsCtrl", function ($scope) {
 					$scope.stateTransMap[s] = stat;
 					millisWindow = (stat.maxMillis || 0) - (stat.minMillis || 0);
 					if (millisWindow > 0) {
-						stat.histoMidPos = Math.round(($scope.rspBarWidth-2) * millisWindow/millisWindow);
+						stat.histoMidPos = Math.round(($scope.rspBarWidth-2) * (stat.avgMillis-stat.minMillis)/millisWindow);
+					}
+					else {
+						stat.histoMidPos = Math.round(($scope.rspBarWidth-2)/2);
 					}
 				}
 				var sMap = Stream($scope.curExecStatDetail.tcList).flatMap(function(tcObj){
