@@ -3,9 +3,14 @@ import com.testoptimal.exec.mscript.TRIGGER
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 // This script automates the testing of a webpage (Vending machine) and 
@@ -13,30 +18,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	ideBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
-	$EXEC.log('current browser is: ' + ideBrowser);
-//    $EXEC.log ('mbt started. ');
- 	ideBrowser = 'Firefox';
-	
-	// test with current browser, or you can choose to test with specific browser
-	switch (ideBrowser) {
-		case 'Safari':
-// 			WebDriverManager.safaridriver().setup();
-			$VAR.webDriver = new SafariDriver();
-			break;
-		case 'Chrome':
-			WebDriverManager.chromedriver().setup();
-			$VAR.webDriver = new ChromeDriver();
-			break;
-		case 'Firefox':
-			WebDriverManager.firefoxdriver().setup();
-			$VAR.webDriver = new FirefoxDriver();
-			break;
-		default:
-			$VAR.webDriver = new HtmlUnitDriver();
-			$VAR.webDriver.setJavascriptEnabled(true);
-	}
-	
+	// change testBrowser to the browser you want to test with, 
+	// see setup_webdriver function at the end for browsers supported
+ 	testBrowser = 'HtmlUnit';
+	$EXEC.log('testing with browser ' + testBrowser);
+	$VAR.webDriver = setup_webdriver(testBrowser);
 	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
    $VAR.outFile << '<html><body><H1>Test Output</H1>\n';
    $VAR.outFile << '<ol>\n';
@@ -220,4 +206,36 @@ def 'End' () {
    $EXEC.genMSC('TestCase ' + $EXEC.getPathName(), $EXEC.getPathName());
    $VAR.outFile << "<li><img src='" + $EXEC.getPathName() + ".png'/></li>\n";
    $VAR.outFile << '</ul></li>\n';
+}
+
+// you may need to play with the web driver options to get it to work in your environment
+// add additional browsers support here
+def setup_webdriver (testBrowser) {
+	switch (testBrowser) {
+		case 'Safari':
+ 			WebDriverManager.safaridriver().setup();
+			return new SafariDriver();
+		case 'Chrome':
+			WebDriverManager.chromedriver().setup();
+			ChromeOptions chromeOptions = new ChromeOptions();
+ 			chromeOptions.setHeadless(true);
+			return new ChromeDriver(chromeOptions);
+		case 'Firefox':
+			WebDriverManager.firefoxdriver().setup();
+			FirefoxOptions firefoxOptions = new FirefoxOptions();
+			firefoxOptions.setHeadless(true);
+			return new FirefoxDriver(firefoxOptions);
+		case 'Remote':
+			ChromeOptions remoteOptions = new ChromeOptions();
+			// set gridUrl below to point to your remote webdriver server
+    		return new RemoteWebDriver('gridUrl', remoteOptions);
+		case 'Edge':
+			WebDriverManager.edgedriver().setup();
+			EdgeOptions edgeOptions = new EdgeOptions();
+    		return new EdgeDriver(edgeOptions);
+		default:
+			wd = new HtmlUnitDriver();
+			wd.setJavascriptEnabled(true);
+			return wd;
+	}	
 }
