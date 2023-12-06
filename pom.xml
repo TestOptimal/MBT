@@ -35,23 +35,18 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-		-->
-<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-lang3</artifactId>
-</dependency>
 
-<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
 				
 		<!-- spring security -->
         <dependency>
@@ -65,89 +60,46 @@
 	      <scope>compile</scope>
 	    </dependency>
 	    
-<!--
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
-		</dependency>
--->
-   <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>2.2.0</version>
-   </dependency>
+	    <dependency>
+	      <groupId>org.springdoc</groupId>
+	      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+	      <version>2.2.0</version>
+	    </dependency>
    
    
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured, need to be before lambdaj due to hamcrest conflict-->
-<dependency>
-<groupId>io.rest-assured</groupId>
-<artifactId>rest-assured</artifactId>
-</dependency>
-		
-<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-<!--
 		<dependency>
-		    <groupId>io.rest-assured</groupId>
-		    <artifactId>rest-assured</artifactId>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
 		</dependency>
-
-
-	    <dependency>
-	        <groupId>org.seleniumhq.selenium</groupId>
-	        <artifactId>selenium-server</artifactId>
-	        <version>3.141.59</version>
-	    </dependency> 
--->		
+		
 	    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-</dependency>
-<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-<dependency>
-    <groupId>io.github.bonigarcia</groupId>
-    <artifactId>webdrivermanager</artifactId>
-    <version>5.6.2</version>
-</dependency>
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>htmlunit3-driver</artifactId>
+		    <version>4.15.1</version>
+		</dependency>	    
+
+		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+		<dependency>
+		    <groupId>io.github.bonigarcia</groupId>
+		    <artifactId>webdrivermanager</artifactId>
+		    <version>5.6.2</version>
+		</dependency>
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
+             <version>5.2.3</version>
         </dependency>
-<!--
-           <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcore</artifactId>
-    </dependency>
-s-->
         
-	  	<dependency>
-	        <groupId>org.seleniumhq.selenium</groupId>
-	        <artifactId>htmlunit-driver</artifactId>
-	    </dependency>
-	    <!-- dependency>
+	    <dependency>
 		    <groupId>org.seleniumhq.selenium</groupId>
 		    <artifactId>selenium-remote-driver</artifactId>
-		</dependency -->
-
-          	    
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<!--
-		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>29.0-jre</version>
 		</dependency>
-		-->
 
 		<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -173,13 +125,6 @@ s-->
             <artifactId>bootstrap</artifactId>
 		    <version>4.5.3</version>
 		</dependency>
-
-		<!--        
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-		-->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -195,25 +140,6 @@ s-->
 		    <type>pom</type>
 		</dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/org.scannotation/scannotation -->
-		<!--
-		<dependency>
-		    <groupId>org.scannotation</groupId>
-		    <artifactId>scannotation</artifactId>
-		    <version>1.0.3</version>
-		</dependency>
-	-->
-			        
-		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
-		<!--
-		<dependency>
-		    <groupId>net.sourceforge.jexcelapi</groupId>
-		    <artifactId>jxl</artifactId>
-		    <version>2.6.12</version>
-		</dependency>
-		-->
-				
 		<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
 		<dependency>
 		    <groupId>net.sourceforge.plantuml</groupId>
@@ -221,31 +147,12 @@ s-->
 		    <version>1.2023.9</version>
 		</dependency>
 		
-		
-		<!-- https://mvnrepository.com/artifact/com.microsoft.azure/azure-client-runtime -->
-		<!--
-		<dependency>
-		    <groupId>com.microsoft.azure</groupId>
-		    <artifactId>azure-client-runtime</artifactId>
-		    <version>1.7.5</version>
-		</dependency>
-		-->
-
 		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
 		<dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>javax.mail-api</artifactId>
 		    <version>1.4.7</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
-		<!--
-		<dependency>
-		    <groupId>joda-time</groupId>
-		    <artifactId>joda-time</artifactId>
-		    <version>2.10.6</version>
-		</dependency>
-		-->
 					
 		<!-- https://mvnrepository.com/artifact/colt/colt -->
 		<dependency>
@@ -259,24 +166,7 @@ s-->
 		    <artifactId>openOptima</artifactId>
 		    <version>1.0.2</version>
 		</dependency>
-		<!--
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		</dependency>
-		
-		
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		</dependency>	
-		-->		
-		<!--
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>	
-	-->
+
 		<!-- https://mvnrepository.com/artifact/org.webjars/codemirror -->
 		<dependency>
 		    <groupId>org.webjars</groupId>
@@ -297,57 +187,6 @@ s-->
 		    <artifactId>jquery</artifactId>
 		    <version>3.3.1</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
-		<!--
-		<dependency>
-		    <groupId>com.github.ulisesbocchio</groupId>
-		    <artifactId>jasypt-spring-boot-starter</artifactId>
-		    <version>3.0.2</version>
-   		</dependency>
-		-->
-		
-        <!-- https://mvnrepository.com/artifact/org.webjars/d3js -->
-		<!--
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>d3js</artifactId>
-            <version>5.9.7</version>
-        </dependency>
-		-->
-		        
-		<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
-		<!--
-		<dependency>
-		    <groupId>org.eclipse.paho</groupId>
-		    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-		    <version>1.2.2</version>
-		</dependency>
-		-->
-
-		<!--		
-	    <dependency>
-	        <groupId>com.fasterxml.jackson.dataformat</groupId>
-	        <artifactId>jackson-dataformat-yaml</artifactId>
-	    </dependency>	    
-	    -->
-	    
-		<!-- https://mvnrepository.com/artifact/io.ultreia/bluecove -->
-		<!-- dependency>
-		    <groupId>io.ultreia</groupId>
-		    <artifactId>bluecove</artifactId>
-		    <version>2.1.1</version>
-		</dependency -->
-		
-		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
-		<!--
-		<dependency>
-		    <groupId>com.opencsv</groupId>
-		    <artifactId>opencsv</artifactId>
-		    <version>5.3</version>
-		</dependency>
-		-->
-		
 	</dependencies>
 
 	<properties>
