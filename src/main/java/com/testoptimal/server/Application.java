@@ -14,11 +14,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.core.env.Environment;
 
-import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
+import com.testoptimal.server.controller.helper.CodeAssistMgr;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.stats.StatsMgr;

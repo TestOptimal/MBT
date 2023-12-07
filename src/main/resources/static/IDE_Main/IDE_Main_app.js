@@ -350,7 +350,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		frames: {
 			Monitor: {
 				title: 'Execution Monitor',
-				srcFrame: 'IDE_Main/webmbtMonitor.html',
+				srcFrame: 'IDE_Main/PropertyMonitor.html',
 				width: 600,
 				height: 500
 			},
@@ -362,7 +362,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 			},
 			FileList: {
 				title: 'Model List',
-				srcFrame: 'IDE_Main/webmbtFileList.html',
+				srcFrame: 'IDE_Main/PropertyFileList.html',
 				width: 800,
 				height: 600,
 			},
@@ -497,14 +497,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	
 	$scope.saveShortcuts = function () {
 		curAppState.toSvc.SysSvc.saveShortcuts($scope.shortcutKey, $scope.shortcutList);
-	}
-
-    $scope.setSession = function (menuItem) {
-		if ($scope.rootCurAppState.isModelChanged(true, true)) {
-			alertDialog("Pending changes.");
-			return;
-		}
-		$scope.openModel(menuItem.modelName);
 	}
 
 	$scope.markCurSession = function (modelName) {
@@ -643,8 +635,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 
     $scope.initWS = function () {
 		// setup websocket connection
-//		$scope.rootCurAppState.toWS.wsSetConID($scope.rootCurAppState.config.HttpSessionID);
-
 		$scope.rootCurAppState.toWS.wsSubscribe("alert", function (packet) {
         	var msg = JSON.parse(packet.body);
         	if (!msg.type) {
@@ -673,35 +663,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 			$scope.openModel(packet.body);
 		}, "IDE_Main");
 
-		$scope.rootCurAppState.toWS.wsSubscribe ("runtime/list", function(packet) {
-			var sessList = JSON.parse(packet.body);
-			$scope.sessList = sessList;
-			// keep original menu items (ignore session items)
-			$scope.menuRun.items = $scope.menuRun.items.filter(function(item) {
-				return item.label.indexOf("Session")<0;
-			});
-
-			$scope.menuRun.items = $scope.menuRun.items.filter(function(m) {return m.sessID == undefined;})
-			for (var i in sessList) {
-				var sessObj = sessList[i];
-				var sessNum = parseInt(i) + 1;
-				$scope.menuRun.items.push ({ 
-					menuFunc: "$scope.setSession(item)", 
-					label: "Session " + sessNum,
-					title: sessObj.modelName, 
-					sessID: sessObj.sessID,
-					modelName: sessObj.modelName
-				});
-			}
-			if ($scope.rootCurAppState.scxml) {
-				$scope.markCurSession($scope.rootCurAppState.scxml.modelName);
-			} 
-//			else if (sessList.length>0) {
-//				$scope.openModel(sessList[0].modelName);
-//			}
-			$scope.$apply();
-		}, "IDE_Main");
-		
 		$scope.rootCurAppState.toWS.wsSubscribe('model.paused', function (packet) {
 			//if (packet.body.indexOf("{")>=0) {
 			//	var p = JSON.parse(packet.body);

@@ -78,7 +78,7 @@ public class ModelController {
 		openInfo.valid = true;
 		
 		IdeSvc.sendModelState(httpSessID, modelName);
-		RuntimeController.sendIdeRuntimeSessions(httpSessID);
+//		RuntimeController.sendIdeRuntimeSessions(httpSessID);
 		return new ResponseEntity<>(openInfo, HttpStatus.OK);
 	}
 
@@ -86,7 +86,7 @@ public class ModelController {
 	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelRunner mbtSess = SessionMgr.getInstance().closeModel(modelName, httpSessID);
+		SessionMgr.getInstance().closeModel(modelName, httpSessID);
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 	

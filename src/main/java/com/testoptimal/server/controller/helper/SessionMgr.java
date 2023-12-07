@@ -15,19 +15,18 @@ public abstract class SessionMgr {
 	// opens MbtStarter for a model, returns existing MbtStarter if model is already open
 	public abstract ModelRunner getMbtStarterForModel (String modelName_p, String sessId_p);
 	
-	// closes model
-	public abstract ModelRunner closeModel (String modelName_p, String sessId_p);
-	
-	
-	// close model session
-	public abstract boolean closeModel (ModelRunner modelExec_p);
-
 	// returns a list of model MbtStarter currently opened by the session id
 	public abstract List<ModelRunner> getMbtStarterForUserSession(String sessId_p);
 	
-
 	// returns the model MbtStarter for mbt session id
 	public abstract ModelRunner getMbtStarterForMbtSession(String mbtSessId_p);
+
+	// closes model, returns model closed. null if model not found.
+	public abstract void closeModel (String modelName_p, String sessId_p);
+	
+	// close model session, return true if the model session was found and removed
+	public abstract void closeModel (ModelRunner modelExec_p);
+
 
 	// closes all models opened by the session id
 	public abstract void closeModelAll (String sessId_p);

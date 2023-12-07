@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +22,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionStatus;
 import com.testoptimal.exec.ModelRunner;
-import com.testoptimal.exec.ModelRunnerIDE;
+import com.testoptimal.exec.ModelRunnerClient;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
-import com.testoptimal.server.controller.helper.SessionInfo;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.ExecStatusInfo;
@@ -36,7 +33,6 @@ import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.RunRequest;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.ModelFile;
-import com.testoptimal.util.StringUtil;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;
@@ -64,24 +60,13 @@ public class RuntimeController {
 		return new ResponseEntity<>(retList, HttpStatus.OK);
 	}
 
-
-	@GetMapping(value = "session/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SessionInfo>> listSessions (ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-
-		List<SessionInfo> sessList = SessionMgr.getInstance().getMbtStarterForUserSession(httpSessID).stream().map(mbtSess-> new SessionInfo(mbtSess.getModelMgr().getModelName(), mbtSess.getMbtSessionID(), mbtSess.isRunning())).collect(Collectors.toList());
-		return new ResponseEntity<>(sessList , HttpStatus.OK);
-	}
-
-	@PostMapping(value = "model/run/async", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/run", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> runModelAsync (
 			@RequestBody RunRequest runReq, 
 			ServletRequest request) throws Exception, MBTAbort {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		logger.info("model: " + runReq.modelName);
 		try {
-			Boolean Debug = (Boolean)runReq.options.get("debug");
-			boolean debug = Debug==null?false: Debug;
 			if (runReq.options==null) {
 				runReq.options = new java.util.HashMap<>();
 			}
@@ -89,12 +74,12 @@ public class RuntimeController {
 				runReq.options.put("autoClose", true);
 			}
 
-			ModelRunnerIDE mbtSess = new ModelRunnerIDE(httpSessID, new ModelMgr(runReq.modelName));
+			ModelRunnerClient mbtSess = new ModelRunnerClient(httpSessID, new ModelMgr(runReq.modelName));
 			SessionMgr.getInstance().addMbtStarter(mbtSess);
-			mbtSess.startMbt(false,runReq.mbtMode, runReq.options);
+			mbtSess.startMbt(runReq.mbtMode, runReq.options);
 			
 			Map<String, Object> m = ClientReturn.map("mbtSessID", mbtSess.getMbtSessionID());
-			m.put("statsURL", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + runReq.modelName + "/-1");
+			m.put("statsURL", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + mbtSess.getMbtSessionID());
 			logger.info("model exec started, mbtSessID: " + mbtSess.getMbtSessionID());
 			m.put("status", "running");
 			return new ResponseEntity<>(m, HttpStatus.OK);
@@ -108,33 +93,17 @@ public class RuntimeController {
 		}
 	}
 	
-	@GetMapping(value = "model/{modelName}/monitor", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExecStatusInfo> monitorStats (@PathVariable (name="modelName", required=true) String modelName,
+	@GetMapping(value = "model/{mbtSessID}/monitor", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ExecStatusInfo> monitorStats (@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessID);
+//		String httpSessID = ((HttpServletRequest) request).getSession().getId();
+		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
 		if (mbtSess == null) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 		ExecStatusInfo execInfo = new ExecStatusInfo();
 		execInfo.execStatus = mbtSess.getExecDirector().getExecStat();
 		return new ResponseEntity<>(execInfo, HttpStatus.OK);
-	}
-
-	@GetMapping(value = "session/stop", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ClientReturn> interruptAllSessions (
-		ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		SessionMgr.getInstance().getMbtStarterForUserSession(httpSessID).forEach(s -> s.stopMbt());
-		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
-	}
-
-	@GetMapping(value = "session/close", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ClientReturn> closeAllSessions (
-		ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		SessionMgr.getInstance().closeModelAll(httpSessID);
-		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "session/{mbtSessionID}/stop", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -158,11 +127,11 @@ public class RuntimeController {
 		return new ResponseEntity <> (sessObj.getExecStatus(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "model/{modelName}/log", produces = MediaType.TEXT_PLAIN_VALUE)
-	public String getScriptLog (@PathVariable (name="modelName", required=true) String modelName,
+	@GetMapping(value = "model/{mbtSessID}/log", produces = MediaType.TEXT_PLAIN_VALUE)
+	public String getScriptLog (@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForModel(modelName, httpSessID);
+//		String httpSessID = ((HttpServletRequest) request).getSession().getId();
+		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
 		if (mbtSess==null) {
 			return "";
 		}
@@ -173,19 +142,15 @@ public class RuntimeController {
 		}
 	}
 
-	@GetMapping(value = "model/{modelName}/close", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="modelName", required=true) String modelName,
+	@GetMapping(value = "model/{mbtSessID}/close", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ClientReturn> closeModel(@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 		ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		ModelRunner mbtSess = SessionMgr.getInstance().closeModel(modelName, httpSessID);
-		IdeSvc.sendIdeMessage(httpSessID, new IdeMessage("alert", "Model session closed: " + modelName, "MbtController.closeModel"));
-		RuntimeController.sendIdeRuntimeSessions(httpSessID);
+		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
+		if (mbtSess!=null) {
+			SessionMgr.getInstance().closeModel(mbtSess);
+			IdeSvc.sendIdeMessage(httpSessID, new IdeMessage("alert", "Model session closed: " + mbtSess.getModelMgr().getModelName(), "RuntimeController.closeModel"));			
+		}
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}	
-	
-	
-	public static void sendIdeRuntimeSessions (String httpSessionID_p) throws Exception {
-		List<SessionInfo> sessList = SessionMgr.getInstance().getMbtStarterForUserSession(httpSessionID_p).stream().map(mbtSess-> new SessionInfo(mbtSess.getModelMgr().getModelName(), mbtSess.getMbtSessionID(), mbtSess.isRunning())).collect(Collectors.toList());
-		IdeSvc.sendIdeData(httpSessionID_p, "runtime/list", sessList);
-	}
 }

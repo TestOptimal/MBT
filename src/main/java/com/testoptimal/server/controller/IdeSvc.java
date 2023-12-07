@@ -97,7 +97,7 @@ public class IdeSvc {
 	
 	@MessageMapping("/init")
 	public void init (SimpMessageHeaderAccessor accessor) throws Exception {
-		RuntimeController.sendIdeRuntimeSessions(this.getHttpSessionId(accessor));
+//		RuntimeController.sendIdeRuntimeSessions(this.getHttpSessionId(accessor));
 	}
 
 	@MessageMapping("/{modelName}/getModelState")
@@ -133,7 +133,7 @@ public class IdeSvc {
     		SessionMgr.getInstance().addMbtStarter(sess);
     		sess.startMbt(false, req.mbtMode, req.options);
 	    	sendModelState(this.getHttpSessionId(accessor), modelName);
-			RuntimeController.sendIdeRuntimeSessions(httpSessionId);
+//			RuntimeController.sendIdeRuntimeSessions(httpSessionId);
     	}
     	catch (Throwable e) {
     		String msg = e.getMessage();
@@ -161,7 +161,7 @@ public class IdeSvc {
     		SessionMgr.getInstance().addMbtStarter(sess);
     		sess.startMbt(true, req.mbtMode, req.options);
 	    	sendModelState(this.getHttpSessionId(accessor), modelName);
-			RuntimeController.sendIdeRuntimeSessions(httpSessionId);
+//			RuntimeController.sendIdeRuntimeSessions(httpSessionId);
     	}
     	catch (Throwable e) {
     		this.sendIdeMessageLocal(accessor, new IdeMessage("warn", e.getMessage(), "IdeSvc.debugModel"));
@@ -318,8 +318,8 @@ public class IdeSvc {
 	    		newModelFolder = modelMgr.getFolderPath().replace(modelMgr.getModelName(), newModelName);
 	    	}
 	    	else if (pList[0].equals("")) {
-		    		// path from model root
-		    		newModelFolder = Config.getModelRoot() + newModelFilePath.substring(1) + ".fsm";
+	    		// path from model root
+	    		newModelFolder = Config.getModelRoot() + newModelFilePath.substring(1) + ".fsm";
 	    	}
 	    	else {
 	    		// relative path from current folder

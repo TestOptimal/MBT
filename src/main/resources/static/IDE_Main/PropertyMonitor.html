@@ -64,10 +64,10 @@
 				}
 				
 				parent.curAppState.toSvc.RuntimeSvc.modelMonitor (parent.curAppState.scxml.modelName, $scope.updateProgress);
-				if (!$scope.curAppState.modelState.running) {
-					clearTimeout($scope.refreshTimeout);
-					$scope.refreshTimeout = null;
-				}
+//				if (!$scope.curAppState.modelState.running) {
+//					clearTimeout($scope.refreshTimeout);
+//					$scope.refreshTimeout = null;
+//				}
 			}
 			
 			$scope.updateProgress = function (data) {
@@ -99,15 +99,19 @@
 
 			$scope.init = function () {
 				parent.curAppState.toWS.wsSubscribe('model.ended', function (packet) {
-					$scope.stopAutoRefresh();
+//					$scope.stopAutoRefresh();
 				}, "Monitor");
 				
 				parent.curAppState.toWS.wsSubscribe('model.started', function (packet) {
-					$scope.startAutoRefresh();
+//					$scope.startAutoRefresh();
 				}, "Monitor");
 
 				parent.curAppState.toWS.wsSubscribe('model.paused', function (packet) {
-					$scope.refresh();
+//					$scope.refresh();
+				}, "Monitor");
+
+				parent.curAppState.toWS.wsSubscribe('model.stats', function (packet) {
+					$scope.updateProgress(JSON.parse(packet.body));
 				}, "Monitor");
 
 				parent.curAppState.toWS.wsSubscribe('debug.expr', function (packet) {

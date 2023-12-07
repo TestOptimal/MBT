@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.client.CodeAssist;
-import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
+import com.testoptimal.server.controller.helper.CodeAssist;
+import com.testoptimal.server.controller.helper.CodeAssistMgr;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.util.DateUtil;
 import com.testoptimal.util.misc.SerialNum;

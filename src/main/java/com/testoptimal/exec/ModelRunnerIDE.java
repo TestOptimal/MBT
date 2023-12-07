@@ -11,16 +11,19 @@ import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.server.controller.IdeSvc;
 import com.testoptimal.server.controller.helper.SessionMgr;
+import com.testoptimal.server.model.ExecStatusInfo;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.ModelState;
 import com.testoptimal.stats.TagExec;
 
 public class ModelRunnerIDE extends ModelRunner {
 	public static enum MsgType {warn, info, error};
+	private static long MonitorStatsMillis = 5000;
 
 	private boolean pauseNext = false;	
 	private boolean debugMode = false;
 	private List<String> breakPoints = new ArrayList<>();
+	private long lastStatsMillis = System.currentTimeMillis();
 
 	public ModelRunnerIDE(String sessionId_p, ModelMgr modelMgr_p) throws Exception {
 		super(sessionId_p, modelMgr_p);
@@ -102,8 +105,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterMbtEnd() {
-		// TODO Auto-generated method stub
-		
+		this.sendExecStatus();
 	}
 
 	@Override
@@ -130,6 +132,7 @@ public class ModelRunnerIDE extends ModelRunner {
 		List<TagExec> failList = this.execDir.getSequenceNavigator().getCurTravObj().getFailedTagChecks();
 		List<String> retList = failList.stream().map(s -> s.getExecMsg()).collect(Collectors.toList());
     	IdeSvc.sendIdeMessage(this.httpSessId, new IdeMessage("error", retList.toString(), "MbtStarter.fail"));
+		this.sendExecStatus();
 	}
 
 	@Override
@@ -164,8 +167,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void exitState(State stateObj_p) throws MBTAbort {
-		// TODO Auto-generated method stub
-		
+		this.sendExecStatus();		
 	}
 
 	@Override
@@ -188,8 +190,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void exitTrans(Transition transObj_p) throws MBTAbort {
-		// TODO Auto-generated method stub
-		
+		this.sendExecStatus();
 	}
 	
 	@Override
@@ -198,5 +199,18 @@ public class ModelRunnerIDE extends ModelRunner {
 		ModelState m = new ModelState(this.modelMgr.getScxmlNode().getModelName(), this.httpSessId);
 		IdeSvc.sendIdeData(this.httpSessId, "model.ended", m);
 
+	}
+	
+	private void sendExecStatus() {
+		if (System.currentTimeMillis() - this.lastStatsMillis < MonitorStatsMillis) return;
+		try {
+			this.lastStatsMillis = System.currentTimeMillis();
+			ExecStatusInfo execInfo = new ExecStatusInfo();
+			execInfo.execStatus = this.execDir.getExecStat();
+			IdeSvc.sendIdeData(this.httpSessId, "model.stats", execInfo);
+		}
+		catch (Exception e) {
+			//
+		}
 	}
 }

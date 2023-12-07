@@ -1,56 +1,56 @@
 package com.testoptimal.server.controller.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ModelRunner;
 
 public class SimpleSessionMgr extends SessionMgr {
-	private List<ModelRunner> MbtSessionList = new java.util.ArrayList<>();
+	private ModelRunner MbtSession;
 	
 	@Override
-	public ModelRunner closeModel(String modelName_p, String sessId_p) {
-		ModelRunner m = this.getMbtStarterForModel(modelName_p, sessId_p);
-		if (m != null) {
-			this.MbtSessionList.remove(m);
+	public void addMbtStarter(ModelRunner mbtStarter_p) {
+		if (this.MbtSession!=null) {
+			this.MbtSession.stopMbt();
 		}
-		return m;
+		this.MbtSession = mbtStarter_p;
 	}
 
 	@Override
 	public List<ModelRunner> getMbtStarterForUserSession(String sessId_p) {
-		return this.MbtSessionList.stream().filter(s -> s.getHttpSessionID().equals(sessId_p)).collect(Collectors.toList());
-	}
-
-	@Override
-	public void closeModelAll(String email_p) {
-		this.getMbtStarterForUserSession(email_p).stream().forEach(s -> {
-			s.stopMbt();
-			this.MbtSessionList.remove(s);
-		});
+		List<ModelRunner> list = new ArrayList<ModelRunner>();
+		if (this.MbtSession!=null) {
+			list.add(this.MbtSession);
+		}
+		return list;
 	}
 
 	@Override
 	public ModelRunner getMbtStarterForModel(String modelName_p, String sessId_p) {
-		Optional<ModelRunner> opt = this.MbtSessionList.stream().filter(s -> s.getHttpSessionID().equals(sessId_p) && s.getModelMgr().getModelName().equals(modelName_p)).findFirst();
-		return opt.orElse(null);
-	}
-
-	@Override
-	public void addMbtStarter(ModelRunner mbtStarter_p) {
-		this.closeModel(mbtStarter_p.getModelMgr().getModelName(), mbtStarter_p.getHttpSessionID());
-		this.MbtSessionList.add(mbtStarter_p);
+		return this.MbtSession;
 	}
 
 	@Override
 	public ModelRunner getMbtStarterForMbtSession(String mbtSessId_p) {
-		Optional<ModelRunner> opt = this.MbtSessionList.stream().filter(s -> s.getMbtSessionID().equals(mbtSessId_p)).findFirst();
-		return opt.orElse(null);
+		return this.MbtSession;
 	}
 
 	@Override
-	public boolean closeModel(ModelRunner modelExec_p) {
-		return this.MbtSessionList.remove(modelExec_p);
+	public void closeModel(String modelName_p, String sessId_p) {
+		if (this.MbtSession!=null) {
+			this.MbtSession.stopMbt();
+		}
+		this.MbtSession = null;
+	}
+
+	@Override
+	public void closeModel(ModelRunner modelExec_p) {
+		this.MbtSession = null;
+	}
+
+	@Override
+	public void closeModelAll(String sessId_p) {
+		this.MbtSession = null;
 	}
 }

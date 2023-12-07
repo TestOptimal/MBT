@@ -1,4 +1,4 @@
-package com.testoptimal.client;
+package com.testoptimal.server.controller.helper;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
