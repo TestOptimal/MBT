@@ -1094,7 +1094,7 @@ function JSDState (diagram_p, pUID_p, parentStateWrapper_p, state_p) {
 			breakElem = elem.children(".JSDState-label").css("position", "absolute").children(".JSD-breakpoint");
 		}
 		else if (state.nodeType=="SWITCH") {
-			breakElem = elem.children(".JSDSwitch-middle").children(".JSDState-label").children(".JSD-breakpoint");
+			breakElem = elem.children(".JSDState-label").children(".JSD-breakpoint");
 		}
 		else {
 			breakElem = elem.children(".JSDState-label").children(".JSD-breakpoint");
