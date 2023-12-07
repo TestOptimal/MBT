@@ -1,7 +1,7 @@
 # TestOptimal / MBT
 [TestOptimal](https://testoptimal.com) Model-Based Testing (MBT) - intelligent test design and test automation
 
-Model application-under-test (AUT) with state diagram model (Finite-State-Machine FSM), let TestOptimal generate test cases with your choice of sequencer to achieve desired test coverage.
+Model application-under-test (AUT) with state diagram or BPM model, let TestOptimal generate test cases from the model with your choice of sequencer to achieve desired test coverage.
 
 To perform test automation, write test script ([groovy](https://groovy-lang.org/testing.html)) for transitions (and/or states) to drive AUT as TestOptimal executes the test cases for you.
 
