@@ -1,4 +1,4 @@
-package com.testoptimal.license;
+package com.testoptimal.util.misc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Base64;
 import java.util.Scanner;
-
-import com.testoptimal.util.misc.SysLogger;
 
 public class SerialNum {
 	private static String sn = null;

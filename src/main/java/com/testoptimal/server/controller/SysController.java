@@ -22,12 +22,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testoptimal.client.CodeAssist;
 import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.navigator.Navigator;
-import com.testoptimal.license.SerialNum;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.util.DateUtil;
+import com.testoptimal.util.misc.SerialNum;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.ServletRequest;

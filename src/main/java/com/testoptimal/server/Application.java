@@ -17,7 +17,6 @@ import org.springframework.core.env.Environment;
 import com.testoptimal.client.CodeAssistMgr;
 import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.exec.navigator.Navigator;
-import com.testoptimal.license.SerialNum;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.controller.helper.SessionMgr;
@@ -25,6 +24,7 @@ import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.stats.StatsMgr;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
+import com.testoptimal.util.misc.SerialNum;
 import com.testoptimal.util.misc.SysLogger;
 
 /**

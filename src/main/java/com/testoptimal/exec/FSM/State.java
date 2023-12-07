@@ -2,7 +2,7 @@ package com.testoptimal.exec.FSM;
 
 import java.util.List;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.util.StringUtil;
 

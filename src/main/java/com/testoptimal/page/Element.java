@@ -2,7 +2,7 @@ package com.testoptimal.page;
 
 import java.util.Map;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 
 import groovy.lang.Closure;
 

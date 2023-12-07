@@ -3,7 +3,7 @@ package com.testoptimal.exec.FSM;
 import java.util.List;
 
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.util.ArrayUtil;
 import com.testoptimal.util.StringUtil;

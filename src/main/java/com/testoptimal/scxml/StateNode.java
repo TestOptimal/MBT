@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.util.StringUtil;
 
 @IGNORE_INHERITED_METHOD

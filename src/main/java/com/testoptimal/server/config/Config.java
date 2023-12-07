@@ -15,9 +15,9 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.license.SerialNum;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
+import com.testoptimal.util.misc.SerialNum;
 
 /**
  * Config class must not call out other classes that have "static" initializer that may indirectly

@@ -1,10 +1,7 @@
 package com.testoptimal.exec.mcase;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-
 import groovy.lang.Closure;
 
-@IGNORE_INHERITED_METHOD
 public class MStep {
 	/**
 	 * 

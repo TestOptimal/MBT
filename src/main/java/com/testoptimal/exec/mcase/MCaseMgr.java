@@ -3,15 +3,12 @@ package com.testoptimal.exec.mcase;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-
 /**
  * Manages MCase objects. use "$SYS.getMCaseMgr()" to obtain this object.
  * 
  * @author yxl01
  *
  */
-@IGNORE_INHERITED_METHOD
 public class MCaseMgr {
 	private List<MCase> mcaseList = new java.util.ArrayList<>();
 

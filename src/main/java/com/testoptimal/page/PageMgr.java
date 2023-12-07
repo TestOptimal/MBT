@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.testoptimal.exception.MBTAbort;
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 
 /**
  * Manages page objects.  Use "$SYS.getPageMgr()" to obtain this object.

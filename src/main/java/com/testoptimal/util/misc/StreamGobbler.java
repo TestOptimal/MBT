@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
  * @author yxl01
  *
  */
-class StreamGobbler extends Thread {
+public class StreamGobbler extends Thread {
 	private static Logger logger = LoggerFactory.getLogger(StreamGobbler.class);
 
-    InputStream is;
+	InputStream is;
     boolean errStream = true;
     
-    StreamGobbler(InputStream is_p, boolean errStream_p) {
+    public StreamGobbler(InputStream is_p, boolean errStream_p) {
         this.is = is_p;
         this.errStream = errStream_p;
     }

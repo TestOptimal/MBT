@@ -1,13 +1,10 @@
 package com.testoptimal.exec.mscript;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-import com.testoptimal.plugin.RandPlugin;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.Config.OS;
 import com.testoptimal.util.MailUtil;
 
-@IGNORE_INHERITED_METHOD
 public class Util {
 	private static RandPlugin randPlugin = new RandPlugin();
 

@@ -2,8 +2,6 @@ package com.testoptimal.exec.mcase;
 
 import java.util.List;
 
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-
 import groovy.lang.Closure;
 
 /**
@@ -21,7 +19,6 @@ import groovy.lang.Closure;
  * @author yxl01
  *
  */
-@IGNORE_INHERITED_METHOD
 public class MCase {
 	private String name;
 	private List<MStep> stepList = new java.util.ArrayList<>();

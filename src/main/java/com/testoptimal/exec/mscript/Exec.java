@@ -2,7 +2,6 @@ package com.testoptimal.exec.mscript;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.testoptimal.exception.MBTAbort;
@@ -14,9 +13,7 @@ import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.mcase.MCase;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.page.Page;
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.stats.TagExec;
-import com.testoptimal.stats.exec.ExecStateTrans;
 import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.stats.exec.TestCaseStep;
 
@@ -27,7 +24,6 @@ import com.testoptimal.stats.exec.TestCaseStep;
  * 
  *
  */
-@IGNORE_INHERITED_METHOD
 public class Exec {
 	private MbtScriptExecutor scriptExec;
 	private ModelMgr modelMgr;

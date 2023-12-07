@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.mcase.MCase;
 import com.testoptimal.exec.mscript.Exec;
+import com.testoptimal.exec.mscript.RandPlugin;
 import com.testoptimal.exec.mscript.Util;
+import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
+import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.page.Page;
-import com.testoptimal.plugin.MScriptInterface.IGNORE_INHERITED_METHOD;
-import com.testoptimal.plugin.MScriptInterface.NOT_MSCRIPT_METHOD;
-import com.testoptimal.plugin.RandPlugin;
 import com.testoptimal.scxml.ScxmlNode;
 
 public class CodeAssistMgr {

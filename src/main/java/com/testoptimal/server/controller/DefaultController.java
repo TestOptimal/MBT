@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testoptimal.exec.navigator.Navigator;
-import com.testoptimal.license.SerialNum;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.model.ClientReturn;
@@ -25,6 +24,7 @@ import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
+import com.testoptimal.util.misc.SerialNum;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
