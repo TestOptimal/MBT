@@ -1,29 +1,25 @@
-# TestOptimal_Build
-TestOptimal Build Package
+# TestOptimal / MBT
+[TestOptimal](https://testoptimal.com) Model-Based Testing (MBT) - intelligent test design and test automation
 
-## Clone and Setup
-Git ignore was set up to ignore a set of working and binary folders to reduce the workspace size. These directories must be manually created:
-work/
-lib/
-build/
-target/
-h2db/
+Model application-under-test (AUT) with state diagram model (Finite-State-Machine FSM), let TestOptimal generate test cases with your choice of sequencer to achieve desired test coverage.
 
-On windows, you must also install Graphviz and copy the files to lib/Graphviz folder in order for model graph function to work:
-* bin/
-* etc/
-* fonts/
-* include/
-* lib/
+To perform test automation, write test script ([groovy](https://groovy-lang.org/testing.html)) for transitions (and/or states) to drive AUT as TestOptimal executes the test cases for you.
 
-You must also copy statsDB.mv.db from buildDef/shared/h2db/ folder to h2db/.
+## Tell me more
 
-TestOptimal uses nist acts combinatorial package.  You must manually copy/download acts-cmd.jar into your local .mvn repo as shown below:
+[This short video](https://www.youtube.com/watch?v=n6tZTlgHULc) gives a brief overview of TestOptima in action, or check out [list of tutorials](https://testoptimal.com/v6/wiki/doku.php?id=tutorial:tutorial_lst).
 
----
-	C:\Users\yxl01\.m2\repository\nist\acts-cmd\2.92
-		acts-cmd-2.92.jar	
----
+More information available at [wiki pages](https://testoptimal.com/wiki).
+
+There are a few DEMO models for you to play with it out of the box.  
+
+
+## Getting Started
+
+To get started, [download/install TestOptimal](https://testoptimal.com/#Download), start up TestOptimal server to run in the background and point your browser at http://localhost:8888 to bring up TestOptimal IDE.
+
+You can run TestOptimal MBT on your Windows, Mac or linux computer or as a docker container.  
+
 
 
 
