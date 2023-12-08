@@ -1,4 +1,4 @@
-package com.testoptimal.server.model;
+package com.testoptimal.server.model.agent;
 
 public class TestCmd {
 	public static enum Type { MBT_START, MBT_END, STATE, TRANSITION, FAIL, ERROR, ABORT, TIMEOUT }

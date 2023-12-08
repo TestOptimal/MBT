@@ -9,19 +9,25 @@ import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
-import com.testoptimal.server.model.TestCmd;
-import com.testoptimal.server.model.TestResult;
+import com.testoptimal.exec.FSM.TravBase;
+import com.testoptimal.exec.navigator.Navigator;
+import com.testoptimal.server.model.agent.TestCmd;
+import com.testoptimal.server.model.agent.TestResult;
 
 public class ModelRunnerAgent extends ModelRunner {
 	
 	private BlockingQueue<TestCmd> cmdQue = new ArrayBlockingQueue<>(200);
 	private BlockingQueue<TestResult> resultQue = new ArrayBlockingQueue<>(200);
 	private long agentTimeoutMilis;
+	private Navigator navigator;
+	private String mbtSessID;
 	
 	public ModelRunnerAgent(String sessionId_p, ModelMgr modelMgr_p, long agentTimeoutMillis_p) throws Exception {
 		super(sessionId_p, modelMgr_p);
 		this.execDir = new ExecutionDirector(this);
-
+		this.navigator = this.execDir.getSequenceNavigator();
+		this.mbtSessId = this.execSetting.getMbtSessionID();
+		
 		this.agentTimeoutMilis = agentTimeoutMillis_p;
 	}
 		
@@ -87,6 +93,8 @@ public class ModelRunnerAgent extends ModelRunner {
 		try {
 			this.cmdQue.put(cmdObj_p);
 			TestResult result = this.resultQue.poll(this.agentTimeoutMilis, TimeUnit.MILLISECONDS);
+			TravBase travObj = this.navigator.getCurTravObj();
+			travObj.addTagExec(result.reqTag, result.passed, result.result, result.assertID);
 			return result;
 		}
 		catch (Exception e) {

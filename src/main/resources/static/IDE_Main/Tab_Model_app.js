@@ -454,9 +454,8 @@ MainModule.controller("mainCtrl", function ($scope) {
 	
 	$scope.sendBreakpoints = function () {
 		parentWinObj.curAppState.toWS.wsSendModel('setBreakpoints', 
-			{   modelName: parentWinObj.curAppState.scxml.modelName, 
-				uidList: $scope.diagram.getBreakpoints()
-			});
+			$scope.diagram.getBreakpoints()
+		);
 	}
 	
 

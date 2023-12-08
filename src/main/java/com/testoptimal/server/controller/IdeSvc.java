@@ -24,7 +24,6 @@ import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.controller.helper.SessionMgr;
-import com.testoptimal.server.model.BreakpointInfo;
 import com.testoptimal.server.model.GuardStatus;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.ModelProp;
@@ -170,10 +169,10 @@ public class IdeSvc {
 
     @MessageMapping("/{modelName}/setBreakpoints")
    	public void setBreakpoints (@DestinationVariable("modelName") String modelName, 
-   			@Payload BreakpointInfo breakInfo, SimpMessageHeaderAccessor accessor) {
+   			@Payload String[] uidList, SimpMessageHeaderAccessor accessor) {
     	ModelRunnerIDE sess = (ModelRunnerIDE) SessionMgr.getInstance().getMbtStarterForModel(modelName, this.getHttpSessionId(accessor));
  	   	if (sess!=null && sess.isRunning()) {
-		   sess.setBreakpoints(Arrays.asList(breakInfo.uidList));
+		   sess.setBreakpoints(Arrays.asList(uidList));
 	   }
    	}
 

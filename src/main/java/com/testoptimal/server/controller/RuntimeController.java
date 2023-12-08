@@ -103,7 +103,8 @@ public class RuntimeController {
 	}
 	
 	@GetMapping(value = "session/{mbtSessID}/monitor", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExecutionStatus> monitorStats (@PathVariable (name="mbtSessID", required=true) String mbtSessID,
+	public ResponseEntity<ExecutionStatus> monitorStats (
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
 //		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);

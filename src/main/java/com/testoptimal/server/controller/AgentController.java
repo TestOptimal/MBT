@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,6 @@ import com.google.gson.Gson;
 import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.ModelRunnerAgent;
-import com.testoptimal.exec.ModelRunnerIDE;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.Application;
@@ -32,11 +32,10 @@ import com.testoptimal.server.config.Config;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.RunRequest;
-import com.testoptimal.server.model.TestCmd;
-import com.testoptimal.server.model.TestResult;
+import com.testoptimal.server.model.agent.TestCmd;
+import com.testoptimal.server.model.agent.TestResult;
 import com.testoptimal.server.model.parser.GherkinModel;
 import com.testoptimal.server.model.parser.ModelParserGherkin;
-import com.testoptimal.stats.exec.ExecStateTrans;
 import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
 
@@ -54,11 +53,11 @@ import jakarta.servlet.http.HttpServletRequest;
 @SecurityRequirement(name = "basicAuth")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
-public class ClientController {
-	private static Logger logger = LoggerFactory.getLogger(ClientController.class);
+public class AgentController {
+	private static Logger logger = LoggerFactory.getLogger(AgentController.class);
 	public static enum Status { success, error, timeout};
 
-	@PostMapping(value = "model/start", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/run", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> startModel (
 			@RequestBody RunRequest runReq, 
 			ServletRequest request) throws Exception, MBTAbort {
@@ -77,7 +76,8 @@ public class ClientController {
 			mbtSess.startMbt(runReq.mbtMode, runReq.options);
 			
 			Map<String, Object> m = ClientReturn.map("mbtSessID", mbtSess.getMbtSessionID());
-			m.put("statsURL", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + runReq.modelName + "/-1");
+			m.put("url.stats", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + runReq.modelName + "/" + mbtSess.getMbtSessionID());
+			m.put("url.monitor", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/session/" + mbtSess.getMbtSessionID() + "/monitor");
 			logger.info("model exec started, mbtSessID: " + mbtSess.getMbtSessionID());
 			m.put("status", "running");
 			return new ResponseEntity<>(m, HttpStatus.OK);
@@ -91,9 +91,10 @@ public class ClientController {
 		}
 	}
 
-	@GetMapping(value = "model/stop", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "session/{mbtSessID}/stop", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void stopModel (
-			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
 		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
@@ -105,9 +106,9 @@ public class ClientController {
 		}
 	}
 	
-	@GetMapping(value = "model/next", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/{mbtSessID}/next", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestCmd> nextStep (
-			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			@RequestParam (name="timeoutMillis", required=false) int timeoutMillis,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
@@ -122,9 +123,9 @@ public class ClientController {
 		return new ResponseEntity<>(cmdObj, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "model/result", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "session/{mbtSessID}/result", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void sendResult (
-			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			@RequestBody TestResult result,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
@@ -138,9 +139,9 @@ public class ClientController {
 	}
 	
 
-	@GetMapping(value = "model/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "session/{mbtSessID}/stats", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> getModelExec (
-			@RequestParam (name="mbtSessID", required=true) String mbtSessID,
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		ModelExec modelExec = null;
@@ -222,86 +223,8 @@ public class ClientController {
 		
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
-//
-//	@RequestMapping(value = "model/upload/csv", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<ClientReturn> uploadModelCSV (
-//			@RequestParam (name="modelName", required=true) String modelName,
-//			@RequestBody String modelCSV, 
-//			ServletRequest request) throws Exception {
-//		ModelParserCSV parser = new ModelParserCSV();
-//		try ( CSVReader reader = new CSVReader(new StringReader(modelCSV));) {
-//			List<String[]> r = reader.readAll();
-//			if (parser.parse(r)) {
-//				
-//			}
-//			else {
-//				throw new Exception ("Upload model in CSV failed to parse: " + parser.getErrMsg());
-//			}
-//		}
-//		ScxmlNode scxml = parser.getScxmlNode();
-//		scxml.setModelName(modelName);
-//		scxml.autoLayout();
-//		logger.info("ClientController.uploadModelTab: " + modelName);
-//
-//    	String modelRoot = Config.getModelRoot();
-//    	this.checkClientFolder("client");
-//
-//		String modelPath = FileUtil.findModelFolder(modelName);
-//    	if (modelPath==null) {
-//        	String clientFolderPath = FileUtil.concatFilePath(modelRoot, "client");
-//    		modelPath = FileUtil.concatFilePath(clientFolderPath, modelName + ".fsm");
-//    		
-//    		String tplPath = FileUtil.concatFilePath(modelRoot, ".tpl", "fsm.tpl");
-//    		int cnt = FileUtil.copyFolder(tplPath, modelPath, true);
-//    		if (cnt <= 0) throw new Exception ("Model create failed");
-//    	}
-//		String triggerFilePath = FileUtil.concatFilePath(modelPath, "model", "TRIGGERS.gvy");
-//		FileUtil.writeToFile(triggerFilePath, parser.getScripts().stream().collect(Collectors.joining("\n")));
-//
-//		ModelMgr modelMgr = new ModelMgr(modelName);
-//		modelPath = modelMgr.getModelFolderPath();
-//		scxml.save(modelPath);
-//		
-//		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
-//	}
-//	
 
-	@PostMapping(value = "model/gen", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RunResult> modelSeq (
-			@RequestBody RunRequest runReq, 
-			ServletRequest request) throws Exception, MBTAbort {
-		logger.info("model: " + runReq.modelName);
-		runReq.options.put("generateOnly", true);
-		String httpSessID = ((HttpServletRequest) request).getSession().getId();
-		long startMS = System.currentTimeMillis();
-		long timeoutMillis = 10000;
-		if (runReq.options.get("timeoutMillis")!=null) {
-			timeoutMillis = (int) runReq.options.get("timeoutMillis");
-		}
-		
-		ModelRunnerIDE sess = new ModelRunnerIDE(httpSessID, new ModelMgr(runReq.modelName));
-		SessionMgr.getInstance().addMbtStarter(sess);
-		sess.startMbt(false, runReq.mbtMode, runReq.options);
 
-		ModelExec modelExec = sess.getExecDirector().getExecStats();
-		RunResult result = this.makeReuslts(modelExec);
-		result.execMillis = System.currentTimeMillis() - startMS;
-		logger.info("model exec ended, mbtSessID: " + sess.getMbtSessionID());
-		
-		List<String> exceptList = sess.getModelMgr().getExceptionList();
-		if (!exceptList.isEmpty()) {
-			throw new Exception (exceptList.toString());
-		}
-		else if (sess.isRunning()) {
-			sess.stopMbt();
-			if (result.execMillis > timeoutMillis) {
-				result.errorMsg = "TIMEOUT after " + timeoutMillis + "ms" + ", adjust option timeoutMillis";
-				result.status = Status.timeout;
-			}
-		}
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	
 	
 	private RunResult makeReuslts (ModelExec modelExec_p) {
 		RunResult result = new RunResult ();
@@ -369,4 +292,86 @@ public class ClientController {
 		public long execMillis;
 		public Map<String, Object> results = new java.util.TreeMap();
 	}
+	
+
+//	@PostMapping(value = "model/gen", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<RunResult> modelSeq (
+//			@RequestBody RunRequest runReq, 
+//			ServletRequest request) throws Exception, MBTAbort {
+//		logger.info("model: " + runReq.modelName);
+//		runReq.options.put("generateOnly", true);
+//		String httpSessID = ((HttpServletRequest) request).getSession().getId();
+//		long startMS = System.currentTimeMillis();
+//		long timeoutMillis = 10000;
+//		if (runReq.options.get("timeoutMillis")!=null) {
+//			timeoutMillis = (int) runReq.options.get("timeoutMillis");
+//		}
+//		
+//		ModelRunnerIDE sess = new ModelRunnerIDE(httpSessID, new ModelMgr(runReq.modelName));
+//		SessionMgr.getInstance().addMbtStarter(sess);
+//		sess.startMbt(false, runReq.mbtMode, runReq.options);
+//
+//		ModelExec modelExec = sess.getExecDirector().getExecStats();
+//		RunResult result = this.makeReuslts(modelExec);
+//		result.execMillis = System.currentTimeMillis() - startMS;
+//		logger.info("model exec ended, mbtSessID: " + sess.getMbtSessionID());
+//		
+//		List<String> exceptList = sess.getModelMgr().getExceptionList();
+//		if (!exceptList.isEmpty()) {
+//			throw new Exception (exceptList.toString());
+//		}
+//		else if (sess.isRunning()) {
+//			sess.stopMbt();
+//			if (result.execMillis > timeoutMillis) {
+//				result.errorMsg = "TIMEOUT after " + timeoutMillis + "ms" + ", adjust option timeoutMillis";
+//				result.status = Status.timeout;
+//			}
+//		}
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
+//	
+	
+	//
+//	@RequestMapping(value = "model/upload/csv", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<ClientReturn> uploadModelCSV (
+//			@RequestParam (name="modelName", required=true) String modelName,
+//			@RequestBody String modelCSV, 
+//			ServletRequest request) throws Exception {
+//		ModelParserCSV parser = new ModelParserCSV();
+//		try ( CSVReader reader = new CSVReader(new StringReader(modelCSV));) {
+//			List<String[]> r = reader.readAll();
+//			if (parser.parse(r)) {
+//				
+//			}
+//			else {
+//				throw new Exception ("Upload model in CSV failed to parse: " + parser.getErrMsg());
+//			}
+//		}
+//		ScxmlNode scxml = parser.getScxmlNode();
+//		scxml.setModelName(modelName);
+//		scxml.autoLayout();
+//		logger.info("ClientController.uploadModelTab: " + modelName);
+//
+//    	String modelRoot = Config.getModelRoot();
+//    	this.checkClientFolder("client");
+//
+//		String modelPath = FileUtil.findModelFolder(modelName);
+//    	if (modelPath==null) {
+//        	String clientFolderPath = FileUtil.concatFilePath(modelRoot, "client");
+//    		modelPath = FileUtil.concatFilePath(clientFolderPath, modelName + ".fsm");
+//    		
+//    		String tplPath = FileUtil.concatFilePath(modelRoot, ".tpl", "fsm.tpl");
+//    		int cnt = FileUtil.copyFolder(tplPath, modelPath, true);
+//    		if (cnt <= 0) throw new Exception ("Model create failed");
+//    	}
+//		String triggerFilePath = FileUtil.concatFilePath(modelPath, "model", "TRIGGERS.gvy");
+//		FileUtil.writeToFile(triggerFilePath, parser.getScripts().stream().collect(Collectors.joining("\n")));
+//
+//		ModelMgr modelMgr = new ModelMgr(modelName);
+//		modelPath = modelMgr.getModelFolderPath();
+//		scxml.save(modelPath);
+//		
+//		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
+//	}
+//	
 }
