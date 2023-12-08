@@ -1,10 +1,9 @@
 
-FROM eclipse-temurin:17-jre-alpine
+FROM testoptimal/base:latest
 RUN apk add --no-cache wget unzip
 RUN apk add --no-cache graphviz
 RUN apk add firefox
-
-RUN mkdir /app
+ADD VERSION .
 
 RUN wget https://testoptimal.com/downloads/Rel-7.0/TestOptimal_7.0.3_mac.zip -O /app/TestOptimal.zip
 #COPY build/TestOptimal_7.0.3_mac.zip /app/TestOptimal.zip

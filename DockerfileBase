@@ -1,0 +1,11 @@
+
+FROM eclipse-temurin:17-jre-alpine
+RUN apk add --no-cache wget unzip
+RUN apk add --no-cache graphviz
+RUN apk add firefox
+
+RUN mkdir /app
+WORKDIR /app
+RUN cd /app
+
+ADD VERSION .

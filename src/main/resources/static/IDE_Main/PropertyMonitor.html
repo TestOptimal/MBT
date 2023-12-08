@@ -173,62 +173,12 @@
     		background: #E0E0E0;
     	}
     	
-    	a.cmd {
-    		font-style: italic;
-    		cursor: default; 
-    	}
-		    	
-		.hoverDropdown .dropdown-content {
-			display: none;
-		}		    	
-
-		.dropdown-content {
-			text-align: left;
-		    position: absolute;
-		    left: -8px;
-		    background-color: #f1f1f1;
-		    width: 200px;
-		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		    z-index: 99;
-		    padding-top: 8px;
-		    padding-bottom: 5px;
-		}
-		
-		.dropdown-content .menuItem {
-		    color: black;
-		    padding: 2px 8px;
-		    display: block;
-		    cursor: pointer;
-		    height: 20px;
-		}
-		
-		.dropdown-content .menuItem.extraPaddingTop {
-			padding-top: 8px;
-		}
-		
-		.dropdown-content .menuItem.extraPaddingBottom {
-			padding-bottom: 8px;
-		}
-		
-		.dropdown-content .menuItem:hover {
-			background-color: #ddd;
-		    text-decoration: none;
-		}
-		
-		.hoverDropdown:hover .dropdown-content {
-		    display: block;
-		}
-		
-		.dropdown .menu-label:hover {
-			font-weight: bold;
-		}
-
 		pre {
 			border: none;
 		}
 		
 		.CodeMirror {
-			height: 75px;
+			height: 175px;
 		}
 		
 		.cm-s-to div.CodeMirror-selected { 
@@ -308,7 +258,7 @@
 					</span>
 				</div>
 				<div ng-show="sectionExpanded.debugExpr">
-					<textarea class="form-control" 
+					<textarea class="form-control"
 						disabled class="script" id="scriptEditor"></textarea>
 				</div>
 				<div style="height: 195px; overflow: auto; background: transparent;" ng-show="sectionExpanded.debugExpr">
