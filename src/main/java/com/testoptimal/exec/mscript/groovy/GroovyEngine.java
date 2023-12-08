@@ -47,11 +47,11 @@ public class GroovyEngine {
 	private List<StepMethod> stepMethodList;
 	private GroovyScriptExec mainScriptExec;
 	
-    public GroovyEngine (String threadName_p, ModelMgr modelMgr_p) {
+    public GroovyEngine (String threadName_p, ModelMgr modelMgr_p, String tempScriptFolder_p) {
     	this.mainModelName = modelMgr_p.getModelName();
     	this.modelMgr = modelMgr_p;
 		this.threadName = threadName_p;
-		this.scriptFolderPath = modelMgr_p.getTempFolderPath();
+		this.scriptFolderPath = tempScriptFolder_p;
 //    }
 //    
 //    public void init (ModelMgr modelMgr_p) throws IOException, ScriptRuntimeException {
@@ -111,7 +111,7 @@ public class GroovyEngine {
 		if (scriptName.equalsIgnoreCase("TRIGGERS") && this.stepMethodList!=null && !this.stepMethodList.isEmpty()) {
 			// resolve STEPs
 			gScript_p = GroovyScript.resolveSteps (gScript_p, this.stepMethodList);
-			gScript_p.saveScript(FileUtil.concatFilePath(this.modelMgr.getTempFolderPath(), gScript_p.getModelName()));
+			gScript_p.saveScript(FileUtil.concatFilePath(this.scriptFolderPath, gScript_p.getModelName()));
 		}
 		
 		String modelName = gScript_p.getModelName();

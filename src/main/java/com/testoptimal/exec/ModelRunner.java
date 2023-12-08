@@ -58,13 +58,19 @@ public abstract class ModelRunner implements ExecListener {
 
 		try {
 			File folder = new File (this.modelMgr.getTempFolderPath());
-			if (folder.exists()) FileUtil.recursiveDelete (folder);
+			if (!folder.exists()) {
+				folder.mkdir();
+			}
+			folder = new File (folder, this.mbtSessId);
 			folder.mkdir();
 			folder = new File (this.modelMgr.getReportFolderPath());
-			if (folder.exists()) FileUtil.recursiveDelete (folder);
-			folder.mkdir();
+			if (!folder.exists()) {
+				folder.mkdir();
+			}
 			folder = new File (this.modelMgr.getStatsFolderPath());
-			if (!folder.exists()) folder.mkdir();
+			if (!folder.exists()) {
+				folder.mkdir();
+			}
 		}
 		catch (Exception e) {
 			logger.error("Failed setting model for execution " 

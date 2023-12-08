@@ -176,33 +176,16 @@ function TOServer (svrURL_p) {
 		});
 	}
 
-	function genPaths (modelName_p, mbtMode_p, timeoutMillis_p) {
-		return new Promise ((resolve, reject) => {
-			if (modelName_p instanceof Model) {
-				modelName_p = modelName_p.getModelName();
-			}
-			if (!mbtMode_p) {
-				mbtMode_p = "Optimal";
-			}
-			var req = { modelName: modelName_p, mbtMode: mbtMode_p, options: {}};
-			if (timeoutMillis_p>0) {
-				req.options["timeoutMillis"] = timeoutMillis_p;
-			}
-			postURL ("/api/v1/client/model/gen", conHeader, req, resolve, reject); 
-		});
-	}
 
-	function genPathsPartial (modelName_p, transList_p, optimal_p, timeoutMillis_p, successCB_p, errorCB_p) {
+	function genPaths (modelName_p, transList_p, timeoutMillis_p, successCB_p, errorCB_p) {
 		return new Promise ((resolve, reject) => {
 			var req = {modelName: modelName_p, mbtMode: optimal_p?'MarkedOptimal':'MarkedSerial', options: {}};
 			if (timeoutMillis_p > 0) {
 				req.options["timeoutMillis"] = timeoutMillis_p;
 			}
-			var transUIDs = [];
-			for (t in transList_p) {
-				transUIDs.push(t.getUid());
+			if (transList_p && transList_p.length > 0) {
+				req.options ["markList"] = transList_p.map(function(t) { return t.getUid(); });				
 			}
-			req.options ["markList"] = transUIDs;
 			postURL ("/api/v1/client/model/gen", conHeader, req, resovle, reject);
 		});
 	}
@@ -293,7 +276,6 @@ function TOServer (svrURL_p) {
 		uploadModel: uploadModel,
 		uploadDataSet: uploadDataSet,
 		genPaths: genPaths,
-		genPathsPartial: genPathsPartial,
 		getSummary: getSummary,
 		regAgent: regAgent,
 		nextCmd: nextCmd,

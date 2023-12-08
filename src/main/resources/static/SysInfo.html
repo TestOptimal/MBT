@@ -63,14 +63,13 @@
 <body ng-app="Main" ng-controller="mainCtrl" ng-cloak>
 	<div id="mainDIV" style="overflow: auto;">
 	<table border="0" width="100%" cellspacing="0" style="margin-bottom: 40px;">
-		<tr><td nowrap>Edition:</td><td>{{config["License.Edition"]}}</td></tr>
+		<tr><td nowrap>Edition:</td><td>{{config["License.Edition"]}} {{config["TestOptimalVersion"]}} <small>(build: {{config["releaseDate"]}})</small></td></tr>
 		<tr><td align="left">Sys ID:</td><td>{{config["sysID"]}}</td></tr>
 		<tr><td nowrap>Server URL:</td><td>{{config["hostport"]}}</td></tr>
 		<tr><td nowrap>IP Address:</td><td>{{config["ipaddress"]}}</td></tr>
 		<tr><td nowrap>OS Name:</td><td>{{config["osName"]}}</td></tr>
 		<tr><td nowrap>OS Version:</td><td>{{config["osVersion"]}}</td></tr>
 		<tr><td nowrap>Java Version:</td><td>{{config["javaVersion"]}}</td></tr>
-		<tr><td nowrap>TO Version:</td><td>{{config["TestOptimalVersion"]}} <small>(build: {{config["releaseDate"]}})</small></td></tr>
 		<tr ng-show="licReq"><td nowrap>License Status:</td><td>{{config["License.status"]}}</td></tr>
 		<tr ng-show="licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{config["expireDate"]}}</td></tr>
 		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licEmail"/></td></tr>

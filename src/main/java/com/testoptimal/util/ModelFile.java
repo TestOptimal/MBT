@@ -125,27 +125,27 @@ public class ModelFile {
 	}
 	
 	
-	/**
-	 * place a lock on the model by creating model.lock file with the licensed email.
-	 * @param modelName_p
-	 * @return null if lock is acquired or email of the user who already has the lock.
-	 */
-	public static String lockModel(String modelFolderPath_p, boolean forceLock_p) throws Exception {
-		String lockUser = getModelLock(modelFolderPath_p);
-		if (StringUtil.isEmpty(lockUser) || forceLock_p) {
-			try {
-				String modelLockFilePath = FileUtil.concatFilePath(modelFolderPath_p, modelLockFile);
-				FileUtil.writeToFile(modelLockFilePath, "License.getLicEmail()");
-			}
-			catch (Exception e) {
-				throw new Exception ("Failed to lock model " + modelFolderPath_p + ": " + e.getMessage());
-			}
-			return null;
-		}
-		else {
-			return lockUser.equalsIgnoreCase("License.getLicEmail()")? null: lockUser;
-		}
-	}
+//	/**
+//	 * place a lock on the model by creating model.lock file with the licensed email.
+//	 * @param modelName_p
+//	 * @return null if lock is acquired or email of the user who already has the lock.
+//	 */
+//	public static String lockModel(String modelFolderPath_p, boolean forceLock_p) throws Exception {
+//		String lockUser = getModelLock(modelFolderPath_p);
+//		if (StringUtil.isEmpty(lockUser) || forceLock_p) {
+//			try {
+//				String modelLockFilePath = FileUtil.concatFilePath(modelFolderPath_p, modelLockFile);
+//				FileUtil.writeToFile(modelLockFilePath, "License.getLicEmail()");
+//			}
+//			catch (Exception e) {
+//				throw new Exception ("Failed to lock model " + modelFolderPath_p + ": " + e.getMessage());
+//			}
+//			return null;
+//		}
+//		else {
+//			return lockUser.equalsIgnoreCase("License.getLicEmail()")? null: lockUser;
+//		}
+//	}
 	
 	
 	/**

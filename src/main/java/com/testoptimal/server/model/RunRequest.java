@@ -25,21 +25,12 @@ public class RunRequest {
 	 *   <li>stopReqCoveragePct: stop condition - stop MBT execution when the requirement coverage has reached the specified percentage</li>
 	 *   <li>stopAtFinalOnly: stop execution at final states only</li>
 	 *   <li>seqParams: additional sequencer parameters in the format of code=value, separate multiple settings with a semi-colon</li>
-	 *   <li>threadNum: number of threads (virtual users)</li>
-	 *   <li>threadDelay: number of milliseconds to wait between threads, used for load testing to control gradual ramping up load on AUT</li>
-	 *   <li>batchID: batch id (int) to associate this execution to</li>
-	 *   <li>batchGroup: the batch group to associate this execution to</li>
 	 *   <li>seed: int to set the seed to be used by random number generator</li>
 	 *   <li>initScript: groovy script to be executed before model execution. use this to set user variables. This overrides "Initialization Script" in model setting.</li>
-	 *   <li>autoClose: true/false to set Auto Close model after model execution.</li>
-	 *   <li>MCaseList: array of MCase names to execute the specified MCases</li>
+	 *   <li>autoClose: true/false to clear model execution from memory.</li>
+	 *   <li>MCaseList: array of MCase names to execute the specified MCases (ProMBT)</li>
 	 *   <li>statDesc: to save execution stats to the database</li>
 	 * 	 <li>markList: array of UIDs for states and/or transitions</li>
-	 * 	 <li>debug: boolean true to enable debug - internal use only by IDE</li>
-	 *   <li>breakpoints: array of UIDs for states and/or transitions, internal use only</li>
-	 *   <li>submitEmail: email/id that submitted the model for execution</li>
-	 *   <li>hostList: list of host names preferred to run the model</li>
-	 *   <li>catCodes: list of catCode separated by comma to find runtime server to run the model</li>
 	 *   </ul>
 	 * 
 	 */

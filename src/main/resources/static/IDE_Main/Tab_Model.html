@@ -843,19 +843,6 @@
 			</form>
 		</div>
 	</div>
-	<div ng-show="FloatViewID=='AnnotView'" id="AnnotView">
-		<div class="viewHeader">
-			<span class="icon-ctrl glyphicon glyphicon-film"></span>
-			<span title="click to highlight state" ng-show="curPropNodeData.curNodeData.typeCode=='state'" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">&#9723; {{curPropNodeData.curNodeData.stateID}}</span>
-			<span title="click to highight transition" ng-show="curPropNodeData.curNodeData.typeCode=='transition'" ng-click="hiLiteStateTrans(curPropNodeData.curNodeData.uid)">&#8605; {{curPropNodeData.curNodeData.event}}</span>
-		</div>
-		<div>
-			<div class="mdd_toolbar"></div>
-			<textarea rows="12" id="mdd_editor" class="mdd_editor" style="margin-top: 8px;"></textarea>
-			<div class="mdd_resizer"></div>
-			<div class="mdd_preview"></div>
-		</div>
-	</div>
 	<div ng-show="FloatViewID=='Search'" id="SearchView">
 		<div class="viewHeader">
 			<span class="icon-ctrl glyphicon glyphicon-search"></span>

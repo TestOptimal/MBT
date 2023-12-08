@@ -124,8 +124,8 @@ public class IdeSvc {
    		}
 
  	   	// start model execution
-    	if (StringUtil.isEmpty((String)req.options.get("submitEmail"))) {
-    		req.options.put("submitEmail", "License.getLicEmail()");
+    	if (StringUtil.isEmpty((String)req.options.get("submitedBy"))) {
+    		req.options.put("submitedBy", Config.getProperty("License.Email"));
     	}
     	try {
     		sess = new ModelRunnerIDE (httpSessionId, new ModelMgr(req.modelName));

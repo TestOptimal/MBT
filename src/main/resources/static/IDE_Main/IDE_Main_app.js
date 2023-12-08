@@ -57,10 +57,7 @@ var curAppState = {
 	},
 	setModelEditorMode: function(mode_p) {
 		scope.flags.modelEditorMode = mode_p;
-		if (mode_p=="mark") {
-			scope.flags.seqMode = "MarkedOptimal";
-		}
-		else scope.flags.seqMode = "Optimal";
+		scope.flags.seqMode = "Optimal";
 		scope.$apply();
 	},
 	openDialog: function (winName_p) {
@@ -239,7 +236,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		help: { menuFunc: "curAppState.winMgr.openWin ('Help')", classes: "", title: "TestOptimal online help documentation/wiki", label: "Online Wiki", helpMenu: true},
 		forum: { menuFunc: "curAppState.winMgr.openWin ('Forum')", classes: "", label: "Community Forum", title: "TestOptimal Community Discussion Forum"},
 		support: { menuFunc: "curAppState.winMgr.openWin ('Support');", classes: "", label: "Contact Us", title: "submit sales-questions or for ProMBT users support-tickets"},
-		manageLic: { menuFunc: "$scope.openDialog('License')", classes: "extraPaddingTop", label: "System Info", title: "System information"},
+		sysInfo: { menuFunc: "$scope.openDialog('SysInfo')", classes: "extraPaddingTop", label: "System Info", title: "System information"},
 		serverLog: { menuFunc: "curAppState.openSvrLog(true)", classes: "extraPaddingTop", toolbar: true, icon: "glyphicon-alert", label: "Server Log", title: "Server Log window"},
 		MScriptLog: {menuFunc: "curAppState.openModelLog(true)", label: 'Model Log', classes: "", toolbar: true, icon: 'glyphicon-warning-sign', title: "Model script log file", hide: "noModelOpen"},
 		resetShortcuts: {menuFunc: "$scope.initShortcuts()", label: 'Reset Shortcuts', classes: "extraPaddingTop", title: "Resets toolbar"},
@@ -299,7 +296,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		  $scope.actionList.help,
 		  $scope.actionList.forum,
 		  $scope.actionList.support,
-		  $scope.actionList.manageLic,
+		  $scope.actionList.sysInfo,
 	      $scope.actionList.toggleFS,
 	      $scope.actionList.serverLog,
 	      $scope.actionList.swaggerUI
@@ -354,9 +351,9 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 				width: 600,
 				height: 500
 			},
-			License: {
+			SysInfo: {
 				title: 'System Info',
-				srcFrame: 'ManageLicense.html',
+				srcFrame: 'SysInfo.html',
 				width: 500,
 				height: 450,
 			},

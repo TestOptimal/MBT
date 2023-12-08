@@ -2,6 +2,7 @@ package com.testoptimal.stats;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +89,20 @@ public class StatsMgr {
 					.skip(keepNum)
 					.map(s -> s.mbtSessID)
 					.collect(Collectors.toList());
-			int deletedCount = statsMgr.deleteStats(modelName_p, mbtSessList);
-			return deletedCount;
+			List<String> dList = statsMgr.deleteStats(modelName_p, mbtSessList);
+			// purge temp folder
+			File f = new File(modelMgr.getTempFolderPath());
+			Arrays.asList(f.list()).stream()
+				.filter(n -> mbtSessList.contains(n))
+				.forEach(n -> {
+					try {
+						FileUtil.recursiveDelete(new File (f, n));
+					}
+					catch (Exception e) {
+						// ok
+					}
+				});
+			return dList.size();
 		}
 		catch (Exception e) {
 			logger.warn("Error cleaning up stats for model " + modelName_p);

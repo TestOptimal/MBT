@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.testoptimal.exec.FSM.ModelMgr;
@@ -51,25 +52,24 @@ public class SimpleStatsMgr implements ManageStats {
 	}
 
 	@Override
-	public int deleteStats(String modelName_p, List<String> mbtSessIDList_p) {
+	public List<String> deleteStats(String modelName_p, List<String> mbtSessIDList_p) {
+		List<String> dList = new java.util.ArrayList<>();
 		String modelFolder = FileUtil.findModelFolder(modelName_p);
-		if (!FileUtil.exists(modelFolder)) {
-			return 0;
+		if (FileUtil.exists(modelFolder)) {
+			dList =  mbtSessIDList_p.stream()
+				.map(m -> {
+					try {
+						FileUtil.deleteOneFile(modelFolder + "/stats/" + m + ".json");
+						return m;
+					}
+					catch (Exception e) {
+						return null;
+					}
+				})
+				.filter(f -> f!=null)
+				.collect(Collectors.toList());
 		}
-		int deleted = (int) mbtSessIDList_p.stream()
-			.map(m -> modelFolder + "/stats/" + m + ".json")
-			.map(f -> {
-				try {
-					FileUtil.deleteOneFile(f);
-					return f;
-				}
-				catch (Exception e) {
-					return null;
-				}
-			})
-			.filter(f -> f!=null)
-			.count();
-		return deleted;
+		return dList;
 	}
 
 }

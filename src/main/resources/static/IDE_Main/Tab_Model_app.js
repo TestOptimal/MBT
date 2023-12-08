@@ -111,14 +111,6 @@ MainModule.controller("mainCtrl", function ($scope) {
 		$scope.FloatViewVisible = !$scope.FloatViewVisible;
 	}
 
-	$scope.openAnnotView = function (curNodeData) {
-		if ($scope.setCurPropNodeData(curNodeData)) {
-			$("#mdd_editor").val($scope.curPropNodeData.curNodeData.annot);
-			$("#mdd_editor").focus();
-			$scope.openView ("AnnotView");
-		}
-	}
-	
 	$scope.annotSave = function () {
 		var mdText = $("#mdd_editor").val();
 		$scope.curPropNodeData.curNodeData.annot = mdText;
@@ -389,10 +381,6 @@ MainModule.controller("mainCtrl", function ($scope) {
 			$scope.openView(id, clickObj);
 			$scope.$apply();
 		}
-//		else if (id=="StateAnnot" || id=="TransAnnot") {
-//			$scope.openView("AnnotView", clickObj);
-//			$scope.$apply();
-//		}
 		else if (id=="StateTrigger") {
 			$scope.gotoStateTrigger (clickObj);
 		}
@@ -618,15 +606,17 @@ MainModule.controller("mainCtrl", function ($scope) {
 					$scope.addMsg({type: "alert", text: "No current execution stats found."});
 					return;
 				}
-				var uidListCovered = Stream(execStatsDetails.stateTransList)
+				var stateTransList = Object.entries(execStatsDetails.stateMap).concat(Object.entries(execStatsDetails.transMap))
+						.map(function(d) { return d[1];} );
+				var uidListCovered = Stream(stateTransList)
 					.filter (function (s) { return s.failCount == 0 && s.passCount >= s.minTravRequired})
 					.map(function (s) { return s.UID; }).toArray();
 
-				var uidListPartial = Stream(execStatsDetails.stateTransList)
+				var uidListPartial = Stream(stateTransList)
 					.filter (function (s) { return s.failCount == 0 && s.passCount > 0 && s.passCount < s.minTravRequired})
 					.map(function (s) { return s.UID; }).toArray();
 				
-				var uidListFailed = Stream(execStatsDetails.stateTransList)
+				var uidListFailed = Stream(stateTransList)
 					.filter (function (s) { return s.failCount > 0})
 					.map(function (s) { return s.UID; }).toArray();
 

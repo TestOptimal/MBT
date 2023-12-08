@@ -61,7 +61,7 @@ guidedTourList.ide = function () {
 		},
 		{ title: "Help", 
 		  element: '#helpMenu',
-		  content: "<p>Helpful resources including Manage License, check for software updates, server log file, and more.</p>", 
+		  content: "<p>Helpful resources including Sys Info, server log file, REST api and more.</p>", 
 		  placement: "left", 
 			onShown: function(tour) {
 				var stepNum = tour.getCurrentStep();

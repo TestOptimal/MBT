@@ -6,6 +6,7 @@ import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.server.controller.helper.SessionMgr;
 
 public class ModelRunnerClient extends ModelRunner {
 	
@@ -57,7 +58,9 @@ public class ModelRunnerClient extends ModelRunner {
 
 	@Override
 	public void exitMbtEnd() {
-	
+		if (this.execSetting.getOption("autoClose")!=null && (boolean) this.execSetting.getOption("autoClose")) {
+			SessionMgr.getInstance().closeModel(this.modelMgr.getModelName(), this.httpSessId);
+		}
 	}
 
 	@Override

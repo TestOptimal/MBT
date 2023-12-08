@@ -12,12 +12,12 @@ import cern.jet.random.Uniform;
  *
  */
 public final class RandPlugin {
-	private Random randObj = new Random(37);
-	
 	private static String lowerAlphabets = "abcdefghijklmnopqrstuvwxyz";
 	private static String upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static String numbers = "0123456789";
 	private static String alphaNumeric = lowerAlphabets + upperAlphabets + numbers;
+
+	private Random randObj = new Random();
 
 	/**
 	 * returns a random integer number between startInt_p (inclusive) and endInt_p (exclusive).

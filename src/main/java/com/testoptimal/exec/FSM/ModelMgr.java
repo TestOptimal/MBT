@@ -299,8 +299,10 @@ public class ModelMgr {
 		return dsList;
 	}
 
-	public List<GroovyScript> getScriptForExec () throws Exception {
-		String scriptTempFolder = this.getTempFolderPath();
+	public List<GroovyScript> getScriptForExec (String mbtSessID_p) throws Exception {
+		String scriptTempFolder = this.getTempFolderPath() + mbtSessID_p;
+//		File f = new File (scriptTempFolder);
+//		f.mkdir();
 		List<GroovyScript> retList = this.getScriptList();
 		for (GroovyScript gScript: retList) {
 			String outFolder = FileUtil.concatFilePath(scriptTempFolder, gScript.getModelName());

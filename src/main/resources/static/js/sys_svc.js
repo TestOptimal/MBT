@@ -166,18 +166,6 @@ MainModule.factory ('StatsSvc', function(SvrRest) {
 		SvrRest.get (StatsSvc.base + "exec/" + modelName + "/" + mbtSessID, successCB, errorCB);
 	};
 	
-	StatsSvc.setModelExecKeep = function (modelName, mbtSessID, keepFlag, successCB, errorCB) {
-		SvrRest.get (StatsSvc.base + "exec/" + modelName + "/" + mbtSessID + "/setKeep/" + keepFlag, successCB, errorCB);
-	};
-
-	StatsSvc.delModelExec = function (modelName, mbtSessID, successCB, errorCB) {
-		SvrRest.delete (StatsSvc.base + "exec/" + modelName + "/" + mbtSessID, successCB, errorCB);
-	};
-	
-	StatsSvc.modelFailedTC = function (modelName, mbtSessID, successCB, errorCB) {
-		SvrRest.get (StatsSvc.base + "model/" + modelName + "/failedTC?mbtSessID=" + mbtSessID, successCB, errorCB);
-	};
-	
 	StatsSvc.dashboard = function (successCB, errorCB) {
 		SvrRest.get (StatsSvc.base + "dashboard", successCB, errorCB);
 	};

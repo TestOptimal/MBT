@@ -10,6 +10,6 @@ public interface ManageStats {
 	public ModelExec getStats (ModelMgr modelMgr_p, String mbtSessID_p) throws Exception;
 	public void save(ModelExec execStats_p) throws Exception;
 	
-	// returns # of deleted
-	public int deleteStats (String modelName_p, List<String> mbtSessIDList_p);
+	// returns mbtSessID deleted
+	public List<String> deleteStats (String modelName_p, List<String> mbtSessIDList_p);
 }

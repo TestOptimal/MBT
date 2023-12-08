@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
+import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
@@ -35,10 +36,18 @@ public class SequencerOptimal implements Sequencer {
 	private int curPathIdx = -1;
 	private SequencePath curPath = null;
 	private int curTransIdxInPath = -1;
+	private int traversedTransCost = 500;
 	
 	public SequencerOptimal (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
 		this.execSetting = this.execDir.getExecSetting();
+
+    	ModelMgr modelMgr = execSetting.getModelMgr();
+        StateNetwork networkObj = execSetting.getNetworkObj();
+        List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
+		if (!reqTransList.isEmpty()) {
+	    	networkObj.markRequiredTrans(reqTransList, this.traversedTransCost, modelMgr);
+		}
 
 		this.pathList = this.genPathList();
 		logger.info("paths to cover: " + this.pathList.size());

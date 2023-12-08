@@ -1,5 +1,6 @@
 package com.testoptimal.exec.mscript;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mcase.MCaseMgr;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
@@ -18,9 +18,7 @@ import com.testoptimal.exec.mscript.groovy.GroovyEngine;
 import com.testoptimal.exec.mscript.groovy.GroovyScript;
 import com.testoptimal.exec.page.PageMgr;
 import com.testoptimal.scxml.ScxmlNode;
-import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
-import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ExecTestCase;
 import com.testoptimal.util.StringUtil;
 
@@ -78,7 +76,10 @@ public class MbtScriptExecutor implements MScriptInterface {
 	
 
 	public void initGroovyMScript (ModelMgr modelMgr_p) throws MBTAbort, Exception {
-		this.groovyEngine = new GroovyEngine(modelMgr_p.getModelName(), modelMgr_p);
+		String tempScriptFolder = modelMgr_p.getTempFolderPath() + this.execDirector.getMbtSessionID();
+		File f = new File (tempScriptFolder);
+		f.mkdir();
+		this.groovyEngine = new GroovyEngine(modelMgr_p.getModelName(), modelMgr_p, tempScriptFolder);
 		if (this.execDirector.getExecSetting().isGenOnly()) {
 			this.groovyEngine.setNoOp();
 		}

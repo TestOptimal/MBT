@@ -76,7 +76,7 @@ public final class ExecutionDirector extends Thread {
 		
 		ScxmlNode scxmlNode = modelMgr.getScxmlNode();
 		logger.info ("Starting model " + modelName);
-		this.gScriptList = modelMgr.getScriptForExec();
+		this.gScriptList = modelMgr.getScriptForExec(mbtSession_p.getMbtSessionID());
 		this.dataSetList = modelMgr.getDataSetList();
 		
 		logger.info(">>> MBT Execution Started");
