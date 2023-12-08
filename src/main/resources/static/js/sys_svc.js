@@ -1,54 +1,4 @@
 
-
-
-MainModule.factory ('APITestSvc', function(SvrRest) {
-	var APITestSvc = { 
-		base: "/api/v1/apitest/"
-	};
-
-	APITestSvc.newAPITest = function (api, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + encodeURIComponent(api.apiName);
-		SvrRest.post(url, api, successCB, errorCB);
-	};
-
-	APITestSvc.saveAPITest = function (apiName, api, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + encodeURIComponent(apiName);
-		SvrRest.put(url, api, successCB, errorCB);
-	};
-	
-	APITestSvc.renameAPITest = function (path, apiName, newAPIName, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + apiName + "/rename?path=" + encodeURIComponent(path) + "&newApiName=" + newAPIName;
-		SvrRest.get(url, successCB, errorCB);
-	};
-	
-	APITestSvc.cloneAPITest = function (path, apiName, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + encodeURIComponent(apiName) + "/clone?path=" + encodeURIComponent(path);
-		SvrRest.get(url, successCB, errorCB);
-	};
-
-	APITestSvc.delAPITest = function (path, apiName, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + encodeURIComponent(apiName) + "?path=" + encodeURIComponent(path);
-		SvrRest.delete(url, successCB, errorCB);
-	};
-	
-	APITestSvc.getAPITest = function (path, apiName, successCB, errorCB) {
-		var url = APITestSvc.base + "apiset/" + encodeURIComponent(apiName) + "?path=" + encodeURIComponent(path);
-		SvrRest.get(url, successCB, errorCB);
-	};
-	
-	APITestSvc.parseSwagger = function (swaggerDoc, successCB, errorCB) {
-		var url = APITestSvc.base + "swagger/parse";
-		SvrRest.post(url, swaggerDoc, successCB, errorCB);
-	};
-	
-	APITestSvc.getURL = function (url, successCB, errorCB) {
-		SvrRest.get(url, successCB, errorCB);
-	};
-	
-	return APITestSvc;
-});
-
-
 MainModule.factory ('AlmSvc', function(SvrRest) {
 	var AlmSvc = { 
 		base: "/api/v1/alm/"
@@ -62,7 +12,6 @@ MainModule.factory ('AlmSvc', function(SvrRest) {
 		SvrRest.put (AlmSvc.base + modelName + "/requirement", reqConfig, successCB, errorCB);
 	};
 
-	
 	return AlmSvc;
 });
 
@@ -134,10 +83,6 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		SvrRest.get (url, successCB, errorCB);
 	};
 	
-	FileSvc.getSvrLogUrl = function () {
-		return FileSvc.base + "log/tosvr";
-	};
-
 	FileSvc.getModelDownloadUrl = function (modelName) {
 		return FileSvc.base + "model/" + modelName + "/download";
 	};
@@ -153,7 +98,6 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 	FileSvc.getSvrLog = function (successCB, errorCB) {
 		SvrRest.get(FileSvc.base + "log/tosvr", successCB, errorCB);
 	};
-	
 	
 	return FileSvc;
 })
@@ -203,7 +147,7 @@ MainModule.factory ('RuntimeSvc', function(SvrRest) {
 	};
 
 	RuntimeSvc.getModelLog = function (mbtSessID, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/" + mbtSessID + "/log", successCB, errorCB);
+		SvrRest.get (RuntimeSvc.base + "session/" + mbtSessID + "/log", successCB, errorCB);
 	}
 
 	return RuntimeSvc;
@@ -268,16 +212,8 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "template", successCB, errorCB);
 	};
 
-//	SysSvc.getLicDetails = function (successCB, errorCB) {
-//		SvrRest.get (SysSvc.base + "sysinfo", successCB, errorCB);
-//	};
-
 	SysSvc.saveLic = function (licEmail, licKey, successCB, errorCB) {
 		SvrRest.get (SysSvc.base + "lic/save?email=" + licEmail + "&licKey=" + encodeURIComponent(licKey), successCB, errorCB);
-	};
-
-	SysSvc.about = function (successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "about", successCB, errorCB);
 	};
 
 	SysSvc.getCA = function (successCB, errorCB) {

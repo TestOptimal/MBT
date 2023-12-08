@@ -61,6 +61,7 @@ public class ModelExecSummary {
 		this.testCaseFailed = (int) modelExec_p.tcList.stream().filter(t -> t.status==Status.failed).count();
 		this.testStepNum = (int) modelExec_p.tcList.stream().flatMap(t -> t.stepList.stream()).count();
 		this.testItemNum = (int) modelExec_p.tcList.stream().flatMap(t -> t.stepList.stream()).flatMap(s -> s.itemList.stream()).count();
+		this.status = this.testCaseFailed == 0 && this.testCasePassed > 0? ModelExec.Status.passed: ModelExec.Status.failed;
 	}
 }
 	

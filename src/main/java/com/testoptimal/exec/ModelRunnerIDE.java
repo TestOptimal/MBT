@@ -11,7 +11,6 @@ import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.server.controller.IdeSvc;
 import com.testoptimal.server.controller.helper.SessionMgr;
-import com.testoptimal.server.model.ExecStatusInfo;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.server.model.ModelState;
 import com.testoptimal.stats.TagExec;
