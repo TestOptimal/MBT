@@ -20,7 +20,7 @@ import com.testoptimal.exec.mscript.RandPlugin;
 import com.testoptimal.exec.mscript.Util;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
-import com.testoptimal.page.Page;
+import com.testoptimal.exec.page.Page;
 import com.testoptimal.scxml.ScxmlNode;
 
 public class CodeAssistMgr {

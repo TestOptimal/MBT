@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;

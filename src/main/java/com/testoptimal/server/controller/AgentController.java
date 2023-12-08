@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.ModelRunnerAgent;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;

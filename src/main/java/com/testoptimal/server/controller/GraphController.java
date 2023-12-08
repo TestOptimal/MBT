@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.graphing.plantuml.MSC_Graph;
 import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;

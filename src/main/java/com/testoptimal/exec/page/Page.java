@@ -1,8 +1,8 @@
-package com.testoptimal.page;
+package com.testoptimal.exec.page;
 
 import java.util.Map;
 
-import com.testoptimal.exception.MBTException;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 
 import groovy.lang.Closure;

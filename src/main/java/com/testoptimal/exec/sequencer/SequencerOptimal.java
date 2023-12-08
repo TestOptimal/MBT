@@ -5,11 +5,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.navigator.SequencePath;
 import com.testoptimal.exec.navigator.Sequencer;
 

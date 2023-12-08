@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.graphing.plantuml.MSC_Graph;
 import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;

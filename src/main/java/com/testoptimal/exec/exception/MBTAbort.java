@@ -1,4 +1,4 @@
-package com.testoptimal.exception;
+package com.testoptimal.exec.exception;
 
 /**
  * Signal MBT execution abort

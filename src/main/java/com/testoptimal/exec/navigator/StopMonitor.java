@@ -3,10 +3,10 @@ package com.testoptimal.exec.navigator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.scxml.StopCondition;
 import com.testoptimal.server.model.Requirement;
 

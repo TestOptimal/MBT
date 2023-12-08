@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.testoptimal.exception.MBTException;
+import com.testoptimal.exec.exception.MBTException;
 
 
 public class DateUtil {

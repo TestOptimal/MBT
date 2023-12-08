@@ -9,9 +9,9 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.exception.MBTAbort;
-import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.exec.mscript.STEP;
 import com.testoptimal.exec.mscript.StepMethod;
 import com.testoptimal.scxml.ScxmlNode;

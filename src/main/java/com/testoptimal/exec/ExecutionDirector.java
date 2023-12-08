@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
 import com.testoptimal.exec.mscript.groovy.GroovyScript;

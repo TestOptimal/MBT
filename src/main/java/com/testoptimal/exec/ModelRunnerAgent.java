@@ -5,11 +5,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.navigator.Navigator;
 import com.testoptimal.server.model.agent.TestCmd;
 import com.testoptimal.server.model.agent.TestResult;

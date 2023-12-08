@@ -14,7 +14,7 @@ import org.codehaus.groovy.runtime.InvokerInvocationException;
 import org.codehaus.groovy.runtime.StackTraceUtils;
 import org.codehaus.groovy.syntax.SyntaxException;
 
-import com.testoptimal.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.TRIGGER;
 
 import groovy.lang.Binding;

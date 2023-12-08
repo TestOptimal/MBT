@@ -1,8 +1,8 @@
 package com.testoptimal.exec;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
+import com.testoptimal.exec.exception.MBTAbort;
 
 public interface ExecListener {
 

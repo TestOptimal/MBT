@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
@@ -14,6 +13,7 @@ import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.FSM.TravState;
 import com.testoptimal.exec.FSM.TravTrans;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 
 public class Navigator {

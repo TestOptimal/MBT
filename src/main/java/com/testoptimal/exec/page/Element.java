@@ -1,4 +1,4 @@
-package com.testoptimal.page;
+package com.testoptimal.exec.page;
 
 import java.util.Map;
 

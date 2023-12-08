@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.ExecutionStatus;
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.ModelRunnerClient;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.controller.helper.SessionInfo;

@@ -3,9 +3,9 @@ package com.testoptimal.exec.FSM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.exception.MBTAbort;
-import com.testoptimal.exception.MBTException;
 import com.testoptimal.exec.ExecutionDirector;
+import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.scxml.StateNode;
 import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;

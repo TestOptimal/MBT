@@ -2,10 +2,10 @@ package com.testoptimal.exec;
 
 import java.util.Map;
 
-import com.testoptimal.exception.MBTAbort;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
+import com.testoptimal.exec.exception.MBTAbort;
 
 public class ModelRunnerClient extends ModelRunner {
 	
