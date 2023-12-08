@@ -642,7 +642,7 @@ MainModule.controller("mainCtrl", function ($scope) {
 		scope = $scope;
 		parentWinObj.curAppState.toWS.wsSubscribe('model.started', function (packet) {
 			parentWinObj.curAppState.addMsg({type: "alert", text: "Model execution started", source: "ModelEditor"});
-        	parentWinObj.curAppState.modelState.running = JSON.parse(packet.body);
+        	parentWinObj.curAppState.modelState = JSON.parse(packet.body);
         	$scope.$apply();
 		}, "ModelEditor");
 

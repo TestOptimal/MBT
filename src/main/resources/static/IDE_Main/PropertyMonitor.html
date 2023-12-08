@@ -31,8 +31,6 @@
 			$scope.curAppState = parent.curAppState;
 			$scope.progressBarWidth = 150;
 			$scope.progressBarHeight = 10;
-			$scope.refreshInterval = 5000;
-			$scope.refreshTimeout;
 			$scope.debug = parent.curAppState.debug;
 
 			$scope.sectionExpanded = {
@@ -41,37 +39,8 @@
 				debugExpr: true
 			}
 
-			$scope.startAutoRefresh = function () {
-				if ($scope.refreshTimeout) {
-					clearTimeout($scope.refreshTimeout);
-				}
-				$scope.refresh();
-				$scope.refreshTimeout = setTimeout($scope.startAutoRefresh, $scope.refreshInterval);
-			}
-			
-			$scope.stopAutoRefresh = function () {
-				if ($scope.refreshTimeout) {
-					clearTimeout($scope.refreshTimeout);
-				}
-				$scope.refreshTimeout = null;
-				$scope.refresh();
-			}
-			
-			$scope.refresh = function () {
-				$scope.curAppState = parent.curAppState;
-				if ($scope.curAppState.scxml == undefined) {
-					return;
-				}
-				
-				parent.curAppState.toSvc.RuntimeSvc.modelMonitor (parent.curAppState.scxml.modelName, $scope.updateProgress);
-//				if (!$scope.curAppState.modelState.running) {
-//					clearTimeout($scope.refreshTimeout);
-//					$scope.refreshTimeout = null;
-//				}
-			}
-			
 			$scope.updateProgress = function (data) {
-				$scope.execStatus = data.execStatus;
+				$scope.execStatus = data;
 				if ($scope.execStatus) {
 					if ($scope.execStatus.startDT) {
 						$scope.execStatus.startDT = new Date($scope.execStatus.startDT);
@@ -98,18 +67,6 @@
 			}
 
 			$scope.init = function () {
-				parent.curAppState.toWS.wsSubscribe('model.ended', function (packet) {
-//					$scope.stopAutoRefresh();
-				}, "Monitor");
-				
-				parent.curAppState.toWS.wsSubscribe('model.started', function (packet) {
-//					$scope.startAutoRefresh();
-				}, "Monitor");
-
-				parent.curAppState.toWS.wsSubscribe('model.paused', function (packet) {
-//					$scope.refresh();
-				}, "Monitor");
-
 				parent.curAppState.toWS.wsSubscribe('model.stats', function (packet) {
 					$scope.updateProgress(JSON.parse(packet.body));
 				}, "Monitor");
@@ -131,11 +88,6 @@
 				}, "Monitor");
 
 	       		$scope.loadCAList();
-
-	       		if (parent.curAppState.modelState.running) {
-					$scope.startAutoRefresh();
-				}
-				else $scope.refresh();
 			}
 			
 			$scope.debugRun = function (expr) {

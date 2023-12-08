@@ -743,9 +743,9 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		$scope.flags.isModelOpen = false;
 		$scope.flags.noModelOpen = true;
 		$scope.rootCurAppState.resetModelChanged();
-		var mName = $scope.rootCurAppState.scxml.modelName;
+		// var mName = $scope.rootCurAppState.scxml.modelName;
 		$scope.rootCurAppState.scxml = undefined;
-		$scope.rootCurAppState.toSvc.RuntimeSvc.closeModel(mName);
+		// $scope.rootCurAppState.toSvc.RuntimeSvc.closeModel(mName);
 		$scope.closeDialog();
 	}
 	

@@ -105,7 +105,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterMbtEnd() {
-		this.sendExecStatus();
+		this.sendExecStatus(true);
 	}
 
 	@Override
@@ -123,6 +123,7 @@ public class ModelRunnerIDE extends ModelRunner {
 		if (this.execSetting.getOption("autoClose")!=null && (boolean) this.execSetting.getOption("autoClose")) {
 			SessionMgr.getInstance().closeModel(this.modelMgr.getModelName(), this.httpSessId);
 		}
+		this.sendExecStatus(true);
 	}
 
 	@Override
@@ -132,7 +133,7 @@ public class ModelRunnerIDE extends ModelRunner {
 		List<TagExec> failList = this.execDir.getSequenceNavigator().getCurTravObj().getFailedTagChecks();
 		List<String> retList = failList.stream().map(s -> s.getExecMsg()).collect(Collectors.toList());
     	IdeSvc.sendIdeMessage(this.httpSessId, new IdeMessage("error", retList.toString(), "MbtStarter.fail"));
-		this.sendExecStatus();
+		this.sendExecStatus(true);
 	}
 
 	@Override
@@ -167,7 +168,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void exitState(State stateObj_p) throws MBTAbort {
-		this.sendExecStatus();		
+		this.sendExecStatus(false);		
 	}
 
 	@Override
@@ -190,7 +191,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void exitTrans(Transition transObj_p) throws MBTAbort {
-		this.sendExecStatus();
+		this.sendExecStatus(false);
 	}
 	
 	@Override
@@ -201,16 +202,16 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	}
 	
-	private void sendExecStatus() {
-		if (System.currentTimeMillis() - this.lastStatsMillis < MonitorStatsMillis) return;
-		try {
-			this.lastStatsMillis = System.currentTimeMillis();
-			ExecStatusInfo execInfo = new ExecStatusInfo();
-			execInfo.execStatus = this.execDir.getExecStat();
-			IdeSvc.sendIdeData(this.httpSessId, "model.stats", execInfo);
-		}
-		catch (Exception e) {
-			//
+	private void sendExecStatus(boolean force_p) {
+		if (force_p || System.currentTimeMillis() - this.lastStatsMillis >= MonitorStatsMillis) {
+			try {
+				this.lastStatsMillis = System.currentTimeMillis();
+				ExecutionStatus execInfo = this.execDir.getExecStat();
+				IdeSvc.sendIdeData(this.httpSessId, "model.stats", execInfo);
+			}
+			catch (Exception e) {
+				//
+			}
 		}
 	}
 }

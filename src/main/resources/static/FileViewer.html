@@ -27,7 +27,7 @@
 					});
 				}
 				else if (parent.curAppState.FileViewer.type=="ModelLog") {
-					parent.curAppState.toSvc.RuntimeSvc.getModelLog(parent.curAppState.scxml.modelName, function(data) {
+					parent.curAppState.toSvc.RuntimeSvc.getModelLog(parent.curAppState.modelState.mbtSessID, function(data) {
 						$scope.title = "Model Log";
 						$scope.filePath = parent.curAppState.scxml.modelName + "/temp/script.log";
 						$scope.textdata = data;			

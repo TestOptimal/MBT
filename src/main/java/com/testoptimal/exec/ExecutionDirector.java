@@ -117,14 +117,13 @@ public final class ExecutionDirector extends Thread {
 			
 			this.execStats.complete();
 			
+			this.endDT = new java.util.Date();
 			this.trigerMBTAction(TravBase.TriggerType.end);
 			if (this.scriptExec!=null) {
 				this.scriptExec.close();
 				this.scriptExec = null;
 			}
 			logger.info("Model " + this.execSetting.getModelMgr().getModelName() + " has stopped");
-			
-			this.endDT = new java.util.Date();
 			
 			StatsMgr.getInstance().save(this.execStats);
 			this.mScriptLogger.close();

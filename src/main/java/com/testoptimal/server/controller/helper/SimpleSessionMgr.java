@@ -38,9 +38,6 @@ public class SimpleSessionMgr extends SessionMgr {
 
 	@Override
 	public void closeModel(String modelName_p, String sessId_p) {
-		if (this.MbtSession!=null) {
-			this.MbtSession.stopMbt();
-		}
 		this.MbtSession = null;
 	}
 

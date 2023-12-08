@@ -202,24 +202,8 @@ MainModule.factory ('RuntimeSvc', function(SvrRest) {
 		SvrRest.get (RuntimeSvc.base + "model/list", successCB, errorCB);
 	};
 
-	RuntimeSvc.sessions = function (successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "session/list", successCB, errorCB);
-	};
-
-	RuntimeSvc.runModel = function (runReq, successCB, errorCB) {
-		SvrRest.post (RuntimeSvc.base + "model/run/async", runReq, successCB, errorCB);
-	};
-
-	RuntimeSvc.closeModel = function (modelName, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/"+ modelName + "/close", successCB, errorCB);
-	};
-
-	RuntimeSvc.modelMonitor = function (modelName, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/" + modelName + "/monitor", successCB, errorCB);
-	};
-
-	RuntimeSvc.getModelLog = function (modelName, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/" + modelName + "/log", successCB, errorCB);
+	RuntimeSvc.getModelLog = function (mbtSessID, successCB, errorCB) {
+		SvrRest.get (RuntimeSvc.base + "model/" + mbtSessID + "/log", successCB, errorCB);
 	}
 
 	return RuntimeSvc;
