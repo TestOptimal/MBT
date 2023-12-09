@@ -1,11 +1,20 @@
 package com.testoptimal.stats;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+import com.testoptimal.server.config.Config;
 import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.stats.exec.ModelExec.Status;
+import com.testoptimal.util.FileUtil;
 
 public class DashboardStats {
 	public Date collectDate = new Date();
@@ -14,17 +23,40 @@ public class DashboardStats {
 	public StatsSummary last24HrStats = new StatsSummary();
 	public StatsSummary latestRunStats = new StatsSummary();
 	
-	public void addModelExec(List<ModelExec> modelExecList_p) {
-		if (modelExecList_p.isEmpty()) return;
+	public static DashboardStats getStats() {
+		DashboardStats dstats = new DashboardStats();
+		Gson gson = new Gson();
+		
+		String folder = Config.getRootPath() + "dashboard/";
+		File df = new File(folder);
+		Map<String, List<ModelExecSummary>> mlist = Arrays.asList(df.list()).stream()
+			.filter(f -> f.endsWith(".json"))
+			.map(f -> {
+				try {
+					ModelExecSummary sum = (ModelExecSummary) gson.fromJson(FileUtil.readFile(folder + f).toString(), ModelExecSummary.class);
+					return sum;
+				}
+				catch (Exception e) {
+					return null;
+				}
+			})
+			.filter(s -> s!=null)
+			.collect(Collectors.groupingBy(m -> m.modelName));
+		mlist.values().stream().forEach(m -> dstats.addModelExec(m));
+
+		return dstats;
+	}
+	public void addModelExec(List<ModelExecSummary> modelExecSumList_p) {
 		Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
 		Date yesterdayDate = cal.getTime();
         cal.add(Calendar.DATE, -6);
 		Date lastWeekStartDate = cal.getTime();
 		
+		modelExecSumList_p.sort((ModelExecSummary a, ModelExecSummary b) -> b.startDT.compareTo(a.startDT));
 		this.overallStats.modelNum++;
-		modelExecList_p.stream().forEach(e -> this.overallStats.addModelSummary(e.execSummary));
-		ModelExecSummary latestExecSum = modelExecList_p.get(0).execSummary;
+		modelExecSumList_p.stream().forEach(e -> this.overallStats.addModelSummary(e));
+		ModelExecSummary latestExecSum = modelExecSumList_p.get(0);
 		if (latestExecSum.status==Status.failed) {
 			this.overallStats.modelFailed++;
 			if (lastWeekStartDate.before(latestExecSum.startDT)) {
@@ -34,16 +66,16 @@ public class DashboardStats {
 				this.last24HrStats.modelFailed++;
 			}
 		}
-		if (modelExecList_p.stream().filter(e -> e.execSummary.startDT.after(lastWeekStartDate))
-			.map(e -> this.lastWeekStats.addModelSummary(e.execSummary)).count() >= 0) {
+		if (modelExecSumList_p.stream().filter(e -> e.startDT.after(lastWeekStartDate))
+			.map(e -> this.lastWeekStats.addModelSummary(e)).count() >= 0) {
 			this.lastWeekStats.modelNum++;
 		}
-		if (modelExecList_p.stream().filter(e -> e.execSummary.startDT.after(yesterdayDate))
-			.map(e -> this.last24HrStats.addModelSummary(e.execSummary)).count() >= 0) {
+		if (modelExecSumList_p.stream().filter(e -> e.startDT.after(yesterdayDate))
+			.map(e -> this.last24HrStats.addModelSummary(e)).count() >= 0) {
 			this.last24HrStats.modelNum++;
 		}
 		this.latestRunStats.modelNum++;
-		this.latestRunStats.addModelSummary(modelExecList_p.get(0).execSummary);
+		this.latestRunStats.addModelSummary(modelExecSumList_p.get(0));
 	}
 	
 	public class StatsSummary {
@@ -60,7 +92,7 @@ public class DashboardStats {
 		public int reqFailed;
 		public int reqNotCovered;
 		
-		// returns model exec status
+
 		public ModelExecSummary addModelSummary (ModelExecSummary modelSum_p) {
 			this.modelExecNum++;
 			if (modelSum_p.status==Status.failed) this.modelExecFailed++;
@@ -73,5 +105,10 @@ public class DashboardStats {
 			this.reqNotCovered += modelSum_p.reqNotCovered;
 			return modelSum_p;
 		}
+	}
+	
+	public static void addModelExec (ModelExec modelExec_p) throws Exception {
+		Gson gson = new Gson();
+		FileUtil.writeToFile(Config.getRootPath() + "dashboard/" + modelExec_p.mbtSessID + ".json", gson.toJson(modelExec_p.execSummary));
 	}
 }

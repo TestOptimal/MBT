@@ -49,6 +49,7 @@ public class SimpleStatsMgr implements ManageStats {
 		String statsJson = gson.toJson(execStats_p);
 		FileUtil.writeToFile(execStats_p.filePath, statsJson);
 		StatsMgr.purgeStats(execStats_p.modelName);
+		DashboardStats.addModelExec(execStats_p);
 	}
 
 	@Override

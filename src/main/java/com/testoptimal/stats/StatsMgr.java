@@ -65,22 +65,6 @@ public class StatsMgr {
 		return modelExec;
 	}	
 
-	public static DashboardStats getDashboardStats () {
-		DashboardStats dstats = new DashboardStats();
-		List<String> modelList = FileUtil.getModelList(new File(Config.getModelRoot()), false);
-		modelList.stream().forEach(m -> {
-			try {
-				ModelMgr modelMgr = new ModelMgr(m.substring(0, m.lastIndexOf(".")));
-				dstats.addModelExec(statsMgr.getStatsList(modelMgr));
-			}
-			catch (Exception e) {
-				//
-				logger.error(e.getMessage());
-			}
-		});
-		return dstats;
-	}
-
 	public static int purgeStats(String modelName_p) {
 		try {
 			ModelMgr modelMgr = new ModelMgr(modelName_p);

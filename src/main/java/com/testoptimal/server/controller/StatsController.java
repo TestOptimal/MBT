@@ -53,7 +53,7 @@ public class StatsController {
 	
 	@GetMapping(value = "dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DashboardStats> getDashboard (ServletRequest request) throws Exception {
-		DashboardStats dstats = StatsMgr.getDashboardStats();
+		DashboardStats dstats = DashboardStats.getStats();
 		return new ResponseEntity<>(dstats, HttpStatus.OK);
 	}
 }
