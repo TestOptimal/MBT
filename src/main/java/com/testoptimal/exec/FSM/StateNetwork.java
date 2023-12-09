@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
@@ -328,23 +327,6 @@ public class StateNetwork extends PostmanNetwork {
 		return;
 	}
 	
-
-	/**
-	 * returns the list transitions that sets the variable to the desired value for the 
-	 * state var passed in.
-	 * @return
-	 */
-	public List<Transition> getSetTransForGuard (Transition transObj_p, 
-			MbtScriptExecutor scriptExec_p) {
-		List<Transition> activeTransList = this.allActiveTransList;
-		List<Transition> retList = new java.util.ArrayList<Transition> ();
-		for (Transition loopTrans: activeTransList) {
-			if (loopTrans.satisfyGuard(transObj_p, scriptExec_p)) {
-				retList.add(loopTrans);
-			}
-		}
-		return retList;
-	}
 
 	/**
 	 * returns a list of state with specified stereotype

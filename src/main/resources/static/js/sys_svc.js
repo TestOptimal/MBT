@@ -200,10 +200,6 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 		SvrRest.get (SysSvc.base + "template", successCB, errorCB);
 	};
 
-	SysSvc.saveLic = function (licEmail, licKey, successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "lic/save?email=" + licEmail + "&licKey=" + encodeURIComponent(licKey), successCB, errorCB);
-	};
-
 	SysSvc.getCA = function (successCB, errorCB) {
 		SvrRest.get (SysSvc.base + "CodeAssist/model", successCB, errorCB);
 	};

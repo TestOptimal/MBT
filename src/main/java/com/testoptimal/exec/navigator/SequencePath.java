@@ -14,9 +14,30 @@ public class SequencePath {
 	private List<String> pathTransIdList;
 	private int reqTransCnt = 0;
 	private String pathDesc = "";
+	private int curTransIdxInPath = -1;
+
 	
 	public void setPathDesc (String desc_p) {
 		this.pathDesc = desc_p;
+	}
+	
+	public void reset() {
+		this.curTransIdxInPath = -1;
+	}
+	
+	public Transition nextTrans() {
+		this.curTransIdxInPath++;
+		if (this.curTransIdxInPath >= this.transList.size()) {
+			return null;
+		}
+		return this.transList.get(this.curTransIdxInPath);
+	}
+
+	public boolean isStartingPath () {
+		return this.curTransIdxInPath==-1;
+	}
+	public boolean isEndingPath() {
+		return this.curTransIdxInPath == this.transList.size() - 1;
 	}
 
 	public SequencePath(List<Transition> transList_p) {
@@ -113,15 +134,15 @@ public class SequencePath {
 		return this.transList.size();
 	}
 	
-	public Transition addAltRoute (int atTransIdx_p, List<Transition> altTransList_p) {
-		this.transList.addAll(atTransIdx_p, altTransList_p);
+	public Transition addAltRoute (List<Transition> altTransList_p) {
+		this.transList.addAll(this.curTransIdxInPath, altTransList_p);
 		this.genPathId();
 		for (Transition trans: altTransList_p) {
 			if (trans.getMinTraverseCount() > 0) {
 				this.reqTransCnt++;
 			}
 		}
-		return this.transList.get(atTransIdx_p);
+		return this.transList.get(this.curTransIdxInPath);
 	}
 	
 	public static List<SequencePath> breakupToPaths(List<Transition> transList_p) {

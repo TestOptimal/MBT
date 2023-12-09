@@ -29,14 +29,6 @@
     		});
     	}
     	
-    	$scope.saveLic = function () {
-    		parent.curAppState.toSvc.SysSvc.saveLic($scope.licEmail, $scope.licKey, function (data) {
-				parent.curAppState.addMsg({type: "info", text: "License key saved, refreshing IDE ..."});
-				parent.curAppState.winMgr.refresh();
-    			$scope.$apply();
-    		});
-    	}
-
     	$scope.init();
     });    
     </script>
@@ -70,20 +62,9 @@
 		<tr><td nowrap>OS Name:</td><td>{{config["osName"]}}</td></tr>
 		<tr><td nowrap>OS Version:</td><td>{{config["osVersion"]}}</td></tr>
 		<tr><td nowrap>Java Version:</td><td>{{config["javaVersion"]}}</td></tr>
-		<tr ng-show="licReq"><td nowrap>License Status:</td><td>{{config["License.status"]}}</td></tr>
-		<tr ng-show="licReq"><td nowrap>Expiration:</td><td style="color: orange;">{{config["expireDate"]}}</td></tr>
 		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licEmail"/></td></tr>
 		<tr><td nowrap>License:</td><td align="left" colspan="2"><a href="{{config['License.Agreement.url']}}" target="_blank">{{config["License.Agreement.label"]}}</a></td></tr>
-		<tr ng-show="licReq"><td nowrap title="For float license, enter http://'svrmgrHost':8888?edition='edition'" target="_blank">License Key:</td><td align="left" colspan="2"><input ng-model="licObj.licKey"/></td></tr>
-		<tr ng-show="licReq" style="height: 35px;">
-			<td colspan="2">
-				<div style="color: orange; background: #EEEEEE;">{{config["License.exceptions"]}}</div>
-			</td>
-		</tr>
 	</table>
-		<div ng-show="licReq" style="position: absolute; left: 3px; bottom: 0px;">
-			<button class="btn btn-primary" ng-click="saveLic()">SAVE</button>
-		</div">
 	</div>
 </body>
 </html>

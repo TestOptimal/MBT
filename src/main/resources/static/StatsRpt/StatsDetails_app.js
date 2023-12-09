@@ -142,7 +142,6 @@ MainModule.controller("detailsCtrl", function ($scope) {
 			msgText += msgTag.checkMsg + "</li>";
 		}
 		msgText += "</ol></div></div>";
-		msgText = $scope.resolveSnapID(msgText, parent.curAppState.mbtSessID);
 		parent.alertDialog(msgText);
 	}
 
@@ -157,27 +156,7 @@ MainModule.controller("detailsCtrl", function ($scope) {
 			hcode += "<li>"+ msgList[i].checkMsg + "</li>";
 		}
 		hcode += "</ol>";
-		hcode = $scope.resolveSnapID(hcode, $scope.mbtSessID);
 		parent.alertDialog(hcode);
-	}
-
-	$scope.resolveSnapID = function (msg_p, mbtSessID_p) {
-		var snapIdx = msg_p.indexOf("@snapTS:");
-		var mbtSessID = "";
-		if (mbtSessID_p) {
-			mbtSessID = "&mbtSessID=" + mbtSessID_p;
-		}
-		while (snapIdx>=0) {
-			var snapId = msg_p.substring(snapIdx+8);
-			var snapIdx2 = snapId.indexOf("@");
-			var msgTail = snapId.substring(snapIdx2+1);
-			snapId = snapId.substring(0, snapIdx2);
-			msg_p = msg_p.substring(0, snapIdx) 
-				+ " <a href='api/v1/file/artifact/" + $scope.modelName + "/snapscreen/snap_" + snapId + ".png"
-				+ "' target='_blank'>ScreenShot</a>" + msgTail;
-			snapIdx = msg_p.indexOf("@snapTS:");
-		}
-		return msg_p;
 	}
 
 	$scope.showExecSettings = function () {

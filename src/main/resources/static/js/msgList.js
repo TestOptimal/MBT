@@ -1,5 +1,5 @@
-// copyright 2009 - 2015, TestOptimal, LLC, all rights reserved.
-// webmbtMsgList.js
+// copyright TestOptimal, LLC, all rights reserved.
+// msgList.js
 
 var gMsgList = new Array();
 
@@ -14,16 +14,13 @@ gMsgList["build"] = {"code": "Model Build Num", "desc": "Model build (archive) n
 
 gMsgList["canvasHeight"] = {"code": "Canvas Height (px)", "desc": "Modeling canvas height in px."};
 gMsgList["canvasWidth"] = {"code": "Canvas Width (px)", "desc": "Modeling canvas width in px."};
-gMsgList["catCodes"] = {"code": "Category Code(s)", "desc": "Category codes to be assigned to Runtime server, model and license key. Use semi-colon to separate multiple category codes. Category codes are used to determine the compatibility between models, Runtime servers and license keys."};
 gMsgList["change.not.allowed"] = {"code": "Change Not Allowed", "desc": "Changes not allowed."};
 gMsgList["change.ok2discard"] = {"code": "Change Discard", "desc": "There are pending changes in Property tab, do you wish to discard the changes?"};
 gMsgList["change.save.first"] = {"code": "Change Save First", "desc": "Please save the changes first."};
 gMsgList["change.pending"] = {"code": "Changes Pending", "desc": "There are pending unsaved changes!"};
 gMsgList["char.not.allowed"] = {"code": "Char Not Allowed", "desc": "Character @@ is not allowed for @@. Replaced it with alternative char @@"};
 gMsgList["color"] = { "code": "Color", "desc": "Color for the state and transition" };
-gMsgList["compile.java.done"] = { "code": "Java OK", "desc": "java class compiled successfully" };
-gMsgList["config"] = { "code": "Config", "desc": "System configuration and license key" };
-gMsgList["config.save.not.authorized"] = { "code": "Changes to Config not allowed", "desc": "Changes to configuration not authorized." };
+gMsgList["config"] = { "code": "Config", "desc": "System Info" };
 gMsgList["coverageType"] = { "code": "Coverage Type", "desc": "For Optimal sequencers only, to cover all transitions or all paths." };
 gMsgList["cssStyle"] = {"code": "CSS Style", "desc": "CSS style string"};
 gMsgList["curFolder"] = {"code": "Current Folder", "desc": "The folder path for the current model or new model being created."};
@@ -41,8 +38,7 @@ gMsgList["delete.demo"] = {"code": "Delete Demo", "desc": "Demo model can not be
 gMsgList["demo.save"] = {"code": "Save not allowed in demo mode", "desc": "This is a demo server, save not allowed." };
 gMsgList["delete.submodel.refd"] = {"code": "Submodel Referenced", "desc": "Submodel is referenced, can not be deleted." };
 
-gMsgList["email"] = {"code": "Email Address", "desc": "The email address of the person the license was issued to." };
-gMsgList["expirationdate"] = {"code": "License Expiration Date", "desc": "License expiration date." };
+gMsgList["email"] = {"code": "Email Address", "desc": "Licensed user email address." };
 gMsgList["errored"] = {"code": "Errored", "desc": "Errored"};
 gMsgList["event.invalid"] = {"code": "Invalid Event", "desc": "Event @@ is not a valid event for state @@"};
 gMsgList["event"] = {"code": "Trans. Name", "desc": "Name of the transition or edge."};
@@ -71,8 +67,7 @@ gMsgList["folder.new"] = {"code": "New Folder", "desc": "New Folder: please ente
 gMsgList["graph.find"] = {"code": "Find State/Trans", "desc": "Find states/transitions by tag, state id or transition id." };
 gMsgList["graphShowWeight"] = { "code": "Show Weight", "desc": "To show transition weight on graphs." };
 gMsgList["guard"] = {"code": "Guard", "desc": "Guard condition boolean expression, e.g. $VAR.myVar > 10" };
-gMsgList["guardHint"] = {"code": "Guard Hint", "desc": "Hint (code) to be used to find a transition that resolves the guard. Separate list by a comma." };
-gMsgList["satisfyingHint"] = {"code": "Satisfying Hint", "desc": "Hint (code) this transition can satisfy when visited. Separate list by a comma." };
+gMsgList["guardResolvers"] = {"code": "Guard Resolver(s)", "desc": "UIDs of transitions that can resolve the guard." };
 
 gMsgList["ide.reset.prompt"] = {"code": "Reset IDE Layout?", "desc": "Do you wish to reset IDE screen layout?" };
 gMsgList["ipaddress"] = {"code": "IP Address", "desc": "IP address of " + msgIDE + " server." };
@@ -80,14 +75,10 @@ gMsgList["isInitial"] = {"code": "Is Initial", "desc": "If this is an intial sta
 gMsgList["isFinal"] = {"code": "Is Final", "desc": "If this is a final state / node. Each model or super state/node can have at least one final state/node." };
 gMsgList["import.model.open"] = {"code": "Requires Open Model", "desc": "Open an existing model or create a new model first." };
 gMsgList["import.merge"] = {"code": "Merge Import with Model", "desc": "You have a model open, do you wish to merge the import file with the model?" };
-gMsgList["issuedate"] = {"code": "License Issue Date", "desc": "Date when the license was issued." };
 gMsgList["item.delete.confirm"] = {"code": "Delete?", "desc": "Do you wish to delete @@?" };
 gMsgList["item.deleted"] = {"code": "Deleted", "desc": "@@ has been deleted." };
 
 gMsgList["edition"] = {"code": "Edition", "desc": "Licensed edition" };
-gMsgList["licAck"] = {"code": "License Terms", "desc": "Check License Terms if you agree with " + msgIDE + " User License Terms." };
-
-gMsgList["exceptions"] = {"code": "Exceptions", "desc": "License key exceptions." };
 
 gMsgList["left"] = {"code": "Node Left (px)", "desc": "Node's left position in pixel" };
 gMsgList["top"] = {"code": "Node Top (px)", "desc": "Node's top position in pixel" };
@@ -146,7 +137,6 @@ gMsgList["osVersion"] = {"code": "OS Version", "desc": "Operating System Version
 gMsgList["paused"] = {"code": "Paused", "desc": "Paused"};
 gMsgList["pause.invalid"] = {"code": "Pause not allowed", "desc": "Pause action is invalid."};
 gMsgList["popup.blocker"] = {"code": "Popup Blocker Enabled", "desc": "Popup blocker is preventing new window from opening." };
-gMsgList["prodlevel"] = {"code": "Edition", "desc": "License Type" };
 gMsgList["prompt.change"] = {"code": "Change", "desc": "Enter domain values separated by | and click OK." };
 
 gMsgList["releaseDate"] = {"code": "Release Date", "desc": "Date when the current release was published." };
@@ -162,9 +152,6 @@ gMsgList["scList"] = {"code": "ShortCut Keys", "desc": "ShortCut keys are define
 gMsgList["scxml"] = {"code": "SCXML Model", "desc": "MBT Model" };
 gMsgList["search.not.found"] = {"code": "No found", "desc": "No states/transitions found matching the criteria."};
 gMsgList["select.change"] = {"code": "Select", "desc": "Choose from the dropdown list below and click OK." };
-
-gMsgList["sessionnum"] = {"code": "Sessions Licensed", "desc": "Number of concurrent sessions licensed." };
-gMsgList["maxModelSize"] = {"code": "Max Model Size", "desc": "Maximum number of states for a model allowed." };
 
 gMsgList["snapscreen.file.notfound"] = {"code": "Screenshot not found", "desc": "Screenshot file not found." };
 gMsgList["stat.select"] = {"code": "Select a stat first", "desc": "Please select a stat first."};
@@ -228,10 +215,6 @@ gMsgList["hint_addState_switch"] = {"code": "add switch node", "desc": "click on
 gMsgList["hint_addTrans"] = {"code": "add trans", "desc": "click on state edge to select transition source state" };
 gMsgList["hint_addTrans_target"] = {"code": "add trans", "desc": "select transition target state" };
 gMsgList["hint_mark"] = {"code": "mark states/trans", "desc": "click on states and transitions to mark/unmark or left-mouse drag to mark multiple states." };
-
-//function resolveMsg (msgID_p) {
-//	return gMsgList[msgID_p];
-//}
 
 function translateMsg (msgKey_p, token1_p, token2_p, token3_p, token4_p, token5_p) {
 	var transMsg = gMsgList[msgKey_p];

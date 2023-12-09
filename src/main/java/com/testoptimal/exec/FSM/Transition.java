@@ -204,26 +204,6 @@ public class Transition extends PostmanArc {
 //	}
 	
 	
-	/**
-	 * returns true if this transition "set" defined satisfies the transition passed in.
-	 * Assumes that trans_p is not null and has a legal guard condition set.
-	 * @param trans_p transition that has guard condition
-	 * @return true if this transition sets the condition that satisfies transition passed in. 
-	 * false on any error,exception.
-	 */
-	public boolean satisfyGuard (Transition forTrans_p, MbtScriptExecutor scriptExec_p) {
-		TransitionNode forTransNode = forTrans_p.getTransNode();
-
-		// fake trans, trans with guards and trans with no satisfying hint set don't qualify
-		if (this.transNode==null || !StringUtil.isEmpty(this.transNode.getGuard())) return false;
-		if (StringUtil.isEmpty(this.transNode.getSatisfyingHint())) return false;
-		
-		String [] transHintList = ArrayUtil.splitString(this.transNode.getSatisfyingHint(), ",;");
-		String [] reqHintList = ArrayUtil.splitString(forTransNode.getGuardHint(), ",;");
-		List<String> matchHintList = ArrayUtil.findOverlap(transHintList, reqHintList);
-		return !matchHintList.isEmpty();
-	}
-	
 	
 	/**
 	 * returns true if this transition is a fake transition.

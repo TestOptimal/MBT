@@ -11,6 +11,7 @@ import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.SequencePath;
 import com.testoptimal.exec.navigator.Sequencer;
 
@@ -31,17 +32,21 @@ public class SequencerOptimal implements Sequencer {
 
 	private ExecutionDirector execDir;
 	private ExecutionSetting execSetting;
+	private MbtScriptExecutor scriptExec;
 	
 	private List<SequencePath> pathList;
 	private int curPathIdx = -1;
 	private SequencePath curPath = null;
-	private int curTransIdxInPath = -1;
+	private TransGuard transGuard;
 	private int traversedTransCost = 500;
+
 	
 	public SequencerOptimal (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
 		this.execSetting = this.execDir.getExecSetting();
-
+		this.scriptExec = this.execDir.getScriptExec();
+		this.transGuard = new TransGuard(this.scriptExec, this.execSetting);
+		
     	ModelMgr modelMgr = execSetting.getModelMgr();
         StateNetwork networkObj = execSetting.getNetworkObj();
         List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
@@ -53,38 +58,37 @@ public class SequencerOptimal implements Sequencer {
 		logger.info("paths to cover: " + this.pathList.size());
 		if (!this.pathList.isEmpty()) {
 			this.curPathIdx = 0;
-			this.curTransIdxInPath = -1;
 			this.curPath = this.pathList.get(0); 
+			this.curPath.reset();
 		}
 	}
 	
 	@Override
-	public Transition getNext() {
+	public Transition getNext() throws MBTAbort {
 		if (this.curPath == null) return null;
-		
-		
-		this.curTransIdxInPath++;
-		Transition trans = this.curPath.getTransAt(this.curTransIdxInPath);
+		Transition trans = this.curPath.nextTrans();
 		boolean newPath = (trans == null);
 		if (newPath) {
 			this.curPathIdx++;
 			if (this.curPathIdx >= this.pathList.size()) return null;
 			this.curPath = this.pathList.get(this.curPathIdx);
-			this.curTransIdxInPath = 0;
-			trans = this.curPath.getTransAt(this.curTransIdxInPath);
+			this.curPath.reset();
+			trans = this.curPath.nextTrans();
+			this.transGuard.reset();
 		}
 
+		trans = this.transGuard.checkTrans(trans, this.curPath);
 		return trans;
 	}
 	
 	@Override
 	public boolean isStartingPath() {
-		return this.curTransIdxInPath == 0;
+		return this.curPath.isStartingPath();
 	}
 	
 	@Override
 	public boolean isEndingPath() {
-		return this.curTransIdxInPath == this.curPath.getTransList().size() - 1;
+		return this.curPath.isEndingPath();
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class SequencerOptimal implements Sequencer {
 		return this.pathList.size();
 	}
 	
-	public List<SequencePath> genPathList () throws Exception {
+	private List<SequencePath> genPathList () throws Exception {
 		StateNetwork networkObj = this.execSetting.getNetworkObj();
 		int homeStateID = networkObj.getHomeState().getId(); 
 		LinZhaoAlgorithm optimizer;
