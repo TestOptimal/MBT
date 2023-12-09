@@ -143,7 +143,11 @@ public class TransitionNode implements Comparable<TransitionNode> {
 	}
 	
 	public String getGuardResolvers() {
-		return this.guardResolvers;
+		return this.guardResolvers==null?"":this.guardResolvers;
+	}
+	
+	public boolean isGuardResolver(String uid_p) {
+		return this.guardResolvers!=null && this.guardResolvers.indexOf(uid_p)>=0;
 	}
 	
 	public boolean noNeedToCover() {
