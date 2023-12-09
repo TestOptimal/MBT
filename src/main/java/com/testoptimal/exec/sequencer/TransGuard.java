@@ -92,9 +92,7 @@ public class TransGuard {
 			resolverTrans = altTrans;
 		}
 		else {
-			List<Transition> tlist = Arrays.asList(trans_p.getTransNode().getGuardResolvers().split(",")).stream()
-					.map(u -> (Transition) this.networkObj.findByUID(u))
-					.toList();
+			List<Transition> tlist = this.networkObj.getTransByUIDList(Arrays.asList(trans_p.getTransNode().getGuardResolvers().split(",")));
 			if (tlist.size() > 1) {
 				List<Transition> list4 = tlist.stream().filter(t -> t.getMinTraverseCount() > 0).toList();
 				if (list4.size() > 1) {
