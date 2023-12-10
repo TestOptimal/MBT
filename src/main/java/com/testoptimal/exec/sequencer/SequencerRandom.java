@@ -37,11 +37,14 @@ public class SequencerRandom implements Sequencer {
 	private Transition curTrans;
 	private Random randObj;
     private TraversalCount travTransCount;
-	
+	private MbtScriptExecutor scriptExec;
 	
 	public SequencerRandom (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
+		this.scriptExec = execDir_p.getScriptExec();
 		this.networkObj = this.execDir.getExecSetting().getNetworkObj();
+		this.networkObj = new StateNetwork ();
+		this.networkObj.init(this.execDir.getExecSetting().getModelMgr().getScxmlNode());
 		this.homeState = this.networkObj.getHomeState();
     	this.randObj = this.execDir.getExecSetting().getSeededRandObj();
     	this.curState = this.homeState;
@@ -53,63 +56,47 @@ public class SequencerRandom implements Sequencer {
 		if (this.travTransCount==null) {
 			this.travTransCount = this.execDir.getSequenceNavigator().getTravTransCount();		
 		}
-
-		if (this.curTrans != null) {
+		if (this.curTrans!=null) {
 			this.curState = (State) this.curTrans.getToNode();
 		}
 		if (this.curState.isModelFinal()) {
 			this.curState = this.homeState;
 		}
-		List<Transition> validTransList = this.getValidTransList(this.curState, travTransCount, this.execDir);
-		List<Transition> reqTransList = this.keepReqTrans(validTransList, travTransCount);
-		List<Transition> leastTravList = this.removeTraversedTrans(validTransList, travTransCount);
-		List<Transition> checkList = leastTravList.isEmpty()? reqTransList.isEmpty()? validTransList: reqTransList: leastTravList;
-		if (checkList.isEmpty()) return null;
+		else if (this.curState.isFinal()) {
+			List<Transition> outTransList = this.curState.getEdgesOut().stream().map(e -> (Transition) e).toList();
+			Transition trans = outTransList.get(this.randObj.nextInt(outTransList.size()));
+			this.curTrans = trans.getForTrans();
+			this.curState = (State) this.curTrans.getFromNode();
+			return this.curTrans;
+		}
+		else if (this.curState.isSuperVertex()) {
+			this.curState = (State) this.curState.findSubModelEntryTrans().getToNode();
+		}
 		
-		this.curTrans = this.randomTransFromList(checkList);
-//		travTransCount.addTravTrans(transObj);
+		this.curTrans = this.findNext();
 		return this.curTrans;
 	}
 	
-	/**
-	 * trans that meet guards conditions and not traversed over the max number allowed.
-	 * @param curState_p
-	 * @param transTravCount_p
-	 * @param travMgr_p
-	 * @return
-	 * @throws Exception
-	 */
-	private List<Transition> getValidTransList (State curState_p, TraversalCount transTravCount_p, ExecutionDirector execDir_p) {
-		List <Transition> transList = new java.util.ArrayList <>();
-		java.util.ArrayList <Edge> tempList = curState_p.getEdgesOut();
-		Boolean guardStatus;
-		for (Edge edge: tempList) {
-			Transition transObj = (Transition) edge;
-			guardStatus = execDir_p.getScriptExec().evalGuard(transObj.getTransNode());
-			if (guardStatus && (transObj.isFake() || transTravCount_p.getTravCount(transObj) < transObj.getMaxTraverseCount())) {
-				transList.add(transObj);
-			}
-		}
-		return transList;
-	}
+	private Transition findNext() {
+		List <Transition> validTransList = this.curState.getEdgesOut().stream()
+			.map(edge -> (Transition) edge)
+			.filter(transObj -> this.scriptExec.evalGuard(transObj.getTransNode()))
+			.filter(transObj -> transObj.isFake() || travTransCount.getTravCount(transObj) < transObj.getMaxTraverseCount())
+			.toList();
 
-	private List<Transition> keepReqTrans (List<Transition> transList_p, TraversalCount transTravCount_p) {
-		return transList_p.stream().filter(transObj -> transObj.isFake() || transTravCount_p.isRequired(transObj)).collect(Collectors.toList());
-	}
+		List<Transition> reqTransList = validTransList.stream().filter(transObj -> transObj.isFake() || travTransCount.isRequired(transObj)).toList();
+		List<Transition> leastTravList = validTransList.stream().filter(transObj -> travTransCount.getTravCountLeft(transObj) > 0).toList();
+		List<Transition> checkList = leastTravList.isEmpty()? reqTransList.isEmpty()? validTransList: reqTransList: leastTravList;
+		if (checkList.isEmpty()) return null;
 
-	private List<Transition> removeTraversedTrans (List<Transition> transList_p, TraversalCount transTravCount_p) {
-		return transList_p.stream().filter(transObj -> transTravCount_p.getTravCountLeft(transObj) > 0).collect(Collectors.toList());
-	}
-
-	private Transition randomTransFromList (List<Transition> transList_p) {
-		int totalWeight = transList_p.stream()
+		int totalWeight = checkList.stream()
 				.map( transObj -> (transObj.getTransNode()==null?5:transObj.getTransNode().getWeight()))
 				.reduce(0, Integer::sum);
 
 		// generate random number and pick the trans based on the randowm number and the trans weight
 		int idx = this.randObj.nextInt(totalWeight);
 		totalWeight = 0;
-		for (Transition transObj: transList_p) {
+		for (Transition transObj: checkList) {
 			int weight = (transObj.getTransNode()==null?5:transObj.getTransNode().getWeight());
 			totalWeight = totalWeight + weight;
 			if (idx <= totalWeight) {
@@ -117,7 +104,7 @@ public class SequencerRandom implements Sequencer {
 			}
 		}
 		// fall back to first trans
-		return (Transition) transList_p.get(0);
+		return (Transition) checkList.get(0);
 	}
 	
 	@Override

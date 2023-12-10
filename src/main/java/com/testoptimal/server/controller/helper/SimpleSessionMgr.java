@@ -28,12 +28,18 @@ public class SimpleSessionMgr extends SessionMgr {
 
 	@Override
 	public ModelRunner getMbtStarterForModel(String modelName_p, String sessId_p) {
-		return this.MbtSession;
+		if (this.MbtSession!=null && this.MbtSession.getModelMgr().getModelName().equals(modelName_p)) {
+			return this.MbtSession;
+		}
+		else return null;
 	}
 
 	@Override
 	public ModelRunner getMbtStarterForMbtSession(String mbtSessId_p) {
-		return this.MbtSession;
+		if (this.MbtSession!=null && this.MbtSession.getMbtSessionID().equals(mbtSessId_p)) {
+			return this.MbtSession;
+		}
+		else return null;
 	}
 
 	@Override

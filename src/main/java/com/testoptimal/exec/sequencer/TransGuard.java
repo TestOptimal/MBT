@@ -11,10 +11,12 @@ import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
-import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.SequencePath;
 import com.testoptimal.scxml.TransitionNode;
+
+import openOptima.NoSolutionException;
 
 public class TransGuard {
 	private static Logger logger = LoggerFactory.getLogger(TransGuard.class);
@@ -43,7 +45,7 @@ public class TransGuard {
 	}
 	
 	// returns the next trans to traverse
-	public Transition checkTrans(Transition trans_p, SequencePath seqPath_p ) throws MBTAbort {
+	public Transition checkTrans(Transition trans_p, SequencePath seqPath_p ) throws MBTException {
 		if (this.scriptExec.evalGuard(trans_p.getTransNode())) {
 			if (trans_p==this.guardedTrans) {
 				logger.info("Guard resolved on transition " + this.guardedTrans.getTransNode().getEvent() + " at attempt " + this.consecutiveGuardResolves + "");
@@ -59,17 +61,17 @@ public class TransGuard {
 			this.guardedTrans = trans_p;
 		}
 		if (this.consecutiveGuardResolves > this.MaxGuardResolves) {
-			throw new MBTAbort ("Unable to resolve guard on transition " + guardedTrans.getTransNode().getEvent() + ": " + this.guardedTrans.getTransNode().getGuard());
+			throw new MBTException ("Unable to resolve guard on transition " + guardedTrans.getTransNode().getEvent() + ": " + this.guardedTrans.getTransNode().getGuard());
 		}
 		logger.info("Guard failed on transition " + this.guardedTrans.getTransNode().getEvent() + ", attempt to find alternate path (count: " + this.consecutiveGuardResolves + ")");
 		Transition trans = this.findAltTrans(trans_p, seqPath_p);
 		if (trans==null) {
-			throw new MBTAbort ("Unable to find alternate path to resolve guard error on transition " + this.guardedTrans.getEventId() + ": " + this.guardedTrans.getTransNode().getGuard());
+			throw new MBTException ("Unable to find alternate path to resolve guard error on transition " + this.guardedTrans.getEventId() + ": " + this.guardedTrans.getTransNode().getGuard());
 		}
 		return trans;
 	}
 	
-	private Transition findAltTrans (Transition trans_p, SequencePath seqPath_p) throws MBTAbort {
+	private Transition findAltTrans (Transition trans_p, SequencePath seqPath_p) throws MBTException {
 		State curState = (State) trans_p.getFromNode();
 		TransitionNode transNode = trans_p.getTransNode();
 		List<Transition> list1 = curState.getEdgesOut().stream()
@@ -83,7 +85,7 @@ public class TransGuard {
 		if (list2.isEmpty()) {
 			String exceptMsg = curState.getStateId() + "." + trans_p.getTransNode().getEvent() 
 					+ ": Unresolved guard: " + trans_p.getTransNode().getGuard();
-			throw new MBTAbort (exceptMsg);
+			throw new MBTException (exceptMsg);
 		}
 		Transition altTrans = list2.get(this.rand.nextInt(list2.size()));
 		
@@ -93,7 +95,10 @@ public class TransGuard {
 		}
 		else {
 			List<Transition> tlist = this.networkObj.getTransByUIDList(Arrays.asList(trans_p.getTransNode().getGuardResolvers().split(",")));
-			if (tlist.size() > 1) {
+			if (tlist.isEmpty()) {
+				tlist = curState.getAllIncomingTrans();
+			}
+			else if (tlist.size() > 1) {
 				List<Transition> list4 = tlist.stream().filter(t -> t.getMinTraverseCount() > 0).toList();
 				if (list4.size() > 1) {
 					tlist = list4;
@@ -104,22 +109,14 @@ public class TransGuard {
 		
 		double transCost = trans_p.getDist();
 		trans_p.setDist(5000);
-		List<Transition> altPath = this.findShortestPath((State)altTrans.getToNode(), (State)resolverTrans.getFromNode());
+		List<Transition> altPath = this.networkObj.findShortestPath(altTrans.getToNode().getId(), resolverTrans.getFromNode().getId());
 		if (altTrans!=resolverTrans) {
 			altPath.add(resolverTrans);
-			altPath.addAll(this.findShortestPath((State)resolverTrans.getToNode(), (State)altTrans.getFromNode()));
+			altPath.addAll(this.networkObj.findShortestPath(((State)resolverTrans.getToNode()).getId(), ((State)altTrans.getFromNode()).getId()));
 		}
 		trans_p.setDist(transCost);
 		altPath.add(0, altTrans);		
 		altTrans = seqPath_p.addAltRoute (altPath);
 		return altTrans;
 	}
-	
-	public List<Transition> findShortestPath (State fromState_p, State toState_p) throws MBTAbort {
-		List<Transition> retList = this.networkObj.findShortestPath(fromState_p.getId(), toState_p.getId());
-		for (Transition trans: retList) {
-			trans.setDist(trans.getDist()+1);
-		}
-		return retList;
-	}	
 }

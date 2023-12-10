@@ -38,7 +38,7 @@ public class State extends Node {
 	}
 
 	/**
-	 * submodel state that contains this state.
+	 * submodel state (parent) that contains this state.
 	 */
 	private State subModelState;
 	public void setSubModelState(State subModelState_p) {
@@ -101,8 +101,6 @@ public class State extends Node {
 	
 	public String getStateId () { return this.getMarker(); }
 	
-	public int getNodeI () { return this.getId(); }
-
 	/**
 	 * returns the child states.  Pseudo exit state is not included.
 	 * empty arrayList if this state is a simple state.

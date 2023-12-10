@@ -22,6 +22,9 @@ public class TravTrans extends TravBase {
 		super(execDir_p, newPath_p);
 		this.curTrans = travObj_p;
 		this.curTransNode = this.curTrans.getTransNode();
+		if (this.curTransNode==null) {
+			int a = 0;
+		}
 		this.fromStateNode = this.curTransNode.getParentStateNode();
 	}
 

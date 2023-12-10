@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.graphing.plantuml.StateDiagram;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.StateNode;
@@ -362,7 +362,7 @@ public class StateNetwork extends PostmanNetwork {
 	/**
 	 * returns the shortest path of transitions from fromState_p to toState_p.
 	 */
-	public List<Transition> findShortestPath (int fromState_p, int toState_p) throws MBTAbort {
+	public List<Transition> findShortestPath (int fromState_p, int toState_p) throws MBTException {
 		List<Transition> retList = new java.util.ArrayList<Transition> ();
 		if (fromState_p==toState_p) return retList;
 		try {
@@ -371,7 +371,7 @@ public class StateNetwork extends PostmanNetwork {
 		    shortestpathObj.init(this);
 		    ShortestPath path = shortestpathObj.getShortestPath(fromState_p, toState_p);
 			if (path==null) {
-				throw new NoSolutionException ("Some states are not reachable. This is usually caused by missing transitions.");
+				throw new MBTException ("Some states are not reachable. This is usually caused by missing transitions.");
 			}
 			Arc [] arcList = path.getPathArcs();
 			for (int k=0; k<arcList.length; k++) {
@@ -380,7 +380,7 @@ public class StateNetwork extends PostmanNetwork {
 			return retList;
 		}
 		catch (Throwable t) {
-			throw new MBTAbort(t.getMessage());
+			throw new MBTException(t.getMessage());
 		}
 	}
 
@@ -388,7 +388,7 @@ public class StateNetwork extends PostmanNetwork {
 	 * returns the transition from the initial state of the network that are most common for reaching all of 
 	 * the states and transitions passed in.
 	 */
-	public Transition findCommonInitialTrans(List<Transition> transList_p, ModelMgr modelMgr_p) throws MBTAbort {
+	public Transition findCommonInitialTrans(List<Transition> transList_p, ModelMgr modelMgr_p) throws MBTException {
 		int homeStateId = this.getHomeState().getId(); //this.superState.getId(); // this.homeState.getId();
 		java.util.HashMap<Transition, Integer> tallyTransList = new java.util.HashMap<Transition, Integer>();
 		for (Transition theTrans: transList_p) {
@@ -512,23 +512,23 @@ public class StateNetwork extends PostmanNetwork {
 		}
 		return retList;
 	}
-	
-	public static List<Transition> cleanPath (List<PostmanArc> pathTransList_p) {
-		List<Transition> retList = new java.util.ArrayList<Transition>();
-		for (PostmanArc transObj: pathTransList_p) {
-			Transition trans = (Transition) transObj;
-//			if (trans.isFake() || !trans.isActive()) continue;
-			Transition realTrans = trans.getForTrans();
-			if (realTrans != null) {
-				trans = realTrans;
-			}
-//			if (!trans.isFake() || trans.isLoopbackTrans()) {
-			if (!trans.isFake()) {
-				retList.add(trans);
-			}
-		}
-		return retList;
-	}
+//	
+//	public static List<Transition> cleanPath (List<PostmanArc> pathTransList_p) {
+//		List<Transition> retList = new java.util.ArrayList<Transition>();
+//		for (PostmanArc transObj: pathTransList_p) {
+//			Transition trans = (Transition) transObj;
+////			if (trans.isFake() || !trans.isActive()) continue;
+//			Transition realTrans = trans.getForTrans();
+//			if (realTrans != null) {
+//				trans = realTrans;
+//			}
+////			if (!trans.isFake() || trans.isLoopbackTrans()) {
+//			if (!trans.isFake()) {
+//				retList.add(trans);
+//			}
+//		}
+//		return retList;
+//	}
 	
 
 	/**

@@ -1,5 +1,6 @@
 package com.testoptimal.exec.navigator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.testoptimal.exec.FSM.State;
@@ -41,7 +42,8 @@ public class SequencePath {
 	}
 
 	public SequencePath(List<Transition> transList_p) {
-		this.transList = transList_p;
+		this.transList = new ArrayList<>(transList_p.size());
+		this.transList.addAll(transList_p);
 		Transition lastTrans = this.transList.get(this.transList.size()-1);
 		if (lastTrans.isLoopbackTrans()) {
 			this.transList.remove(lastTrans);
@@ -135,7 +137,7 @@ public class SequencePath {
 	}
 	
 	public Transition addAltRoute (List<Transition> altTransList_p) {
-		this.transList.addAll(this.curTransIdxInPath, altTransList_p);
+		this.transList.addAll(this.curTransIdxInPath, altTransList_p.stream().filter(t-> t.getTransNode()!=null).toList());
 		this.genPathId();
 		for (Transition trans: altTransList_p) {
 			if (trans.getMinTraverseCount() > 0) {
@@ -149,16 +151,14 @@ public class SequencePath {
 		List<SequencePath> retList = new java.util.ArrayList<>();
 		List<Transition> aTransList = new java.util.ArrayList<>();
 		for (Transition trans: transList_p) {
-			if (trans.isLoopbackTrans()) {
+			aTransList.add(trans);
+			if (((State) trans.getToNode()).isModelFinal()) {
 				if (aTransList.size() > 1) {
 					SequencePath path = new SequencePath(aTransList);
 					path.setPathDesc("Path " + retList.size());
 					retList.add(path);
 				}
-				aTransList = new java.util.ArrayList<Transition>();
-			}
-			else {
-				aTransList.add(trans);
+				aTransList = new java.util.ArrayList<Transition>();				
 			}
 		}
 		if (!aTransList.isEmpty()) {

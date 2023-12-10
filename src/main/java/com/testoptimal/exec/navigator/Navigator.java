@@ -66,12 +66,23 @@ public class Navigator {
 			
 			State atState = (State)this.curTrans.getFromNode();
 			State toState = (State) this.curTrans.getToNode();
-			this.curTravObj = new TravState(atState, true, this.execDir);
-			if (this.execDir.isAborted()) break;
-			this.curTravObj.travRun();
+			
+			if (!atState.isSuperVertex()) {
+				this.curTravObj = new TravState(atState, true, this.execDir);
+				if (this.execDir.isAborted()) break;
+				this.curTravObj.travRun();
+			}
+
 			this.curTravObj = new TravTrans(this.curTrans, false, this.execDir);
 			if (this.execDir.isAborted()) break;
 			this.curTravObj.travRun();
+			
+			if (toState.isSuperVertex()) {
+				this.curTravObj = new TravState(toState, true, this.execDir);
+				if (this.execDir.isAborted()) break;
+				this.curTravObj.travRun();
+			}
+			
 			boolean atFinal = toState.isModelFinal();
 			if (this.sequencer.isEndingPath()) {
 				this.curTravObj = new TravState(toState, true, this.execDir);

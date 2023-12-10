@@ -3,14 +3,15 @@ package com.testoptimal.exec;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
+import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.mscript.groovy.GroovyScript;
 import com.testoptimal.exec.mscript.groovy.ScriptRuntimeException;
 import com.testoptimal.exec.navigator.Navigator;
@@ -129,6 +130,7 @@ public final class ExecutionDirector extends Thread {
 			this.mScriptLogger.close();
 		}
 		catch (Throwable e) {
+			logger.warn(ExceptionUtils.getStackTrace(e));
 			String errMsg = e instanceof ScriptRuntimeException? ((ScriptRuntimeException) e).toString(): e.getMessage();
 			
 			try {
