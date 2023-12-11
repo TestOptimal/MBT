@@ -99,7 +99,7 @@ public class ExecutionSetting {
 		if (initStateList!=null && !initStateList.isEmpty()) this.initialStateID = initStateList.get(0).getStateID();
 		
 	    // reset counters here
-	    this.networkObj.reset(this.modelMgr);
+	    this.networkObj.reset();
 	}
 	
 	

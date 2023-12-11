@@ -7,14 +7,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ExecutionDirector;
-import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.FSM.TravState;
 import com.testoptimal.exec.FSM.TravTrans;
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mscript.MbtScriptExecutor;
 
 public class Navigator {
 	private static Map<String, Constructor> seqConstructorMap = new HashMap<>();
@@ -33,9 +31,7 @@ public class Navigator {
 		return seqConstructorMap.keySet().stream().map(s -> s).collect(Collectors.toList());	
 	}
 	
-	private MbtScriptExecutor scriptExec;
 	private ExecutionDirector execDir;
-	private ExecutionSetting execSetting;
 	private Sequencer sequencer;
 	private TravBase curTravObj;
 	private Transition curTrans;
@@ -45,8 +41,6 @@ public class Navigator {
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
-		this.scriptExec = this.execDir.getScriptExec();
-		this.execSetting = this.execDir.getExecSetting();
 
 		Map<String, Integer> transReqMap = new java.util.HashMap<>();
 		for (Transition trans: execDir_p.getExecSetting().getNetworkObj().getAllRequiredTrans()) {

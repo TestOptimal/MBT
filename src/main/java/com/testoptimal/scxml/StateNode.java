@@ -55,43 +55,6 @@ public class StateNode implements Comparable<StateNode> {
 	 */
 	private int maxMillis = Integer.MAX_VALUE;
 	
-	/**
-	 * type of the node: 
-	 * <ul>
-	 * <li>FSM (default, null, blank) - normal, FSM state, behaves like XOR 1, IOR 1
-	 * <li>AND (all, no purging) - all incoming trans required to fire state, only consume 1 traversal
-	 * from each incoming transitions. Behaves like XOR m of m transitions
-	 * <li>XOR (n/m, purged on duplicates) - must have n distinct transition traversals of
-	 * any of the transitions. consume 1 traversal from each of the n transitions.
-	 * <li>IOR (n/m) - must have n transition traversals, duplicate traversal on transitions ok and counted
-	 * </ul>
-	 * 
-	 * <ul>
-	 * 	<li>TraversalCount: count of traversals regardless of transitions, duplicate traversals of same
-	 * transitions are counted. This is the default if not specified to be compatible with FSM.
-	 * <li>TransitionCount: count of distinctive transitions that have traversals, one transition only
-	 * counted once regardless of multiple of traversals. 
-	 * <li>Weight: sum of weight of all traversals must be equal or exceeds the activateThreshold
-	 * </ul>
-	 * @since 4.0
-	 */
-	private String activateType = "";
-	
-	/**
-	 * quantity for activateType.
-	 */
-	private int activateThreshold = 1; // <=0 is treated as 1.
-
-	/**
-	 * type of firing rule to use.
-	 * <ul>
-	 * 	<li>ALL - fire all transitions if no guard condition or guard condition evaluates to true
-	 *  <li>RANDOM - randomly select one transitions from the trans weight that has no guard condition
-	 *  or guard condition evaluates to true.
-	 * </ul>
-	 */
-	private String firingType = "RANDOM";
-	
 	//	public StateNode initialChildState;
 	private List<StateNode> childrenStates = new java.util.ArrayList<StateNode>();
 	private List <TransitionNode> transitions = new java.util.ArrayList<TransitionNode>();
@@ -110,52 +73,6 @@ public class StateNode implements Comparable<StateNode> {
 		return this.stateID.trim(); 
 	}
 
-	
-	
-	public String getActivateType() { 
-//		if (Util.isEmpty(this.activateType)) this.activateType = "XOR";
-		return this.activateType; 
-	}
-
-	public ActivateType getActivateTypeEnum() {
-		return resolveActivateType(this.activateType);
-	}
-
-	public static ActivateType resolveActivateType(String activateType_p) {
-		if (StringUtil.isEmpty(activateType_p)) return ActivateType.TRAV_COUNT;
-		else if (activateType_p.equalsIgnoreCase("TRANS_COUNT")) return ActivateType.TRANS_COUNT;
-		else if (activateType_p.equalsIgnoreCase("WEIGHT")) return ActivateType.WEIGHT;
-		else if (activateType_p.equalsIgnoreCase("VAR")) return ActivateType.VAR;
-		else return ActivateType.TRAV_COUNT;
-		
-//		if (Util.isEmpty(this.activateType)) return ActivateType.FSM;
-//		else if (this.activateType.equalsIgnoreCase("XOR")) return ActivateType.XOR;
-//		else if (this.activateType.equalsIgnoreCase("IOR")) return ActivateType.IOR;
-//		else if (this.activateType.equalsIgnoreCase("AND")) return ActivateType.AND;
-//		else return ActivateType.FSM;
-	}
-	
-	public static FiringType resolveFiringType(String firingType_p) {
-		if (StringUtil.isEmpty(firingType_p)) return FiringType.RANDOM;
-		else if (firingType_p.equalsIgnoreCase("ALL")) return FiringType.ALL;
-		else if (firingType_p.equalsIgnoreCase("VAR")) return FiringType.VAR;
-		else return FiringType.RANDOM;
-	}
-	
-	public String getFiringType() { 
-		return this.firingType; 
-	}
-
-	public FiringType getFiringTypeEnum() {
-		return resolveFiringType(this.firingType);
-	}
-	
-	public int getActivateThreshold() {
-		if (this.activateThreshold<=0) this.activateThreshold = 1;
-		return this.activateThreshold;
-	}
-	
-	
 	public String getStereotype () {
 		if (StringUtil.isEmpty(this.stereotype)) {
 			if (this.isInitial) {

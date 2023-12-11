@@ -12,11 +12,9 @@ import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.util.StringUtil;
 
-import openOptima.NoSolutionException;
 import openOptima.graph.Edge;
 import openOptima.graph.Vertex;
 import openOptima.network.Arc;
-import openOptima.network.postman.PostmanArc;
 import openOptima.network.postman.PostmanNetwork;
 import openOptima.network.shortestpath.ShortestPath;
 import openOptima.network.shortestpath.ShortestPathProblem;
@@ -42,43 +40,13 @@ public class StateNetwork extends PostmanNetwork {
 	public StateNetwork() {
 //		this.logObj = Logger.getLogger("com.testoptimal.sequencer");
 	}
-	
-	private List<State> getAllStates (boolean activeOnly_p) {
-		List<State> retList = new java.util.ArrayList<State>();
-		for (Object stateObj: super.getVertexList(activeOnly_p)) {
-			State state = (State) stateObj;
-			retList.add(state);
-		}
-		return retList;
-	}
-
-	private List<Transition> getAllTrans(boolean activeOnly_p, boolean incFakeTrans_p) {
-		List<Transition> retList = new java.util.ArrayList<Transition>();
-		for (Object transObj: super.getArcList(activeOnly_p)) {
-			Transition trans = (Transition) transObj;
-			if (incFakeTrans_p || !trans.isFake()) {
-				retList.add(trans);
-			}
-		}
-		return retList;
-	}
 
 	public List<Transition> getActiveTransList () {
 		return this.allActiveTransList;
 	}
-	
-	public List<State> getActiveStateList () {
-		return this.allActiveStateList;
-	}
 
 	public List<Transition> getAllRequiredTrans() {
-		List<Transition> retList = new java.util.ArrayList<>();
-		for (Transition trans: this.allActiveTransList) {
-			if (trans.getMinTraverseCount() > 0) {
-				retList.add(trans);
-			}
-		}
-		return retList;
+		return this.allActiveTransList.stream().filter(t -> t.getMinTraverseCount() > 0).toList();
 	}
 
 	/**
@@ -132,9 +100,8 @@ public class StateNetwork extends PostmanNetwork {
 		super.addArc(arcObj);
 	    fStateObj.setVertexType(Vertex.finalVertex);
 	    
-	    this.allActiveStateList = this.getAllStates(true);
-	    this.allActiveTransList = this.getAllTrans(true, false);
-
+	    this.allActiveStateList = super.getVertexList(true).stream().map(s -> (State) s).toList();
+	    this.allActiveTransList = super.getArcList(true).stream().map(t -> (Transition) t).filter(t -> !((Transition)t).isFake()).toList();
 	    if (printNetwork) {
 			try {
 				String fname = StateDiagram.genNetworkGraph("State Network", this, Config.getTempPath(), "StateNetwork");
@@ -204,159 +171,17 @@ public class StateNetwork extends PostmanNetwork {
 	 * resets this network for a fresh run. re-apply submodel mcase selection
 	 * 
 	 */
-	public void reset(ModelMgr modelMgr_p) throws Exception {
-		for (Transition trans: this.allActiveTransList) {
-			trans.reset(modelMgr_p);
-		}
-		return;
+	public void reset() {
+		this.allActiveTransList.forEach(t -> t.reset());
 	}
 
 
-
-	/**
-	 * prints out debug message that describes this network when debug is turned on.
-	 */
-	public String toString () {
-		StringBuffer retBuf = new StringBuffer();
-		java.util.ArrayList <Vertex> nodeList = this.getVertexList(true);
-		for (int i=0; i<nodeList.size(); i++) {
-			State stateObj = (State) nodeList.get(i);
-			java.util.ArrayList <Edge> edgeList = stateObj.getEdgesOut();
-			for (int j=0; j<edgeList.size(); j++) {
-				Transition transObj = (Transition) edgeList.get(j);
-				retBuf.append(stateObj.getMarker()).append(", ").append(transObj.getTargetStateId()).append("\n");
-			}
-		}
-		return retBuf.toString();
-	}
-	
-	/**
-	 * sets traversal of all transitions to optional except the model's initial node. The initial node is required
-	 * to get around the issue that caused LinZhao algorithm to loop.
-	 */
-	public void setAllTransitionsOptional () {
-		for (Transition transObj: this.allActiveTransList) {
-			transObj.setTraverseOptional();
-		}
-	}
-	
-	/**
-	 * resets required number of traverses to the number in mbtNode.
-	 */
-	public void resetTransitionTraverse() {
-		for (Transition transObj: this.allActiveTransList) {
-			transObj.setMinMaxCount(transObj.getMinTraverseCount(), Integer.MAX_VALUE);
-		}
-	}
-	
-	/**
-	 * sets required number of traverses on all transitions included in the state and all of the children states per their transition definition.
-	 */
-	public void setTransitionTraverse(State stateObj_p, int penalty_p) {
-		List <Edge> transList = stateObj_p.getEdgesOut();
-		for (int i=0; i<transList.size(); i++) {
-			Transition transObj = (Transition) transList.get(i);
-			if (transObj.isFake()) continue;
-			transObj.setMinMaxCount(transObj.getTransNode().getTraverseTimes(), Integer.MAX_VALUE);
-			if (penalty_p>0) {
-				transObj.setDist(penalty_p);
-				transObj.setTraverseOptional();
-			}
-		}
-		
-		if (!stateObj_p.isSuperVertex()) return;
-		List<State> stateList = stateObj_p.getChildStates();
-		for (int i=0; i<stateList.size(); i++) {
-			State stateObj = (State) stateList.get(i);
-			if (stateObj.isFake()) continue;
-			this.setTransitionTraverse(stateObj, penalty_p);
-		}
-		return;
-	}
-	
-	/**
-	 * finds a state
-	 */
-	public State findState(String stateID_p) {
-		StateNode node = this.scxmlNode.findState(stateID_p);
-		return node==null?null:(State) this.allStateUIDHash.get(node.getUID());
-	}
-	
 	public State findStateByUID (String uid_p) {
 		return this.allStateUIDHash.get(uid_p);
 	}
 
 	public Transition findTransByUID (String uid_p) {
 		return this.allTransUIDHash.get(uid_p);
-	}
-
-	/**
-	 * Finds either trans or state by uid_p passed in.
-	 * @param uid_p
-	 * @return
-	 */
-	public Object findByUID (String uid_p) {
-		State st = this.allStateUIDHash.get(uid_p);
-		if (st!=null) {
-			return st;
-		}
-		return this.allTransUIDHash.get(uid_p);
-	}
-
-	
-	/**
-	 * sets the transition cost to the transition weight substring from max weight of
-	 * all transitions.  This way, it allows trans with higher weight to be
-	 * selected for repeating.
-	 */
-	public void setTransCostFromWeight() {
-		// find max weight first
-		int maxWeight = 0;
-		for (Transition transObj: this.allActiveTransList) {
-			if (transObj.isFake() || transObj.getTransNode()==null) continue;
-			int curWeight = transObj.getTransNode().getWeight();
-			if (curWeight > maxWeight) {
-				maxWeight = curWeight;
-			}
-		}
-		
-		maxWeight = maxWeight * 10;
-		for (Transition transObj: this.allActiveTransList) {
-			transObj.setDist(maxWeight - transObj.getTransNode().getWeight());
-		}
-		return;
-	}
-	
-
-	/**
-	 * returns a list of state with specified stereotype
-	 * @param stereotype_p
-	 */
-	public List<State> getStateByStereotype (String stereotype_p) {
-		List<State> retList = new java.util.ArrayList<State>();
-		for (State state: this.allActiveStateList) {
-			StateNode stateNode = state.getStateNode();
-			String stereotype = stateNode.getStereotype();
-			if (stereotype==null) continue;
-			if (stereotype.equalsIgnoreCase(stereotype_p)) {
-				retList.add(state);
-			}
-		}
-		return retList;
-	}
-
-	public List<Transition> getTransByStereotype (String stereotype_p) {
-		List<Transition> activeTransList = this.allActiveTransList;
-		List<Transition> retList = new java.util.ArrayList<Transition>();
-		for (Transition trans: activeTransList) {
-			TransitionNode transNode = trans.getTransNode();
-			String stereotype = transNode.getStereotype();
-			if (stereotype==null) continue;
-			if (stereotype.equalsIgnoreCase(stereotype_p)) {
-				retList.add(trans);
-			}
-		}
-		return retList;
 	}
 
 	/**
@@ -385,153 +210,6 @@ public class StateNetwork extends PostmanNetwork {
 	}
 
 	/**
-	 * returns the transition from the initial state of the network that are most common for reaching all of 
-	 * the states and transitions passed in.
-	 */
-	public Transition findCommonInitialTrans(List<Transition> transList_p, ModelMgr modelMgr_p) throws MBTException {
-		int homeStateId = this.getHomeState().getId(); //this.superState.getId(); // this.homeState.getId();
-		java.util.HashMap<Transition, Integer> tallyTransList = new java.util.HashMap<Transition, Integer>();
-		for (Transition theTrans: transList_p) {
-			int transStartStateId = theTrans.getFromNode().getId();
-			if (homeStateId==transStartStateId) {
-				continue;
-			}
-			List<Transition> transList = this.findShortestPath(homeStateId, transStartStateId);
-			Transition trans = transList.get(0);
-			for (Transition aTrans: transList) {
-				if (aTrans.getTransNode()!=null) {
-					trans = aTrans;
-					break;
-				}
-			}
-
-			Integer intObj = tallyTransList.get(trans);
-			if (intObj==null) intObj = new Integer(1);
-			else intObj = intObj+1;
-			tallyTransList.put(trans, intObj);
-		}
-		
-		int pathLength = 9999;
-		Transition retTrans = null;
-		boolean retTransHasGuard = false;
-		for (java.util.Map.Entry <Transition, Integer> anEntry: tallyTransList.entrySet()) {
-			Transition trans = anEntry.getKey();
-			Integer intObj = anEntry.getValue();
-			if (retTrans == null) {
-				retTrans = trans;
-				pathLength = intObj;
-				if (retTrans.getTransNode()!=null) {
-					retTransHasGuard = retTrans.getTransNode().hasGuard();
-				}
-			}
-			else if (retTransHasGuard) { // must be also a realTrans
-				if (!trans.getTransNode().hasGuard()) {
-					retTrans = trans;
-					retTransHasGuard = false;
-					pathLength = intObj;
-				}
-				else if (pathLength>=intObj) {
-					retTrans = trans;
-					retTransHasGuard = true;
-					pathLength = intObj;
-				}
-			}
-			else {
-				if (trans.getTransNode().hasGuard()) {
-					continue;
-				}
-				else if (pathLength>=intObj) {
-					retTrans = trans;
-					retTransHasGuard = false;
-					pathLength = intObj;
-				}
-			}
-		}
-		return retTrans;
-	}
-
-	/**
-	 * returns the count of transitions that requires at least one traversal.
-	 */
-	public int getReqTransCount() {
-		int ret = 0;
-		for (Transition loopTrans: this.allActiveTransList) {
-			if (loopTrans.getMinTraverseCount()>0) {
-				ret++;
-			}
-		}
-		return ret;
-	}
-//	
-//	/**
-//	 * if only partial of the network is required, ensure there is a path from the home
-//	 * to the first required arc to be required to avoid the fragmented path.
-//	 * @param fromNode_p
-//	 */
-//	public void primeForPartialCoverage(int fromNode_p) throws Exception {
-//	    ShortestPathProblem shortestpathObj = new ShortestPathProblem("openOptima.network.shortestpath.DijkstraAlgorithm");
-//	    shortestpathObj.init(this);
-//
-//    	// find shortest path to any of the edge/state required for this usecase
-//    	// and set those trans required.
-//    	ShortestPath pathList [] = shortestpathObj.getShortestPaths(fromNode_p);
-//    	if (pathList.length==0) {
-//    		throw new NoSolutionException ("Some states are not reachable. This is usually caused by missing transitions.");
-//    	}
-//    	for (ShortestPath path: pathList) {
-//    		List<Arc> arcList = path.extractPathToFirstRequiredArc();
-//    		if (arcList!=null) {
-//    			for (Arc arc: arcList) {
-//    				if (arc.getMinTraverseCount()==0) {
-//    					arc.setMinMaxCount(1, Integer.MAX_VALUE);
-//    				}
-//    			}
-//    			break;
-//    		}
-//    	}
-//    	return;
-//	}
-	
-	public State getSubModelInitialState (State subModelState_p) {
-		for (State state: this.allActiveStateList) {
-			if (state.getSubModelState()==subModelState_p && state.isInitial()) {
-				return state;
-			}
-		}
-		return null;
-	}
-	
-	
-	public List<State> getSubModelStateList() {
-		List<State> retList = new java.util.ArrayList<State>();
-		for (State state: this.allActiveStateList) {
-			if (state.isFake()) continue;
-			if (state.getStateNode().isSubModelState()) {
-				retList.add(state);
-			}
-		}
-		return retList;
-	}
-//	
-//	public static List<Transition> cleanPath (List<PostmanArc> pathTransList_p) {
-//		List<Transition> retList = new java.util.ArrayList<Transition>();
-//		for (PostmanArc transObj: pathTransList_p) {
-//			Transition trans = (Transition) transObj;
-////			if (trans.isFake() || !trans.isActive()) continue;
-//			Transition realTrans = trans.getForTrans();
-//			if (realTrans != null) {
-//				trans = realTrans;
-//			}
-////			if (!trans.isFake() || trans.isLoopbackTrans()) {
-//			if (!trans.isFake()) {
-//				retList.add(trans);
-//			}
-//		}
-//		return retList;
-//	}
-	
-
-	/**
 	 * this method expands the network passed in by splitting each state into a bi-part graph and add transitions to 
 	 * link between the newly created states using cartesian product algorithm.
 	 * 
@@ -557,7 +235,7 @@ public class StateNetwork extends PostmanNetwork {
 		startNodeList.put(nodeID, postNetwork.initialState);
 		postNetwork.addNode(postNetwork.initialState);
 		
-		List<Transition> transList = networkObj_p.getAllTrans(true,  true);
+		List<Transition> transList = networkObj_p.getArcList(true).stream().map(t -> (Transition) t).toList();
 		Map<String, TransitionNode> transAddedList = new java.util.HashMap<>();
 		for (Transition transObj: transList) {
 			TransitionNode transNode = transObj.getTransNode();
@@ -649,18 +327,6 @@ public class StateNetwork extends PostmanNetwork {
 		return postNetwork;
 	}
 	
-	public void markRequiredTrans (List<Transition> transList_p, long optionalCost_p, ModelMgr modelMgr_p) throws Exception {
-		for (Transition transObj: this.allActiveTransList) {
-			transObj.reset(modelMgr_p);
-			if (optionalCost_p>0) transObj.setDist(optionalCost_p);
-			transObj.setMinMaxCount(0, Integer.MAX_VALUE);
-		}
-
-    	for (Transition transObj: transList_p) {
-			transObj.setMinMaxCount(1, Integer.MAX_VALUE);
-    	}
-	}
-	
 	public List<Transition> getTransByUIDList(List<String> uidList_p) {
 		List<Transition> retList = new java.util.ArrayList<>();
 		if (uidList_p==null || uidList_p.isEmpty()) return retList;
@@ -679,9 +345,5 @@ public class StateNetwork extends PostmanNetwork {
     		}
     	}
     	return retList;
-	}
-	
-	public void setLoopbackTrans (boolean activeFlag_p) {
-		this.allActiveTransList.stream().filter(t -> t.isLoopbackTrans()).forEach(t -> t.setActive(activeFlag_p));
 	}
 }

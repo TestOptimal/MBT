@@ -40,11 +40,15 @@ public abstract class SequencerBase implements Sequencer {
 		this.transGuard = new TransGuard(this.scriptExec, this.execSetting);
 		this.scxmlNode = this.execSetting.getModelMgr().getScxmlNode();
 		
-    	ModelMgr modelMgr = execSetting.getModelMgr();
-        StateNetwork networkObj = execSetting.getNetworkObj();
+//        StateNetwork networkObj = execSetting.getNetworkObj();
         List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
 		if (!reqTransList.isEmpty()) {
-	    	networkObj.markRequiredTrans(reqTransList, this.traversedTransCost, modelMgr);
+			networkObj.getActiveTransList().stream().forEach(t -> {
+				t.reset();
+				t.setMinMaxCount(0, Integer.MAX_VALUE);
+				if (this.traversedTransCost>0) t.setDist(this.traversedTransCost);
+			});
+	    	reqTransList.forEach(t-> t.setMinMaxCount(1, Integer.MAX_VALUE));
 		}
 
 		this.pathList = this.genPathList();

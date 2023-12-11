@@ -1,12 +1,7 @@
 package com.testoptimal.exec.FSM;
 
-import java.util.List;
-
-import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.scxml.TransitionNode;
-import com.testoptimal.util.ArrayUtil;
-import com.testoptimal.util.StringUtil;
 
 import openOptima.network.postman.PostmanArc;
 
@@ -21,9 +16,6 @@ public class Transition extends PostmanArc {
 		this.transNode = transNode_p; 
 		this.restoreDist();
 	}
-	
-//	private Map<String, String> traversalVarList = new java.util.HashMap<String, String>();
-	
 	
 	// transition can be a fake trans not for any real trans. Therefore this.transNode can be null
 	private Transition forTrans = null;
@@ -74,7 +66,7 @@ public class Transition extends PostmanArc {
 	 * resets the number of times this transition is traversed to 0.
 	 *
 	 */
-	public void reset(ModelMgr modelMgr_p) throws Exception { 
+	public void reset() { 
 		this.minTravTimes = -1;
 		this.maxTravTimes = Integer.MAX_VALUE;
 		this.traversedCount = 0;
@@ -106,27 +98,6 @@ public class Transition extends PostmanArc {
 	public void setTraverseOptional () { this.setMinMaxCount(0, Integer.MAX_VALUE); }
 	 
 	public boolean isTraverseOptional() { return this.getMinTraverseCount() <= 0; }
-
-//	public String getTraversalVarValue(String varName_p) {
-//		return this.traversalVarList.get(varName_p);
-//	}
-//	
-//	public void setTraversalVar(String varName_p, String value_p) {
-//		if (value_p==null) this.traversalVarList.remove(varName_p);
-//		this.traversalVarList.put(varName_p, value_p);
-//	}
-//	
-//	public void clearTraversalVars() {
-//		this.traversalVarList.clear();
-//	}
-//	
-//	public void addTraversalVars(Map<String, String> traversalVarList_p) {
-//		this.traversalVarList.putAll(traversalVarList_p);
-//	}
-//
-//	public Map<String, String> getTraversalVarList() {
-//		return this.traversalVarList;
-//	}
 
 	public Transition (State fromStateObj, State toStateObj, String eventId, int triggerTimes) {
 		super (fromStateObj, toStateObj, 1, true);
@@ -170,40 +141,6 @@ public class Transition extends PostmanArc {
 		return this.traversedCount;
 	}
 	
-//	private static final String GuardHintCode = "guardHint";
-//	private static final String SatisfyingHintCode = "satifyingHint";
-//	public String getGuardHintThread() {
-//		if (this.transNode==null) return null;
-//		return this.getExecAttr(GuardHintCode, this.transNode.getGuardHint());
-//	}
-//	public void setGuardHintThread(String value_p) {
-//		this.setExecAttr(GuardHintCode, value_p);
-//	}
-//
-//	public String getSatisfyingHintThread() {
-//		if (this.transNode==null) return null;
-//		return this.getExecAttr(SatisfyingHintCode, this.transNode.getSatisfyingHint());
-//	}
-//	public void setSatisfyingHintThread(String value_p) {
-//		this.setExecAttr(SatisfyingHintCode, value_p);
-//	}
-
-//	private transient java.util.HashMap<String, String> execAttrList;
-//	public void setExecAttr(String attrName_p, String value_p) {
-//		this.execAttrList.put(attrName_p, value_p);
-//	}
-//	public String getExecAttr(String attrName_p, String valueIfNotFound_p) {
-//		String threadVal = this.execAttrList.get(attrName_p);
-//		if (threadVal==null) {
-//			if (valueIfNotFound_p!=null) {
-//				this.execAttrList.put(attrName_p, valueIfNotFound_p);
-//				threadVal = valueIfNotFound_p;
-//			}
-//		}
-//		return threadVal;
-//	}
-	
-	
 	
 	/**
 	 * returns true if this transition is a fake transition.
@@ -226,21 +163,7 @@ public class Transition extends PostmanArc {
 	public boolean isLoopbackTrans () {
 		return this.getMarker().endsWith(State.LoopBackTransID);
 	}
-	
-//	public boolean isFinalExitTrans () {
-//		return this.getMarker().endsWith(State.FinalExitTransID);
-//	}
-	
-//	public boolean isLoopBackTrans() {
-//		boolean ret =  this.getMarker().equalsIgnoreCase(State.LoopBackTransID);
-//		return ret;
-//	}
-	
-//	public boolean isInitialEntryTrans() {
-//		boolean ret = this.getMarker().equalsIgnoreCase(State.InitialEntryTransID);
-//		return ret;
-//	}
-	
+		
 	public double restoreDist () {
 		if (this.transNode!=null) {
 			this.setDist(this.transNode.getWeight());

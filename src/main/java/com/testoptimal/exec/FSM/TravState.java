@@ -43,15 +43,6 @@ public class TravState extends TravBase {
 			this.execDir.getExecListener().exitState(this.curState);
 		}
 		return !this.hasFailed();
-//		else {
-//			String errMsg = this.abortException.getMessage();
-//			if (errMsg==null || errMsg.equals("null")) {
-//				errMsg = this.abortException.toString();
-//			}
-//			this.addTagExec(new TagExec(this.scriptExec, null, false, errMsg, "", this.realStateNode.getStateID(), null, this.realStateNode.getUID()));
-//			throw this.abortException;
-//		}
-
 	}
 		
 		
@@ -68,20 +59,6 @@ public class TravState extends TravBase {
 					e.getMessage(), null, this.curState.getStateId(), null, this.getCurUID()));
 		}			
 	}
-
-//	private TravBase postState (State curState_p) throws Exception, MBTAbort {
-//		TravBase nextTravObj = null;
-//		Navigator nav = this.execDir.getSequenceNavigator();
-//		if (this.execDir.getStopMonitor().checkIfContinue(curState_p.isModelFinal())) {
-////			if (!(nav instanceof SequenceNavigatorMarkov) && curState_p.isSuperVertex()) {
-////				nextTravObj = new AsyncState (((State)curState_p.getAllTrans(false).get(0).getToNode()), this.execDir);
-////			}
-////			else {
-//				nextTravObj = nav.nextTrav();
-////			}
-//		}
-//		return nextTravObj;
-//	}
 
 	public State getState() {
 		return this.curState;

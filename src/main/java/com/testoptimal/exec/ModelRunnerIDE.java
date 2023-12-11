@@ -145,7 +145,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterState(State stateObj_p) throws MBTAbort {
-//		this.sendMessage(MsgType.info, "Traversing state: " + stateObj_p.getStateId());
+		this.sendMessage(MsgType.info, "Traversing state: " + stateObj_p.getStateId());
 
 		String uid = stateObj_p.getStateNode().getUID();
 		if (this.pauseNext || this.debugMode && this.breakPoints.indexOf(uid)>=0) {
@@ -169,7 +169,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterTrans(Transition transObj_p) throws MBTAbort {
-//		this.sendMessage(MsgType.info, "Traversing transition: " + transObj_p.getEventId());
+		this.sendMessage(MsgType.info, "Traversing transition: " + transObj_p.getEventId());
 		String uid = transObj_p.getTransNode().getUID();
 		if (this.pauseNext || this.debugMode && this.breakPoints.indexOf(uid)>=0) {
 			this.pauseNext = false;
