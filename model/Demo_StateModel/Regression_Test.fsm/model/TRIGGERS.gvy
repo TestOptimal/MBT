@@ -28,22 +28,22 @@ def 'LoginSubModel' () {
 @TRIGGER('Ua80e9180')
 def 'LoginSubModel_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }
 
 
 @TRIGGER('Ube59826d')
 def 'LoginSubModel_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('Uaceae12f')
 def 'wait_for_complete' () {
-	$VAR.runReq.statDesc = $VAR.runReq.modelName + "-" + $VAR.runReq.mbtMode + "-" + ($VAR.runReq.options.genOnly?'gen':'run');
+	$VAR.runReq.statDesc = $VAR.runReq.modelName + "-" + $VAR.runReq.mbtMode + "-" + ($VAR.runReq.options.generateOnly?'gen':'run');
 	submit_run_request($VAR.runReq);
 	$EXEC.setPathName($VAR.runReq.statDesc);
-	$EXEC.log "checking model run status: " + $VAR.url_status;
+	$EXEC.log 'checing status for model/' + $VAR.runReq.modelName + '/session/' + $VAR.runReq.mbtSessID;
 	def count = 0;
 	while(count <= 5) {
 		println "$count"
@@ -63,6 +63,7 @@ def 'wait_for_complete' () {
 		}
 		count++
 	}
+	$EXEC.log 'retrieving stats for model/' + $VAR.runReq.modelName + '/session/' + $VAR.runReq.mbtSessID;
 	stats = io.restassured.RestAssured.given().auth().preemptive().basic($VAR.userid, $VAR.password)
 		.header('Content-Type', 'application/json')
 		.pathParam('modelName', $VAR.runReq.modelName)
@@ -72,7 +73,7 @@ def 'wait_for_complete' () {
 		.then()
 		.extract().path("execSummary");
 	$EXEC.log('stats: ' + JsonOutput.prettyPrint(JsonOutput.toJson(stats)));
-	if (stats.status=="passed") {
+	if (stats!=null && stats.status=="passed") {
 		$EXEC.getCurTraverseObj().addReqPassed($VAR.runReq.modelName, 'model exec successful');
 	}
 	else {
@@ -108,13 +109,13 @@ def 'LoginMainModel' () {
 @TRIGGER('Ufadbfaf4')
 def 'LoginMainModel_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('Ua064cf86')
 def 'LoginMainModel_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 
 }
 
@@ -127,13 +128,13 @@ def 'WebAppAutomation' () {
 @TRIGGER('Ud7abf326')
 def 'WebAppAutomation_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('U4cc77289')
 def 'WebAppAutomation_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }
 
 
@@ -145,13 +146,13 @@ def 'WorkflowTesting' () {
 @TRIGGER('Ue7750c17')
 def 'WorkflowTesting_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }
 
 @TRIGGER('U83c7255d')
 def 'WorkflowTesting_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 
@@ -163,13 +164,13 @@ def 'BehaviorDrivenTesting' () {
 @TRIGGER('U606e5068')
 def 'BehaviorDrivenTesting_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('Uf66ebabb')
 def 'BehaviorDrivenTesting_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }
 
 
@@ -181,13 +182,13 @@ def 'DEMO_Guard' () {
 @TRIGGER('Ua40ae68f')
 def 'Guard_start: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('U7159f8c0')
 def 'Guard_start: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }
 
 
@@ -199,11 +200,11 @@ def 'DEMO_OutputTestCases' () {
 @TRIGGER('U1bfb219f')
 def 'DEMO_OutputTestCases: run_model'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = false;
+	$VAR.runReq.options.generateOnly = false;
 }
 
 @TRIGGER('Ucb58e666')
 def 'DEMO_OutputTestCases: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
-	$VAR.runReq.options.genOnly = true;
+	$VAR.runReq.options.generateOnly = true;
 }

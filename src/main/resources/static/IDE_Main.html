@@ -174,8 +174,10 @@
 		<iframe id="dialogFrame" ng-src="{{dialog.frameDefn.srcFrame}}" frameborder="0"></iframe>
 	</div>
 
-	<div id="msgExpander" class="msg_{{sysMsg.mostSevereMsg.type}}"
-		ng-click="sysMsg.visible=true;" title="show console messages">&langle; {{sysMsg.msgList.length}}</div>
+	<div id="msgExpander" class="msg_{{sysMsg.mostSevereType}}" ng-click="sysMsg.visible=true;" 
+		title="{{sysMsg.msgGroups[sysMsg.mostSevereType][0]}} click to show messages">
+		&langle; {{sysMsg.msgGroups[sysMsg.mostSevereType].length || ''}}
+	</div>
 	<div id="msgBar" ng-show="sysMsg.visible" style="width:100%;">
 		<span id="msgBarActions" ng-show="sysMsg.visible">
 			<span class="glyphicon glyphicon-chevron-down" ng-click="sysMsg.visible=false;"></span>

@@ -70,7 +70,7 @@ public class ModelRunnerIDE extends ModelRunner {
 	
 	
 	public void startMbt (boolean debug_p, String mbtMode_p, Map<String,Object> options_p) throws Exception, MBTAbort {
-		this.sendMessage(MsgType.info, "starting model excution ...");
+//		this.sendMessage(MsgType.info, "starting model excution ...");
 		this.debugMode = debug_p;
 		this.pauseNext = this.debugMode;
 		List<String> blist = (List<String>) options_p.get("breakpoints");
@@ -115,7 +115,7 @@ public class ModelRunnerIDE extends ModelRunner {
 		catch (Exception e) {}
 		IdeSvc.sendIdeData(this.httpSessId, "model.paused", "");
 		
-		this.sendMessage(MsgType.info, "MBT_END");
+//		this.sendMessage(MsgType.info, "MBT_END");
 		
 		ModelState m = new ModelState(this.modelMgr.getScxmlNode().getModelName(), this.httpSessId);
 		IdeSvc.sendIdeData(this.httpSessId, "model.ended", m);
@@ -146,7 +146,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterState(State stateObj_p) throws MBTAbort {
-		this.sendMessage(MsgType.info, "Traversing state: " + stateObj_p.getStateId());
+//		this.sendMessage(MsgType.info, "Traversing state: " + stateObj_p.getStateId());
 
 		String uid = stateObj_p.getStateNode().getUID();
 		if (this.pauseNext || this.debugMode && this.breakPoints.indexOf(uid)>=0) {
@@ -170,7 +170,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 	@Override
 	public void enterTrans(Transition transObj_p) throws MBTAbort {
-		this.sendMessage(MsgType.info, "Traversing transition: " + transObj_p.getEventId());
+//		this.sendMessage(MsgType.info, "Traversing transition: " + transObj_p.getEventId());
 		String uid = transObj_p.getTransNode().getUID();
 		if (this.pauseNext || this.debugMode && this.breakPoints.indexOf(uid)>=0) {
 			this.pauseNext = false;

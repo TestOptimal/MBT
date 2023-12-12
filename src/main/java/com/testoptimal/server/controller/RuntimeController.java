@@ -70,10 +70,6 @@ public class RuntimeController {
 			if (runReq.options==null) {
 				runReq.options = new java.util.HashMap<>();
 			}
-			if (runReq.options.get("autoClose")==null) {
-				runReq.options.put("autoClose", true);
-			}
-
 			ModelRunnerClient mbtSess = new ModelRunnerClient(httpSessID, new ModelMgr(runReq.modelName));
 			SessionMgr.getInstance().addMbtStarter(mbtSess);
 			mbtSess.startMbt(runReq.mbtMode, runReq.options);
