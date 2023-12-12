@@ -33,7 +33,7 @@ import jakarta.servlet.ServletRequest;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class ALMController {
-	@PutMapping(value = "{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "model/{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestBody List<Requirement> reqList,
 			ServletRequest request) throws Exception {
@@ -42,7 +42,7 @@ public class ALMController {
 		return new ResponseEntity<>(ClientReturn.OK(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/requirement", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Requirement>> getReqList(@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr = new ModelMgr(modelName);

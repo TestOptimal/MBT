@@ -68,8 +68,7 @@ public class TravTrans extends TravBase {
 			}
 		}
 		catch (MBTException e) {
-			this.tagExecList.add(new TagExec( this.scriptExec, "Error", false, 
-					e.getMessage(), null, this.curTransNode.getParentStateNode().getStateID(), this.curTrans.getEventId(),this.getCurUID()));
+			this.addTagExec(null, false, e.getMessage(), null);
 		}
 		
 //		// execute additional script function

@@ -47,6 +47,9 @@ public class ExecutionStatus {
 	public long elapseMillis;
 	public String elapseTime;
 	
+	public ExecutionStatus (String execStatus_p) {
+		this.execStatus = execStatus_p;
+	}
 	
 	public ExecutionStatus (ExecutionDirector execDir_p) {
 		JVMStatus jvmStatus = JVMStatus.getJVMStatus();

@@ -29,9 +29,9 @@ public class TransGuard {
 	private int MaxGuardResolves = 5;
 	private Random rand = new Random();
 
-	public TransGuard(MbtScriptExecutor scriptExec_p, ExecutionSetting execSetting_p) {
+	public TransGuard(MbtScriptExecutor scriptExec_p, ExecutionSetting execSetting_p, StateNetwork netWorkObj_p) {
 		this.scriptExec = scriptExec_p;
-		this.networkObj = execSetting_p.getNetworkObj();
+		this.networkObj = netWorkObj_p;
 		Integer g = (Integer) execSetting_p.getOption("Optimal.MaxGuardResolves");
 		if (g!=null) {
 			this.MaxGuardResolves = g;
@@ -63,7 +63,7 @@ public class TransGuard {
 		if (this.consecutiveGuardResolves > this.MaxGuardResolves) {
 			throw new MBTException ("Unable to resolve guard on transition " + guardedTrans.getTransNode().getEvent() + ": " + this.guardedTrans.getTransNode().getGuard());
 		}
-		logger.info("Guard failed on transition " + this.guardedTrans.getTransNode().getEvent() + ", attempt to find alternate path (count: " + this.consecutiveGuardResolves + ")");
+		logger.info("searching for alternate path to resolve guard for transition " + this.guardedTrans.getTransNode().getEvent() + ", attempt: " + this.consecutiveGuardResolves);
 		Transition trans = this.findAltTrans(trans_p, seqPath_p);
 		if (trans==null) {
 			throw new MBTException ("Unable to find alternate path to resolve guard error on transition " + this.guardedTrans.getEventId() + ": " + this.guardedTrans.getTransNode().getGuard());

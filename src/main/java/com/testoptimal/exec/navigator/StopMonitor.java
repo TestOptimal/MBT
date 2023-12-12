@@ -43,7 +43,7 @@ public class StopMonitor {
 		this.reqmntCoverage = new TraversalCount(reqmntMap);
 		this.transCoverage = nav_p.getTravTransCount();
 		this.stateCoverage = nav_p.getTravStateCount();
-		this.homeState = execSetting.getNetworkObj().getHomeState();
+		this.homeState = execDir_p.getSequenceNavigator().getSequencer().getNetworkObj().getHomeState();
 		String curMbtMode = execSetting.getCurMbtMode();
 		if (curMbtMode.equalsIgnoreCase("Random")) {
 			this.totalPathCount = execDir_p.getSequenceNavigator().getPathCount();

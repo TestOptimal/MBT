@@ -51,7 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GraphController {
 	private static Logger logger = LoggerFactory.getLogger(GraphController.class);
 
-	@GetMapping(value = "{modelName}/model", produces = MediaType.IMAGE_PNG_VALUE )
+	@GetMapping(value = "model/{modelName}/model", produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genModelGraph (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr =  new ModelMgr(modelName);
@@ -73,7 +73,7 @@ public class GraphController {
 		 }    	
 	}
 	
-	@GetMapping(value = "{modelName}/coverage", produces = MediaType.IMAGE_PNG_VALUE )
+	@GetMapping(value = "model/{modelName}/coverage", produces = MediaType.IMAGE_PNG_VALUE )
 	public ResponseEntity<UrlResource> genCoverageGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -103,7 +103,7 @@ public class GraphController {
 		 }    	
 	}
 
-	@GetMapping(value = "{modelName}/sequence", produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "model/{modelName}/sequence", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> genModelSequenceGraph (@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -133,7 +133,7 @@ public class GraphController {
 		 }    	
 	}
 
-	@GetMapping(value = "{modelName}/msc", produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "model/{modelName}/msc", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<UrlResource> modelTravMSC(@PathVariable (name="modelName", required=true) String modelName,
 			@RequestParam (name="mbtSessID", required=false, defaultValue="undefined") String mbtSessID,
 			ServletRequest request) throws Exception {

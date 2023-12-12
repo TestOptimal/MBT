@@ -99,7 +99,7 @@ public class ModelExec {
 	private void addTestStep (long perfMillis_p, ExecStateTrans st_p, List<TagExec> checkList_p) {
 		this.curTestCase.addStep(perfMillis_p, st_p, checkList_p);
 
-		Map<String, List<TagExec>> checkMap = checkList_p.stream().collect(Collectors.groupingBy(c -> c.getReqTag()));
+		Map<String, List<TagExec>> checkMap = checkList_p.stream().filter(c -> c.getReqTag()!=null).collect(Collectors.groupingBy(c -> c.getReqTag()));
 		checkMap.keySet().forEach( t -> {
 			Optional<ExecReq> rOpt = this.reqList.stream().filter(r -> r.reqTag.equals(t)).findFirst();
 			ExecReq req;

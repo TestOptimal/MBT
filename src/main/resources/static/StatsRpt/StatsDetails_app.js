@@ -193,19 +193,19 @@ MainModule.controller("detailsCtrl", function ($scope) {
 	
 
 	$scope.openModelGraph = function () {
-		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/model", "ModelGraph");
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/model/" + $scope.modelName + "/model", "ModelGraph");
 	}
 
 	$scope.openTravGraph = function () {
-		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/sequence?mbtSessID=" + $scope.mbtSessID, "SequenceGraph");
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/model/" + $scope.modelName + "/sequence?mbtSessID=" + $scope.mbtSessID, "SequenceGraph");
 	}
 
 	$scope.openCoverageGraph = function () {
-		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/coverage?mbtSessID=" + $scope.mbtSessID, "CoverageGraph");
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/model/" + $scope.modelName + "/coverage?mbtSessID=" + $scope.mbtSessID, "CoverageGraph");
 	}
 
 	$scope.openTravMSC = function () {
-		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/" + $scope.modelName + "/msc?mbtSessID=" + $scope.mbtSessID, "ModelMSC"); 
+		parent.curAppState.winMgr.openWebPage ("../api/v1/graph/model/" + $scope.modelName + "/msc?mbtSessID=" + $scope.mbtSessID, "ModelMSC"); 
 	}
 	
 	$scope.init = function () {

@@ -42,14 +42,17 @@ public class SequencerRandom implements Sequencer {
 	public SequencerRandom (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
 		this.scriptExec = execDir_p.getScriptExec();
-		this.networkObj = this.execDir.getExecSetting().getNetworkObj();
 		this.networkObj = new StateNetwork ();
-		this.networkObj.init(this.execDir.getExecSetting().getModelMgr().getScxmlNode());
+		this.networkObj.init2(this.execDir.getExecSetting().getModelMgr().getScxmlNode());
 		this.homeState = this.networkObj.getHomeState();
     	this.randObj = this.execDir.getExecSetting().getSeededRandObj();
     	this.curState = this.homeState;
 	}
 	
+	@Override
+	public StateNetwork getNetworkObj() {
+		return this.networkObj;
+	}
 	
 	@Override
 	public Transition getNext() {

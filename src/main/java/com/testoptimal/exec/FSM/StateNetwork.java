@@ -52,6 +52,84 @@ public class StateNetwork extends PostmanNetwork {
 	/**
 	 * reads the state transitions from the state machine network and prepares for optimization
 	 * search using Lin/Zhao algorithm for directed Chinese Postman Problem.
+	 * 
+	 * without fake transitions.
+	 * 
+	 * @param scxmlObj_p
+	 * @return HomeState
+	 */
+	public State init2 (ScxmlNode scxmlObj_p) throws IOException, Exception {
+		this.scxmlNode = scxmlObj_p;
+		List<StateNode> iList = scxmlObj_p.getInitialNodes();
+		List<StateNode> fList = scxmlObj_p.getFinalNodes();
+	    if (iList==null || iList.isEmpty()) {
+	    	throw new Exception ("Missing initial state/node.");
+	    }
+	    if (iList.size()>1) {
+	    	throw new Exception ("Multiple initial states/nodes found.");
+	    }
+	    
+	    if (fList.isEmpty()) {
+	    	throw new Exception ("Missing final states/nodes");
+	    }
+	    
+	    // add states only and all children states
+	    for(StateNode stateNode: scxmlObj_p.getAllStates()){
+			State stateObj = new State(stateNode.getStateID(), State.simpleVertex);
+			stateObj.setStateNode(stateNode);
+			super.addNode(stateObj);
+			this.allStateUIDHash.put(stateNode.getUID(), stateObj);
+		}
+
+	    // add trans for states in main model
+	    this.addTrans (scxmlObj_p.getChildrenStates(), null);
+	    this.initialState = this.allStateUIDHash.get(iList.get(0).getUID());
+	    this.initialState.setVertexType(Vertex.initialVertex);
+	    
+	    fList.stream().forEach(s -> this.allStateUIDHash.get(s.getUID()).setVertexType(Vertex.finalVertex));
+	    
+	    this.allActiveStateList = this.allStateUIDHash.values().stream().map(s->s).toList();
+	    this.allActiveTransList = this.allTransUIDHash.values().stream().map(t->t).toList();
+		this.allActiveTransList.forEach(t -> t.reset());
+	    return this.getHomeState();
+	}
+
+
+
+	/**
+	 * adds states and transitions into network. Also recursively adds children states.
+	 * adds fake trans from super state to its initial state in the submodel/sub-states.
+	 * adds fake trans from final states to receiving exit trans. 
+	 * @param stateNodeList_p list of states to load
+	 * @param parentNode_p current super state, null if at root level (main model)
+	 */
+	private void addTrans2 (List<StateNode> stateNodeList_p, State parentState_p) {
+		stateNodeList_p.stream().map(stateNode -> this.allStateUIDHash.get(stateNode.getUID()))
+			.forEach(s -> {
+				StateNode stateNode = s.getStateNode();
+				stateNode.getTransitions().stream().forEach(transNode -> {
+					State toState = (State) this.allStateUIDHash.get(transNode.getTargetNode().getUID());
+	        		Transition arcObj = new Transition(s, toState, transNode.getEvent(), transNode.getTraverseTimes(), false);
+	        		arcObj.setTransNode(transNode);
+	        		super.addArc(arcObj);
+	        		this.allTransUIDHash.put(transNode.getUID(), arcObj);
+				});
+				if (stateNode.getChildrenStates().size()>0) {
+					this.addTrans(stateNode.getChildrenStates(), s);
+				}
+			});
+	    if (parentState_p!=null) {
+	    	parentState_p.setVertexType(Vertex.superVertex);
+	    }
+	}
+	
+	
+	/**
+	 * reads the state transitions from the state machine network and prepares for optimization
+	 * search using Lin/Zhao algorithm for directed Chinese Postman Problem.
+	 * 
+	 * with fake transitions
+	 * 
 	 * @param scxmlObj_p
 	 * @return HomeState
 	 */
@@ -110,6 +188,7 @@ public class StateNetwork extends PostmanNetwork {
 				e.printStackTrace();
 			}
 	    }
+		this.allActiveTransList.forEach(t -> t.reset());
 
 	    return this.getHomeState();
 	}
@@ -167,13 +246,13 @@ public class StateNetwork extends PostmanNetwork {
 	    }
 	}
 	
-	/**
-	 * resets this network for a fresh run. re-apply submodel mcase selection
-	 * 
-	 */
-	public void reset() {
-		this.allActiveTransList.forEach(t -> t.reset());
-	}
+//	/**
+//	 * resets this network for a fresh run. re-apply submodel mcase selection
+//	 * 
+//	 */
+//	public void reset() {
+//		this.allActiveTransList.forEach(t -> t.reset());
+//	}
 
 
 	public State findStateByUID (String uid_p) {

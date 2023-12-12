@@ -1,0 +1,1331 @@
+{
+  "uid": "U1036",
+  "typeCode": "scxml",
+  "desc": "This model demonstrates testing of REST APIs using combinatorial testing algorithms.",
+  "notepad": "\u003cp\u003eThis model demonstrates testing of REST APIs using combinatorial testing algorithms.\n\u003c/p\u003e\n\u003cp\u003eThe model tests a sample Insurance Premium calculator provided in TestOptimal server.  The web service contains following parameters:\n\u003cul\u003e\n\u003cli\u003eAge: 16 - 89\u003c/li\u003e\n\u003cli\u003eatFaultClaims: 0 - 10\u003c/li\u003e\n\u003cli\u003egoodStudent: true / false\u003c/li\u003e\n\u003cli\u003enonDrinker: true / false\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/p\u003e\n\u003cp\u003eThe premium is calculated using following formula:\n\u003cul\u003e\n\u003cli\u003eBase premium by age group: 16-24 $900, 25-64: $600, and 65-89: 720\u003c/li\u003e\n\u003cli\u003eCredit for good student: $50\u003c/li\u003e\n\u003cli\u003ePenalty for at fault claims: 1-4 $100, 5-10 $300\u003c/li\u003e\n\u003cli\u003ePenalty for drinker: $75\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/p\u003e\n\u003cp\u003eCheck DATASET tab for the variable definition and generated test scenarios using combinatorial testing algorithms.\n\u003c/p\u003e\n\u003c/p\u003eNotice that the expected premium is automatically calculated using the above formula as the test data scenarios is generated.\n\u003c/p\u003e",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "state1",
+      "uid": "U7464e09a",
+      "notepad": "",
+      "stateID": "BehaviorDrivenTesting",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Uf66ebabb",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 592.0,
+                "top": 536.8889
+              },
+              {
+                "left": 676.0,
+                "top": 536.8889
+              },
+              {
+                "left": 676.0,
+                "top": 536.8889
+              },
+              {
+                "left": 764.0,
+                "top": 536.8889
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U606e5068",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 592.0,
+                "top": 512.8889
+              },
+              {
+                "left": 676.0,
+                "top": 512.8889
+              },
+              {
+                "left": 676.0,
+                "top": 506.8889
+              },
+              {
+                "left": 764.0,
+                "top": 506.8889
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 397.0,
+        "top": 491.0,
+        "width": 197.0,
+        "height": 88.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1038",
+      "notepad": "",
+      "stateID": "End",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 1146.0,
+        "top": 487.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "state2",
+      "uid": "Ubdd9d5d3",
+      "notepad": "",
+      "stateID": "DEMO_Guard",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "dd",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U7159f8c0",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 587.0,
+                "top": 775.8889
+              },
+              {
+                "left": 648.0,
+                "top": 775.8889
+              },
+              {
+                "left": 648.0,
+                "top": 775.8889
+              },
+              {
+                "left": 763.0,
+                "top": 775.8889
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ua40ae68f",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 587.0,
+                "top": 723.0
+              },
+              {
+                "left": 648.0,
+                "top": 723.0
+              },
+              {
+                "left": 648.0,
+                "top": 723.0
+              },
+              {
+                "left": 763.0,
+                "top": 723.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 399.0,
+        "top": 723.0,
+        "width": 190.0,
+        "height": 68.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U078d8a76",
+      "notepad": "",
+      "stateID": "LoginMainModel",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ua064cf86",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 556.0,
+                "top": 209.0
+              },
+              {
+                "left": 660.0,
+                "top": 209.0
+              },
+              {
+                "left": 660.0,
+                "top": 209.0
+              },
+              {
+                "left": 764.0,
+                "top": 209.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ufadbfaf4",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 556.0,
+                "top": 183.0
+              },
+              {
+                "left": 660.0,
+                "top": 183.0
+              },
+              {
+                "left": 660.0,
+                "top": 183.0
+              },
+              {
+                "left": 764.0,
+                "top": 183.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 389.0,
+        "top": 166.0,
+        "width": 169.0,
+        "height": 80.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U05450e42",
+      "notepad": "",
+      "stateID": "LoginSubModel",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ua80e9180",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 555.0,
+                "top": 110.0
+              },
+              {
+                "left": 659.0,
+                "top": 110.0
+              },
+              {
+                "left": 659.0,
+                "top": 99.0
+              },
+              {
+                "left": 763.0,
+                "top": 99.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ube59826d",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 555.0,
+                "top": 83.0
+              },
+              {
+                "left": 659.0,
+                "top": 83.0
+              },
+              {
+                "left": 659.0,
+                "top": 60.0
+              },
+              {
+                "left": 763.0,
+                "top": 60.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 388.0,
+        "top": 49.0,
+        "width": 169.0,
+        "height": 69.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1037",
+      "notepad": "",
+      "stateID": "Start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ue8ac5e07",
+          "notepad": "",
+          "targetUID": "U05450e42",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 416.5
+              },
+              {
+                "left": 128.0,
+                "top": 416.5
+              },
+              {
+                "left": 128.0,
+                "top": 97.5
+              },
+              {
+                "left": 386.0,
+                "top": 97.5
+              }
+            ],
+            "label": {
+              "left": 61,
+              "top": -352,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Uebaa7a45",
+          "notepad": "",
+          "targetUID": "U078d8a76",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 429.44446
+              },
+              {
+                "left": 242.0,
+                "top": 429.44446
+              },
+              {
+                "left": 242.0,
+                "top": 202.44444
+              },
+              {
+                "left": 387.0,
+                "top": 202.44444
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U260584f6",
+          "notepad": "",
+          "targetUID": "U1e6d4c38",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 441.44446
+              },
+              {
+                "left": 199.0,
+                "top": 441.44446
+              },
+              {
+                "left": 199.0,
+                "top": 313.44446
+              },
+              {
+                "left": 391.0,
+                "top": 313.44446
+              }
+            ],
+            "label": {
+              "left": 168,
+              "top": -195,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ubbae6eec",
+          "notepad": "",
+          "targetUID": "Udcf06b97",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 447.44446
+              },
+              {
+                "left": 199.0,
+                "top": 447.44446
+              },
+              {
+                "left": 199.0,
+                "top": 419.44446
+              },
+              {
+                "left": 394.0,
+                "top": 419.44446
+              }
+            ],
+            "label": {
+              "left": 186,
+              "top": -19,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U0fbe8d24",
+          "notepad": "",
+          "targetUID": "U7464e09a",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 442.44446
+              },
+              {
+                "left": 199.0,
+                "top": 442.44446
+              },
+              {
+                "left": 199.0,
+                "top": 542.44446
+              },
+              {
+                "left": 396.0,
+                "top": 542.44446
+              }
+            ],
+            "label": {
+              "left": 179,
+              "top": 116,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U56e607c5",
+          "notepad": "",
+          "targetUID": "Ubdd9d5d3",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 442.44446
+              },
+              {
+                "left": 132.0,
+                "top": 442.44446
+              },
+              {
+                "left": 132.0,
+                "top": 761.0
+              },
+              {
+                "left": 398.0,
+                "top": 761.0
+              }
+            ],
+            "label": {
+              "left": 175,
+              "top": 269,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ue3dca053",
+          "notepad": "",
+          "targetUID": "U37ea4339",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 97.0,
+                "top": 441.55554
+              },
+              {
+                "left": 245.0,
+                "top": 441.55554
+              },
+              {
+                "left": 245.0,
+                "top": 638.55554
+              },
+              {
+                "left": 393.0,
+                "top": 638.55554
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 24.0,
+        "top": 411.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Uaceae12f",
+      "notepad": "",
+      "stateID": "wait_for_complete",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ua773c432",
+          "notepad": "",
+          "targetUID": "U1038",
+          "event": "check_status",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 956.44446,
+                "top": 508.0
+              },
+              {
+                "left": 1047.4445,
+                "top": 508.0
+              },
+              {
+                "left": 1047.4445,
+                "top": 524.5
+              },
+              {
+                "left": 1143.4445,
+                "top": 524.5
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 765.44446,
+        "top": 50.0,
+        "width": 193.0,
+        "height": 742.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U1e6d4c38",
+      "notepad": "",
+      "stateID": "WebAppAutomation",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U4cc77289",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 560.0,
+                "top": 318.0
+              },
+              {
+                "left": 663.0,
+                "top": 318.0
+              },
+              {
+                "left": 663.0,
+                "top": 318.0
+              },
+              {
+                "left": 764.0,
+                "top": 318.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ud7abf326",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 560.0,
+                "top": 288.0
+              },
+              {
+                "left": 663.0,
+                "top": 288.0
+              },
+              {
+                "left": 663.0,
+                "top": 283.0
+              },
+              {
+                "left": 764.0,
+                "top": 283.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 392.0,
+        "top": 276.0,
+        "width": 170.0,
+        "height": 86.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Udcf06b97",
+      "notepad": "",
+      "stateID": "WorkflowTesting",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ue7750c17",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 565.0,
+                "top": 380.0
+              },
+              {
+                "left": 658.0,
+                "top": 380.0
+              },
+              {
+                "left": 658.0,
+                "top": 388.0
+              },
+              {
+                "left": 764.0,
+                "top": 388.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U83c7255d",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 565.0,
+                "top": 435.0
+              },
+              {
+                "left": 658.0,
+                "top": 435.0
+              },
+              {
+                "left": 658.0,
+                "top": 435.0
+              },
+              {
+                "left": 764.0,
+                "top": 435.0
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 395.0,
+        "top": 380.0,
+        "width": 172.0,
+        "height": 86.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U37ea4339",
+      "notepad": "",
+      "stateID": "DEMO_OutputTestCases",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1bfb219f",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_model",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 579.0,
+                "top": 614.55554
+              },
+              {
+                "left": 671.0,
+                "top": 614.55554
+              },
+              {
+                "left": 671.0,
+                "top": 614.55554
+              },
+              {
+                "left": 763.0,
+                "top": 614.55554
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ucb58e666",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "run_gen_only",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 579.0,
+                "top": 655.55554
+              },
+              {
+                "left": 671.0,
+                "top": 655.55554
+              },
+              {
+                "left": 671.0,
+                "top": 655.55554
+              },
+              {
+                "left": 763.0,
+                "top": 655.55554
+              }
+            ],
+            "label": {
+              "left": 0,
+              "top": -11,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 395.0,
+        "top": 605.55554,
+        "width": 186.0,
+        "height": 79.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    }
+  ],
+  "modelName": "Regression_Test",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "7.0.3",
+  "versionReq": "",
+  "buildNum": 1,
+  "mbtNode": {
+    "uid": "U1040",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": false
+    },
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "modelType": "FSM"
+}

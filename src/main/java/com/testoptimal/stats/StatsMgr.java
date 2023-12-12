@@ -45,7 +45,7 @@ public class StatsMgr {
 			}
 		}
 		else {
-			mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID_p);
+			mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(modelMgr_p.getModelName(), mbtSessID_p);
 			if (mbtSess != null && mbtSess.getExecDirector().getExecStats() != null) {
 				modelExec = mbtSess.getExecDirector().getExecStats();
 			}

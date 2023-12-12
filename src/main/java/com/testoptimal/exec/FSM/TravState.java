@@ -55,8 +55,7 @@ public class TravState extends TravBase {
 			}
 		}
 		catch (MBTException e) {
-			this.tagExecList.add(new TagExec( this.scriptExec, "Error", false, 
-					e.getMessage(), null, this.curState.getStateId(), null, this.getCurUID()));
+			this.addTagExec(null, false, e.getMessage(), null);
 		}			
 	}
 

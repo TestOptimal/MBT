@@ -16,6 +16,7 @@ model/**/temp
 model/**/model.lock
 .DS_Store
 src/main/resources/TO.properties
+model/**/stats/*.json
 
 # BlueJ files
 *.ctxt

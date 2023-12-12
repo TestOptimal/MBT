@@ -76,8 +76,8 @@ public class AgentController {
 			mbtSess.startMbt(runReq.mbtMode, runReq.options);
 			
 			Map<String, Object> m = ClientReturn.map("mbtSessID", mbtSess.getMbtSessionID());
-			m.put("url.stats", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + runReq.modelName + "/" + mbtSess.getMbtSessionID());
-			m.put("url.monitor", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/session/" + mbtSess.getMbtSessionID() + "/monitor");
+			m.put("urlStats", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/exec/" + runReq.modelName + "/" + mbtSess.getMbtSessionID());
+			m.put("urlMonitor", Application.genURL(Config.getHostName(), Application.getPort()) + "/api/v1/stats/session/" + mbtSess.getMbtSessionID() + "/monitor");
 			logger.info("model exec started, mbtSessID: " + mbtSess.getMbtSessionID());
 			m.put("status", "running");
 			return new ResponseEntity<>(m, HttpStatus.OK);
@@ -92,12 +92,13 @@ public class AgentController {
 	}
 
 
-	@GetMapping(value = "session/{mbtSessID}/stop", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/session/{mbtSessID}/stop", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void stopModel (
+			@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
-		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
+		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(modelName, mbtSessID);
 		if (mbtSess!=null && mbtSess.isRunning()) {
 			mbtSess.stopMbt();
 		}
@@ -106,13 +107,14 @@ public class AgentController {
 		}
 	}
 	
-	@GetMapping(value = "session/{mbtSessID}/next", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/session/{mbtSessID}/next", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestCmd> nextStep (
+			@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			@RequestParam (name="timeoutMillis", required=false) int timeoutMillis,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
-		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
+		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(modelName, mbtSessID);
 		TestCmd cmdObj;
 		if (mbtSess!=null && mbtSess.isRunning()) {
 			cmdObj = mbtSess.fetchCmd(timeoutMillis);
@@ -123,13 +125,14 @@ public class AgentController {
 		return new ResponseEntity<>(cmdObj, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "session/{mbtSessID}/result", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "model/{modelName}/session/{mbtSessID}/result", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void sendResult (
+			@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			@RequestBody TestResult result,
 			ServletRequest request) throws Exception, MBTAbort {
 		logger.info("model: " + mbtSessID);
-		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
+		ModelRunnerAgent mbtSess = (ModelRunnerAgent) SessionMgr.getInstance().getMbtStarterForMbtSession(modelName, mbtSessID);
 		if (mbtSess!=null && mbtSess.isRunning()) {
 			mbtSess.sendResult(result);
 		}
@@ -139,13 +142,14 @@ public class AgentController {
 	}
 	
 
-	@GetMapping(value = "session/{mbtSessID}/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/session/{mbtSessID}/stats", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RunResult> getModelExec (
+			@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
 		String httpSessID = ((HttpServletRequest) request).getSession().getId();
 		ModelExec modelExec = null;
-		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID);
+		ModelRunner mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(modelName, mbtSessID);
 		if (mbtSess == null || mbtSess.getExecDirector().getExecStats()==null) {
 			throw new Exception ("Model closed? No execution results found for model session " + mbtSessID);
 		}

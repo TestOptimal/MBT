@@ -120,6 +120,7 @@ public class ModelRunnerIDE extends ModelRunner {
 		ModelState m = new ModelState(this.modelMgr.getScxmlNode().getModelName(), this.httpSessId);
 		IdeSvc.sendIdeData(this.httpSessId, "model.ended", m);
 		this.sendExecStatus(true);
+		SessionMgr.getInstance().closeModel(this);
 	}
 
 	@Override

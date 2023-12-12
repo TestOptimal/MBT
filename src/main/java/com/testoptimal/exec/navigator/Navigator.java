@@ -41,14 +41,14 @@ public class Navigator {
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
+		this.sequencer = getSequencer(mbtMode_p, this.execDir);
 
 		Map<String, Integer> transReqMap = new java.util.HashMap<>();
-		for (Transition trans: execDir_p.getExecSetting().getNetworkObj().getAllRequiredTrans()) {
+		for (Transition trans: this.sequencer.getNetworkObj().getAllRequiredTrans()) {
 			transReqMap.put(trans.getTransNode().getUID(), trans.getMinTraverseCount());
 		}
 		this.travTransCount = new TraversalCount(transReqMap);
 		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
-		this.sequencer = getSequencer(mbtMode_p, this.execDir);
 	}
 	
 	public void navigate () throws MBTAbort {
@@ -105,5 +105,9 @@ public class Navigator {
 	
 	public int getPathCount() {
 		return this.sequencer.getPathCount();
+	}
+	
+	public Sequencer getSequencer() {
+		return this.sequencer;
 	}
 }

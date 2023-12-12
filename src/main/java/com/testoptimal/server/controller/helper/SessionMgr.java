@@ -19,7 +19,7 @@ public abstract class SessionMgr {
 	public abstract List<ModelRunner> getMbtStarterForUserSession(String sessId_p);
 	
 	// returns the model MbtStarter for mbt session id
-	public abstract ModelRunner getMbtStarterForMbtSession(String mbtSessId_p);
+	public abstract ModelRunner getMbtStarterForMbtSession(String modelName_p, String mbtSessId_p);
 
 	// closes model, returns model closed. null if model not found.
 	public abstract void closeModel (String modelName_p, String sessId_p);

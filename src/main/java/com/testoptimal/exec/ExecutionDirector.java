@@ -134,7 +134,7 @@ public final class ExecutionDirector extends Thread {
 			String errMsg = e instanceof ScriptRuntimeException? ((ScriptRuntimeException) e).toString(): e.getMessage();
 			
 			try {
-				this.trigerMBTAction(TravBase.TriggerType.start);
+				this.trigerMBTAction(TravBase.TriggerType.end);
 			}
 			catch (Throwable e2) {
 				// ok
@@ -216,7 +216,7 @@ public final class ExecutionDirector extends Thread {
 	 * returns a mbt execution status object.
 	 * @return
 	 */
-	public ExecutionStatus getExecStat() throws Exception {
+	public ExecutionStatus getExecStat() {
 		ExecutionStatus execStatusObj = new ExecutionStatus(this);
 		return execStatusObj;
 	}

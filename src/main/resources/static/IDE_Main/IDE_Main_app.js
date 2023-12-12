@@ -218,7 +218,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		closeModel: { menuFunc: "$scope.closeModel()", toolbar: true, icon: "glyphicon-log-out", classes: "", label: "Close", msc: "", title: 'Close model', hide: "noModelOpen"},
 		artifact: { menuFunc: "$scope.selectTab('Files')", classes: "", label: "Model Files", msc: "", title: "Open File tab", hide: "noModelOpen"},
 
-		ModelGraph: { menuFunc: "curAppState.winMgr.openWebPage('api/v1/graph/' + curAppState.scxml.modelName + '/model', 'ModelGraph')", classes: "", label: "Model Graph", msc: "", title: "Generate and display model graph", hide: "noModelOpen"},
+		ModelGraph: { menuFunc: "curAppState.winMgr.openWebPage('api/v1/graph/model/' + curAppState.scxml.modelName + '/model', 'ModelGraph')", classes: "", label: "Model Graph", msc: "", title: "Generate and display model graph", hide: "noModelOpen"},
 
 		Monitor: {menuFunc: "$scope.openDialog('Monitor')", label: 'Monitor', classes: "extraPaddingTop", toolbar: true, icon: 'glyphicon-tasks', title: "Model execution monitor", hide: "noModelOpen"},
 		runResults: {menuFunc: "$scope.selectTab('Results')", label: 'Results', toolbar: true, icon: 'glyphicon-stats', title: "Model execution test results", hide: "noModelOpen"},
@@ -696,7 +696,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		msgObj_p.timestamp = new Date();
     	}
 		$scope.sysMsg.msgList.unshift(msgObj_p);
-		$scope.sysMsg.visible = true;
 		if ($scope.sysMsg.mostSevereMsg==undefined || $scope.sysMsg.mostSevereMsg.severity <= msgObj_p.severity) {
 			$scope.sysMsg.mostSevereMsg = msgObj_p;
 		}

@@ -36,11 +36,11 @@ public abstract class SequencerBase implements Sequencer {
 		this.execDir = execDir_p;
 		this.execSetting = this.execDir.getExecSetting();
 		this.scriptExec = this.execDir.getScriptExec();
-		this.networkObj = this.execSetting.getNetworkObj();
-		this.transGuard = new TransGuard(this.scriptExec, this.execSetting);
 		this.scxmlNode = this.execSetting.getModelMgr().getScxmlNode();
+		this.networkObj = new StateNetwork ();
+		this.networkObj.init(this.scxmlNode);
+		this.transGuard = new TransGuard(this.scriptExec, this.execSetting, this.networkObj);
 		
-//        StateNetwork networkObj = execSetting.getNetworkObj();
         List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
 		if (!reqTransList.isEmpty()) {
 			networkObj.getActiveTransList().stream().forEach(t -> {
@@ -58,6 +58,11 @@ public abstract class SequencerBase implements Sequencer {
 			this.curPath = this.pathList.get(0); 
 			this.curPath.reset();
 		}
+	}
+	
+	@Override
+	public StateNetwork getNetworkObj() {
+		return this.networkObj;
 	}
 	
 	@Override
@@ -96,9 +101,6 @@ public abstract class SequencerBase implements Sequencer {
 		return this.pathList.size();
 	}
 	
-	public StateNetwork getNetworkObj() {
-		return this.networkObj;
-	}
 	public int getTraversedTransCost() {
 		return this.traversedTransCost;
 	}

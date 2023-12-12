@@ -27,7 +27,7 @@ function alertDialogBase(msg_p) {
 		$(document).trigger('reveal.facebox');
 	}
 	else {
-		jQuery.facebox("<div class=alertTable style='overflow:auto;'><span id=alertMsg><p>" + msg_p + "</p></span>"
+		jQuery.facebox("<div class=alertTable style='overflow:auto; max-height: 600px;'><span id=alertMsg><p>" + msg_p + "</p></span>"
 	    	+ "<br/><button style='float:right;margin-top: 8px;' id=alertOkBtn onclick='closeAlertDialog();'>OK</button>"
 			+ "</div>");
 	}
