@@ -39,10 +39,30 @@ def 'LoginSubModel_start: run_model'() {
 }
 
 @TRIGGER('Uaceae12f')
-def 'wait_for_complete' () {
+def 'submit_model_request' () {
 	$VAR.runReq.statDesc = $VAR.runReq.modelName + "-" + $VAR.runReq.mbtMode + "-" + ($VAR.runReq.options.generateOnly?'gen':'run');
-	submit_run_request($VAR.runReq);
+	$EXEC.log 'submitting run request for model ' + $VAR.runReq.modelName;
 	$EXEC.setPathName($VAR.runReq.statDesc);
+
+	api_response = io.restassured.RestAssured.given().auth().preemptive().basic($VAR.userid, $VAR.password)
+		.body(JsonOutput.toJson($VAR.runReq))
+		.header('Content-Type', 'application/json')
+		.when()
+		.post($VAR.url_runmodel)
+		.then()
+		.assertThat().statusCode(200);
+	$EXEC.log api_response.extract().asPrettyString();
+	$VAR.runReq.mbtSessID = api_response.extract().path("mbtSessID");
+	$VAR.runReq.monitorURL = api_response.extract().path("urlStatus");
+	$VAR.runReq.statsURL = api_response.extract().path("urlStats");
+	if ($VAR.runReq.mbtSessID == null) {
+		$EXEC.getCurTraverseObj().addReqFailed($VAR.runReq.modelName, 'failed to run');
+	}
+}
+
+
+@TRIGGER('Ua773c432')
+def 'submit_model_request: check_status'() {
 	$EXEC.log 'checing status for model/' + $VAR.runReq.modelName + '/session/' + $VAR.runReq.mbtSessID;
 	def count = 0;
 	while(count <= 5) {
@@ -78,24 +98,6 @@ def 'wait_for_complete' () {
 	}
 	else {
 		$EXEC.getCurTraverseObj().addReqFailed($VAR.runReq.modelName, 'model exec failed: ' + JsonOutput.prettyPrint(JsonOutput.toJson(stats)));
-	}
-}
-
-def submit_run_request(runReq) {
-	$EXEC.log 'submitting run request for model ' + $VAR.runReq.modelName;
-	api_response = io.restassured.RestAssured.given().auth().preemptive().basic($VAR.userid, $VAR.password)
-		.body(JsonOutput.toJson(runReq))
-		.header('Content-Type', 'application/json')
-		.when()
-		.post($VAR.url_runmodel)
-		.then()
-		.assertThat().statusCode(200);
-	$EXEC.log api_response.extract().asPrettyString();
-	runReq.mbtSessID = api_response.extract().path("mbtSessID");
-	runReq.monitorURL = api_response.extract().path("urlMonitor");
-	runReq.statsURL = api_response.extract().path("urlStats");
-	if (runReq.mbtSessID == null) {
-		$EXEC.getCurTraverseObj().addReqFailed(runReq.modelName, 'failed to run');
 	}
 }
 
@@ -207,4 +209,83 @@ def 'DEMO_OutputTestCases: run_model'() {
 def 'DEMO_OutputTestCases: run_gen_only'() {
 	$VAR.runReq.mbtMode = "Optimal";
 	$VAR.runReq.options.generateOnly = true;
+}
+
+@TRIGGER('U21e31541')
+def 'LoginSubModel_mbt_mode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+
+@TRIGGER('U11d91424')
+def 'LoginMainModel_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+@TRIGGER('U5c6514d8')
+def 'WebAppAutomation_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+@TRIGGER('U7e29c867')
+def 'WorkflowTesting_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+
+@TRIGGER('U5317f6e2')
+def 'BehaviorDrivenTesting_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+
+@TRIGGER('U16e6c077')
+def 'OutputTestCases_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+
+@TRIGGER('Ufe8d0576')
+def 'Guard_mbtMode: optimal'() {
+	$VAR.runReq.mbtMode = 'Optimal';
+}
+
+
+@TRIGGER('Uef432a0e')
+def 'LoginSubModel_mbt_mode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+@TRIGGER('Ue38821e4')
+def 'LoginMainModel_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+
+@TRIGGER('U9ca0b920')
+def 'WebAppAutomation_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+@TRIGGER('Ud96fdf4c')
+def 'WorkflowTesting_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+
+@TRIGGER('U0db1dc90')
+def 'BehaviorDrivenTesting_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+
+@TRIGGER('Ucbd05e3e')
+def 'OutputTestCases_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
+}
+
+
+@TRIGGER('Ubef42ef1')
+def 'Guard_mbtMode: random'() {
+	$VAR.runReq.mbtMode = 'Random';
 }

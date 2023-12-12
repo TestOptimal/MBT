@@ -26,10 +26,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Uf66ebabb",
+          "uid": "U606e5068",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "Uc1d54de0",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -38,25 +38,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 592.0,
-                "top": 536.8889
+                "left": 518.0,
+                "top": 521.7778
               },
               {
-                "left": 676.0,
-                "top": 536.8889
+                "left": 580.0,
+                "top": 521.7778
               },
               {
-                "left": 676.0,
-                "top": 536.8889
+                "left": 580.0,
+                "top": 512.7778
               },
               {
-                "left": 764.0,
-                "top": 536.8889
+                "left": 605.0,
+                "top": 512.7778
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -72,10 +72,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U606e5068",
+          "uid": "Uf66ebabb",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "Uc1d54de0",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -84,25 +84,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 592.0,
-                "top": 512.8889
+                "left": 518.0,
+                "top": 553.7778
               },
               {
-                "left": 676.0,
-                "top": 512.8889
+                "left": 580.0,
+                "top": 553.7778
               },
               {
-                "left": 676.0,
-                "top": 506.8889
+                "left": 580.0,
+                "top": 537.7778
               },
               {
-                "left": 764.0,
-                "top": 506.8889
+                "left": 605.0,
+                "top": 537.7778
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -116,8 +116,8 @@
         }
       ],
       "position": {
-        "left": 397.0,
-        "top": 491.0,
+        "left": 323.0,
+        "top": 490.0,
         "width": 197.0,
         "height": 88.0
       },
@@ -131,7 +131,7 @@
       "desc": "state2",
       "uid": "Ubdd9d5d3",
       "notepad": "",
-      "stateID": "DEMO_Guard",
+      "stateID": "Guard",
       "isFinal": false,
       "isInitial": false,
       "nodeType": "STATE",
@@ -147,10 +147,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U7159f8c0",
+          "uid": "Ua40ae68f",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "U224dcc81",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -159,25 +159,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 587.0,
-                "top": 775.8889
+                "left": 513.0,
+                "top": 747.8889
               },
               {
-                "left": 648.0,
-                "top": 775.8889
+                "left": 579.0,
+                "top": 747.8889
               },
               {
-                "left": 648.0,
-                "top": 775.8889
+                "left": 579.0,
+                "top": 748.8889
               },
               {
-                "left": 763.0,
-                "top": 775.8889
+                "left": 626.0,
+                "top": 748.8889
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -193,10 +193,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ua40ae68f",
+          "uid": "U7159f8c0",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "U224dcc81",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -205,25 +205,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 587.0,
-                "top": 723.0
+                "left": 513.0,
+                "top": 782.0
               },
               {
-                "left": 648.0,
-                "top": 723.0
+                "left": 570.0,
+                "top": 782.0
               },
               {
-                "left": 648.0,
-                "top": 723.0
+                "left": 570.0,
+                "top": 782.0
               },
               {
-                "left": 763.0,
-                "top": 723.0
+                "left": 627.0,
+                "top": 782.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -237,8 +237,8 @@
         }
       ],
       "position": {
-        "left": 399.0,
-        "top": 723.0,
+        "left": 325.0,
+        "top": 722.0,
         "width": 190.0,
         "height": 68.0
       },
@@ -252,7 +252,7 @@
       "desc": "",
       "uid": "U37ea4339",
       "notepad": "",
-      "stateID": "DEMO_OutputTestCases",
+      "stateID": "OutputTestCases",
       "isFinal": false,
       "isInitial": false,
       "nodeType": "STATE",
@@ -268,10 +268,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ucb58e666",
+          "uid": "U1bfb219f",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "Ua338e547",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -280,25 +280,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 579.0,
-                "top": 655.55554
+                "left": 513.0,
+                "top": 632.8889
               },
               {
-                "left": 671.0,
-                "top": 655.55554
+                "left": 574.0,
+                "top": 632.8889
               },
               {
-                "left": 671.0,
-                "top": 655.55554
+                "left": 574.0,
+                "top": 631.8889
               },
               {
-                "left": 763.0,
-                "top": 655.55554
+                "left": 612.0,
+                "top": 631.8889
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -314,10 +314,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U1bfb219f",
+          "uid": "Ucb58e666",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "Ua338e547",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -326,25 +326,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 579.0,
-                "top": 614.55554
+                "left": 513.0,
+                "top": 661.8889
               },
               {
-                "left": 671.0,
-                "top": 614.55554
+                "left": 562.0,
+                "top": 661.8889
               },
               {
-                "left": 671.0,
-                "top": 614.55554
+                "left": 562.0,
+                "top": 661.8889
               },
               {
-                "left": 763.0,
-                "top": 614.55554
+                "left": 611.0,
+                "top": 661.8889
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -358,8 +358,8 @@
         }
       ],
       "position": {
-        "left": 395.0,
-        "top": 605.55554,
+        "left": 329.0,
+        "top": 606.55554,
         "width": 186.0,
         "height": 79.0
       },
@@ -386,8 +386,8 @@
       "childrenStates": [],
       "transitions": [],
       "position": {
-        "left": 1146.0,
-        "top": 487.0,
+        "left": 1159.0,
+        "top": 467.0,
         "width": 75.0,
         "height": 50.0,
         "nameOffset": 5.0
@@ -416,10 +416,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ua064cf86",
+          "uid": "Ufadbfaf4",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "Ub674b0c8",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -428,25 +428,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 556.0,
-                "top": 209.0
+                "left": 482.0,
+                "top": 185.0
               },
               {
-                "left": 660.0,
-                "top": 209.0
+                "left": 561.0,
+                "top": 185.0
               },
               {
-                "left": 660.0,
-                "top": 209.0
+                "left": 561.0,
+                "top": 186.0
               },
               {
-                "left": 764.0,
-                "top": 209.0
+                "left": 590.0,
+                "top": 186.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -462,10 +462,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ufadbfaf4",
+          "uid": "Ua064cf86",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "Ub674b0c8",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -474,25 +474,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 556.0,
-                "top": 183.0
+                "left": 482.0,
+                "top": 213.0
               },
               {
-                "left": 660.0,
-                "top": 183.0
+                "left": 561.0,
+                "top": 213.0
               },
               {
-                "left": 660.0,
-                "top": 183.0
+                "left": 561.0,
+                "top": 222.0
               },
               {
-                "left": 764.0,
-                "top": 183.0
+                "left": 590.0,
+                "top": 222.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -506,8 +506,8 @@
         }
       ],
       "position": {
-        "left": 389.0,
-        "top": 166.0,
+        "left": 315.0,
+        "top": 165.0,
         "width": 169.0,
         "height": 80.0
       },
@@ -537,10 +537,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ua80e9180",
+          "uid": "Ube59826d",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "U76288c68",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -549,25 +549,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 555.0,
-                "top": 110.0
+                "left": 481.0,
+                "top": 48.0
               },
               {
-                "left": 659.0,
-                "top": 110.0
+                "left": 533.0,
+                "top": 48.0
               },
               {
-                "left": 659.0,
-                "top": 99.0
+                "left": 533.0,
+                "top": 61.0
               },
               {
-                "left": 763.0,
-                "top": 99.0
+                "left": 585.0,
+                "top": 61.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -583,10 +583,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ube59826d",
+          "uid": "Ua80e9180",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "U76288c68",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -595,25 +595,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 555.0,
-                "top": 83.0
+                "left": 481.0,
+                "top": 82.0
               },
               {
-                "left": 659.0,
-                "top": 83.0
+                "left": 533.0,
+                "top": 82.0
               },
               {
-                "left": 659.0,
-                "top": 60.0
+                "left": 533.0,
+                "top": 93.0
               },
               {
-                "left": 763.0,
-                "top": 60.0
+                "left": 585.0,
+                "top": 93.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -627,8 +627,8 @@
         }
       ],
       "position": {
-        "left": 388.0,
-        "top": 49.0,
+        "left": 314.0,
+        "top": 48.0,
         "width": 169.0,
         "height": 69.0
       },
@@ -679,11 +679,11 @@
               },
               {
                 "left": 128.0,
-                "top": 97.5
+                "top": 96.5
               },
               {
-                "left": 386.0,
-                "top": 97.5
+                "left": 312.0,
+                "top": 96.5
               }
             ],
             "label": {
@@ -725,11 +725,11 @@
               },
               {
                 "left": 242.0,
-                "top": 202.44444
+                "top": 201.44444
               },
               {
-                "left": 387.0,
-                "top": 202.44444
+                "left": 313.0,
+                "top": 201.44444
               }
             ],
             "label": {
@@ -771,11 +771,11 @@
               },
               {
                 "left": 199.0,
-                "top": 313.44446
+                "top": 312.44446
               },
               {
-                "left": 391.0,
-                "top": 313.44446
+                "left": 317.0,
+                "top": 312.44446
               }
             ],
             "label": {
@@ -817,11 +817,11 @@
               },
               {
                 "left": 199.0,
-                "top": 419.44446
+                "top": 418.44446
               },
               {
-                "left": 394.0,
-                "top": 419.44446
+                "left": 320.0,
+                "top": 418.44446
               }
             ],
             "label": {
@@ -863,11 +863,11 @@
               },
               {
                 "left": 199.0,
-                "top": 542.44446
+                "top": 541.44446
               },
               {
-                "left": 396.0,
-                "top": 542.44446
+                "left": 322.0,
+                "top": 541.44446
               }
             ],
             "label": {
@@ -909,11 +909,11 @@
               },
               {
                 "left": 132.0,
-                "top": 761.0
+                "top": 760.0
               },
               {
-                "left": 398.0,
-                "top": 761.0
+                "left": 324.0,
+                "top": 760.0
               }
             ],
             "label": {
@@ -955,11 +955,11 @@
               },
               {
                 "left": 245.0,
-                "top": 638.55554
+                "top": 639.55554
               },
               {
-                "left": 393.0,
-                "top": 638.55554
+                "left": 327.0,
+                "top": 639.55554
               }
             ],
             "label": {
@@ -992,7 +992,7 @@
       "desc": "",
       "uid": "Uaceae12f",
       "notepad": "",
-      "stateID": "wait_for_complete",
+      "stateID": "submit_model_request",
       "isFinal": false,
       "isInitial": false,
       "nodeType": "STATE",
@@ -1020,25 +1020,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 956.44446,
-                "top": 508.0
+                "left": 1058.4445,
+                "top": 505.0
               },
               {
-                "left": 1047.4445,
-                "top": 508.0
+                "left": 1101.4445,
+                "top": 505.0
               },
               {
-                "left": 1047.4445,
-                "top": 524.5
+                "left": 1101.4445,
+                "top": 504.5
               },
               {
-                "left": 1143.4445,
-                "top": 524.5
+                "left": 1157.4445,
+                "top": 504.5
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -1052,8 +1052,8 @@
         }
       ],
       "position": {
-        "left": 765.44446,
-        "top": 50.0,
+        "left": 867.44446,
+        "top": 47.0,
         "width": 193.0,
         "height": 742.0
       },
@@ -1083,10 +1083,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U4cc77289",
+          "uid": "Ud7abf326",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_gen_only",
+          "targetUID": "Uf0e64a61",
+          "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -1095,25 +1095,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 560.0,
-                "top": 318.0
+                "left": 486.0,
+                "top": 300.0
               },
               {
-                "left": 663.0,
-                "top": 318.0
+                "left": 541.0,
+                "top": 300.0
               },
               {
-                "left": 663.0,
-                "top": 318.0
+                "left": 541.0,
+                "top": 300.0
               },
               {
-                "left": 764.0,
-                "top": 318.0
+                "left": 596.0,
+                "top": 300.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -1129,10 +1129,10 @@
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "Ud7abf326",
+          "uid": "U4cc77289",
           "notepad": "",
-          "targetUID": "Uaceae12f",
-          "event": "run_model",
+          "targetUID": "Uf0e64a61",
+          "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -1141,25 +1141,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 560.0,
-                "top": 288.0
+                "left": 486.0,
+                "top": 328.0
               },
               {
-                "left": 663.0,
-                "top": 288.0
+                "left": 541.0,
+                "top": 328.0
               },
               {
-                "left": 663.0,
-                "top": 283.0
+                "left": 541.0,
+                "top": 336.0
               },
               {
-                "left": 764.0,
-                "top": 283.0
+                "left": 596.0,
+                "top": 336.0
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -1173,8 +1173,8 @@
         }
       ],
       "position": {
-        "left": 392.0,
-        "top": 276.0,
+        "left": 318.0,
+        "top": 275.0,
         "width": 170.0,
         "height": 86.0
       },
@@ -1206,7 +1206,7 @@
           "desc": "",
           "uid": "Ue7750c17",
           "notepad": "",
-          "targetUID": "Uaceae12f",
+          "targetUID": "Uc17da50f",
           "event": "run_gen_only",
           "weight": 5,
           "traverseTimes": 1,
@@ -1216,25 +1216,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 565.0,
-                "top": 380.0
+                "left": 491.0,
+                "top": 410.77777
               },
               {
-                "left": 658.0,
-                "top": 380.0
+                "left": 566.0,
+                "top": 410.77777
               },
               {
-                "left": 658.0,
-                "top": 388.0
+                "left": 566.0,
+                "top": 424.77777
               },
               {
-                "left": 764.0,
-                "top": 388.0
+                "left": 601.0,
+                "top": 424.77777
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -1252,7 +1252,7 @@
           "desc": "",
           "uid": "U83c7255d",
           "notepad": "",
-          "targetUID": "Uaceae12f",
+          "targetUID": "Uc17da50f",
           "event": "run_model",
           "weight": 5,
           "traverseTimes": 1,
@@ -1262,25 +1262,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 565.0,
-                "top": 435.0
+                "left": 491.0,
+                "top": 436.77777
               },
               {
-                "left": 658.0,
-                "top": 435.0
+                "left": 566.0,
+                "top": 436.77777
               },
               {
-                "left": 658.0,
-                "top": 435.0
+                "left": 566.0,
+                "top": 443.77777
               },
               {
-                "left": 764.0,
-                "top": 435.0
+                "left": 601.0,
+                "top": 443.77777
               }
             ],
             "label": {
-              "left": 0,
-              "top": -11,
+              "left": 5,
+              "top": -22,
               "width": 75,
               "height": 25
             }
@@ -1294,10 +1294,857 @@
         }
       ],
       "position": {
-        "left": 395.0,
-        "top": 380.0,
+        "left": 321.0,
+        "top": 379.0,
         "width": 172.0,
         "height": 86.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U76288c68",
+      "notepad": "",
+      "stateID": "LoginSubModel_mbt_mode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U21e31541",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 770.0,
+                "top": 66.0
+              },
+              {
+                "left": 818.0,
+                "top": 66.0
+              },
+              {
+                "left": 818.0,
+                "top": 66.0
+              },
+              {
+                "left": 866.0,
+                "top": 66.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Uef432a0e",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 770.0,
+                "top": 93.0
+              },
+              {
+                "left": 818.0,
+                "top": 93.0
+              },
+              {
+                "left": 818.0,
+                "top": 103.0
+              },
+              {
+                "left": 866.0,
+                "top": 103.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 587.0,
+        "top": 38.0,
+        "width": 185.0,
+        "height": 78.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Ub674b0c8",
+      "notepad": "",
+      "stateID": "LoginMainModel_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U11d91424",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 773.0,
+                "top": 178.0
+              },
+              {
+                "left": 803.0,
+                "top": 178.0
+              },
+              {
+                "left": 803.0,
+                "top": 178.0
+              },
+              {
+                "left": 866.0,
+                "top": 178.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ue38821e4",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 773.0,
+                "top": 211.0
+              },
+              {
+                "left": 819.0,
+                "top": 211.0
+              },
+              {
+                "left": 819.0,
+                "top": 211.0
+              },
+              {
+                "left": 865.0,
+                "top": 211.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 592.0,
+        "top": 165.0,
+        "width": 183.0,
+        "height": 69.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Uf0e64a61",
+      "notepad": "",
+      "stateID": "WebAppAutomation_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U5c6514d8",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 774.0,
+                "top": 296.0
+              },
+              {
+                "left": 820.0,
+                "top": 296.0
+              },
+              {
+                "left": 820.0,
+                "top": 296.0
+              },
+              {
+                "left": 866.0,
+                "top": 296.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U9ca0b920",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 774.0,
+                "top": 333.0
+              },
+              {
+                "left": 820.0,
+                "top": 333.0
+              },
+              {
+                "left": 820.0,
+                "top": 347.0
+              },
+              {
+                "left": 866.0,
+                "top": 347.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 597.0,
+        "top": 282.0,
+        "width": 179.0,
+        "height": 73.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Uc17da50f",
+      "notepad": "",
+      "stateID": "WorkflowTesting_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U7e29c867",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 773.0,
+                "top": 405.0
+              },
+              {
+                "left": 803.0,
+                "top": 405.0
+              },
+              {
+                "left": 803.0,
+                "top": 405.0
+              },
+              {
+                "left": 866.0,
+                "top": 405.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ud96fdf4c",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 773.0,
+                "top": 444.0
+              },
+              {
+                "left": 819.0,
+                "top": 444.0
+              },
+              {
+                "left": 819.0,
+                "top": 444.0
+              },
+              {
+                "left": 865.0,
+                "top": 444.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 602.0,
+        "top": 392.0,
+        "width": 173.0,
+        "height": 73.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Uc1d54de0",
+      "notepad": "",
+      "stateID": "BehaviorDrivenTesting_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U5317f6e2",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 791.0,
+                "top": 506.0
+              },
+              {
+                "left": 803.0,
+                "top": 506.0
+              },
+              {
+                "left": 803.0,
+                "top": 506.0
+              },
+              {
+                "left": 865.0,
+                "top": 506.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U0db1dc90",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 791.0,
+                "top": 537.0
+              },
+              {
+                "left": 828.0,
+                "top": 537.0
+              },
+              {
+                "left": 828.0,
+                "top": 548.0
+              },
+              {
+                "left": 865.0,
+                "top": 548.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 606.0,
+        "top": 486.0,
+        "width": 187.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Ua338e547",
+      "notepad": "",
+      "stateID": "OutputTestCases_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U16e6c077",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 792.0,
+                "top": 608.0
+              },
+              {
+                "left": 804.0,
+                "top": 608.0
+              },
+              {
+                "left": 804.0,
+                "top": 608.0
+              },
+              {
+                "left": 866.0,
+                "top": 608.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ucbd05e3e",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 792.0,
+                "top": 648.0
+              },
+              {
+                "left": 829.0,
+                "top": 648.0
+              },
+              {
+                "left": 829.0,
+                "top": 648.0
+              },
+              {
+                "left": 866.0,
+                "top": 648.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 613.0,
+        "top": 598.0,
+        "width": 181.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U224dcc81",
+      "notepad": "",
+      "stateID": "Guard_mbtMode",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ufe8d0576",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "optimal",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 785.0,
+                "top": 752.1111
+              },
+              {
+                "left": 805.0,
+                "top": 752.1111
+              },
+              {
+                "left": 805.0,
+                "top": 751.1111
+              },
+              {
+                "left": 865.0,
+                "top": 751.1111
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ubef42ef1",
+          "notepad": "",
+          "targetUID": "Uaceae12f",
+          "event": "random",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 785.0,
+                "top": 770.1111
+              },
+              {
+                "left": 825.0,
+                "top": 770.1111
+              },
+              {
+                "left": 825.0,
+                "top": 770.1111
+              },
+              {
+                "left": 865.0,
+                "top": 770.1111
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -22,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 628.0,
+        "top": 719.8889,
+        "width": 159.0,
+        "height": 71.0
       },
       "css": {
         "classes": "name-top"

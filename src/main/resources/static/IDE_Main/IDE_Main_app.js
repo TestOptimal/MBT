@@ -180,6 +180,14 @@ $(document).ready(function() {
 	window.onunload = function () {
 		curAppState.winMgr.closeAllWins();
     }
+    
+	$(document).keyup(function(event) {
+		var moveDelta = 3;
+		if (event.keyCode == 27) { // escape
+			parent.scope.sysMsg.visible = false;
+			parent.scope.$apply();
+		}
+	});
 });
 
 
