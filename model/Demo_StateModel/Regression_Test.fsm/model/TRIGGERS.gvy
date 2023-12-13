@@ -66,7 +66,6 @@ def 'submit_model_request: check_status'() {
 	$EXEC.log 'checing status for model/' + $VAR.runReq.modelName + '/session/' + $VAR.runReq.mbtSessID;
 	def count = 0;
 	while(count <= 5) {
-		println "$count"
 		sleep(1000)
 		api_response = io.restassured.RestAssured.given().auth().preemptive().basic($VAR.userid, $VAR.password)
 			.header('Content-Type', 'application/json')
