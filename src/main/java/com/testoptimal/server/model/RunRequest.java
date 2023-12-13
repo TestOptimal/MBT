@@ -30,6 +30,7 @@ public class RunRequest {
 	 *   <li>MCaseList: array of MCase names to execute the specified MCases (ProMBT)</li>
 	 *   <li>statDesc: to save execution stats to the database</li>
 	 * 	 <li>markList: array of UIDs for states and/or transitions</li>
+	 * 	 <li>macPaths: int to limit number of test paths to be generated</li>
 	 *   </ul>
 	 * 
 	 */

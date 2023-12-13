@@ -26,8 +26,8 @@ import openOptima.graph.Edge;
  * @author yxl01
  *
  */
-public class SequencerRandom implements Sequencer {
-	private static Logger logger = LoggerFactory.getLogger(SequencerRandom.class);
+public class RandomWalk implements Sequencer {
+	private static Logger logger = LoggerFactory.getLogger(RandomWalk.class);
 
 	private ExecutionDirector execDir;
 	
@@ -39,7 +39,7 @@ public class SequencerRandom implements Sequencer {
     private TraversalCount travTransCount;
 	private MbtScriptExecutor scriptExec;
 	
-	public SequencerRandom (ExecutionDirector execDir_p) throws MBTAbort, Exception {
+	public RandomWalk (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
 		this.scriptExec = execDir_p.getScriptExec();
 		this.networkObj = new StateNetwork ();

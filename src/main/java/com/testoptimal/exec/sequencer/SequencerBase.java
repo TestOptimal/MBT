@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
-import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
@@ -31,6 +30,7 @@ public abstract class SequencerBase implements Sequencer {
 	private int traversedTransCost = 5000;
 	private StateNetwork networkObj;
 	private ScxmlNode scxmlNode;
+	private int maxPaths;
 	
 	public SequencerBase (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		this.execDir = execDir_p;
@@ -40,7 +40,14 @@ public abstract class SequencerBase implements Sequencer {
 		this.networkObj = new StateNetwork ();
 		this.networkObj.init(this.scxmlNode);
 		this.transGuard = new TransGuard(this.scriptExec, this.execSetting, this.networkObj);
-		
+        this.maxPaths = this.getScxmlNode().getMiscNode().getMaxTestCaseNum();
+        if (this.getExecSetting().getOption("macPaths")!=null) {
+        	this.maxPaths = (int) this.getExecSetting().getOption("maxPaths");
+        }
+        if (this.maxPaths<=0) {
+        	this.maxPaths = Math.min(this.maxPaths, 200);
+        }
+
         List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
 		if (!reqTransList.isEmpty()) {
 			networkObj.getActiveTransList().stream().forEach(t -> {
@@ -52,12 +59,19 @@ public abstract class SequencerBase implements Sequencer {
 		}
 
 		this.pathList = this.genPathList();
+		if (this.pathList.size() >= this.maxPaths) {
+			this.pathList.subList(0, this.maxPaths);
+		}
 		logger.info("paths to cover: " + this.pathList.size());
 		if (!this.pathList.isEmpty()) {
 			this.curPathIdx = 0;
 			this.curPath = this.pathList.get(0); 
 			this.curPath.reset();
 		}
+	}
+	
+	public int getMaxPaths() {
+		return this.maxPaths;
 	}
 	
 	@Override

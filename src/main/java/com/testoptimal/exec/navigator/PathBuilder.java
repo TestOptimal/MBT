@@ -34,8 +34,8 @@ public class PathBuilder {
 		}
 		else {
 			Transition t = this.networkObj.findTransByUID(toUID_p);
+			this.navigateTo((State) t.getFromNode());
 			this.transList.add(t);
-			this.navigateTo((State) t.getToNode());
 		}
 		return this;
 	}

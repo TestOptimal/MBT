@@ -23,10 +23,10 @@ import openOptima.network.postman.PostmanPath;
  * @author yxl01
  *
  */
-public class SequencerOptimal extends SequencerBase {
-	private static Logger logger = LoggerFactory.getLogger(SequencerOptimal.class);
+public class Optimal extends SequencerBase {
+	private static Logger logger = LoggerFactory.getLogger(Optimal.class);
 
-	public SequencerOptimal (ExecutionDirector execDir_p) throws MBTAbort, Exception {
+	public Optimal (ExecutionDirector execDir_p) throws MBTAbort, Exception {
 		super(execDir_p);
 	}
 	
