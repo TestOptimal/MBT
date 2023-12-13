@@ -191,7 +191,7 @@ $(document).ready(function() {
 });
 
 
-MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, SysSvc, FileSvc, ModelSvc, AlmSvc, RuntimeSvc, StatsSvc) {
+MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, SysSvc, FileSvc, ModelSvc, AlmSvc, StatsSvc) {
 	parent.scope = $scope;
 	$scope.shortcutKey = "IDE.shortcuts.ide";
 	$scope.shortcutDefault = "closeModel,ModelProperty,MBTSetting,genTestCase,startExec,startDebug,startPlay,stopExec,pauseExec,stepOver,Monitor,showCoverage,MScriptLog";
@@ -587,7 +587,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		FileSvc: FileSvc, 
     		ModelSvc: ModelSvc,
     		AlmSvc: AlmSvc,
-    		RuntimeSvc: RuntimeSvc,
     		StatsSvc: StatsSvc,
     		SvrRest: SvrRest
     	};
@@ -746,9 +745,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		$scope.flags.isModelOpen = false;
 		$scope.flags.noModelOpen = true;
 		$scope.rootCurAppState.resetModelChanged();
-		// var mName = $scope.rootCurAppState.scxml.modelName;
 		$scope.rootCurAppState.scxml = undefined;
-		// $scope.rootCurAppState.toSvc.RuntimeSvc.closeModel(mName);
 		$scope.closeDialog();
 	}
 	

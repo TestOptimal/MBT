@@ -99,6 +99,10 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		SvrRest.get(FileSvc.base + "log/tosvr", successCB, errorCB);
 	};
 	
+	FileSvc.getModelLog = function (modelName, mbtSessID, successCB, errorCB) {
+		SvrRest.get (FileSvc.base + "log/model/" + modelName + "/session/" + mbtSessID, successCB, errorCB);
+	}
+
 	return FileSvc;
 })
 
@@ -136,22 +140,6 @@ MainModule.factory ('ModelSvc', function(SvrRest) {
 	return ModelSvc;
 });
 
-
-MainModule.factory ('RuntimeSvc', function(SvrRest) {
-	var RuntimeSvc = { 
-		base: "/api/v1/runtime/"
-	};
-
-	RuntimeSvc.listModels = function (successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/list", successCB, errorCB);
-	};
-
-	RuntimeSvc.getModelLog = function (modelName, mbtSessID, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/" + modelName + "/session/" + mbtSessID + "/log", successCB, errorCB);
-	}
-
-	return RuntimeSvc;
-});
 
 MainModule.factory ('StatsSvc', function(SvrRest) {
 	var StatsSvc = { 
