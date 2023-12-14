@@ -1,16 +1,16 @@
 {
-  "uid": "U1054",
+  "uid": "U473",
   "typeCode": "scxml",
-  "desc": "Demonstrate web application automation using VendingMachine sample webapp.",
-  "notepad": "\u003cp\u003eDemonstrate web application test automation using \u003ca href\u003d\"http://localhost:8888/DemoApp/VendingMachine/VendingMachine.html\" target\u003d_blank\u003eVending Machine\u003c/a\u003e as the web app.\n\u003c/p\u003e\n\u003cp\u003e\nOther features of this model:\n\u003cul\u003e\n\u003cli\u003eUI page object that provides a layer of abstraction of UI elements and automation actions. (check Script / PAGES)\n\u003c/li\u003e\n\u003cli\u003eOutput test case execution and results to html page. Click on testOutput.html in \"report\" folder in ARTIFACT tab after model execution has completed.\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\nTo run this model, click on Run or Play button on the toolbar and watch Vending Machine web page being tested. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e\n\u003cp\u003e\nBe sure to try out different sequencers and stop conditions and see it generates different test case that produces different test coverage with no model or automation script changes.\n\u003c/p\u003e",
+  "desc": "This model demonstrates the use of sub-models.",
+  "notepad": "\u003cp\u003eThis model demonstrates the usage of sub-model.  Sub-models allow sharing and reuse of testing components.\n\u003c/p\u003e\n\u003cp\u003eThis model tests login function on the sample web site.  The same login function is tested when different tab is selected.  The sub-model executes a set of testing scenarios (from the sub model), which is automatically repeated for each tab.\n\u003c/p\u003e\n\u003cp\u003eSub model is injected into LoginSubModel state by setting \"Sub Model\" property in State Property view.\n\u003c/p\u003e\n\u003cp\u003eThe model uses Selenium/Web Driver to interact with AUT. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e",
   "childrenStates": [
     {
       "readOnly": false,
       "typeCode": "state",
       "desc": "",
-      "uid": "U1060",
+      "uid": "U478",
       "notepad": "",
-      "stateID": "Choose Drink",
+      "stateID": "DownloadPage",
       "isFinal": false,
       "isInitial": false,
       "nodeType": "STATE",
@@ -28,11 +28,11 @@
         {
           "readOnly": false,
           "typeCode": "transition",
-          "desc": "pepsi",
-          "uid": "U1071",
+          "desc": "",
+          "uid": "U504",
           "notepad": "",
-          "targetUID": "U1061",
-          "event": "discharge",
+          "targetUID": "U475",
+          "event": "startLogin",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -41,25 +41,25 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 640.0,
-                "top": 173.0
+                "left": 266.0,
+                "top": 368.0
               },
               {
-                "left": 677.0,
-                "top": 173.0
+                "left": 330.0,
+                "top": 368.0
               },
               {
-                "left": 677.0,
-                "top": 173.0
+                "left": 330.0,
+                "top": 369.0
               },
               {
-                "left": 721.0,
-                "top": 173.0
+                "left": 399.0,
+                "top": 369.0
               }
             ],
             "label": {
-              "left": 9,
-              "top": -23,
+              "left": 5,
+              "top": -25,
               "width": 75,
               "height": 25
             }
@@ -67,17 +67,62 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U505",
+          "notepad": "",
+          "targetUID": "U479",
+          "event": "toDownload",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 214.0,
+                "top": 403.0
+              },
+              {
+                "left": 214.0,
+                "top": 434.0
+              },
+              {
+                "left": 214.0,
+                "top": 434.0
+              },
+              {
+                "left": 214.0,
+                "top": 465.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": 25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
       ],
       "position": {
-        "left": 559.0,
-        "top": 151.0,
-        "width": 83.0,
-        "height": 47.0,
+        "left": 181.0,
+        "top": 353.0,
+        "width": 87.0,
+        "height": 50.0,
         "nameOffset": 5.0
       },
       "css": {}
@@ -86,7 +131,7 @@
       "readOnly": false,
       "typeCode": "state",
       "desc": "",
-      "uid": "U1061",
+      "uid": "U479",
       "notepad": "",
       "stateID": "End",
       "isFinal": true,
@@ -104,10 +149,10 @@
       "childrenStates": [],
       "transitions": [],
       "position": {
-        "left": 722.0,
-        "top": 156.0,
-        "width": 62.0,
-        "height": 42.0,
+        "left": 181.0,
+        "top": 465.0,
+        "width": 74.0,
+        "height": 50.0,
         "nameOffset": 5.0
       },
       "css": {}
@@ -116,7 +161,414 @@
       "readOnly": false,
       "typeCode": "state",
       "desc": "",
-      "uid": "U1062",
+      "uid": "U476",
+      "notepad": "",
+      "stateID": "FeaturePage",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U500",
+          "notepad": "",
+          "targetUID": "U475",
+          "event": "startLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 261.0,
+                "top": 258.0
+              },
+              {
+                "left": 306.0,
+                "top": 258.0
+              },
+              {
+                "left": 306.0,
+                "top": 259.0
+              },
+              {
+                "left": 401.0,
+                "top": 259.0
+              }
+            ],
+            "label": {
+              "left": 8,
+              "top": -26,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U501",
+          "notepad": "",
+          "targetUID": "U479",
+          "event": "toFeature",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "left",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 181.0,
+                "top": 281.0
+              },
+              {
+                "left": 156.0,
+                "top": 281.0
+              },
+              {
+                "left": 156.0,
+                "top": 478.0
+              },
+              {
+                "left": 181.0,
+                "top": 478.0
+              }
+            ],
+            "label": {
+              "left": -85,
+              "top": -28,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 181.0,
+        "top": 238.0,
+        "width": 80.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U477",
+      "notepad": "",
+      "stateID": "HomePage",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U502",
+          "notepad": "",
+          "targetUID": "U475",
+          "event": "startLogin",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 263.0,
+                "top": 159.0
+              },
+              {
+                "left": 305.0,
+                "top": 159.0
+              },
+              {
+                "left": 305.0,
+                "top": 160.0
+              },
+              {
+                "left": 401.0,
+                "top": 160.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U503",
+          "notepad": "",
+          "targetUID": "U479",
+          "event": "toHomePage",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": true,
+          "posInfo": {
+            "startDir": "left",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 185.0,
+                "top": 172.0
+              },
+              {
+                "left": 97.0,
+                "top": 172.0
+              },
+              {
+                "left": 97.0,
+                "top": 500.0
+              },
+              {
+                "left": 181.0,
+                "top": 500.0
+              }
+            ],
+            "label": {
+              "left": -80,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 185.0,
+        "top": 130.0,
+        "width": 78.0,
+        "height": 50.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U475",
+      "notepad": "",
+      "stateID": "LoginSubModel",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "M",
+      "subModel": "DEMO_Login_SubModel",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "TRAV_COUNT",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U499",
+          "notepad": "",
+          "targetUID": "U478",
+          "event": "toDownloadPage",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "left",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 399.0,
+                "top": 321.0
+              },
+              {
+                "left": 223.0,
+                "top": 321.0
+              },
+              {
+                "left": 223.0,
+                "top": 352.0
+              }
+            ],
+            "label": {
+              "left": -108,
+              "top": -20,
+              "width": 104,
+              "height": 23
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": "U25657b8f"
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U498",
+          "notepad": "",
+          "targetUID": "U476",
+          "event": "toFeaturePage",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "left",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 399.0,
+                "top": 214.0
+              },
+              {
+                "left": 221.0,
+                "top": 214.0
+              },
+              {
+                "left": 221.0,
+                "top": 237.0
+              }
+            ],
+            "label": {
+              "left": -108,
+              "top": -20,
+              "width": 104,
+              "height": 23
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "LoginSuccessExit",
+          "uid": "U497",
+          "notepad": "",
+          "targetUID": "U477",
+          "event": "toHomePage",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 537.0,
+                "top": 84.0
+              },
+              {
+                "left": 537.0,
+                "top": 58.0
+              },
+              {
+                "left": 229.0,
+                "top": 58.0
+              },
+              {
+                "left": 229.0,
+                "top": 129.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": "U25657b8f"
+        }
+      ],
+      "position": {
+        "left": 401.0,
+        "top": 85.0,
+        "width": 640.0,
+        "height": 403.0,
+        "nameOffset": 5.0
+      },
+      "css": {}
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U474",
       "notepad": "",
       "stateID": "Start",
       "isFinal": false,
@@ -136,58 +588,11 @@
         {
           "readOnly": false,
           "typeCode": "transition",
-          "desc": "add a quarter",
-          "uid": "U1072",
-          "notepad": "",
-          "targetUID": "U1057",
-          "event": "add25",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "right",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 78.0,
-                "top": 77.0
-              },
-              {
-                "left": 121.0,
-                "top": 77.0
-              },
-              {
-                "left": 121.0,
-                "top": 77.0
-              },
-              {
-                "left": 164.0,
-                "top": 77.0
-              }
-            ],
-            "label": {
-              "left": 3,
-              "top": -22,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        },
-        {
-          "readOnly": false,
-          "typeCode": "transition",
           "desc": "",
-          "uid": "U1073",
+          "uid": "U496",
           "notepad": "",
-          "targetUID": "U1058",
-          "event": "add50",
+          "targetUID": "U478",
+          "event": "DownloadPage",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -196,21 +601,21 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 37.0,
-                "top": 106.0
+                "left": 32.0,
+                "top": 88.0
               },
               {
-                "left": 37.0,
-                "top": 192.0
+                "left": 32.0,
+                "top": 388.0
               },
               {
-                "left": 240.0,
-                "top": 192.0
+                "left": 181.0,
+                "top": 388.0
               }
             ],
             "label": {
-              "left": 5,
-              "top": 25,
+              "left": 8,
+              "top": 273,
               "width": 75,
               "height": 25
             }
@@ -218,128 +623,18 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
-        }
-      ],
-      "position": {
-        "left": 15.0,
-        "top": 58.0,
-        "width": 65.0,
-        "height": 49.0,
-        "nameOffset": 5.0
-      },
-      "css": {}
-    },
-    {
-      "readOnly": false,
-      "typeCode": "state",
-      "desc": "",
-      "uid": "U1055",
-      "notepad": "",
-      "stateID": "V100Cents",
-      "isFinal": false,
-      "isInitial": false,
-      "nodeType": "STATE",
-      "color": "",
-      "textColor": "",
-      "stereotype": "",
-      "subModel": "",
-      "hideSubstates": false,
-      "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
-      "childrenStates": [],
-      "transitions": [
+        },
         {
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U1063",
+          "uid": "U495",
           "notepad": "",
-          "targetUID": "U1060",
-          "event": "toDrink",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "right",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 470.0,
-                "top": 187.0
-              },
-              {
-                "left": 512.0,
-                "top": 187.0
-              },
-              {
-                "left": 512.0,
-                "top": 187.0
-              },
-              {
-                "left": 557.0,
-                "top": 187.0
-              }
-            ],
-            "label": {
-              "left": 11,
-              "top": -21,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        }
-      ],
-      "position": {
-        "left": 398.0,
-        "top": 150.0,
-        "width": 74.0,
-        "height": 50.0,
-        "nameOffset": 5.0
-      },
-      "css": {}
-    },
-    {
-      "readOnly": false,
-      "typeCode": "state",
-      "desc": "",
-      "uid": "U1056",
-      "notepad": "n",
-      "stateID": "V125Cents",
-      "isFinal": false,
-      "isInitial": false,
-      "nodeType": "STATE",
-      "color": "",
-      "textColor": "",
-      "stereotype": "",
-      "subModel": "",
-      "hideSubstates": false,
-      "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
-      "childrenStates": [],
-      "transitions": [
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1064",
-          "notepad": "",
-          "targetUID": "U1060",
-          "event": "return25",
+          "targetUID": "U476",
+          "event": "FeaturePage",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -348,21 +643,21 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 516.0,
-                "top": 109.0
+                "left": 66.0,
+                "top": 88.0
               },
               {
-                "left": 516.0,
-                "top": 163.0
+                "left": 66.0,
+                "top": 250.0
               },
               {
-                "left": 557.0,
-                "top": 163.0
+                "left": 181.0,
+                "top": 250.0
               }
             ],
             "label": {
-              "left": -28,
-              "top": 9,
+              "left": 9,
+              "top": 137,
               "width": 75,
               "height": 25
             }
@@ -370,50 +665,18 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
-        }
-      ],
-      "position": {
-        "left": 483.0,
-        "top": 58.0,
-        "width": 103.0,
-        "height": 52.0,
-        "nameOffset": 5.0
-      },
-      "css": {}
-    },
-    {
-      "readOnly": false,
-      "typeCode": "state",
-      "desc": "",
-      "uid": "U1057",
-      "notepad": "",
-      "stateID": "V25Cents",
-      "isFinal": false,
-      "isInitial": false,
-      "nodeType": "STATE",
-      "color": "",
-      "textColor": "",
-      "stereotype": "",
-      "subModel": "",
-      "hideSubstates": false,
-      "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
-      "childrenStates": [],
-      "transitions": [
+        },
         {
           "readOnly": false,
           "typeCode": "transition",
           "desc": "",
-          "uid": "U1065",
+          "uid": "U494",
           "notepad": "",
-          "targetUID": "U1058",
-          "event": "add25",
+          "targetUID": "U477",
+          "event": "HomePage",
           "weight": 5,
           "traverseTimes": 1,
           "hideName": false,
@@ -422,21 +685,21 @@
             "endDir": "left",
             "posList": [
               {
-                "left": 204.0,
-                "top": 107.0
+                "left": 96.0,
+                "top": 88.0
               },
               {
-                "left": 204.0,
-                "top": 167.0
+                "left": 96.0,
+                "top": 141.0
               },
               {
-                "left": 240.0,
-                "top": 167.0
+                "left": 185.0,
+                "top": 141.0
               }
             ],
             "label": {
-              "left": -32,
-              "top": 5,
+              "left": 9,
+              "top": 29,
               "width": 75,
               "height": 25
             }
@@ -444,329 +707,39 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        },
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1066",
-          "notepad": "",
-          "targetUID": "U1059",
-          "event": "add50",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "right",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 237.0,
-                "top": 67.0
-              },
-              {
-                "left": 286.0,
-                "top": 67.0
-              },
-              {
-                "left": 286.0,
-                "top": 67.0
-              },
-              {
-                "left": 335.0,
-                "top": 67.0
-              }
-            ],
-            "label": {
-              "left": 3,
-              "top": -31,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
       ],
       "position": {
-        "left": 165.0,
-        "top": 58.0,
-        "width": 74.0,
-        "height": 50.0,
-        "nameOffset": 5.0
-      },
-      "css": {}
-    },
-    {
-      "readOnly": false,
-      "typeCode": "state",
-      "desc": "",
-      "uid": "U1058",
-      "notepad": "",
-      "stateID": "V50Cents",
-      "isFinal": false,
-      "isInitial": false,
-      "nodeType": "STATE",
-      "color": "",
-      "textColor": "",
-      "stereotype": "",
-      "subModel": "",
-      "hideSubstates": false,
-      "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
-      "childrenStates": [],
-      "transitions": [
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1067",
-          "notepad": "",
-          "targetUID": "U1059",
-          "event": "add25",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "up",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 274.0,
-                "top": 153.0
-              },
-              {
-                "left": 274.0,
-                "top": 91.0
-              },
-              {
-                "left": 334.0,
-                "top": 91.0
-              }
-            ],
-            "label": {
-              "left": -21,
-              "top": -45,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        },
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1068",
-          "notepad": "",
-          "targetUID": "U1055",
-          "event": "add50",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "right",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 316.0,
-                "top": 193.0
-              },
-              {
-                "left": 357.0,
-                "top": 193.0
-              },
-              {
-                "left": 357.0,
-                "top": 193.0
-              },
-              {
-                "left": 398.0,
-                "top": 193.0
-              }
-            ],
-            "label": {
-              "left": 5,
-              "top": -22,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 200,
-          "subModelFinalStateUID": ""
-        }
-      ],
-      "position": {
-        "left": 242.0,
-        "top": 154.0,
-        "width": 74.0,
-        "height": 50.0,
-        "nameOffset": 5.0
-      },
-      "css": {}
-    },
-    {
-      "readOnly": false,
-      "typeCode": "state",
-      "desc": "",
-      "uid": "U1059",
-      "notepad": "",
-      "stateID": "V75Cents",
-      "isFinal": false,
-      "isInitial": false,
-      "nodeType": "STATE",
-      "color": "",
-      "textColor": "",
-      "stereotype": "",
-      "subModel": "",
-      "hideSubstates": false,
-      "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
-      "childrenStates": [],
-      "transitions": [
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1069",
-          "notepad": "",
-          "targetUID": "U1055",
-          "event": "add25",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "down",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 371.0,
-                "top": 107.0
-              },
-              {
-                "left": 371.0,
-                "top": 167.0
-              },
-              {
-                "left": 396.0,
-                "top": 167.0
-              }
-            ],
-            "label": {
-              "left": -20,
-              "top": 9,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        },
-        {
-          "readOnly": false,
-          "typeCode": "transition",
-          "desc": "",
-          "uid": "U1070",
-          "notepad": "",
-          "targetUID": "U1056",
-          "event": "add50",
-          "weight": 5,
-          "traverseTimes": 1,
-          "hideName": false,
-          "posInfo": {
-            "startDir": "right",
-            "endDir": "left",
-            "posList": [
-              {
-                "left": 406.0,
-                "top": 83.0
-              },
-              {
-                "left": 444.0,
-                "top": 83.0
-              },
-              {
-                "left": 444.0,
-                "top": 83.0
-              },
-              {
-                "left": 482.0,
-                "top": 83.0
-              }
-            ],
-            "label": {
-              "left": 4,
-              "top": -27,
-              "width": 75,
-              "height": 25
-            }
-          },
-          "css": {},
-          "stereotype": "",
-          "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
-          "maxMillis": 2147483647,
-          "subModelFinalStateUID": ""
-        }
-      ],
-      "position": {
-        "left": 336.0,
-        "top": 56.0,
-        "width": 72.0,
-        "height": 52.0,
+        "left": 12.0,
+        "top": 37.0,
+        "width": 119.0,
+        "height": 51.0,
         "nameOffset": 5.0
       },
       "css": {}
     }
   ],
-  "modelName": "DEMO_WebAppAutomation",
+  "modelName": "DEMO_Login_MainModel",
   "version": "1.0",
   "versionAUT": "",
   "versionTO": "7.0.3",
   "versionReq": "",
-  "buildNum": 7,
+  "buildNum": 0,
   "mbtNode": {
-    "uid": "U1074",
+    "uid": "U506",
     "mode": "Optimal",
     "stopCond": {
-      "stopAtFinalOnly": true
+      "stopAtFinalOnly": false
     },
     "seqParams": ""
   },
   "miscNode": {
     "typeCode": "misc",
-    "canvasWidth": 2500,
-    "canvasHeight": 2000,
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
     "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
