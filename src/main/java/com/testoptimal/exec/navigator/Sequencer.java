@@ -6,6 +6,7 @@ import com.testoptimal.exec.exception.MBTAbort;
 
 public interface Sequencer {
 
+	public void prepToNavigate(StopMonitor monitor_p) throws Exception;
 	public Transition getNext() throws MBTAbort;
 	public boolean isStartingPath();
 	public boolean isEndingPath();

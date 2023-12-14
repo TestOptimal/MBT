@@ -35,28 +35,27 @@ public class Navigator {
 	private Sequencer sequencer;
 	private TravBase curTravObj;
 	private Transition curTrans;
-	private TraversalCount travTransCount;
-	private TraversalCount travStateCount;
+//	private TraversalCount travTransCount;
+//	private TraversalCount travStateCount;
 	private StopMonitor stopMonitor;
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
+		this.stopMonitor = new StopMonitor(this.execDir.getExecSetting(), this);
 		this.sequencer = getSequencer(mbtMode_p, this.execDir);
 
-		Map<String, Integer> transReqMap = new java.util.HashMap<>();
-		for (Transition trans: this.sequencer.getNetworkObj().getAllRequiredTrans()) {
-			transReqMap.put(trans.getTransNode().getUID(), trans.getMinTraverseCount());
-		}
-		this.travTransCount = new TraversalCount(transReqMap);
-		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
+//		this.travTransCount = new TraversalCount(transReqMap);
+//		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
+		this.sequencer.prepToNavigate(this.stopMonitor);
+		this.stopMonitor.start(this.sequencer);
 	}
 	
 	public void navigate () throws MBTAbort {
-		this.stopMonitor = this.execDir.getStopMonitor();
-		
 		while (true) {
 			this.curTrans = this.sequencer.getNext();
-			if (this.curTrans == null) break;
+			if (this.curTrans == null) {
+				break;
+			}
 			
 			State atState = (State)this.curTrans.getFromNode();
 			State toState = (State) this.curTrans.getToNode();
@@ -84,20 +83,20 @@ public class Navigator {
 				this.curTravObj.travRun();
 			}
 
-			if (!this.stopMonitor.checkIfContinue(atFinal)) {
+			if (this.execDir.isAborted() || !this.stopMonitor.checkIfContinue(atFinal)) {
 				break;
 			}
 		}
 	}
 	
+//	
+//	public TraversalCount getTravStateCount() {
+//		return this.travStateCount;
+//	}
 	
-	public TraversalCount getTravStateCount() {
-		return this.travStateCount;
-	}
-	
-	public TraversalCount getTravTransCount() {
-		return this.travTransCount;
-	}
+//	public TraversalCount getTravTransCount() {
+//		return this.travTransCount;
+//	}
 	
 	public TravBase getCurTravObj() {
 		return this.curTravObj;
@@ -109,5 +108,9 @@ public class Navigator {
 	
 	public Sequencer getSequencer() {
 		return this.sequencer;
+	}
+	
+	public StopMonitor getStopMonitor() {
+		return this.stopMonitor;
 	}
 }

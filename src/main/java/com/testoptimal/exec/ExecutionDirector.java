@@ -49,7 +49,6 @@ public final class ExecutionDirector extends Thread {
 		return this.mbtSession.getMbtSessionID(); 
 	}
 	private ExecListener execListener;
-	private StopMonitor stopMonitor;
 	
 	private ExecutionSetting execSetting;
 	
@@ -108,7 +107,6 @@ public final class ExecutionDirector extends Thread {
 			this.scriptExec.initGroovyMScript(modelMgr);
 			logger.info("starting model " + modelMgr.getModelName());
 			this.navigator = new Navigator(this, this.execSetting.getCurMbtMode());
-			this.stopMonitor = new StopMonitor(this.navigator, this);
 	
 			this.trigerMBTAction(TravBase.TriggerType.start);
 			String msg = "Started model " + modelMgr.getModelName();
@@ -256,10 +254,6 @@ public final class ExecutionDirector extends Thread {
 	
 	public ExecListener getExecListener() {
 		return this.execListener;
-	}
-	
-	public StopMonitor getStopMonitor() {
-		return this.stopMonitor;
 	}
 	
 	public long getElapseMillis () {

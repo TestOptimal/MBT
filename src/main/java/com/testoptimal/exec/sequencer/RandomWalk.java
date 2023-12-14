@@ -2,22 +2,19 @@ package com.testoptimal.exec.sequencer;
 
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.ExecutionDirector;
-import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.StateNetwork;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.Sequencer;
+import com.testoptimal.exec.navigator.StopMonitor;
 import com.testoptimal.exec.navigator.TraversalCount;
-
-import openOptima.graph.Edge;
 
 /**
  * this class selects the sequence paths based on the traversal style:
@@ -38,8 +35,9 @@ public class RandomWalk implements Sequencer {
 	private Random randObj;
     private TraversalCount travTransCount;
 	private MbtScriptExecutor scriptExec;
+	private StopMonitor stopMonitor;
 	
-	public RandomWalk (ExecutionDirector execDir_p) throws MBTAbort, Exception {
+	public RandomWalk (ExecutionDirector execDir_p) throws Exception {
 		this.execDir = execDir_p;
 		this.scriptExec = execDir_p.getScriptExec();
 		this.networkObj = new StateNetwork ();
@@ -57,7 +55,7 @@ public class RandomWalk implements Sequencer {
 	@Override
 	public Transition getNext() {
 		if (this.travTransCount==null) {
-			this.travTransCount = this.execDir.getSequenceNavigator().getTravTransCount();		
+			this.travTransCount = this.stopMonitor.getTransCoverage();		
 		}
 		if (this.curTrans!=null) {
 			this.curState = (State) this.curTrans.getToNode();
@@ -123,6 +121,11 @@ public class RandomWalk implements Sequencer {
 	@Override
 	public int getPathCount() {
 		return 0;
+	}
+
+	@Override
+	public void prepToNavigate(StopMonitor monitor_p) {
+		this.stopMonitor = monitor_p;
 	}
 
 }

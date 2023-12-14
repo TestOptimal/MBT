@@ -78,7 +78,6 @@ public class ModelController {
 		openInfo.valid = true;
 		
 		IdeSvc.sendModelState(httpSessID, modelName);
-//		RuntimeController.sendIdeRuntimeSessions(httpSessID);
 		return new ResponseEntity<>(openInfo, HttpStatus.OK);
 	}
 

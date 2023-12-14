@@ -25,6 +25,8 @@ public class TravState extends TravBase {
 	@Override
 	public boolean travRun() throws MBTAbort {
 		this.execDir.getExecListener().enterState(this.curState);
+		this.stopMonitor.getStateCoverage().addTravState(this.curStateNode.getUID());
+		
 		long startMillis = System.currentTimeMillis();
 		ModelExec statsCollector = this.execDir.getExecStats();
 		if (this.curState.isModelInitial()) {

@@ -163,20 +163,6 @@ public class ExecutionSetting {
 		this.randSeed = seed_p;
 	}
 	
-	/**
-	 * returns the max size of transition log allowed.  When this limit is reached, the older log entries will be deleted
-	 * to make space for new log entries.
-	 */
-	public int getMaxExecLogSize() {
-		Integer s = (Integer) this.execOptions.get("maxTestCaseNum");
-		if (s==null) {
-			return this.getModelMgr().getScxmlNode().getMiscNode().getMaxTestCaseNum(); 
-		}
-		else {
-			return (int) s;
-		}
-	}
-
 	public String getInitScript () {
 		String script = (String) this.execOptions.get("initScript");
 		if (StringUtil.isEmpty(script)) {

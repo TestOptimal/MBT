@@ -14,12 +14,6 @@ public class MiscNode {
 	public int getCanvasHeight() { return this.canvasHeight; }
 	
 	/**
-	 * Max Number of test cases allowed per MBT Execution.
-	 */
-	private int maxTestCaseNum = 100;
-	public int getMaxTestCaseNum () { return this.maxTestCaseNum; }
-
-	/**
 	 * Max number of history stats to be kept.
 	 */
 	private int maxHistoryStat = 5;

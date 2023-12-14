@@ -14,6 +14,7 @@ import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.SequencePath;
 import com.testoptimal.exec.navigator.Sequencer;
+import com.testoptimal.exec.navigator.StopMonitor;
 import com.testoptimal.scxml.ScxmlNode;
 
 public abstract class SequencerBase implements Sequencer {
@@ -30,9 +31,10 @@ public abstract class SequencerBase implements Sequencer {
 	private int traversedTransCost = 5000;
 	private StateNetwork networkObj;
 	private ScxmlNode scxmlNode;
+	protected StopMonitor stopMonitor;
 	private int maxPaths;
 	
-	public SequencerBase (ExecutionDirector execDir_p) throws MBTAbort, Exception {
+	public SequencerBase (ExecutionDirector execDir_p) throws Exception {
 		this.execDir = execDir_p;
 		this.execSetting = this.execDir.getExecSetting();
 		this.scriptExec = this.execDir.getScriptExec();
@@ -40,14 +42,13 @@ public abstract class SequencerBase implements Sequencer {
 		this.networkObj = new StateNetwork ();
 		this.networkObj.init(this.scxmlNode);
 		this.transGuard = new TransGuard(this.scriptExec, this.execSetting, this.networkObj);
-        this.maxPaths = this.getScxmlNode().getMiscNode().getMaxTestCaseNum();
-        if (this.getExecSetting().getOption("macPaths")!=null) {
-        	this.maxPaths = (int) this.getExecSetting().getOption("maxPaths");
-        }
-        if (this.maxPaths<=0) {
-        	this.maxPaths = Math.min(this.maxPaths, 200);
-        }
-
+	}
+	
+	@Override
+	public void prepToNavigate(StopMonitor stopMonitor_p) throws Exception {
+		this.stopMonitor = stopMonitor_p;
+		this.maxPaths = this.stopMonitor.getMacPaths();
+		
         List<Transition> reqTransList = networkObj.getTransByUIDList(execSetting.getMarkList());
 		if (!reqTransList.isEmpty()) {
 			networkObj.getActiveTransList().stream().forEach(t -> {
@@ -63,11 +64,9 @@ public abstract class SequencerBase implements Sequencer {
 			this.pathList.subList(0, this.maxPaths);
 		}
 		logger.info("paths to cover: " + this.pathList.size());
-		if (!this.pathList.isEmpty()) {
-			this.curPathIdx = 0;
-			this.curPath = this.pathList.get(0); 
-			this.curPath.reset();
-		}
+		this.curPathIdx = 0;
+		this.curPath = this.pathList.get(0); 
+		this.curPath.reset();
 	}
 	
 	public int getMaxPaths() {
@@ -81,12 +80,13 @@ public abstract class SequencerBase implements Sequencer {
 	
 	@Override
 	public Transition getNext() throws MBTAbort {
-		if (this.curPath == null) return null;
 		Transition trans = this.curPath.nextTrans();
 		boolean newPath = (trans == null);
 		if (newPath) {
 			this.curPathIdx++;
-			if (this.curPathIdx >= this.pathList.size()) return null;
+			if (this.curPathIdx >= this.pathList.size()) {
+				this.curPathIdx = 0;
+			}
 			this.curPath = this.pathList.get(this.curPathIdx);
 			this.curPath.reset();
 			trans = this.curPath.nextTrans();
