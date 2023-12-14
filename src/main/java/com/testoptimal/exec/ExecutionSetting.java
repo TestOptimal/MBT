@@ -47,7 +47,7 @@ public class ExecutionSetting {
 	private MbtNode mbtNode;
 	private transient String curMbtMode;
 	
-	private StateNetwork networkObj;
+//	private StateNetwork networkObj;
 	private ModelMgr modelMgr;
 	private String initialStateID = "";
 	private boolean stopAtFinalState = false;
@@ -93,13 +93,13 @@ public class ExecutionSetting {
 	public void init () throws Exception {
 		this.randNumObj = new Random(this.randSeed);
 		ScxmlNode scxmlNode = this.modelMgr.getScxmlNode();
-		this.networkObj = new StateNetwork ();
-		this.networkObj.init(scxmlNode);
+//		this.networkObj = new StateNetwork ();
+//		this.networkObj.init(scxmlNode);
 		java.util.ArrayList<StateNode> initStateList = scxmlNode.getInitialNodes();
 		if (initStateList!=null && !initStateList.isEmpty()) this.initialStateID = initStateList.get(0).getStateID();
 		
 	    // reset counters here
-	    this.networkObj.reset(this.modelMgr);
+//	    this.networkObj.reset();
 	}
 	
 	
@@ -163,20 +163,6 @@ public class ExecutionSetting {
 		this.randSeed = seed_p;
 	}
 	
-	/**
-	 * returns the max size of transition log allowed.  When this limit is reached, the older log entries will be deleted
-	 * to make space for new log entries.
-	 */
-	public int getMaxExecLogSize() {
-		Integer s = (Integer) this.execOptions.get("maxTestCaseNum");
-		if (s==null) {
-			return this.getModelMgr().getScxmlNode().getMiscNode().getMaxTestCaseNum(); 
-		}
-		else {
-			return (int) s;
-		}
-	}
-
 	public String getInitScript () {
 		String script = (String) this.execOptions.get("initScript");
 		if (StringUtil.isEmpty(script)) {
@@ -195,13 +181,13 @@ public class ExecutionSetting {
 		return this.modelMgr; 
 	}
 	
-	/**
-	 * <p>INTERNAL USE ONLY</p>
-	 */
-	@NOT_MSCRIPT_METHOD
-	public StateNetwork getNetworkObj() { 
-		return this.networkObj; 
-	}
+//	/**
+//	 * <p>INTERNAL USE ONLY</p>
+//	 */
+//	@NOT_MSCRIPT_METHOD
+//	public StateNetwork getNetworkObj() { 
+//		return this.networkObj; 
+//	}
 
 	public String getCurMbtMode() { 
 		return this.curMbtMode; 
@@ -211,9 +197,9 @@ public class ExecutionSetting {
 
 	public String getInitialStateID() { return this.initialStateID; }
 
-	public List<Transition> getAllTransitions() {
-		return this.networkObj.getActiveTransList();
-	}
+//	public List<Transition> getAllTransitions() {
+//		return this.networkObj.getActiveTransList();
+//	}
 
 
 	public void setMbtMode(String mbtMode_p) {

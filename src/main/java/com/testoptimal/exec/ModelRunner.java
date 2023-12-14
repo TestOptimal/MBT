@@ -14,7 +14,6 @@ import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.server.controller.IdeSvc;
 import com.testoptimal.server.model.IdeMessage;
 import com.testoptimal.util.ArrayUtil;
-import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 
 public abstract class ModelRunner implements ExecListener {
@@ -110,7 +109,7 @@ public abstract class ModelRunner implements ExecListener {
 	/**
 	 * returns the execution status
 	 */
-	public ExecutionStatus getExecStatus() throws Exception {
+	public ExecutionStatus getExecStatus() {
 		return this.execDir.getExecStat();
 	}
 	

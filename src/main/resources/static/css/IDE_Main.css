@@ -324,24 +324,21 @@ span.symb:hover {
 
 
 #msgExpander {
-	background: #000000;
+	background: gray;
 	color: #FFFFFF;
-	width: 10px;
-	text-align: center; 
-	vertical-align: top; 
-	left: 0px; 
 	font-weight: bold;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	padding: 3px;
+	border-radius: 5px 0px 0px 0px;
+	cursor: pointer;
 }
 
 #msgExpander:hover {
-	width: 15px;
-	height: 20px;
+	background: darkgray;
 }
 
-#msgExpander {
-	background: #777777;
-	color: #FFFFFF;
-}
 
 #msgExpander.msg_alert {
 	background: BLACK;

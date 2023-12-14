@@ -47,6 +47,9 @@ public class ExecutionStatus {
 	public long elapseMillis;
 	public String elapseTime;
 	
+	public ExecutionStatus (String execStatus_p) {
+		this.execStatus = execStatus_p;
+	}
 	
 	public ExecutionStatus (ExecutionDirector execDir_p) {
 		JVMStatus jvmStatus = JVMStatus.getJVMStatus();
@@ -66,7 +69,7 @@ public class ExecutionStatus {
 		this.execStatus = execDir_p.isAborted()? "ABORTED": this.endDT==null? "RUNNING":"COMPLETED";
 		
 		this.stopCond = execDir_p.getExecSetting().getStopCondition();
-		this.progressPcnt = execDir_p.getStopMonitor().getProgressPercent();
+		this.progressPcnt = execDir_p.getSequenceNavigator().getStopMonitor().getProgressPercent();
 		
 		this.elapseMillis = execDir_p.getElapseMillis();
 		this.elapseTime = this.millisToString(this.elapseMillis);

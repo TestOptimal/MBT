@@ -1,0 +1,589 @@
+{
+  "uid": "U100",
+  "typeCode": "scxml",
+  "desc": "Cloned from templateBasic model",
+  "notepad": "",
+  "childrenStates": [
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "Ue2a02e75",
+      "notepad": "",
+      "stateID": "End",
+      "isFinal": true,
+      "isInitial": false,
+      "nodeType": "FINAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [],
+      "position": {
+        "left": 1142.0,
+        "top": 272.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 10.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U0e65b7f4",
+      "notepad": "",
+      "stateID": "Start",
+      "isFinal": false,
+      "isInitial": true,
+      "nodeType": "INITIAL",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U3d8c2c70",
+          "notepad": "",
+          "targetUID": "U26a7d994",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 226.0,
+                "top": 268.0
+              },
+              {
+                "left": 285.0,
+                "top": 268.0
+              },
+              {
+                "left": 285.0,
+                "top": 268.0
+              },
+              {
+                "left": 344.0,
+                "top": 268.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 153.0,
+        "top": 243.0,
+        "width": 75.0,
+        "height": 50.0,
+        "nameOffset": 15.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U26a7d994",
+      "notepad": "",
+      "stateID": "state name",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U465bd95c",
+          "notepad": "",
+          "targetUID": "U863b3ccc",
+          "event": "path-all",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "up",
+            "endDir": "up",
+            "posList": [
+              {
+                "left": 412.0,
+                "top": 249.0
+              },
+              {
+                "left": 412.0,
+                "top": 107.0
+              },
+              {
+                "left": 872.0,
+                "top": 107.0
+              },
+              {
+                "left": 872.0,
+                "top": 273.0
+              }
+            ],
+            "label": {
+              "left": -29,
+              "top": -107,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U228c7532",
+          "notepad": "",
+          "targetUID": "U63d1794f",
+          "event": "path1",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 443.0,
+                "top": 263.0
+              },
+              {
+                "left": 506.0,
+                "top": 263.0
+              },
+              {
+                "left": 506.0,
+                "top": 209.0
+              },
+              {
+                "left": 569.0,
+                "top": 209.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "$VAR.path \u003c\u003d2",
+          "guardResolvers": "U1466714b",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Ub0cd295f",
+          "notepad": "",
+          "targetUID": "U83a7698d",
+          "event": "path2",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 443.0,
+                "top": 308.0
+              },
+              {
+                "left": 517.0,
+                "top": 308.0
+              },
+              {
+                "left": 517.0,
+                "top": 419.0
+              },
+              {
+                "left": 591.0,
+                "top": 419.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "$VAR.path\u003e2",
+          "guardResolvers": "U1466714b",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 345.0,
+        "top": 250.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U63d1794f",
+      "notepad": "",
+      "stateID": "state name",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U7a1a6fd0",
+          "notepad": "",
+          "targetUID": "U863b3ccc",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 668.0,
+                "top": 207.0
+              },
+              {
+                "left": 741.0,
+                "top": 207.0
+              },
+              {
+                "left": 741.0,
+                "top": 308.0
+              },
+              {
+                "left": 814.0,
+                "top": 308.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 570.0,
+        "top": 168.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U83a7698d",
+      "notepad": "",
+      "stateID": "state name",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1fff95aa",
+          "notepad": "",
+          "targetUID": "U863b3ccc",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "down",
+            "posList": [
+              {
+                "left": 691.0,
+                "top": 399.0
+              },
+              {
+                "left": 843.0,
+                "top": 399.0
+              },
+              {
+                "left": 843.0,
+                "top": 348.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 593.0,
+        "top": 380.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    },
+    {
+      "readOnly": false,
+      "typeCode": "state",
+      "desc": "",
+      "uid": "U863b3ccc",
+      "notepad": "",
+      "stateID": "state name",
+      "isFinal": false,
+      "isInitial": false,
+      "nodeType": "STATE",
+      "color": "",
+      "textColor": "",
+      "stereotype": "",
+      "subModel": "",
+      "hideSubstates": false,
+      "maxMillis": 2147483647,
+      "activateType": "",
+      "activateThreshold": 1,
+      "firingType": "RANDOM",
+      "childrenStates": [],
+      "transitions": [
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "U1466714b",
+          "notepad": "",
+          "targetUID": "U26a7d994",
+          "event": "resolver",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "down",
+            "endDir": "down",
+            "posList": [
+              {
+                "left": 890.0,
+                "top": 348.0
+              },
+              {
+                "left": 890.0,
+                "top": 500.0
+              },
+              {
+                "left": 376.0,
+                "top": 500.0
+              },
+              {
+                "left": 376.0,
+                "top": 324.0
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": 25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        },
+        {
+          "readOnly": false,
+          "typeCode": "transition",
+          "desc": "",
+          "uid": "Uf7fd5524",
+          "notepad": "",
+          "targetUID": "Ue2a02e75",
+          "event": "trans name",
+          "weight": 5,
+          "traverseTimes": 1,
+          "hideName": false,
+          "posInfo": {
+            "startDir": "right",
+            "endDir": "left",
+            "posList": [
+              {
+                "left": 914.0,
+                "top": 324.0
+              },
+              {
+                "left": 1027.0,
+                "top": 324.0
+              },
+              {
+                "left": 1027.0,
+                "top": 309.5
+              },
+              {
+                "left": 1140.0,
+                "top": 309.5
+              }
+            ],
+            "label": {
+              "left": 5,
+              "top": -25,
+              "width": 75,
+              "height": 25
+            }
+          },
+          "css": {},
+          "stereotype": "",
+          "guard": "",
+          "guardResolvers": "",
+          "maxMillis": 2147483647,
+          "subModelFinalStateUID": ""
+        }
+      ],
+      "position": {
+        "left": 816.0,
+        "top": 274.0,
+        "width": 100.0,
+        "height": 75.0
+      },
+      "css": {
+        "classes": "name-top"
+      }
+    }
+  ],
+  "modelName": "DEMO_Guard",
+  "version": "1.0",
+  "versionAUT": "",
+  "versionTO": "7.0.3",
+  "versionReq": "",
+  "buildNum": 0,
+  "mbtNode": {
+    "uid": "U120",
+    "mode": "Optimal",
+    "stopCond": {
+      "stopAtFinalOnly": true
+    },
+    "seqParams": ""
+  },
+  "miscNode": {
+    "typeCode": "misc",
+    "canvasWidth": 1500,
+    "canvasHeight": 1000,
+    "maxTestCaseNum": 100,
+    "maxHistoryStat": 5,
+    "swimlanes": [],
+    "boxes": []
+  },
+  "modelType": "FSM"
+}

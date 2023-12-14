@@ -58,9 +58,7 @@ public class ModelRunnerClient extends ModelRunner {
 
 	@Override
 	public void exitMbtEnd() {
-		if (this.execSetting.getOption("autoClose")!=null && (boolean) this.execSetting.getOption("autoClose")) {
-			SessionMgr.getInstance().closeModel(this.modelMgr.getModelName(), this.httpSessId);
-		}
+		SessionMgr.getInstance().closeModel(this);
 	}
 
 	@Override

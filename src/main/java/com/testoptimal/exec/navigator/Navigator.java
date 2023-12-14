@@ -7,14 +7,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ExecutionDirector;
-import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.FSM.TravState;
 import com.testoptimal.exec.FSM.TravTrans;
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mscript.MbtScriptExecutor;
 
 public class Navigator {
 	private static Map<String, Constructor> seqConstructorMap = new HashMap<>();
@@ -33,45 +31,51 @@ public class Navigator {
 		return seqConstructorMap.keySet().stream().map(s -> s).collect(Collectors.toList());	
 	}
 	
-	private MbtScriptExecutor scriptExec;
 	private ExecutionDirector execDir;
-	private ExecutionSetting execSetting;
 	private Sequencer sequencer;
 	private TravBase curTravObj;
 	private Transition curTrans;
-	private TraversalCount travTransCount;
-	private TraversalCount travStateCount;
+//	private TraversalCount travTransCount;
+//	private TraversalCount travStateCount;
 	private StopMonitor stopMonitor;
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
-		this.scriptExec = this.execDir.getScriptExec();
-		this.execSetting = this.execDir.getExecSetting();
-
-		Map<String, Integer> transReqMap = new java.util.HashMap<>();
-		for (Transition trans: execDir_p.getExecSetting().getNetworkObj().getAllRequiredTrans()) {
-			transReqMap.put(trans.getTransNode().getUID(), trans.getMinTraverseCount());
-		}
-		this.travTransCount = new TraversalCount(transReqMap);
-		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
+		this.stopMonitor = new StopMonitor(this.execDir.getExecSetting(), this);
 		this.sequencer = getSequencer(mbtMode_p, this.execDir);
+
+//		this.travTransCount = new TraversalCount(transReqMap);
+//		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
+		this.sequencer.prepToNavigate(this.stopMonitor);
+		this.stopMonitor.start(this.sequencer);
 	}
 	
 	public void navigate () throws MBTAbort {
-		this.stopMonitor = this.execDir.getStopMonitor();
-		
 		while (true) {
 			this.curTrans = this.sequencer.getNext();
-			if (this.curTrans == null) break;
+			if (this.curTrans == null) {
+				break;
+			}
 			
 			State atState = (State)this.curTrans.getFromNode();
 			State toState = (State) this.curTrans.getToNode();
-			this.curTravObj = new TravState(atState, true, this.execDir);
-			if (this.execDir.isAborted()) break;
-			this.curTravObj.travRun();
+			
+			if (!atState.isSuperVertex()) {
+				this.curTravObj = new TravState(atState, true, this.execDir);
+				if (this.execDir.isAborted()) break;
+				this.curTravObj.travRun();
+			}
+
 			this.curTravObj = new TravTrans(this.curTrans, false, this.execDir);
 			if (this.execDir.isAborted()) break;
 			this.curTravObj.travRun();
+			
+			if (toState.isSuperVertex()) {
+				this.curTravObj = new TravState(toState, true, this.execDir);
+				if (this.execDir.isAborted()) break;
+				this.curTravObj.travRun();
+			}
+			
 			boolean atFinal = toState.isModelFinal();
 			if (this.sequencer.isEndingPath()) {
 				this.curTravObj = new TravState(toState, true, this.execDir);
@@ -79,20 +83,20 @@ public class Navigator {
 				this.curTravObj.travRun();
 			}
 
-			if (!this.stopMonitor.checkIfContinue(atFinal)) {
+			if (this.execDir.isAborted() || !this.stopMonitor.checkIfContinue(atFinal)) {
 				break;
 			}
 		}
 	}
 	
+//	
+//	public TraversalCount getTravStateCount() {
+//		return this.travStateCount;
+//	}
 	
-	public TraversalCount getTravStateCount() {
-		return this.travStateCount;
-	}
-	
-	public TraversalCount getTravTransCount() {
-		return this.travTransCount;
-	}
+//	public TraversalCount getTravTransCount() {
+//		return this.travTransCount;
+//	}
 	
 	public TravBase getCurTravObj() {
 		return this.curTravObj;
@@ -100,5 +104,13 @@ public class Navigator {
 	
 	public int getPathCount() {
 		return this.sequencer.getPathCount();
+	}
+	
+	public Sequencer getSequencer() {
+		return this.sequencer;
+	}
+	
+	public StopMonitor getStopMonitor() {
+		return this.stopMonitor;
 	}
 }

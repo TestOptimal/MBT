@@ -1,0 +1,7 @@
+loginID	password
+goodID1	badPwd
+goodID1	
+	goodPwd1
+	
+badID	goodPwd1
+badID	badPwd

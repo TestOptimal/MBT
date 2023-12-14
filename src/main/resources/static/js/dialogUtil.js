@@ -27,7 +27,7 @@ function alertDialogBase(msg_p) {
 		$(document).trigger('reveal.facebox');
 	}
 	else {
-		jQuery.facebox("<div class=alertTable style='overflow:auto;'><span id=alertMsg><p>" + msg_p + "</p></span>"
+		jQuery.facebox("<div class=alertTable style='overflow:auto; max-height: 600px;'><span id=alertMsg><p>" + msg_p + "</p></span>"
 	    	+ "<br/><button style='float:right;margin-top: 8px;' id=alertOkBtn onclick='closeAlertDialog();'>OK</button>"
 			+ "</div>");
 	}
@@ -211,25 +211,3 @@ function clone(obj){
 
     return temp;
 }
-
-
-//replaces the @snapTS:nnnnn@ with hyper link to display screenshot.
-function resolveSnapID(msg_p, execID_p) {
-	var snapIdx = msg_p.indexOf("@snapTS:");
-	var execID = "";
-	if (execID_p) {
-		execID = "&execID=" + execID_p;
-	}
-	while (snapIdx>=0) {
-		var snapId = msg_p.substring(snapIdx+8);
-		var snapIdx2 = snapId.indexOf("@");
-		var msgTail = snapId.substring(snapIdx2+1);
-		snapId = snapId.substring(0, snapIdx2);
-		msg_p = msg_p.substring(0, snapIdx) 
-			+ " <a href='app=webmbt&action=getSnapScreen&snapTime=" + snapId 
-			+ execID + "&rand=" + Math.random() + "' target='_blank'>ScreenShot</a>" + msgTail;
-		snapIdx = msg_p.indexOf("@snapTS:");
-	}
-	return msg_p;
-}
-

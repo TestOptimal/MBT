@@ -3,10 +3,9 @@ package com.testoptimal.exec.navigator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.State;
-import com.testoptimal.exec.exception.MBTAbort;
+import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.scxml.StopCondition;
 import com.testoptimal.server.model.Requirement;
 
@@ -20,41 +19,50 @@ public class StopMonitor {
 	private State homeState;
 	private int totalPathCount;
 	private AtomicInteger execPathCount = new AtomicInteger(0);
-	private ExecutionDirector execDir;
 	
-	private StopCondition stopCond;
+//	private StopCondition stopCond;
 	private int stopTransCoverage;
 	private int stopTransCount;
 	private int stopReqCoverage;
 	private int stopHomeRunCount;
 	private int stopElapseMillis;
-
+	private ExecutionSetting execSetting;
 	
-	public StopMonitor (Navigator nav_p, ExecutionDirector execDir_p) throws MBTAbort, Exception {
-		this.execDir = execDir_p;
-		ExecutionSetting execSetting = this.execDir.getExecSetting();
-		this.startedMillis = execDir_p.getStartTime().getTime();
-		this.stopCond = execSetting.getStopCondition();
+	
+	public StopMonitor (ExecutionSetting execSetting_p, Navigator nav_p) throws Exception {
+		this.execSetting = execSetting_p;
+		this.stopAtFinalOnly = execSetting_p.isStopAtFinalOnly();
 		
 		Map<String, Integer> reqmntMap = new java.util.HashMap<>();
-		for (Requirement tag: execSetting.getModelMgr().getRequirementList()) {
+		for (Requirement tag: execSetting_p.getModelMgr().getRequirementList()) {
 			reqmntMap.put(tag.name, 1);
 		}
 		this.reqmntCoverage = new TraversalCount(reqmntMap);
-		this.transCoverage = nav_p.getTravTransCount();
-		this.stateCoverage = nav_p.getTravStateCount();
-		this.homeState = execSetting.getNetworkObj().getHomeState();
-		String curMbtMode = execSetting.getCurMbtMode();
-		if (curMbtMode.equalsIgnoreCase("Random")) {
-			this.totalPathCount = execDir_p.getSequenceNavigator().getPathCount();
+		
+		StopCondition stopCond = this.execSetting.getStopCondition();
+		this.stopTransCoverage = stopCond.getTransCoverage()==null?0: stopCond.getTransCoverage();
+		this.stopTransCount = stopCond.getTransCount()==null?0: stopCond.getTransCount();
+		this.stopReqCoverage = stopCond.getReqCoverage()==null?0: stopCond.getReqCoverage();
+		this.stopHomeRunCount = stopCond.getHomeRunCount()==null?0: stopCond.getHomeRunCount();
+		Integer intObj = (Integer) this.execSetting.getOption("maxPaths");
+		if (intObj!=null && intObj > 0) {
+			this.stopHomeRunCount = intObj;
+		}
+		this.stopElapseMillis = stopCond.getElapseTime()==null?0: stopCond.getElapseTime()*60000;
+	}
+	
+	public void start(Sequencer sequencer_p) {
+		this.startedMillis = System.currentTimeMillis();
+		this.homeState = sequencer_p.getNetworkObj().getHomeState();
+		this.totalPathCount = sequencer_p.getPathCount();
+
+		Map<String, Integer> transReqMap = new java.util.HashMap<>();
+		for (Transition trans: sequencer_p.getNetworkObj().getAllRequiredTrans()) {
+			transReqMap.put(trans.getTransNode().getUID(), trans.getMinTraverseCount());
 		}
 		
-		this.stopAtFinalOnly = execSetting.isStopAtFinalOnly();
-		this.stopTransCoverage = this.stopCond.getTransCoverage()==null?0: this.stopCond.getTransCoverage();
-		this.stopTransCount = this.stopCond.getTransCount()==null?0: this.stopCond.getTransCount();
-		this.stopReqCoverage = this.stopCond.getReqCoverage()==null?0: this.stopCond.getReqCoverage();
-		this.stopHomeRunCount = this.stopCond.getHomeRunCount()==null?0: this.stopCond.getHomeRunCount();
-		this.stopElapseMillis = this.stopCond.getElapseTime()==null?0: this.stopCond.getElapseTime()*60000;
+		this.transCoverage = new TraversalCount(transReqMap);
+		this.stateCoverage = new TraversalCount(new java.util.HashMap<>());		
 	}
 	
 	public int getProgressPercent () {
@@ -109,8 +117,7 @@ public class StopMonitor {
 	 * @return
 	 */
 	public boolean checkIfContinue (boolean atFinalState_p) {
-		if (this.execDir.isInterrupted() || 
-			this.getProgressPercent() >= 100) {
+		if (this.getProgressPercent() >= 100) {
 			if (this.stopAtFinalOnly && !atFinalState_p) {
 				return true;
 			}
@@ -131,4 +138,7 @@ public class StopMonitor {
 		return this.execPathCount.incrementAndGet();
 	}
 	
+	public int getMacPaths() {
+		return this.stopHomeRunCount;
+	}
 }

@@ -125,7 +125,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 	}
 
 	public boolean evalGuard(TransitionNode transNode_p) {
-		if (transNode_p==null) return true;
+		if (transNode_p==null || this.execDirector.isGenOnly()) return true;
 		String guardExpr = transNode_p.getGuard();
 		if (StringUtil.isEmpty(guardExpr)) {
 			return true;

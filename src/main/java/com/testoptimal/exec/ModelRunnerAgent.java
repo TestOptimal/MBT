@@ -11,6 +11,7 @@ import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.navigator.Navigator;
+import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.model.agent.TestCmd;
 import com.testoptimal.server.model.agent.TestResult;
 
@@ -165,7 +166,7 @@ public class ModelRunnerAgent extends ModelRunner {
 			}
 			logger.warn(e.toString());
 		}
-		
+		SessionMgr.getInstance().closeModel(this);
 	}
 
 	@Override

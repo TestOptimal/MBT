@@ -4,4 +4,4 @@
 //static void myCheckAndRecordStep(p1, p2) {
 //   print(p1 + ',' + p2)
 //}
-import com.testoptimal.mscript.groovy.STEP
+import com.testoptimal.exec.mscript.STEP

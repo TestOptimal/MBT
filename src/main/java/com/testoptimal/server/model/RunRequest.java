@@ -27,10 +27,10 @@ public class RunRequest {
 	 *   <li>seqParams: additional sequencer parameters in the format of code=value, separate multiple settings with a semi-colon</li>
 	 *   <li>seed: int to set the seed to be used by random number generator</li>
 	 *   <li>initScript: groovy script to be executed before model execution. use this to set user variables. This overrides "Initialization Script" in model setting.</li>
-	 *   <li>autoClose: true/false to clear model execution from memory.</li>
 	 *   <li>MCaseList: array of MCase names to execute the specified MCases (ProMBT)</li>
 	 *   <li>statDesc: to save execution stats to the database</li>
 	 * 	 <li>markList: array of UIDs for states and/or transitions</li>
+	 * 	 <li>macPaths: int to limit number of test paths to be generated</li>
 	 *   </ul>
 	 * 
 	 */

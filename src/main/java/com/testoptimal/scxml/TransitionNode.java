@@ -43,25 +43,10 @@ public class TransitionNode implements Comparable<TransitionNode> {
 	private String guard = "";
 	
 	/**
-	 * contains the string as hint to resolve the guard.  Transitions
-	 * that has matching value in satisfyingHint will resolve this.guard as set by the user.
+	 * contains the list of UID of transitions that can resolve the guard condition for this transition
 	 */
-	private String guardHint = "";
+	private String guardResolvers = "";
 
-	public void setGuardHint (String hint_p) {
-		this.guardHint = hint_p;
-	}
-	
-	/**
-	 * contains the hint to satify the guard condition for transition that
-	 * has matching guardHint
-	 */
-	private String satisfyingHint = "";
-
-	public void setSatisfyingHint (String hint_p) {
-		this.satisfyingHint = hint_p;
-	}
-	
 	/**
 	 * The max number of millis allowed for the event action, if exceeded will cause the transition traversal to be tallied 
 	 * in the number of traversal over the limit.
@@ -157,12 +142,12 @@ public class TransitionNode implements Comparable<TransitionNode> {
 		return this.hideName?null: this.event;
 	}
 	
-	public String getGuardHint() {
-		return this.guardHint;
+	public String getGuardResolvers() {
+		return this.guardResolvers==null?"":this.guardResolvers;
 	}
 	
-	public String getSatisfyingHint() {
-		return this.satisfyingHint;
+	public boolean isGuardResolver(String uid_p) {
+		return this.guardResolvers!=null && this.guardResolvers.indexOf(uid_p)>=0;
 	}
 	
 	public boolean noNeedToCover() {

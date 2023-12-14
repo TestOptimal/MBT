@@ -35,8 +35,7 @@ public class ModelExec {
 	public Map<String, ExecStateTrans> transMap = new java.util.HashMap<>();
 		
 	private transient AtomicInteger tcCounter = new AtomicInteger(0);
-		private transient ExecTestCase curTestCase;
-	private transient int maxTestCaseNum = 1;
+	private transient ExecTestCase curTestCase;
 
 	public ModelExec (String mbtSessID_p, ModelMgr modelMgr_p, ExecutionSetting execSetting_p) {
 		this.modelName = modelMgr_p.getModelName();
@@ -44,7 +43,6 @@ public class ModelExec {
 		this.filePath = modelMgr_p.getStatsFolderPath() + this.mbtSessID + ".json";
 		this.mbtSessID = mbtSessID_p;
 		ScxmlNode scxml = modelMgr_p.getScxmlNode();
-		this.maxTestCaseNum = scxml.getMiscNode().getMaxTestCaseNum();
 		this.execSummary = new ModelExecSummary();
 		this.execSummary.modelName = this.modelName;
 		this.execSummary.mbtSessID = this.mbtSessID;
@@ -82,9 +80,7 @@ public class ModelExec {
 		String tcName = StringUtil.genTCName("TC_", tcCounter.addAndGet(1), 6);
 		this.curTestCase = new ExecTestCase(tcName);
 		this.tcList.add(this.curTestCase);
-		if (this.tcList.size() >= this.maxTestCaseNum) {
-			this.tcList = this.tcList.subList(this.tcList.size() - this.maxTestCaseNum, this.maxTestCaseNum);
-		}
+		this.execSummary.summarize(this);
 		return this.curTestCase;
 	}
 	
@@ -99,7 +95,7 @@ public class ModelExec {
 	private void addTestStep (long perfMillis_p, ExecStateTrans st_p, List<TagExec> checkList_p) {
 		this.curTestCase.addStep(perfMillis_p, st_p, checkList_p);
 
-		Map<String, List<TagExec>> checkMap = checkList_p.stream().collect(Collectors.groupingBy(c -> c.getReqTag()));
+		Map<String, List<TagExec>> checkMap = checkList_p.stream().filter(c -> c.getReqTag()!=null).collect(Collectors.groupingBy(c -> c.getReqTag()));
 		checkMap.keySet().forEach( t -> {
 			Optional<ExecReq> rOpt = this.reqList.stream().filter(r -> r.reqTag.equals(t)).findFirst();
 			ExecReq req;

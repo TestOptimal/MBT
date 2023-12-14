@@ -191,10 +191,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.17</java.version>
+		<java.version>17</java.version>
 		<start-class>com.testoptimal.server.Application</start-class>
-		<maven.compiler.source>1.17</maven.compiler.source>
-		<maven.compiler.target>1.17</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<to.version>${project.version}</to.version>
@@ -305,28 +305,16 @@
 			        <links>
 			            <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
 			        </links>
-			        <source>1.17</source>
 			        <show>public</show>
 			        <doctitle>TestOptimal API</doctitle>
 			        <title>TestOptimal API</title>
 			        <bottom><![CDATA[Copyright TestOptimal, LLC]]></bottom>
-				    <sourceFileIncludes>
-					    <include>exception/*</include>
-					    <include>server/model/RunRequest.java</include>
-					    <include>dataset/DataMgr.java</include>
-					    <include>dataset/DataSet.java</include>
-					    <include>dataset/DataSetDef.java</include>
-					    <include>mcase/*</include>
-					    <include>mscript/Sys.java</include>
-					    <include>mscript/Util.java</include>
-					    <include>page/*</include>
-					    <include>plugin/*</include>
-					    <include>model/*</include>
-					    <include>plugin/selenium/SeleniumAssist.java</include>
-					    <include>plugin/selenium/WebDriverAssist.java</include>
-				    </sourceFileIncludes>
-			        <sourcepath>${basedir}/src/main/java/com/testoptimal/</sourcepath>
-                    <configuration> <!-- add this to disable checking -->
+			        <sourceFileIncludes>
+						<include>exec/mscript/Exec.java</include>
+					</sourceFileIncludes>
+			        <sourcepath>${basedir}/src/main/java/com/testoptimal</sourcepath>
+			        <classpath>${basedir}/src/main/java</classpath>
+                    <configuration>
 		                <additionalparam>-Xdoclint:none</additionalparam>
 						<failOnError>false</failOnError>
 		            </configuration>

@@ -2,8 +2,10 @@ package com.testoptimal.server.config;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -124,6 +126,8 @@ public final class Config {
 	    if (!FileUtil.exists(tempPath)) {
 	    	FileUtil.createFolder(tempPath);
 	    }
+	    
+//    	System.setOut(new CustomPrintStream());
 	}
 
 	public static String getMScriptLogFilePath(String modelName_p, long fileIdx_p) {
@@ -292,4 +296,5 @@ public final class Config {
 		}
 		return filterReqExp;
 	}
+
 }

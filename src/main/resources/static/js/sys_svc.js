@@ -5,11 +5,11 @@ MainModule.factory ('AlmSvc', function(SvrRest) {
 	};
 	
 	AlmSvc.getRequirements = function (modelName, successCB, errorCB) {
-		SvrRest.get (AlmSvc.base + modelName + "/requirement", successCB, errorCB);
+		SvrRest.get (AlmSvc.base + "model/" + modelName + "/requirement", successCB, errorCB);
 	};
 
 	AlmSvc.saveRequirements = function (modelName, reqConfig, successCB, errorCB) {
-		SvrRest.put (AlmSvc.base + modelName + "/requirement", reqConfig, successCB, errorCB);
+		SvrRest.put (AlmSvc.base + "model/" + modelName + "/requirement", reqConfig, successCB, errorCB);
 	};
 
 	return AlmSvc;
@@ -99,6 +99,10 @@ MainModule.factory ('FileSvc', function(SvrRest) {
 		SvrRest.get(FileSvc.base + "log/tosvr", successCB, errorCB);
 	};
 	
+	FileSvc.getModelLog = function (modelName, mbtSessID, successCB, errorCB) {
+		SvrRest.get (FileSvc.base + "log/model/" + modelName + "/session/" + mbtSessID, successCB, errorCB);
+	}
+
 	return FileSvc;
 })
 
@@ -137,33 +141,17 @@ MainModule.factory ('ModelSvc', function(SvrRest) {
 });
 
 
-MainModule.factory ('RuntimeSvc', function(SvrRest) {
-	var RuntimeSvc = { 
-		base: "/api/v1/runtime/"
-	};
-
-	RuntimeSvc.listModels = function (successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "model/list", successCB, errorCB);
-	};
-
-	RuntimeSvc.getModelLog = function (mbtSessID, successCB, errorCB) {
-		SvrRest.get (RuntimeSvc.base + "session/" + mbtSessID + "/log", successCB, errorCB);
-	}
-
-	return RuntimeSvc;
-});
-
 MainModule.factory ('StatsSvc', function(SvrRest) {
 	var StatsSvc = { 
 		base: "/api/v1/stats/"
 	};
 
 	StatsSvc.modelExecList = function (modelName, successCB, errorCB) {
-		SvrRest.get (StatsSvc.base + "exec/" + modelName + "/list", successCB, errorCB);
+		SvrRest.get (StatsSvc.base + "model/" + modelName + "/list", successCB, errorCB);
 	};
 
 	StatsSvc.getModelExec = function (modelName, mbtSessID, successCB, errorCB) {
-		SvrRest.get (StatsSvc.base + "exec/" + modelName + "/" + mbtSessID, successCB, errorCB);
+		SvrRest.get (StatsSvc.base + "model/" + modelName + "/session/" + mbtSessID, successCB, errorCB);
 	};
 	
 	StatsSvc.dashboard = function (successCB, errorCB) {
@@ -198,10 +186,6 @@ MainModule.factory ('SysSvc', function(SvrRest) {
 
 	SysSvc.getModelTemplates = function (successCB, errorCB) {
 		SvrRest.get (SysSvc.base + "template", successCB, errorCB);
-	};
-
-	SysSvc.saveLic = function (licEmail, licKey, successCB, errorCB) {
-		SvrRest.get (SysSvc.base + "lic/save?email=" + licEmail + "&licKey=" + encodeURIComponent(licKey), successCB, errorCB);
 	};
 
 	SysSvc.getCA = function (successCB, errorCB) {

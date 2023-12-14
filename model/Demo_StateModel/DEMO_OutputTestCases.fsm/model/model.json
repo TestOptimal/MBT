@@ -17,7 +17,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -68,8 +67,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -111,8 +109,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -158,8 +155,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -187,7 +183,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -234,8 +229,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -263,7 +257,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -314,8 +307,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -357,8 +349,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "a,b,c",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -386,7 +377,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -437,8 +427,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -466,7 +455,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -517,8 +505,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -546,7 +533,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -593,8 +579,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -636,8 +621,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -665,7 +649,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -698,7 +681,6 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
@@ -749,8 +731,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -767,7 +748,7 @@
       }
     }
   ],
-  "modelName": "Demo_OutputTestCases",
+  "modelName": "DEMO_OutputTestCases",
   "version": "1.0",
   "versionAUT": "",
   "versionTO": "7.0.3",

@@ -130,11 +130,11 @@ public class Application extends SpringBootServletInitializer implements Command
 	    Arrays.asList(seqList).stream().forEach(s -> {
 	    	String[] s2 = s.split(":");
     		try {
-    			logger.info("loading sequencer " + s2);
+    			logger.info("loading sequencer " + s);
     			Navigator.addSequencer(s2[0], s2[1]);
     		}
     		catch (Exception e) {
-    			logger.warn("Error loading sequencer " + s);
+    			logger.warn("Error loading sequencer " + s + " - " + e.toString());
     		}
 	    });
 	    

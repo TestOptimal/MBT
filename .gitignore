@@ -1,21 +1,24 @@
 # Compiled class file
 *.class
 
+mbt.git
+prombt.git
+
 # Log file
 *.log
 log/
 target/
 build/
 work/
-h2db/statsDB.mv.db
 lib/Graphviz
 model/**/report
 model/**/snapscreen
 model/**/temp
-.svn/
 model/**/model.lock
 .DS_Store
 src/main/resources/TO.properties
+model/**/stats/*.json
+dashboard/*.json
 
 # BlueJ files
 *.ctxt

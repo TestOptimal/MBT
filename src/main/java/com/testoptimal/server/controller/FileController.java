@@ -205,6 +205,21 @@ public class FileController {
 		return logFilePath + "\n\n" + ret;
     }
 	
+
+	@GetMapping(value = "log/model/{modelName}/session/{mbtSessID}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public String getScriptLog (
+			@PathVariable (name="modelName", required=true) String modelName,
+			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
+			ServletRequest request) throws Exception {
+		String modelFolder = FileUtil.findModelFolder(modelName);
+		if (modelFolder==null) {
+			return "Model not found: " + modelName;
+		}
+		String logFilePath = modelFolder + "/temp/script.log";
+		String logString = logFilePath + "\n\n" + FileUtil.readFile(logFilePath);
+		return logString;
+	}
+	
 	
 	// used by IDE_Main/Tab_ModelFiles.html
 	@GetMapping("file/{folderPath}/{fileName}")

@@ -57,7 +57,7 @@ abstract public class TravBase {
 
 	public TravBase (ExecutionDirector execDir_p, boolean newPath_p) {
 		this.execDir = execDir_p;
-		this.stopMonitor = this.execDir.getStopMonitor();
+		this.stopMonitor = this.execDir.getSequenceNavigator().getStopMonitor();
 		this.scriptExec = this.execDir.getScriptExec();
 		this.newPathInd = newPath_p;
 	}

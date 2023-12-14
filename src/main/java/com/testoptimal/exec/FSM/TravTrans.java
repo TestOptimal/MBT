@@ -22,6 +22,9 @@ public class TravTrans extends TravBase {
 		super(execDir_p, newPath_p);
 		this.curTrans = travObj_p;
 		this.curTransNode = this.curTrans.getTransNode();
+		if (this.curTransNode==null) {
+			int a = 0;
+		}
 		this.fromStateNode = this.curTransNode.getParentStateNode();
 	}
 
@@ -65,8 +68,7 @@ public class TravTrans extends TravBase {
 			}
 		}
 		catch (MBTException e) {
-			this.tagExecList.add(new TagExec( this.scriptExec, "Error", false, 
-					e.getMessage(), null, this.curTransNode.getParentStateNode().getStateID(), this.curTrans.getEventId(),this.getCurUID()));
+			this.addTagExec(null, false, e.getMessage(), null);
 		}
 		
 //		// execute additional script function

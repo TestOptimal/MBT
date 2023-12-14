@@ -9,7 +9,7 @@
     <script src="packages/facebox-1.4/jquery.facebox.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" src="js/dialogUtil.js"></script>
-	<script type="text/javascript" src="js/webmbtMsgList.js"></script>
+	<script type="text/javascript" src="js/msgList.js"></script>
 	<script type="text/javascript" src="js/winUtil.js"></script>
     <script src="/webjars/angularjs/angular.min.js"></script>
 	<script src="/webjars/angularjs/angular-cookies.js"></script>
@@ -174,14 +174,15 @@
 		<iframe id="dialogFrame" ng-src="{{dialog.frameDefn.srcFrame}}" frameborder="0"></iframe>
 	</div>
 
-	<div id="msgBar" ng-attr-style="width: {{sysMsg.visible?'100%':'8px'}};">
+	<div id="msgExpander" class="msg_{{sysMsg.mostSevereType}}" ng-click="sysMsg.visible=true;" 
+		title="{{sysMsg.msgGroups[sysMsg.mostSevereType][0]}} click to show messages">
+		&langle; {{sysMsg.msgGroups[sysMsg.mostSevereType].length || ''}}
+	</div>
+	<div id="msgBar" ng-show="sysMsg.visible" style="width:100%;">
 		<span id="msgBarActions" ng-show="sysMsg.visible">
 			<span class="glyphicon glyphicon-chevron-down" ng-click="sysMsg.visible=false;"></span>
 			<span class="glyphicon glyphicon-erase" ng-click="clearMsg();"></span>
 		</span>
-		<span id="msgExpander" class="msg_{{sysMsg.mostSevereMsg.type}}" 
-			ng-hide="sysMsg.visible && sysMsg.msgList.length>0" ng-click="sysMsg.visible=true;"
-			title="show console messages">&rangle;</span>
 		<ul id="msgList" ng-show="sysMsg.visible">
 			<li ng-repeat="msg in sysMsg.msgList track by $index">
 				<span class="msgItem symb msg_{{msg.type}}">&#9888;</span>

@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class StatsController {
-	@GetMapping(value = "exec/{modelName}/{mbtSessID}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/session/{mbtSessID}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ModelExec> getModelExec (@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
 			ServletRequest request) throws Exception {
@@ -43,7 +43,7 @@ public class StatsController {
 	}
 
 
-	@GetMapping(value = "exec/{modelName}/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "model/{modelName}/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ModelExec>> getModelExecList (@PathVariable (name="modelName", required=true) String modelName,
 			ServletRequest request) throws Exception {
 		ModelMgr modelMgr = new ModelMgr(modelName);

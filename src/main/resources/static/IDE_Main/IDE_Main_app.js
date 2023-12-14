@@ -180,10 +180,18 @@ $(document).ready(function() {
 	window.onunload = function () {
 		curAppState.winMgr.closeAllWins();
     }
+    
+	$(document).keyup(function(event) {
+		var moveDelta = 3;
+		if (event.keyCode == 27) { // escape
+			parent.scope.sysMsg.visible = false;
+			parent.scope.$apply();
+		}
+	});
 });
 
 
-MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, SysSvc, FileSvc, ModelSvc, AlmSvc, RuntimeSvc, StatsSvc) {
+MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, SysSvc, FileSvc, ModelSvc, AlmSvc, StatsSvc) {
 	parent.scope = $scope;
 	$scope.shortcutKey = "IDE.shortcuts.ide";
 	$scope.shortcutDefault = "closeModel,ModelProperty,MBTSetting,genTestCase,startExec,startDebug,startPlay,stopExec,pauseExec,stepOver,Monitor,showCoverage,MScriptLog";
@@ -196,9 +204,12 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	$scope.moreMenuID = "";
 	$scope.rootCurAppState = curAppState;
 	$scope.sysMsg = {
-		SeverityList: { "info": 2, "alert": 10, "warn": 20, "error": 50},
+		SeverityList: { "info": 1, "alert": 2, "warn": 3, "error": 4},
 		msgList: [],
-		mostSevereMsg: undefined,
+		infoCount: 0,
+		alertCount: 0,
+		warnCount: 0,
+		errorCount: 0,
 		visible: false
 	}
 	
@@ -218,7 +229,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		closeModel: { menuFunc: "$scope.closeModel()", toolbar: true, icon: "glyphicon-log-out", classes: "", label: "Close", msc: "", title: 'Close model', hide: "noModelOpen"},
 		artifact: { menuFunc: "$scope.selectTab('Files')", classes: "", label: "Model Files", msc: "", title: "Open File tab", hide: "noModelOpen"},
 
-		ModelGraph: { menuFunc: "curAppState.winMgr.openWebPage('api/v1/graph/' + curAppState.scxml.modelName + '/model', 'ModelGraph')", classes: "", label: "Model Graph", msc: "", title: "Generate and display model graph", hide: "noModelOpen"},
+		ModelGraph: { menuFunc: "curAppState.winMgr.openWebPage('api/v1/graph/model/' + curAppState.scxml.modelName + '/model', 'ModelGraph')", classes: "", label: "Model Graph", msc: "", title: "Generate and display model graph", hide: "noModelOpen"},
 
 		Monitor: {menuFunc: "$scope.openDialog('Monitor')", label: 'Monitor', classes: "extraPaddingTop", toolbar: true, icon: 'glyphicon-tasks', title: "Model execution monitor", hide: "noModelOpen"},
 		runResults: {menuFunc: "$scope.selectTab('Results')", label: 'Results', toolbar: true, icon: 'glyphicon-stats', title: "Model execution test results", hide: "noModelOpen"},
@@ -534,7 +545,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	$scope.openModel = function (modelName) {
 		$scope.tabList = [];
 		$scope.sysMsg.msgList = [];
-		$scope.sysMsg.mostSevereMsg = undefined;
 		$scope.rootCurAppState.toSvc.ModelSvc.getModel(modelName, function (modelInfo) {
 			if (modelInfo.valid) {
 				$scope.rootCurAppState.winMgr.init();
@@ -577,7 +587,6 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
     		FileSvc: FileSvc, 
     		ModelSvc: ModelSvc,
     		AlmSvc: AlmSvc,
-    		RuntimeSvc: RuntimeSvc,
     		StatsSvc: StatsSvc,
     		SvrRest: SvrRest
     	};
@@ -690,29 +699,25 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 
     
     $scope.addMsg = function(msgObj_p) {
-    	msgObj_p.severity = $scope.sysMsg.SeverityList[msgObj_p.type];
-    	if (msgObj_p.severity==undefined) msgObj_p.severity = 0;
     	if (!msgObj_p.timestamp) {
     		msgObj_p.timestamp = new Date();
     	}
 		$scope.sysMsg.msgList.unshift(msgObj_p);
-		$scope.sysMsg.visible = true;
-		if ($scope.sysMsg.mostSevereMsg==undefined || $scope.sysMsg.mostSevereMsg.severity <= msgObj_p.severity) {
-			$scope.sysMsg.mostSevereMsg = msgObj_p;
-		}
-		if ($scope.sysMsg.clearMsgTimer) {
-			clearTimeout($scope.sysMsg.clearMsgTimer);
-		}
-		$scope.sysMsg.clearMsgTimer = setTimeout (function() {
-			$scope.sysMsg.visible = false;
-			$scope.$apply();
-		}, curAppState.config["IDE.msgHideMillis"]);
+		$scope.tallyMsgList();
 	}
 
+	$scope.tallyMsgList = function () {
+		$scope.sysMsg.msgGroups = Object.groupBy($scope.sysMsg.msgList, ({type}) => type);
+		$scope.sysMsg.mostSevereType = "info";
+		if ($scope.sysMsg.msgGroups.alert?.length>0) $scope.sysMsg.mostSevereType = "alert";
+		if ($scope.sysMsg.msgGroups.warn?.length>0) $scope.sysMsg.mostSevereType = "warn";
+		if ($scope.sysMsg.msgGroups.error?.length>0) $scope.sysMsg.mostSevereType = "error";
+	}
+	
 	$scope.clearMsg = function () {
 		$scope.sysMsg.visible=false; 
 		$scope.sysMsg.msgList = [];
-		$scope.sysMsg.mostSevereMsg = undefined;
+		$scope.tallyMsgList();
 	}
 	
 	$scope.checkModelEditorMode = function () {
@@ -740,9 +745,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 		$scope.flags.isModelOpen = false;
 		$scope.flags.noModelOpen = true;
 		$scope.rootCurAppState.resetModelChanged();
-		// var mName = $scope.rootCurAppState.scxml.modelName;
 		$scope.rootCurAppState.scxml = undefined;
-		// $scope.rootCurAppState.toSvc.RuntimeSvc.closeModel(mName);
 		$scope.closeDialog();
 	}
 	

@@ -3,7 +3,6 @@ package com.testoptimal.stats;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.ModelRunner;
 import com.testoptimal.exec.FSM.ModelMgr;
-import com.testoptimal.server.config.Config;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.stats.exec.ModelExec;
 import com.testoptimal.util.FileUtil;
@@ -47,7 +45,7 @@ public class StatsMgr {
 			}
 		}
 		else {
-			mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(mbtSessID_p);
+			mbtSess = SessionMgr.getInstance().getMbtStarterForMbtSession(modelMgr_p.getModelName(), mbtSessID_p);
 			if (mbtSess != null && mbtSess.getExecDirector().getExecStats() != null) {
 				modelExec = mbtSess.getExecDirector().getExecStats();
 			}

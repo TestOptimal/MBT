@@ -2,7 +2,6 @@ package com.testoptimal.server.controller.helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.testoptimal.exec.ModelRunner;
 
@@ -28,12 +27,18 @@ public class SimpleSessionMgr extends SessionMgr {
 
 	@Override
 	public ModelRunner getMbtStarterForModel(String modelName_p, String sessId_p) {
-		return this.MbtSession;
+		if (this.MbtSession!=null && this.MbtSession.getModelMgr().getModelName().equals(modelName_p)) {
+			return this.MbtSession;
+		}
+		else return null;
 	}
 
 	@Override
-	public ModelRunner getMbtStarterForMbtSession(String mbtSessId_p) {
-		return this.MbtSession;
+	public ModelRunner getMbtStarterForMbtSession(String modelName_p, String mbtSessId_p) {
+		if (this.MbtSession!=null && this.MbtSession.getMbtSessionID().equals(mbtSessId_p)) {
+			return this.MbtSession;
+		}
+		else return null;
 	}
 
 	@Override
@@ -50,4 +55,5 @@ public class SimpleSessionMgr extends SessionMgr {
 	public void closeModelAll(String sessId_p) {
 		this.MbtSession = null;
 	}
+
 }
