@@ -7,7 +7,7 @@
 		<version>3.0.13</version>
 	</parent>
   	<groupId>TestOptimal</groupId>
-  	<artifactId>TestOptimal</artifactId>
+  	<artifactId>MBT</artifactId>
   	<version>7.0.3</version>
   	<packaging>jar</packaging>
 
@@ -243,7 +243,8 @@
 					    <configuration>
 					        <target>
 					        	<property name="releaseLabel" value="${project.version}"/>
-								<property name = "releaseBuildDir" value = "build" />
+								<property name="releaseBuildDir" value = "build" />
+								<property name="productName" value="${project.groupId}_${project.artifactId}"/>
 								
 						  		<delete includeEmptyDirs="true" failonerror="false">
 						  		  	<fileset dir="${releaseBuildDir}/TestOptimal_win/" includes="**"/>
@@ -256,7 +257,7 @@
 							    	<fileset dir="buildDef/TestOptimal_win/" includes="**/*"/>
 							  	</copy>
 							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_win/TestOptimal.jar"/>
-							  	<zip destfile="${releaseBuildDir}/TestOptimal_${releaseLabel}_win.zip"
+							  	<zip destfile="${releaseBuildDir}/${productName}_${releaseLabel}_win.zip"
 							       basedir="${releaseBuildDir}/TestOptimal_win"
 							  	/>
 							  	
@@ -271,7 +272,7 @@
 							    	<fileset dir="buildDef/TestOptimal_mac/" includes="**/*"/>
 							  	</copy>
 							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_mac/TestOptimal.jar"/>
-							  	<zip destfile="${releaseBuildDir}/TestOptimal_${releaseLabel}_mac.zip">
+							  	<zip destfile="${releaseBuildDir}/${productName}_${releaseLabel}_mac.zip">
 							  		 <zipfileset filemode="755" dir="${releaseBuildDir}/TestOptimal_mac" includes="**/*"/>
 							  	</zip>
 					        </target>
