@@ -2267,7 +2267,6 @@ function TransBuilder () {
 	var fromSideOffset;
 	var startPos = {};
 	var arrowCanvas;
-	var scrollOffset = {left: 0, top: 20};
 	
 	function init (canvasElem_p) {
 		canvasElem = canvasElem_p;
@@ -2280,6 +2279,7 @@ function TransBuilder () {
 			}).css( {left: 0, top:0, position: "absolute", "z-index": 999999}).get(0);
 		$(canvasElem_p).on("mousemove", function(event_p) {
 			if (startPos) {
+				var scrollOffset = $(this).offset();
 				toPos = { 
 					left: event_p.pageX - scrollOffset.left, 
 					top: event_p.pageY - scrollOffset.top
@@ -2380,7 +2380,8 @@ function TransBuilder () {
 		arrowCanvas.width = Math.max(sizeWidth+1, 5);
 		arrowCanvas.height = Math.max(sizeHeight + 1, 5);
 		$(arrowCanvas).css({left: offsetLeft, top: offsetTop, width: Math.max(sizeWidth+1, 5), height: Math.max(sizeHeight + 1, 5)});
-		context.strokeStyle = "orange";
+		context.strokeStyle = "gray";
+		context.setLineDash([5,3]);
 		context.beginPath();
 		var headlen = 10;	// length of head in pixels
 		var dx = tox-fromx;
