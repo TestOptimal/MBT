@@ -1,0 +1,17 @@
+# docker build --progress=plain --no-cache -t testoptimal/base -f DockerfileBase .
+docker build --progress=plain -t testoptimal/base -f DockerfileBase .
+docker login -u testoptimal
+docker image tag testoptimal/mbt base:7.0.3
+docker image push testoptimal/base:7.0.3
+docker run -p 8888:8888 testoptimal/base:7.0.3
+docker system prune
+
+docker build --progress=plain -t testoptimal/mbt -f DockerfileMBT .
+docker login -u testoptimal
+docker image tag mbt testoptimal/mbt:7.0.3
+docker image push testoptimal/mbt:7.0.3
+docker run -p 8888:8888 testoptimal/mbt:7.0.3
+docker system prune
+
+docker run -it -d -p 8888:8888 mbt
+docker run -it -p 8888:8888 testoptimal/mbt:7.0.3
