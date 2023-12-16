@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import com.testoptimal.exec.FSM.RequirementMgr;
@@ -36,6 +37,7 @@ import com.testoptimal.util.misc.SysLogger;
  * @author yxl01
  *
  */
+@ComponentScan
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer implements CommandLineRunner {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
@@ -83,6 +85,8 @@ public class Application extends SpringBootServletInitializer implements Command
     @Value("${CONFIG.RequirementMgr}")
     private String ClassRequirementMgr;
     
+    @Autowired
+    Config config;
     
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
@@ -113,14 +117,14 @@ public class Application extends SpringBootServletInitializer implements Command
 		//"-baseDir", FileUtil.concatFilePath(Config.getRootPath(), "H2DB")
 //		String fullDbBaseDir = FileUtil.concatFilePath(Config.getRootPath(), "h2db");
 		
-		String webRoot = System.getProperty("user.dir") + File.separator;
+//		String webRoot = System.getProperty("user.dir") + File.separator;
 		try {
 			logger.info("Initializing TestOptimal Server...");
 			logger.info("Checking Config ...");
-			Config.init(webRoot);
+//			Config.init(webRoot);
 		}
 	    catch (Exception e) {
-	    	logger.error("Error reading config.properties file at " + webRoot, e);
+	    	logger.error("Error reading config.properties file at " + Config.getRootPath(), e);
 	    	System.exit(0);
 	    }
 		

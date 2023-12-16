@@ -280,14 +280,13 @@
 					</execution>
 		        </executions>
 		    </plugin>		
-			<plugin>
+<!--			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 	            <configuration>
 	                <mainClass>com.testoptimal.server.Application</mainClass>
 	                <layout>ZIP</layout>
 				    <addResources>true</addResources>
-       				<!-- jvmArguments>-Xmx1024m</jvmArguments -->
        				<includeSystemScope>true</includeSystemScope>
 		            <executions>
 		                <execution>
@@ -298,7 +297,7 @@
 		            </executions>       				
        	        </configuration>
 			</plugin>
-			
+-->			
 	      <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-javadoc-plugin</artifactId>

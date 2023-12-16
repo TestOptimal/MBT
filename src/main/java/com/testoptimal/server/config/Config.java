@@ -2,10 +2,8 @@ package com.testoptimal.server.config;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -16,6 +14,7 @@ import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
@@ -28,6 +27,7 @@ import com.testoptimal.util.misc.SerialNum;
  * @author yxl01
  *
  */
+@Component
 public final class Config {
 	private static Logger logger = LoggerFactory.getLogger(Config.class);
 
@@ -96,12 +96,12 @@ public final class Config {
 	    Config.save();
 	}
 
-	public static void init(String webRoot_p) throws Exception {
+	public Config() throws Exception {
+		root = System.getProperty("user.dir") + File.separator;
 		
-		logger.info("user.dir: " + webRoot_p);
+		logger.info("user.dir: " + root);
 		String configFile_p = "config.properties";
 		
-		root = webRoot_p;
 		webRootPath = root + "www" + File.separator;
 		jarPath = root + "lib" + File.separator;
 		tempPath = root + "work" + File.separator;

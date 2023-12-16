@@ -1,6 +1,5 @@
 package com.testoptimal.server.security;
 
-import java.util.Properties;
 import com.testoptimal.server.config.Config;
 
 public class SimpleUserMgr implements ManageUser {

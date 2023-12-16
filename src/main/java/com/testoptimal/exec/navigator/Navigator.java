@@ -28,24 +28,19 @@ public class Navigator {
 		seqConstructorMap.put(seqMode_p, constructor);
 	}
 	public static List<String>  getSequencerList () {
-		return seqConstructorMap.keySet().stream().map(s -> s).collect(Collectors.toList());	
+		return seqConstructorMap.keySet().stream().map(s -> s).sorted().toList();	
 	}
 	
 	private ExecutionDirector execDir;
 	private Sequencer sequencer;
 	private TravBase curTravObj;
 	private Transition curTrans;
-//	private TraversalCount travTransCount;
-//	private TraversalCount travStateCount;
 	private StopMonitor stopMonitor;
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
 		this.stopMonitor = new StopMonitor(this.execDir.getExecSetting(), this);
 		this.sequencer = getSequencer(mbtMode_p, this.execDir);
-
-//		this.travTransCount = new TraversalCount(transReqMap);
-//		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
 		this.sequencer.prepToNavigate(this.stopMonitor);
 		this.stopMonitor.start(this.sequencer);
 	}
@@ -88,15 +83,6 @@ public class Navigator {
 			}
 		}
 	}
-	
-//	
-//	public TraversalCount getTravStateCount() {
-//		return this.travStateCount;
-//	}
-	
-//	public TraversalCount getTravTransCount() {
-//		return this.travTransCount;
-//	}
 	
 	public TravBase getCurTravObj() {
 		return this.curTravObj;
