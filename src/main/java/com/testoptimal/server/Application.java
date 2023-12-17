@@ -154,6 +154,8 @@ public class Application extends SpringBootServletInitializer implements Command
 	
     private void startup () throws Exception {
 	   	logger.info((new java.util.Date()).toString());
+ 	   	logger.info ("Loading config from: " + Config.getConfigPath());
+ 	   	
  	   	logger.info ("Model-Based Testing and Process Automation, copyright 2008 - 2020, all rights reserved. TestOptimal, LLC");
  	   	logger.info ("Version: " + Config.versionDesc);
  	   	
@@ -172,20 +174,7 @@ public class Application extends SpringBootServletInitializer implements Command
 		logger.info("MAC Address: " + SerialNum.getMAC());
 		System.out.println("Serial #: " + SerialNum.getSerialNum());
 		logger.info("Serial #: " + SerialNum.getSerialNum());
-		 	   	
-	   	// purge log files
-	   	String keepCriteria = Config.getProperty("keepLog");
-	   	if (StringUtil.isEmpty(keepCriteria)) {
-		   keepCriteria = "10D";
-	   	}
-	   	SysLogger.logInfo("Purging old log files: keeplog=" + keepCriteria);
-	   	try {
-		   FileUtil.purgeFiles(Config.getLogPath(), ".", keepCriteria);
-	   	}
-	   	catch (Exception e) {
-		   SysLogger.logError("Unable to purge log file: ", e);
-	   	}
-	   
+		 	   		   
 	   	logger.info("java.library.path: " + System.getProperty("java.library.path"));
 	   	logger.info("GRAPHVIZ_DOT: " + System.getProperty("GRAPHVIZ_DOT"));
 	   	CodeAssistMgr.init();

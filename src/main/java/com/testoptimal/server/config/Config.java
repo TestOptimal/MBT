@@ -116,17 +116,22 @@ public final class Config {
 
 	public Config() throws Exception {
 		root = System.getProperty("user.dir") + File.separator;
-		
 		logger.info("user.dir: " + root);
-		String configFile_p = "config.properties";
-		
+		configFile = "config.properties";
+		File f = new File ("/toconfig");
+	    if (f.exists()) {
+	    	configPath = "/toconfig";
+	    }
+	    else {
+		    configPath = root  + "config" + File.separator;
+	    }
+	    System.out.println("Loading cnofig from " + configPath);
+	    
 		webRootPath = root + "www" + File.separator;
 		jarPath = root + "lib" + File.separator;
 		tempPath = root + "work" + File.separator;
 		classPath = root + "build" + File.separator;
-	    configPath = root  + "config" + File.separator;
 	    logPath = root + File.separator + "log" + File.separator;
-		configFile = configFile_p;
 	    ModelRoot = root + "model" + File.separator;
 	    dashRoot = root + "dashboard" + File.separator;
 
