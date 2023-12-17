@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.server.controller;
 
 import java.io.File;
@@ -6,12 +23,12 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.UrlResource;
@@ -20,7 +37,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -133,8 +159,6 @@ public class FileController {
 
 	/**
 	 * moves folder from its current folder to the ide current folder
-	 * @param reqInfo_p
-	 * @throws Exception
 	 */
 	@PostMapping(value = "folder/{folderPath}/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FileInfo> newFolder (@PathVariable(name="folderPath", required=true) String folderPath,
@@ -178,9 +202,6 @@ public class FileController {
 	/**
 	 * Deletes a model (ds or fsm) or a folder.  Can not delete a file or folder within a model,
 	 * use modelFileDelete() instead.
-	 * 
-	 * @param reqInfo_p
-	 * @throws Exception
 	 */
 	@DeleteMapping(value = "file/{folderPath}/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClientReturn> deleteFolder (@PathVariable (name="folderPath", required=true) String folderPath,
