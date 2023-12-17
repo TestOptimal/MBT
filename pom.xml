@@ -272,7 +272,7 @@
 							    	<fileset dir="buildDef/TestOptimal_mac/" includes="**/*"/>
 							  	</copy>
 							  	<copy file="target/${project.artifactId}-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_mac/${productName}.jar"/>
-							  	<zip destfile="${releaseBuildDir}/${productName}-${releaseLabel}-mac.zip">
+							  	<zip destfile="${releaseBuildDir}/${productName}_${releaseLabel}_mac.zip">
 							  		 <zipfileset filemode="755" dir="${releaseBuildDir}/TestOptimal_mac" includes="**/*"/>
 							  	</zip>
 					        </target>
@@ -281,7 +281,7 @@
 		        </executions>
 		    </plugin>		
 		    <!-- comment out following plugin to generate project jar only -->
-		    <!--
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -299,7 +299,7 @@
 		            </executions>       				
        	        </configuration>
 			</plugin>
--->
+
 	      <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-javadoc-plugin</artifactId>
