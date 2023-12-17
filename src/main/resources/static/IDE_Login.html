@@ -126,6 +126,7 @@ MainModule.controller('mainCtrl', function ($scope, $window, $http, SysSvc, SvrR
     		$scope.license_label = $scope.config["License.Agreement.label"];
    			$scope.title = $scope.ack?"Login":"Create Account"
     		$scope.registerInd = !$scope.username;
+    		$scope.sysMsg = $scope.config["Startup.Error"];
    			$scope.loginStyle = {
    				width: '400px',
    				left: 'calc(50% - 200px)',

@@ -3,8 +3,6 @@ package com.testoptimal.stats;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +44,7 @@ public class DashboardStats {
 
 		return dstats;
 	}
+	
 	public void addModelExec(List<ModelExecSummary> modelExecSumList_p) {
 		Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
@@ -108,7 +107,12 @@ public class DashboardStats {
 	}
 	
 	public static void addModelExec (ModelExec modelExec_p) throws Exception {
+		String dashboardFolder = Config.getRootPath() + "dashboard/";
+		File f = new File(dashboardFolder);
+		if (!f.exists()) {
+			f.mkdir();
+		}
 		Gson gson = new Gson();
-		FileUtil.writeToFile(Config.getRootPath() + "dashboard/" + modelExec_p.mbtSessID + ".json", gson.toJson(modelExec_p.execSummary));
+		FileUtil.writeToFile(dashboardFolder + modelExec_p.mbtSessID + ".json", gson.toJson(modelExec_p.execSummary));
 	}
 }

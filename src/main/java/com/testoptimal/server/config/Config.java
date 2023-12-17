@@ -33,6 +33,7 @@ public final class Config {
 
 	public static final String copyright = "Copyright 2008 - 2023 TestOptimal, LLC.  All rights reserved.";
 	public final static String versionDesc = ConfigVersion.getReleaseLabel(); // majorVersion + "." + ConfigVersion.minorVersion + "." + ConfigVersion.buildNum;
+	private static String StartupError = "Startup.Error";
 	
     private static String logPath;
     public static String getLogPath() { return logPath; }
@@ -114,6 +115,7 @@ public final class Config {
 
 		// Read properties file.
     	loadConfigProp(configPath + configFile);
+    	Config.setProperty("Startup.Error", "");
 	    
 	    String tempModel = Config.getProperty("modelFolder");
 	    if (!StringUtil.isEmpty(tempModel)) {
@@ -297,4 +299,9 @@ public final class Config {
 		return filterReqExp;
 	}
 
+	public static void postStartupError(String errMsg_p, Throwable e_p) {
+		String errMsg = e_p.getMessage();
+		if (errMsg == null) errMsg = "Nullpointer error";
+		Config.setProperty(Config.StartupError, errMsg_p + ": " + errMsg);
+	}
 }

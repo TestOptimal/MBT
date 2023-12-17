@@ -64,6 +64,7 @@
 		<tr><td nowrap>Java Version:</td><td>{{config["javaVersion"]}}</td></tr>
 		<tr><td nowrap>Email:</td><td align="left" colspan="2"><input disabled ng-model="licEmail"/></td></tr>
 		<tr><td nowrap>License:</td><td align="left" colspan="2"><a href="{{config['License.Agreement.url']}}" target="_blank">{{config["License.Agreement.label"]}}</a></td></tr>
+		<tr ng-show="config['Startup.Error']"><td nowrap>Server Errors:</td><td>{{config["Startup.Error"]}}</td></tr>
 	</table>
 	</div>
 </body>

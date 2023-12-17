@@ -96,7 +96,6 @@ public class Application extends SpringBootServletInitializer implements Command
 	@Override
 	public void run(String... args) throws Exception {
 		app = this;
-//		port = Integer.parseInt(environment.getProperty("local.server.port"));
 		System.out.println("port: " + this.port);
 		
 		String graphvizDOT = environment.getProperty("GRAPHVIZ_DOT");
@@ -110,18 +109,9 @@ public class Application extends SpringBootServletInitializer implements Command
     
 
 	private void init() throws Exception {
-//		Root = System.getProperty("user.dir") + File.separator;
-//		logger.info("user.dir: " + Root);
-//		Config.init(Root, "config.properties");
-
-		//"-baseDir", FileUtil.concatFilePath(Config.getRootPath(), "H2DB")
-//		String fullDbBaseDir = FileUtil.concatFilePath(Config.getRootPath(), "h2db");
-		
-//		String webRoot = System.getProperty("user.dir") + File.separator;
 		try {
 			logger.info("Initializing TestOptimal Server...");
 			logger.info("Checking Config ...");
-//			Config.init(webRoot);
 		}
 	    catch (Exception e) {
 	    	logger.error("Error reading config.properties file at " + Config.getRootPath(), e);

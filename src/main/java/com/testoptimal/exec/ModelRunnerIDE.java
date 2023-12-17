@@ -139,6 +139,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 		String errMsg = e_p.getMessage();
     	if (errMsg != null && errMsg.startsWith("java.lang.Exception:")) errMsg = errMsg.substring(21);
+    	logger.warn("mbtErrored: " + (errMsg==null?"nullpointer": errMsg));
     	IdeSvc.sendIdeMessage(this.httpSessId, new IdeMessage("error", errMsg, "MbtStarter.error"));
 		ModelState m = new ModelState(this.modelMgr.getScxmlNode().getModelName(), this.httpSessId);
 		IdeSvc.sendIdeData(this.httpSessId, "model.ended", m);

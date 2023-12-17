@@ -46,7 +46,7 @@ import jakarta.servlet.http.HttpSession;
 public class SysController {
 	private static Logger logger = LoggerFactory.getLogger(SysController.class);
 	public static final String[] ClientConfigPropList = new String[] { "License.Edition", "License.exceptions",
-			"License.Agreement.url", "License.Agreement.label", "License.Email",
+			"License.Agreement.url", "License.Agreement.label", "License.Email", "Startup.Error",
 			"IDE.shortcuts.ide", "alertMsg", "modelFolder", "IDE.msgHideMillis", "welcomed"};
 
 	

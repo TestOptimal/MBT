@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.testoptimal.exec.ModelRunner;
+import com.testoptimal.server.config.Config;
 
 public abstract class SessionMgr {
 	
@@ -33,12 +34,17 @@ public abstract class SessionMgr {
 	
 	
 	public static void instantiate (String classPath_p) throws Exception {
-		if (sessMgr != null) {
-			throw new Exception ("SessionMgr already instantiated");
+		if (sessMgr == null) {
+			try {
+		    	Class aClass = Class.forName(classPath_p);
+		    	Constructor constructor = aClass.getConstructor();
+		    	sessMgr = (SessionMgr) constructor.newInstance();				
+			}
+			catch (Exception e) {
+				Config.postStartupError("Error loading " + classPath_p, e);
+				sessMgr = new SimpleSessionMgr();
+			}
 		}
-    	Class aClass = Class.forName(classPath_p);
-    	Constructor constructor = aClass.getConstructor();
-    	sessMgr = (SessionMgr) constructor.newInstance();
 	}
 	
 	public static SessionMgr getInstance () {
