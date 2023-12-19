@@ -1,9 +1,13 @@
 # TestOptimal / MBT
-[TestOptimal](https://testoptimal.com) Model-Based Testing (MBT) - intelligent test design and test automation
+
+[TestOptimal](https://testoptimal.com) Model-Based Testing (MBT) - intelligent test design and test automation, an open source project.
 
 Model application-under-test (AUT) with state diagram or BPM, let TestOptimal generate test cases from the model with your choice of sequencer to achieve desired test coverage.
 
 To perform test automation, write test script ([groovy](https://groovy-lang.org/testing.html)) for transitions (and/or states) to drive AUT as TestOptimal executes the test cases for you.
+
+TestOptimal MBT features extensibility allowing you to plug-in your automation packages and your own
+test case generation algorithms.
 
 
 ## Tell me more
@@ -21,9 +25,9 @@ To get started, first download/install TestOptimal for [windows](https://testopt
 
 Or simply run it as a docker container:
 
-    docker run -p8888:8888 testoptimal/mbt 
+    docker run -p8888:8888 testoptimal/mbt:7.0.3 
     
-Then point your browser at http://localhost:8888 to bring up TestOptimal IDE.
+Then point your browser at http://localhost:8888 to bring up TestOptimal IDE/Studio.
 
 
 
