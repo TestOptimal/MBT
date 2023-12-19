@@ -21,9 +21,9 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ExecutionDirector;
+import com.testoptimal.exec.FSM.Action;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
@@ -68,29 +68,32 @@ public class Navigator {
 			if (this.curTrans == null) {
 				break;
 			}
-			
+			if (this.curTrans instanceof Action) {
+				((Action) this.curTrans).run();
+				continue;
+			}
 			State atState = (State)this.curTrans.getFromNode();
 			State toState = (State) this.curTrans.getToNode();
 			
 			if (!atState.isSuperVertex()) {
-				this.curTravObj = new TravState(atState, true, this.execDir);
+				this.curTravObj = new TravState(atState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}
 
-			this.curTravObj = new TravTrans(this.curTrans, false, this.execDir);
+			this.curTravObj = new TravTrans(this.curTrans, this.execDir);
 			if (this.execDir.isAborted()) break;
 			this.curTravObj.travRun();
 			
 			if (toState.isSuperVertex()) {
-				this.curTravObj = new TravState(toState, true, this.execDir);
+				this.curTravObj = new TravState(toState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}
 			
 			boolean atFinal = toState.isModelFinal();
 			if (this.sequencer.isEndingPath()) {
-				this.curTravObj = new TravState(toState, true, this.execDir);
+				this.curTravObj = new TravState(toState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}

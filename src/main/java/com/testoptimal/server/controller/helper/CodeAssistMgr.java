@@ -22,7 +22,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,14 +30,11 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.testoptimal.exec.mcase.MCase;
 import com.testoptimal.exec.mscript.Exec;
-import com.testoptimal.exec.mscript.RandPlugin;
-import com.testoptimal.exec.mscript.Util;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.exec.mscript.MScriptInterface.NOT_MSCRIPT_METHOD;
-import com.testoptimal.exec.page.Page;
-import com.testoptimal.scxml.ScxmlNode;
+import com.testoptimal.exec.mscript.Util;
+import com.testoptimal.exec.plugin.PluginMgr;
 
 public class CodeAssistMgr {
 	private static Logger logger = LoggerFactory.getLogger(CodeAssistMgr.class);
@@ -82,14 +78,11 @@ public class CodeAssistMgr {
 		varCAList.add(new CodeAssist("get variable", "varname", ""));
 		CA_CacheList.put("VAR", varCAList);
 
-//		TOP_CA_NAMES.add("DATASET");
-//		List<CodeAssist> datasetCAList = new java.util.ArrayList<>();
-//		datasetCAList.add(new CodeAssist("get dataset", "dsname", ""));
-//		CA_CacheList.put("DATASET", datasetCAList);
-
-//		TOP_CA_NAMES.add("RAND");
-//		CA_CacheList.put("RAND", getMScriptMethods(RandPlugin.class));
-//
+		PluginMgr.getPluginClassList().entrySet().stream()
+			.forEach(e -> {
+				TOP_CA_NAMES.add(e.getKey());
+				CA_CacheList.put(e.getKey(), getMScriptMethods(e.getValue()));
+			});
 
 		CA_CacheMapList = new java.util.HashMap<>(CA_CacheList.size());
 		CA_CacheList.entrySet().stream()

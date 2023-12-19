@@ -40,9 +40,9 @@ import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.util.FileUtil;
-import com.testoptimal.util.StringUtil;
 import com.testoptimal.util.misc.SerialNum;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -52,6 +52,7 @@ import jakarta.servlet.http.HttpSession;
  * @author yxl01
  *
  */
+@Hidden
 @RestController
 @RequestMapping("/api/v1/default")
 @JsonIgnoreProperties(ignoreUnknown = true)

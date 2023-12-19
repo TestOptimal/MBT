@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  ***********************************************************************************************/
 
-package com.testoptimal.exec.page;
+package com.testoptimal.exec.plugin.page;
 
 import java.util.Map;
 

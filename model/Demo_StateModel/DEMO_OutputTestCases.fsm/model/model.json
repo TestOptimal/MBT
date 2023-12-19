@@ -734,7 +734,6 @@
     "uid": "U120",
     "mode": "Optimal",
     "stopCond": {
-      "elapseTime": 2,
       "stopAtFinalOnly": true
     },
     "seqParams": ""

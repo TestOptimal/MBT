@@ -38,34 +38,28 @@ public class PathBuilder {
 		this.atState = networkObj_p.getHomeState();
 	}
 	
-	public PathBuilder navigateTo(State toState_p) throws MBTException {
+	public PathBuilder navigateToState(State toState_p) throws MBTException {
 		List<Transition> tlist = this.networkObj.findShortestPath(this.atState.getId(), toState_p.getId());
 		this.transList.addAll(tlist.stream().filter(t -> !t.isLoopbackTrans()).toList());
 		this.atState = toState_p;
 		return this;
 	}
-	public PathBuilder navigateTo(String toUID_p) throws MBTException {
+	public PathBuilder navigateToState(String toUID_p) throws MBTException {
 		State toState = this.networkObj.findStateByUID(toUID_p);
-		if (toState!=null) {
-			this.navigateTo(toState);
-		}
-		else {
-			Transition t = this.networkObj.findTransByUID(toUID_p);
-			this.navigateTo((State) t.getFromNode());
-			this.transList.add(t);
-		}
+		this.navigateToState(toState);
 		return this;
 	}
 	
 	public PathBuilder addTrans(Transition trans_p) {
 		this.transList.add(trans_p);
+		this.atState = (State) trans_p.getToNode();
 		return this;
 	}
 	
 	public SequencePath completePath(boolean toFinal_p) throws MBTException {
 		if (toFinal_p && !this.atState.isModelFinal()) {
 			State targetState = this.networkObj.getHomeState();
-			this.navigateTo(targetState);
+			this.navigateToState(targetState);
 			this.atState = targetState;
 		}
 		return new SequencePath(this.transList);
@@ -94,5 +88,9 @@ public class PathBuilder {
 			retList.add(path);
 		}
 		return retList;
+	}
+	
+	public State getAtState() {
+		return this.atState;
 	}
 }

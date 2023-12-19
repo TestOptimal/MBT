@@ -15,17 +15,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  ***********************************************************************************************/
 
-package com.testoptimal.exec.page;
+package com.testoptimal.exec.plugin.page;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 
 /**
- * Manages page objects.  Use "$SYS.getPageMgr()" to obtain this object.
+ * Manages page objects.  Use "$PAGE" to obtain this object.
  * 
  *
  */

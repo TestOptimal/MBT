@@ -18,7 +18,7 @@
 import org.openqa.selenium.By;
 
 def addVendingMachinePage() {
-	mainPage = $EXEC.addPage('MainPage');
+	mainPage = $PAGE.addPage('MainPage');
 	mainPage.addAction('go', { page, params ->
 		$VAR.webDriver.get(params[0]);
 	});

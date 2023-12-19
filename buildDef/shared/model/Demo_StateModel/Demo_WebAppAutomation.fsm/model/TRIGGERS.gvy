@@ -24,6 +24,7 @@ def 'MBT_START' () {
 	$EXEC.log('testing with browser ' + testBrowser);
 	$VAR.webDriver = setup_webdriver(testBrowser);
 	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
+	$VAR.outFile.newWriter();
    $VAR.outFile << '<html><body><H1>Test Output</H1>\n';
    $VAR.outFile << '<ol>\n';
 }
@@ -45,8 +46,8 @@ def 'MBT_ERROR' () {
 @TRIGGER('U1062')
 def 'Start' () {
 	$EXEC.log('getting url ' + 'http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
-	$EXEC.page('MainPage').perform('go', 'http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+	$PAGE.getPage('MainPage').perform('go', 'http://localhost:' + $UTIL.getPort() + '/DemoApp/VendingMachine/VendingMachine.html');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
 	$EXEC.log('bal: ' + bal);
    if (!bal.equals('0.00') && !bal.equals('0')) {
       $EXEC.getCurTraverseObj().addReqFailed ('Cancel failed to reset balance to 0.00', 'Cancel', 'CANCEL-FAILED');
@@ -59,8 +60,8 @@ def 'Start: add25'() {
 	$VAR.outFile << '<li><span>Test Case ' + $EXEC.getPathName() + '</span>\n<ul>\n';
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
 	
-   $EXEC.page('MainPage').element('25c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('25c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('0.25')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("Q!", passMsg);
@@ -76,8 +77,8 @@ def 'Start: add50'() {
 	$VAR.outFile << '<li><span>Test Case ' + $EXEC.getPathName() + '</span>\n<ul>\n';
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
 	
-   $EXEC.page('MainPage').element('50c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('50c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("Q!", passMsg);
@@ -91,8 +92,8 @@ def 'Start: add50'() {
 @TRIGGER('U1065')
 def 'V25Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $EXEC.page('MainPage').element('25c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('25c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('0.50')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
@@ -106,8 +107,8 @@ def 'V25Cents: add25'() {
 @TRIGGER('U1066')
 def 'V25Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $EXEC.page('MainPage').element('50c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('50c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
@@ -121,8 +122,8 @@ def 'V25Cents: add50'() {
 @TRIGGER('U1067')
 def 'V50Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $EXEC.page('MainPage').element('25c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('25c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('0.75')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
@@ -136,8 +137,8 @@ def 'V50Cents: add25'() {
 @TRIGGER('U1068')
 def 'V50Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $EXEC.page('MainPage').element('50c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('50c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one HalfDollor passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
@@ -151,8 +152,8 @@ def 'V50Cents: add50'() {
 @TRIGGER('U1069')
 def 'V75Cents: add25'() {
    $VAR.outFile << '<li>Step: add a Quarter</li>\n';
-   $EXEC.page('MainPage').element('25c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('25c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('1.00')) {
       passMsg = "Insert one Quarter passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("Q1", passMsg);
@@ -166,8 +167,8 @@ def 'V75Cents: add25'() {
 @TRIGGER('U1070')
 def 'V75Cents: add50'() {
    $VAR.outFile << '<li>Step: add a Half-Dollar</li>\n';
-   $EXEC.page('MainPage').element('50c').perform('click');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   $PAGE.getPage('MainPage').element('50c').perform('click');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
    if (bal.equals('1.25')) {
       passMsg = "Insert one HalfDollar passed, balance confirmed: " + bal;
       $EXEC.getCurTraverseObj().addReqPassed("H1", passMsg);
@@ -185,11 +186,13 @@ def 'V125Cents: return25'() {
 
 @TRIGGER('U1071')
 def 'Choose Drink: discharge'() {
-   drinkCodeSelected = $EXEC.dataset('DrinkChoices').get('Drink');
-   drinkTextExpected = $EXEC.dataset('DrinkChoices').get('DrinkCheckText');
-   $EXEC.page('MainPage').perform('chooseDrink', drinkCodeSelected);
-	drinkDispensed = $EXEC.page('MainPage').perform('getDrinkDispensed');
-   bal = $EXEC.page('MainPage').perform('getBalance');
+   drinkCodeSelected = $DATA.dataset('DrinkChoices').get('Drink');
+   drinkTextExpected = $DATA.dataset('DrinkChoices').get('DrinkCheckText');
+	$DATA.dataset('DrinkChoices').next();
+	
+   $PAGE.getPage('MainPage').perform('chooseDrink', drinkCodeSelected);
+	drinkDispensed = $PAGE.getPage('MainPage').perform('getDrinkDispensed');
+   bal = $PAGE.getPage('MainPage').perform('getBalance');
 	
    if (drinkDispensed.indexOf(drinkTextExpected)>=0) {
       $EXEC.getCurTraverseObj().addReqPassed ('DRINK', 'Correct drink has been dispensed: ' + drinkTextExpected);

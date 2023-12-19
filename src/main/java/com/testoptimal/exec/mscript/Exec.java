@@ -26,9 +26,6 @@ import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
-import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mcase.MCase;
-import com.testoptimal.exec.page.Page;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;
@@ -263,26 +260,6 @@ public class Exec {
 		return this.modelMgr.getReportFolderPath();
 	}
 	
-	public List<Page> pages() {
-		return this.scriptExec.getPageMgr().getPageList();
-	}
-	public Page addPage (String name_p) throws MBTAbort {
-		return this.scriptExec.getPageMgr().addPage(name_p);
-	}
-	public Page page (String name_p) {
-		return this.scriptExec.getPageMgr().getPage(name_p);
-	}
-
-	public List<MCase> MCases () {
-		return this.scriptExec.getMCaseMgr().getMCaseList();
-	}
-	public MCase addMCase (String name_p) {
-		return this.scriptExec.getMCaseMgr().addMCase(name_p);
-	}
-	public MCase mcase (String name_p) {
-		return this.scriptExec.getMCaseMgr().getMCase(name_p);
-	}
-
 	public List<DataSet> datasets () {
 		return this.execDir.getDataSetList();
 	}

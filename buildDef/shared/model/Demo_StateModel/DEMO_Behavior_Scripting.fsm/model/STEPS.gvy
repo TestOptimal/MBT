@@ -2,7 +2,7 @@
 // Call steps with following syntax:
 //  >> Take a screenshot
 import com.testoptimal.exec.mscript.STEP
-import com.testoptimal.exception.MBTException
+import com.testoptimal.exec.exception.MBTException
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;

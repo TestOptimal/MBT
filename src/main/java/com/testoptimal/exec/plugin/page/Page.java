@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  ***********************************************************************************************/
 
-package com.testoptimal.exec.page;
+package com.testoptimal.exec.plugin.page;
 
 import java.util.Map;
 
@@ -26,7 +26,7 @@ import groovy.lang.Closure;
 
 /**
  * Page object.  Page contains a name and a list of elements.  Page can also
- * have 0 or many actions.  Use "$SYS.getPageMgr().addPage('page1')" 
+ * have 0 or many actions.  Use "$PAGE.addPage('page1')" 
  * to create a page and added to 
  * 
  * @author yxl01

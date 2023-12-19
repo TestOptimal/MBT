@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  ***********************************************************************************************/
 
-package com.testoptimal.exec.mscript;
+package com.testoptimal.exec.plugin;
 
 import java.util.Random;
 

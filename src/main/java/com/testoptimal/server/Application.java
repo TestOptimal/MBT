@@ -33,16 +33,15 @@ import org.springframework.core.env.Environment;
 
 import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.exec.navigator.Navigator;
+import com.testoptimal.exec.plugin.PluginMgr;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.controller.helper.CodeAssistMgr;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.stats.StatsMgr;
-import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 import com.testoptimal.util.misc.SerialNum;
-import com.testoptimal.util.misc.SysLogger;
 
 /**
  * SpringBoot application startup.  The config.properties file is read from user's home directory if found,
@@ -148,6 +147,8 @@ public class Application extends SpringBootServletInitializer implements Command
     		}
 	    });
 	    
+	    PluginMgr.init();
+	    
 	    StatsMgr.instantiate(ClassStatsMgr);
 	    RequirementMgr.instantiate (ClassRequirementMgr);
 	}
@@ -163,7 +164,7 @@ public class Application extends SpringBootServletInitializer implements Command
  	   	logger.info("***TO Version:" + Config.versionDesc);
  	   	System.out.println("***Build Date:" + ConfigVersion.getReleaseDate());
  	   	logger.info("***Build Date:" + ConfigVersion.getReleaseDate());
- 	   	System.out.println("***Edition: ProMBT");
+ 	   	System.out.println("***Edition: " + Config.getProperty("License.Edition"));
  	   	logger.info("***Edition: " + Config.getProperty("License.Edition", "MBT"));
 		String ideURL = Application.genURL(Config.getHostName(), port);
 		logger.info("IDE Browser: " + ideURL);

@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mcase.MStep;
 import com.testoptimal.exec.mscript.MbtScriptExecutor;
 import com.testoptimal.exec.navigator.StopMonitor;
 import com.testoptimal.stats.TagExec;
@@ -34,11 +33,11 @@ abstract public class TravBase {
 	protected StopMonitor stopMonitor;
 	protected MbtScriptExecutor scriptExec;
 	protected List<TagExec> tagExecList = new java.util.ArrayList<>();
-	protected MStep stepObj;
-	private boolean newPathInd = false;
 	
-	public boolean isNewPath () {
-		return this.newPathInd;
+	public TravBase (ExecutionDirector execDir_p) {
+		this.execDir = execDir_p;
+		this.stopMonitor = this.execDir.getSequenceNavigator().getStopMonitor();
+		this.scriptExec = this.execDir.getScriptExec();
 	}
 	
 	public State getCurState() {
@@ -72,13 +71,6 @@ abstract public class TravBase {
 		else return null;
 	}
 
-	public TravBase (ExecutionDirector execDir_p, boolean newPath_p) {
-		this.execDir = execDir_p;
-		this.stopMonitor = this.execDir.getSequenceNavigator().getStopMonitor();
-		this.scriptExec = this.execDir.getScriptExec();
-		this.newPathInd = newPath_p;
-	}
-	
 	public abstract boolean travRun() throws MBTAbort;
 	
 	public void addTagExec (String tag_p, boolean passed_p, String msg_p, String assertID_p) {
@@ -93,14 +85,6 @@ abstract public class TravBase {
 	
 	public List<TagExec> getFailedTagChecks () {
 		return this.tagExecList.stream().filter(t -> !t.isPassed()).collect(Collectors.toList());
-	}
-	
-	public MStep getMStep () {
-		return this.stepObj;
-	}
-	
-	public void setMStep(MStep stepObj_p) {
-		this.stepObj = stepObj_p;
 	}
 	
 	public abstract String genPausedAt();

@@ -24,8 +24,9 @@ import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.scxml.StateNode;
-import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;
+
+import groovy.lang.Closure;
 
 public class TravState extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravState.class);
@@ -33,8 +34,8 @@ public class TravState extends TravBase {
 	private State curState;
 	private StateNode curStateNode;
 
-	public TravState (State travObj_p, boolean newPath_p, ExecutionDirector execDir_p) {
-		super(execDir_p, newPath_p);
+	public TravState (State travObj_p, ExecutionDirector execDir_p) {
+		super(execDir_p);
 		this.curState = travObj_p;
 		this.curStateNode = this.curState.getStateNode();
 	}

@@ -140,6 +140,10 @@ public class SequencePath {
 		return this.transList.size();
 	}
 	
+	public int getCurTransIdx() {
+		return this.curTransIdxInPath;
+	}
+	
 	public Transition addAltRoute (List<Transition> altTransList_p) {
 		this.transList.addAll(this.curTransIdxInPath, altTransList_p.stream().filter(t-> t.getTransNode()!=null).toList());
 		for (Transition trans: altTransList_p) {

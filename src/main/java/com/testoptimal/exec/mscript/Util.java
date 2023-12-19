@@ -17,6 +17,7 @@
 
 package com.testoptimal.exec.mscript;
 
+import com.testoptimal.exec.plugin.RandPlugin;
 import com.testoptimal.server.Application;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.Config.OS;
@@ -93,6 +94,5 @@ public class Util {
 	
 	public static RandPlugin getRandom() {
 		return randPlugin;
-	}
-	
+	}	
 }

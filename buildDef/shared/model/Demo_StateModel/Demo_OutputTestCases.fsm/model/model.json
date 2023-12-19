@@ -17,13 +17,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -68,8 +64,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -111,8 +106,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -158,8 +152,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -187,13 +180,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -234,8 +223,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -263,13 +251,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -314,8 +298,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -357,8 +340,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "a,b,c",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -386,13 +368,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -437,8 +415,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -466,13 +443,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -517,8 +490,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -546,13 +518,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -593,8 +561,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -636,8 +603,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -665,13 +631,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [],
       "position": {
@@ -698,13 +660,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -749,8 +707,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -767,7 +724,7 @@
       }
     }
   ],
-  "modelName": "Demo_OutputTestCases",
+  "modelName": "DEMO_OutputTestCases",
   "version": "1.0",
   "versionAUT": "",
   "versionTO": "7.0.3",
@@ -785,7 +742,6 @@
     "typeCode": "misc",
     "canvasWidth": 1500,
     "canvasHeight": 1000,
-    "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
     "boxes": []

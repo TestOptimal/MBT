@@ -50,6 +50,8 @@ public abstract class SequencerBase implements Sequencer {
 	private ScxmlNode scxmlNode;
 	protected StopMonitor stopMonitor;
 	private int maxPaths;
+	private int loopMax = 100;
+	private int loopIdx = 0;
 	
 	public SequencerBase (ExecutionDirector execDir_p) throws Exception {
 		this.execDir = execDir_p;
@@ -102,6 +104,10 @@ public abstract class SequencerBase implements Sequencer {
 		if (newPath) {
 			this.curPathIdx++;
 			if (this.curPathIdx >= this.pathList.size()) {
+				this.loopIdx++;
+				if (this.loopIdx >= this.loopMax) {
+					return null;
+				}
 				this.curPathIdx = 0;
 			}
 			this.curPath = this.pathList.get(this.curPathIdx);
@@ -110,6 +116,10 @@ public abstract class SequencerBase implements Sequencer {
 			this.transGuard.reset();
 		}
 
+		if (this.curPath.getCurTransIdx()==1) {
+			this.scriptExec.setPathName(this.curPath.getPathDesc());
+		}
+		
 		try {
 			trans = this.transGuard.checkTrans(trans, this.curPath);
 			return trans;
@@ -143,6 +153,10 @@ public abstract class SequencerBase implements Sequencer {
 	}
 	public ScxmlNode getScxmlNode() {
 		return this.scxmlNode;
+	}
+	
+	public void setLoopMax (int loopMax_p) {
+		this.loopMax = loopMax_p;
 	}
 	
 	abstract public List<SequencePath> genPathList() throws Exception;

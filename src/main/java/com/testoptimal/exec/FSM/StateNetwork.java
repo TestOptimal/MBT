@@ -41,6 +41,7 @@ public class StateNetwork extends PostmanNetwork {
 	
 	private ScxmlNode scxmlNode;
 	private Map <String, State> allStateUIDHash = new java.util.HashMap <> ();
+	private Map <String, State> allStateIDHash = new java.util.HashMap <> ();
 	private List<State> allActiveStateList;
 	private List<Transition> allActiveTransList;
 	
@@ -96,10 +97,11 @@ public class StateNetwork extends PostmanNetwork {
 			stateObj.setStateNode(stateNode);
 			super.addNode(stateObj);
 			this.allStateUIDHash.put(stateNode.getUID(), stateObj);
+			this.allStateUIDHash.put(stateNode.getStateID(), stateObj);
 		}
 
 	    // add trans for states in main model
-	    this.addTrans (scxmlObj_p.getChildrenStates(), null);
+	    this.addTrans2 (scxmlObj_p.getChildrenStates(), null);
 	    this.initialState = this.allStateUIDHash.get(iList.get(0).getUID());
 	    this.initialState.setVertexType(Vertex.initialVertex);
 	    
@@ -171,6 +173,7 @@ public class StateNetwork extends PostmanNetwork {
 			stateObj.setStateNode(stateNode);
 			super.addNode(stateObj);
 			this.allStateUIDHash.put(stateNode.getUID(), stateObj);
+			this.allStateIDHash.put(stateNode.getStateID(), stateObj);
 		}
 
 	    this.addTrans (scxmlObj_p.getChildrenStates(), null);
@@ -262,18 +265,13 @@ public class StateNetwork extends PostmanNetwork {
 	    		.forEach(t -> this.removeArc(t));
 	    }
 	}
-	
-//	/**
-//	 * resets this network for a fresh run. re-apply submodel mcase selection
-//	 * 
-//	 */
-//	public void reset() {
-//		this.allActiveTransList.forEach(t -> t.reset());
-//	}
-
 
 	public State findStateByUID (String uid_p) {
-		return this.allStateUIDHash.get(uid_p);
+		State st = this.allStateUIDHash.get(uid_p);
+		if (st==null) {
+			st = this.allStateIDHash.get(uid_p);
+		}
+		return st;
 	}
 
 	public Transition findTransByUID (String uid_p) {

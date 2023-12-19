@@ -28,6 +28,18 @@ public class Transition extends PostmanArc {
 	private static final int fakeTransCost = 1;
 
 	private TransitionNode transNode;
+	
+	public Transition (State fromStateObj, State toStateObj, String eventId, int triggerTimes) {
+		super (fromStateObj, toStateObj, 1, true);
+		setTransitionArc (eventId, triggerTimes, false);
+	}
+	
+	public Transition (State fromStateObj, State toStateObj, String eventId, int triggerTimes, boolean fakeTrans) {
+		super (fromStateObj, toStateObj, (fakeTrans?fakeTransCost:transCost), true);
+		setTransitionArc (eventId, triggerTimes, fakeTrans);
+	}
+
+	
 	public TransitionNode getTransNode() { return this.transNode; }
 	public void setTransNode(TransitionNode transNode_p) { 
 		this.transNode = transNode_p; 
@@ -115,16 +127,6 @@ public class Transition extends PostmanArc {
 	public void setTraverseOptional () { this.setMinMaxCount(0, Integer.MAX_VALUE); }
 	 
 	public boolean isTraverseOptional() { return this.getMinTraverseCount() <= 0; }
-
-	public Transition (State fromStateObj, State toStateObj, String eventId, int triggerTimes) {
-		super (fromStateObj, toStateObj, 1, true);
-		setTransitionArc (eventId, triggerTimes, false);
-	}
-	
-	public Transition (State fromStateObj, State toStateObj, String eventId, int triggerTimes, boolean fakeTrans) {
-		super (fromStateObj, toStateObj, (fakeTrans?fakeTransCost:transCost), true);
-		setTransitionArc (eventId, triggerTimes, fakeTrans);
-	}
 
 	private void setTransitionArc (String eventId, int triggerTimes, boolean fakeTrans) {
 		this.setMinMaxCount(triggerTimes, Integer.MAX_VALUE);
