@@ -83,6 +83,9 @@ public abstract class SequencerBase implements Sequencer {
 			this.pathList.subList(0, this.maxPaths);
 		}
 		logger.info("paths to cover: " + this.pathList.size());
+		if (this.pathList.size()==0) {
+			throw new Exception ("No test paths have been generated");
+		}
 		this.curPathIdx = 0;
 		this.curPath = this.pathList.get(0); 
 		this.curPath.reset();
