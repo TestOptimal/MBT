@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.mscript;
 
 import java.io.File;
@@ -9,9 +26,6 @@ import com.testoptimal.exec.ExecutionSetting;
 import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.FSM.TravBase;
-import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mcase.MCase;
-import com.testoptimal.exec.page.Page;
 import com.testoptimal.graphing.GenGraph;
 import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;
@@ -246,26 +260,6 @@ public class Exec {
 		return this.modelMgr.getReportFolderPath();
 	}
 	
-	public List<Page> pages() {
-		return this.scriptExec.getPageMgr().getPageList();
-	}
-	public Page addPage (String name_p) throws MBTAbort {
-		return this.scriptExec.getPageMgr().addPage(name_p);
-	}
-	public Page page (String name_p) {
-		return this.scriptExec.getPageMgr().getPage(name_p);
-	}
-
-	public List<MCase> MCases () {
-		return this.scriptExec.getMCaseMgr().getMCaseList();
-	}
-	public MCase addMCase (String name_p) {
-		return this.scriptExec.getMCaseMgr().addMCase(name_p);
-	}
-	public MCase mcase (String name_p) {
-		return this.scriptExec.getMCaseMgr().getMCase(name_p);
-	}
-
 	public List<DataSet> datasets () {
 		return this.execDir.getDataSetList();
 	}

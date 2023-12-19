@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.FSM;
 
 import java.io.IOException;
@@ -24,6 +41,7 @@ public class StateNetwork extends PostmanNetwork {
 	
 	private ScxmlNode scxmlNode;
 	private Map <String, State> allStateUIDHash = new java.util.HashMap <> ();
+	private Map <String, State> allStateIDHash = new java.util.HashMap <> ();
 	private List<State> allActiveStateList;
 	private List<Transition> allActiveTransList;
 	
@@ -79,10 +97,11 @@ public class StateNetwork extends PostmanNetwork {
 			stateObj.setStateNode(stateNode);
 			super.addNode(stateObj);
 			this.allStateUIDHash.put(stateNode.getUID(), stateObj);
+			this.allStateUIDHash.put(stateNode.getStateID(), stateObj);
 		}
 
 	    // add trans for states in main model
-	    this.addTrans (scxmlObj_p.getChildrenStates(), null);
+	    this.addTrans2 (scxmlObj_p.getChildrenStates(), null);
 	    this.initialState = this.allStateUIDHash.get(iList.get(0).getUID());
 	    this.initialState.setVertexType(Vertex.initialVertex);
 	    
@@ -154,6 +173,7 @@ public class StateNetwork extends PostmanNetwork {
 			stateObj.setStateNode(stateNode);
 			super.addNode(stateObj);
 			this.allStateUIDHash.put(stateNode.getUID(), stateObj);
+			this.allStateIDHash.put(stateNode.getStateID(), stateObj);
 		}
 
 	    this.addTrans (scxmlObj_p.getChildrenStates(), null);
@@ -245,18 +265,13 @@ public class StateNetwork extends PostmanNetwork {
 	    		.forEach(t -> this.removeArc(t));
 	    }
 	}
-	
-//	/**
-//	 * resets this network for a fresh run. re-apply submodel mcase selection
-//	 * 
-//	 */
-//	public void reset() {
-//		this.allActiveTransList.forEach(t -> t.reset());
-//	}
-
 
 	public State findStateByUID (String uid_p) {
-		return this.allStateUIDHash.get(uid_p);
+		State st = this.allStateUIDHash.get(uid_p);
+		if (st==null) {
+			st = this.allStateIDHash.get(uid_p);
+		}
+		return st;
 	}
 
 	public Transition findTransByUID (String uid_p) {

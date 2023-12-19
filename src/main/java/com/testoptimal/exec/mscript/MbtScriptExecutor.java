@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.mscript;
 
 import java.io.File;
@@ -9,14 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.testoptimal.exec.ExecutionDirector;
-import com.testoptimal.exec.FSM.DataSet;
 import com.testoptimal.exec.FSM.ModelMgr;
 import com.testoptimal.exec.exception.MBTAbort;
-import com.testoptimal.exec.mcase.MCaseMgr;
 import com.testoptimal.exec.mscript.MScriptInterface.IGNORE_INHERITED_METHOD;
 import com.testoptimal.exec.mscript.groovy.GroovyEngine;
 import com.testoptimal.exec.mscript.groovy.GroovyScript;
-import com.testoptimal.exec.page.PageMgr;
+import com.testoptimal.exec.plugin.PluginMgr;
 import com.testoptimal.scxml.ScxmlNode;
 import com.testoptimal.scxml.TransitionNode;
 import com.testoptimal.stats.exec.ExecTestCase;
@@ -34,12 +49,10 @@ import com.testoptimal.util.StringUtil;
 public class MbtScriptExecutor implements MScriptInterface {
 	private static Logger logger = LoggerFactory.getLogger(MbtScriptExecutor.class);
 	
-	private PageMgr pageMgr;
 	private ModelMgr modelMgr;
 	private Map<String,Object> varMap = new java.util.HashMap<>();
-	private Map<String,DataSet> dsMap = new java.util.HashMap<>();
-	private MCaseMgr mCaseMgr;
 	private GroovyEngine groovyEngine;
+	private Map<String, Object> pluginMap = new java.util.HashMap<>();
 	
 	private ExecutionDirector execDirector;
 	private Exec execObj;
@@ -69,9 +82,7 @@ public class MbtScriptExecutor implements MScriptInterface {
 	public MbtScriptExecutor (ExecutionDirector execDirector_p) throws Exception {
 		this.execDirector = execDirector_p;
 		this.modelMgr = this.execDirector.getExecSetting().getModelMgr();
-		this.pageMgr = new PageMgr();
 		this.execObj = new Exec(this);
-		this.mCaseMgr = new MCaseMgr();
 	}
 	
 
@@ -89,9 +100,14 @@ public class MbtScriptExecutor implements MScriptInterface {
 		this.groovyEngine.addSysProperty("$UTIL", new Util());
 		this.groovyEngine.addSysProperty("$VAR", this.varMap);
 
+		for (String pid: PluginMgr.getPluginClassList().keySet()) {
+			Object p = PluginMgr.newPlugin(pid, this.execDirector);
+			this.groovyEngine.addSysProperty("$" + pid, p);
+			this.pluginMap.put(pid,  p);
+		}
+		
 		// create GroovyScript object for main model
 		List<GroovyScript> scriptList = this.execDirector.getScriptList();
-		this.execDirector.getDataSetList().forEach(d -> this.dsMap.put(d.dsName, d));
 		
 		this.groovyEngine.addGroovyScriptList(scriptList);
 		
@@ -111,17 +127,13 @@ public class MbtScriptExecutor implements MScriptInterface {
 
 		}
 	}
-
-	public PageMgr getPageMgr() {
-		return this.pageMgr;
-	}
 	
 	public Object runMScript (String script_p) throws Exception {
 		return this.groovyEngine.evalExpr("DynamicExpr", script_p);
 	}
 
-	public MCaseMgr getMCaseMgr() {
-		return this.mCaseMgr;
+	public Object getPlugin(String id_p) {
+		return this.pluginMap.get(id_p);
 	}
 
 	public boolean evalGuard(TransitionNode transNode_p) {
@@ -160,8 +172,5 @@ public class MbtScriptExecutor implements MScriptInterface {
 		return this.varMap;
 	}
 
-	public Map<String, DataSet> getDataSetMap() {
-		return this.dsMap;
-	}
 }
 

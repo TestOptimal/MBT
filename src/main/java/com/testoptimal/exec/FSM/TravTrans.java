@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.FSM;
 
 import org.slf4j.Logger;
@@ -6,9 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.exception.MBTException;
-import com.testoptimal.scxml.StateNode;
 import com.testoptimal.scxml.TransitionNode;
-import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;
 
 public class TravTrans extends TravBase {
@@ -16,16 +31,11 @@ public class TravTrans extends TravBase {
 
 	private Transition curTrans = null;
 	private TransitionNode curTransNode = null;
-	private StateNode fromStateNode;
 
-	public TravTrans (Transition travObj_p, boolean newPath_p, ExecutionDirector execDir_p) {
-		super(execDir_p, newPath_p);
+	public TravTrans (Transition travObj_p, ExecutionDirector execDir_p) {
+		super(execDir_p);
 		this.curTrans = travObj_p;
 		this.curTransNode = this.curTrans.getTransNode();
-		if (this.curTransNode==null) {
-			int a = 0;
-		}
-		this.fromStateNode = this.curTransNode.getParentStateNode();
 	}
 
 	@Override
@@ -44,23 +54,7 @@ public class TravTrans extends TravBase {
 		return !this.hasFailed();
 	}
 	
-	private void execTrans () throws MBTAbort {
-//		String dsName = this.realTransNode.getDataSet();
-//		if (!StringUtil.isEmpty(dsName)) {
-//			DataSet ds = this.scriptExec.getDataMgr().getDataSet(dsName);
-//			ds.setRowIndex(this.stopMonitor.getTransCoverage().getTravCount(this.realTransObj.getTransNode().getUID()) - 1); // rowIndex is 0-based
-//		}
-
-		// execute additional script function
-//		if (this.stepObj!=null && this.stepObj.funcBefore!=null) {
-//			try {
-//				this.stepObj.funcBefore.call(this.curTransNode);
-//			}
-//			catch (Exception e) {
-//				this.addTagExec(new TagExec(this.scriptExec, null, false, e.getMessage(), "", this.fromStateNode.getStateID(), this.curTransNode.getEvent(), this.curTransNode.getUID()));
-//			}
-//		}
-		
+	private void execTrans () throws MBTAbort {		
 		try {
 			if (!this.execDir.isGenOnly()) {
 				scriptExec.getGroovyEngine().callTrigger(this.curTransNode.modelName(), "ALL_TRANS");
@@ -70,31 +64,7 @@ public class TravTrans extends TravBase {
 		catch (MBTException e) {
 			this.addTagExec(null, false, e.getMessage(), null);
 		}
-		
-//		// execute additional script function
-//		if (this.stepObj!=null && this.stepObj.funcAfter!=null) {
-//			try {
-//				this.stepObj.funcAfter.call(this.curTransNode);
-//			}
-//			catch (Exception e) {
-//				this.addTagExec(new TagExec(this.scriptExec, null, false, e.getMessage(), "", this.fromStateNode.getStateID(), this.curTransNode.getEvent(), this.curTransNode.getUID()));
-//			}
-//		}
 	}
-//
-//	private AsyncBase postTrans(Transition curTrans_p) throws Exception, MBTAbort {
-//		if (this.execDir.getStopMonitor().checkIfContinue(false)) {
-//			SequenceNavigator nav = this.execDir.getSequenceNavigator();
-//			State aState = (State)curTrans_p.getToNode();
-//			if (aState!=null) {
-//				AsyncState asyncState = new AsyncState(aState, this.execDir);
-//				return asyncState;
-//			}
-//		}
-//		
-//		this.execDir.getExecStatsCollector().doneTestCaseForVU();
-//		return null;
-//	}
 
 	public Transition getTrans() {
 		return this.curTrans;

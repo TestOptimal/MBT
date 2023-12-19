@@ -1,10 +1,25 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.stats;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +61,7 @@ public class DashboardStats {
 
 		return dstats;
 	}
+	
 	public void addModelExec(List<ModelExecSummary> modelExecSumList_p) {
 		Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
@@ -77,6 +93,32 @@ public class DashboardStats {
 		this.latestRunStats.modelNum++;
 		this.latestRunStats.addModelSummary(modelExecSumList_p.get(0));
 	}
+
+	
+	public static void addModelExec (ModelExec modelExec_p) throws Exception {
+		String dashboardFolder = Config.getRootPath() + "dashboard/";
+		File f = new File(dashboardFolder);
+		if (!f.exists()) {
+			f.mkdir();
+		}
+		Gson gson = new Gson();
+		FileUtil.writeToFile(dashboardFolder + modelExec_p.mbtSessID + ".json", gson.toJson(modelExec_p.execSummary));
+	}
+
+	public static void purge (int retentionDays_p) throws Exception {
+		String dashboardFolder = Config.getRootPath() + "dashboard/";
+		File f = new File(dashboardFolder);
+		if (!f.exists()) {
+			f.mkdir();
+		}
+		
+		long retentionMillis = System.currentTimeMillis() - retentionDays_p * 86400000; 
+		Arrays.asList(f.list()).stream().filter(fname -> fname.endsWith(".json"))
+			.map(fname -> new File (dashboardFolder, fname))
+			.filter(f2 -> f2.lastModified() < retentionMillis)
+			.forEach(f2 -> f2.delete());
+	}
+
 	
 	public class StatsSummary {
 		public int modelNum;
@@ -105,10 +147,5 @@ public class DashboardStats {
 			this.reqNotCovered += modelSum_p.reqNotCovered;
 			return modelSum_p;
 		}
-	}
-	
-	public static void addModelExec (ModelExec modelExec_p) throws Exception {
-		Gson gson = new Gson();
-		FileUtil.writeToFile(Config.getRootPath() + "dashboard/" + modelExec_p.mbtSessID + ".json", gson.toJson(modelExec_p.execSummary));
 	}
 }

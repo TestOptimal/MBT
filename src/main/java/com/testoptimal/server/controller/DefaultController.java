@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.server.controller;
 
 import java.util.Map;
@@ -23,9 +40,9 @@ import com.testoptimal.server.model.ClientReturn;
 import com.testoptimal.server.model.SysInfo;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.util.FileUtil;
-import com.testoptimal.util.StringUtil;
 import com.testoptimal.util.misc.SerialNum;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +52,7 @@ import jakarta.servlet.http.HttpSession;
  * @author yxl01
  *
  */
+@Hidden
 @RestController
 @RequestMapping("/api/v1/default")
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.util;
 
 import java.io.BufferedReader;
@@ -395,71 +412,6 @@ public class FileUtil {
 				out.close();
 			if (in != null)
 				in.close();
-		}
-	}
-
-	/**
-	 * purges files that match the pattern and only keep the versions of the
-	 * matched files per keepCriteria_p passed in.
-	 * 
-	 * @param folderPath_p
-	 * @param filePattern_p
-	 * @param keepCriteria_p
-	 */
-	public static void purgeFiles(String folderPath_p, String filePattern_p,
-			String keepCriteria_p) {
-		String logPth = Config.getLogPath();
-		File folderReader = new File(logPth, "");
-		FilenameFilter filter = new MscriptLogFileFilter(filePattern_p);
-		String[] fileList = folderReader.list(filter);
-		int verLimit = Integer.MAX_VALUE;
-		if (StringUtil.isEmpty(keepCriteria_p))
-			keepCriteria_p = "5";
-		long keepMillis = 0;
-		try {
-			verLimit = Integer.parseInt(keepCriteria_p);
-		} catch (Exception e) {
-			int numField = Integer.parseInt(keepCriteria_p.substring(0,
-					keepCriteria_p.length() - 1));
-			try {
-				switch (keepCriteria_p.charAt(keepCriteria_p.length() - 1)) {
-				case 'D':
-				case 'd':
-					keepMillis -= numField * DayMillis;
-					break;
-				case 'W':
-				case 'w':
-					keepMillis -= numField * WeekMillis;
-					break;
-				case 'M':
-				case 'm':
-					keepMillis -= numField * MonthMillis;
-					break;
-				case 'Y':
-				case 'y':
-					keepMillis -= numField * YearMillis;
-					break;
-				}
-			} catch (Exception e2) {
-				keepMillis = 0;
-			}
-		}
-
-		Map sortedList = new TreeMap();
-		for (int i = 0; fileList != null && i < fileList.length; i++) {
-			File fileReader = new File(folderReader, fileList[i]);
-			long modMillis = fileReader.lastModified();
-			if (modMillis < keepMillis)
-				continue; // skip
-			sortedList.put(new Long(modMillis), fileList[i]);
-		}
-
-		java.util.Iterator it = sortedList.entrySet().iterator();
-		int deleteNum = sortedList.size() - verLimit;
-		while (it.hasNext() && deleteNum > 0) {
-			java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-			deleteOneFile(folderPath_p, (String) entry.getValue());
-			deleteNum--;
 		}
 	}
 

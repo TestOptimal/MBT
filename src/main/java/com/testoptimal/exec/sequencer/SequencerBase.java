@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.sequencer;
 
 import java.util.List;
@@ -33,6 +50,8 @@ public abstract class SequencerBase implements Sequencer {
 	private ScxmlNode scxmlNode;
 	protected StopMonitor stopMonitor;
 	private int maxPaths;
+	private int loopMax = 100;
+	private int loopIdx = 0;
 	
 	public SequencerBase (ExecutionDirector execDir_p) throws Exception {
 		this.execDir = execDir_p;
@@ -85,6 +104,10 @@ public abstract class SequencerBase implements Sequencer {
 		if (newPath) {
 			this.curPathIdx++;
 			if (this.curPathIdx >= this.pathList.size()) {
+				this.loopIdx++;
+				if (this.loopIdx >= this.loopMax) {
+					return null;
+				}
 				this.curPathIdx = 0;
 			}
 			this.curPath = this.pathList.get(this.curPathIdx);
@@ -93,6 +116,10 @@ public abstract class SequencerBase implements Sequencer {
 			this.transGuard.reset();
 		}
 
+		if (this.curPath.getCurTransIdx()==1) {
+			this.scriptExec.setPathName(this.curPath.getPathDesc());
+		}
+		
 		try {
 			trans = this.transGuard.checkTrans(trans, this.curPath);
 			return trans;
@@ -126,6 +153,10 @@ public abstract class SequencerBase implements Sequencer {
 	}
 	public ScxmlNode getScxmlNode() {
 		return this.scxmlNode;
+	}
+	
+	public void setLoopMax (int loopMax_p) {
+		this.loopMax = loopMax_p;
 	}
 	
 	abstract public List<SequencePath> genPathList() throws Exception;

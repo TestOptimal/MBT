@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.FSM;
 
 import org.slf4j.Logger;
@@ -7,8 +24,9 @@ import com.testoptimal.exec.ExecutionDirector;
 import com.testoptimal.exec.exception.MBTAbort;
 import com.testoptimal.exec.exception.MBTException;
 import com.testoptimal.scxml.StateNode;
-import com.testoptimal.stats.TagExec;
 import com.testoptimal.stats.exec.ModelExec;
+
+import groovy.lang.Closure;
 
 public class TravState extends TravBase {
 	private static Logger logger = LoggerFactory.getLogger(TravState.class);
@@ -16,8 +34,8 @@ public class TravState extends TravBase {
 	private State curState;
 	private StateNode curStateNode;
 
-	public TravState (State travObj_p, boolean newPath_p, ExecutionDirector execDir_p) {
-		super(execDir_p, newPath_p);
+	public TravState (State travObj_p, ExecutionDirector execDir_p) {
+		super(execDir_p);
 		this.curState = travObj_p;
 		this.curStateNode = this.curState.getStateNode();
 	}

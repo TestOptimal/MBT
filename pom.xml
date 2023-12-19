@@ -256,7 +256,7 @@
 							  	<copy todir="${releaseBuildDir}/TestOptimal_win/">
 							    	<fileset dir="buildDef/TestOptimal_win/" includes="**/*"/>
 							  	</copy>
-							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_win/TestOptimal.jar"/>
+							  	<copy file="target/${project.artifactId}-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_win/${productName}.jar"/>
 							  	<zip destfile="${releaseBuildDir}/${productName}_${releaseLabel}_win.zip"
 							       basedir="${releaseBuildDir}/TestOptimal_win"
 							  	/>
@@ -271,7 +271,7 @@
 							  	<copy todir="${releaseBuildDir}/TestOptimal_mac/">
 							    	<fileset dir="buildDef/TestOptimal_mac/" includes="**/*"/>
 							  	</copy>
-							  	<copy file="target/TestOptimal-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_mac/TestOptimal.jar"/>
+							  	<copy file="target/${project.artifactId}-${releaseLabel}.jar" tofile="${releaseBuildDir}/TestOptimal_mac/${productName}.jar"/>
 							  	<zip destfile="${releaseBuildDir}/${productName}_${releaseLabel}_mac.zip">
 							  		 <zipfileset filemode="755" dir="${releaseBuildDir}/TestOptimal_mac" includes="**/*"/>
 							  	</zip>
@@ -280,6 +280,8 @@
 					</execution>
 		        </executions>
 		    </plugin>		
+		    <!-- comment out following plugin to generate project jar only -->
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -287,7 +289,6 @@
 	                <mainClass>com.testoptimal.server.Application</mainClass>
 	                <layout>ZIP</layout>
 				    <addResources>true</addResources>
-       				<!-- jvmArguments>-Xmx1024m</jvmArguments -->
        				<includeSystemScope>true</includeSystemScope>
 		            <executions>
 		                <execution>
@@ -298,7 +299,7 @@
 		            </executions>       				
        	        </configuration>
 			</plugin>
-			
+
 	      <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-javadoc-plugin</artifactId>

@@ -1,7 +1,25 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.server.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testoptimal.exec.FSM.ModelMgr;
+import com.testoptimal.server.config.Config;
 import com.testoptimal.stats.DashboardStats;
 import com.testoptimal.stats.StatsMgr;
 import com.testoptimal.stats.exec.ModelExec;
@@ -32,6 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
 public class StatsController {
+	
 	@GetMapping(value = "model/{modelName}/session/{mbtSessID}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ModelExec> getModelExec (@PathVariable (name="modelName", required=true) String modelName,
 			@PathVariable (name="mbtSessID", required=true) String mbtSessID,
@@ -53,6 +73,10 @@ public class StatsController {
 	
 	@GetMapping(value = "dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DashboardStats> getDashboard (ServletRequest request) throws Exception {
+		// perform cleanup 
+		int retentionDays = Integer.parseInt(Config.getProperty("Dashboard.days", "14"));
+		DashboardStats.purge(retentionDays);
+		
 		DashboardStats dstats = DashboardStats.getStats();
 		return new ResponseEntity<>(dstats, HttpStatus.OK);
 	}

@@ -1,12 +1,29 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec.navigator;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.testoptimal.exec.ExecutionDirector;
+import com.testoptimal.exec.FSM.Action;
 import com.testoptimal.exec.FSM.State;
 import com.testoptimal.exec.FSM.Transition;
 import com.testoptimal.exec.FSM.TravBase;
@@ -28,24 +45,19 @@ public class Navigator {
 		seqConstructorMap.put(seqMode_p, constructor);
 	}
 	public static List<String>  getSequencerList () {
-		return seqConstructorMap.keySet().stream().map(s -> s).collect(Collectors.toList());	
+		return seqConstructorMap.keySet().stream().map(s -> s).sorted().toList();	
 	}
 	
 	private ExecutionDirector execDir;
 	private Sequencer sequencer;
 	private TravBase curTravObj;
 	private Transition curTrans;
-//	private TraversalCount travTransCount;
-//	private TraversalCount travStateCount;
 	private StopMonitor stopMonitor;
 
 	public Navigator (ExecutionDirector execDir_p, String mbtMode_p) throws Exception {
 		this.execDir = execDir_p;
 		this.stopMonitor = new StopMonitor(this.execDir.getExecSetting(), this);
 		this.sequencer = getSequencer(mbtMode_p, this.execDir);
-
-//		this.travTransCount = new TraversalCount(transReqMap);
-//		this.travStateCount = new TraversalCount(new java.util.HashMap<>());
 		this.sequencer.prepToNavigate(this.stopMonitor);
 		this.stopMonitor.start(this.sequencer);
 	}
@@ -56,29 +68,32 @@ public class Navigator {
 			if (this.curTrans == null) {
 				break;
 			}
-			
+			if (this.curTrans instanceof Action) {
+				((Action) this.curTrans).run();
+				continue;
+			}
 			State atState = (State)this.curTrans.getFromNode();
 			State toState = (State) this.curTrans.getToNode();
 			
 			if (!atState.isSuperVertex()) {
-				this.curTravObj = new TravState(atState, true, this.execDir);
+				this.curTravObj = new TravState(atState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}
 
-			this.curTravObj = new TravTrans(this.curTrans, false, this.execDir);
+			this.curTravObj = new TravTrans(this.curTrans, this.execDir);
 			if (this.execDir.isAborted()) break;
 			this.curTravObj.travRun();
 			
 			if (toState.isSuperVertex()) {
-				this.curTravObj = new TravState(toState, true, this.execDir);
+				this.curTravObj = new TravState(toState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}
 			
 			boolean atFinal = toState.isModelFinal();
 			if (this.sequencer.isEndingPath()) {
-				this.curTravObj = new TravState(toState, true, this.execDir);
+				this.curTravObj = new TravState(toState, this.execDir);
 				if (this.execDir.isAborted()) break;
 				this.curTravObj.travRun();
 			}
@@ -88,15 +103,6 @@ public class Navigator {
 			}
 		}
 	}
-	
-//	
-//	public TraversalCount getTravStateCount() {
-//		return this.travStateCount;
-//	}
-	
-//	public TraversalCount getTravTransCount() {
-//		return this.travTransCount;
-//	}
 	
 	public TravBase getCurTravObj() {
 		return this.curTravObj;

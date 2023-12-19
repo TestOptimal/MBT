@@ -1,3 +1,20 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.exec;
 
 import java.util.ArrayList;
@@ -139,6 +156,7 @@ public class ModelRunnerIDE extends ModelRunner {
 
 		String errMsg = e_p.getMessage();
     	if (errMsg != null && errMsg.startsWith("java.lang.Exception:")) errMsg = errMsg.substring(21);
+    	logger.warn("mbtErrored: " + (errMsg==null?"nullpointer": errMsg));
     	IdeSvc.sendIdeMessage(this.httpSessId, new IdeMessage("error", errMsg, "MbtStarter.error"));
 		ModelState m = new ModelState(this.modelMgr.getScxmlNode().getModelName(), this.httpSessId);
 		IdeSvc.sendIdeData(this.httpSessId, "model.ended", m);

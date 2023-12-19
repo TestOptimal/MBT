@@ -1,6 +1,22 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.server;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -12,20 +28,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import com.testoptimal.exec.FSM.RequirementMgr;
 import com.testoptimal.exec.navigator.Navigator;
+import com.testoptimal.exec.plugin.PluginMgr;
 import com.testoptimal.server.config.Config;
 import com.testoptimal.server.config.ConfigVersion;
 import com.testoptimal.server.controller.helper.CodeAssistMgr;
 import com.testoptimal.server.controller.helper.SessionMgr;
 import com.testoptimal.server.security.UserMgr;
 import com.testoptimal.stats.StatsMgr;
-import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 import com.testoptimal.util.misc.SerialNum;
-import com.testoptimal.util.misc.SysLogger;
 
 /**
  * SpringBoot application startup.  The config.properties file is read from user's home directory if found,
@@ -36,6 +52,7 @@ import com.testoptimal.util.misc.SysLogger;
  * @author yxl01
  *
  */
+@ComponentScan
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer implements CommandLineRunner {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
@@ -83,6 +100,8 @@ public class Application extends SpringBootServletInitializer implements Command
     @Value("${CONFIG.RequirementMgr}")
     private String ClassRequirementMgr;
     
+    @Autowired
+    Config config;
     
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(Application.class);
@@ -92,7 +111,6 @@ public class Application extends SpringBootServletInitializer implements Command
 	@Override
 	public void run(String... args) throws Exception {
 		app = this;
-//		port = Integer.parseInt(environment.getProperty("local.server.port"));
 		System.out.println("port: " + this.port);
 		
 		String graphvizDOT = environment.getProperty("GRAPHVIZ_DOT");
@@ -106,21 +124,12 @@ public class Application extends SpringBootServletInitializer implements Command
     
 
 	private void init() throws Exception {
-//		Root = System.getProperty("user.dir") + File.separator;
-//		logger.info("user.dir: " + Root);
-//		Config.init(Root, "config.properties");
-
-		//"-baseDir", FileUtil.concatFilePath(Config.getRootPath(), "H2DB")
-//		String fullDbBaseDir = FileUtil.concatFilePath(Config.getRootPath(), "h2db");
-		
-		String webRoot = System.getProperty("user.dir") + File.separator;
 		try {
 			logger.info("Initializing TestOptimal Server...");
 			logger.info("Checking Config ...");
-			Config.init(webRoot);
 		}
 	    catch (Exception e) {
-	    	logger.error("Error reading config.properties file at " + webRoot, e);
+	    	logger.error("Error reading config.properties file at " + Config.getRootPath(), e);
 	    	System.exit(0);
 	    }
 		
@@ -138,12 +147,16 @@ public class Application extends SpringBootServletInitializer implements Command
     		}
 	    });
 	    
+	    PluginMgr.init();
+	    
 	    StatsMgr.instantiate(ClassStatsMgr);
 	    RequirementMgr.instantiate (ClassRequirementMgr);
 	}
 	
     private void startup () throws Exception {
 	   	logger.info((new java.util.Date()).toString());
+ 	   	logger.info ("Loading config from: " + Config.getConfigPath());
+ 	   	
  	   	logger.info ("Model-Based Testing and Process Automation, copyright 2008 - 2020, all rights reserved. TestOptimal, LLC");
  	   	logger.info ("Version: " + Config.versionDesc);
  	   	
@@ -151,7 +164,7 @@ public class Application extends SpringBootServletInitializer implements Command
  	   	logger.info("***TO Version:" + Config.versionDesc);
  	   	System.out.println("***Build Date:" + ConfigVersion.getReleaseDate());
  	   	logger.info("***Build Date:" + ConfigVersion.getReleaseDate());
- 	   	System.out.println("***Edition: ProMBT");
+ 	   	System.out.println("***Edition: " + Config.getProperty("License.Edition"));
  	   	logger.info("***Edition: " + Config.getProperty("License.Edition", "MBT"));
 		String ideURL = Application.genURL(Config.getHostName(), port);
 		logger.info("IDE Browser: " + ideURL);
@@ -162,20 +175,7 @@ public class Application extends SpringBootServletInitializer implements Command
 		logger.info("MAC Address: " + SerialNum.getMAC());
 		System.out.println("Serial #: " + SerialNum.getSerialNum());
 		logger.info("Serial #: " + SerialNum.getSerialNum());
-		 	   	
-	   	// purge log files
-	   	String keepCriteria = Config.getProperty("keepLog");
-	   	if (StringUtil.isEmpty(keepCriteria)) {
-		   keepCriteria = "10D";
-	   	}
-	   	SysLogger.logInfo("Purging old log files: keeplog=" + keepCriteria);
-	   	try {
-		   FileUtil.purgeFiles(Config.getLogPath(), ".", keepCriteria);
-	   	}
-	   	catch (Exception e) {
-		   SysLogger.logError("Unable to purge log file: ", e);
-	   	}
-	   
+		 	   		   
 	   	logger.info("java.library.path: " + System.getProperty("java.library.path"));
 	   	logger.info("GRAPHVIZ_DOT: " + System.getProperty("GRAPHVIZ_DOT"));
 	   	CodeAssistMgr.init();

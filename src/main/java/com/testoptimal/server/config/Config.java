@@ -1,11 +1,26 @@
+/***********************************************************************************************
+ * Copyright (c) 2009-2024 TestOptimal.com
+ *
+ * This file is part of TestOptimal MBT.
+ *
+ * TestOptimal MBT is free software: you can redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software Foundation, either version 3 
+ * of the License, or (at your option) any later version.
+ *
+ * TestOptimal MBT is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+ * the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with TestOptimal MBT. 
+ * If not, see <https://www.gnu.org/licenses/>.
+ ***********************************************************************************************/
+
 package com.testoptimal.server.config;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -16,6 +31,7 @@ import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
@@ -28,11 +44,13 @@ import com.testoptimal.util.misc.SerialNum;
  * @author yxl01
  *
  */
+@Component
 public final class Config {
 	private static Logger logger = LoggerFactory.getLogger(Config.class);
 
 	public static final String copyright = "Copyright 2008 - 2023 TestOptimal, LLC.  All rights reserved.";
 	public final static String versionDesc = ConfigVersion.getReleaseLabel(); // majorVersion + "." + ConfigVersion.minorVersion + "." + ConfigVersion.buildNum;
+	private static String StartupError = "Startup.Error";
 	
     private static String logPath;
     public static String getLogPath() { return logPath; }
@@ -96,24 +114,30 @@ public final class Config {
 	    Config.save();
 	}
 
-	public static void init(String webRoot_p) throws Exception {
-		
-		logger.info("user.dir: " + webRoot_p);
-		String configFile_p = "config.properties";
-		
-		root = webRoot_p;
+	public Config() throws Exception {
+		root = System.getProperty("user.dir") + File.separator;
+		logger.info("user.dir: " + root);
+		configFile = "config.properties";
+		File f = new File ("/toconfig");
+	    if (f.exists()) {
+	    	configPath = "/toconfig";
+	    }
+	    else {
+		    configPath = root  + "config" + File.separator;
+	    }
+	    System.out.println("Loading cnofig from " + configPath);
+	    
 		webRootPath = root + "www" + File.separator;
 		jarPath = root + "lib" + File.separator;
 		tempPath = root + "work" + File.separator;
 		classPath = root + "build" + File.separator;
-	    configPath = root  + "config" + File.separator;
 	    logPath = root + File.separator + "log" + File.separator;
-		configFile = configFile_p;
 	    ModelRoot = root + "model" + File.separator;
 	    dashRoot = root + "dashboard" + File.separator;
 
 		// Read properties file.
     	loadConfigProp(configPath + configFile);
+    	Config.setProperty("Startup.Error", "");
 	    
 	    String tempModel = Config.getProperty("modelFolder");
 	    if (!StringUtil.isEmpty(tempModel)) {
@@ -297,4 +321,9 @@ public final class Config {
 		return filterReqExp;
 	}
 
+	public static void postStartupError(String errMsg_p, Throwable e_p) {
+		String errMsg = e_p.getMessage();
+		if (errMsg == null) errMsg = "Nullpointer error";
+		Config.setProperty(Config.StartupError, errMsg_p + ": " + errMsg);
+	}
 }
