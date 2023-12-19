@@ -21,7 +21,7 @@ There are a few DEMO models for you to play with it out of the box.
 
 ## Getting Started
 
-To get started, first download/install TestOptimal for [windows](https://testoptimal.com/download/Rel-7.0/TestOptimal_7.0.3_win.zip), [mac/linux](https://testoptimal.com/download/Rel-7.0/TestOptimal_7.0.3_mac.zip) (JDK 17 required) and start up TestOptimal server to run in the background. 
+To get started, first [download/install TestOptimal](https://testoptimal.com/#Download) and start up TestOptimal server to run in the background. 
 
 Or simply run it as a docker container:
 

@@ -5,8 +5,8 @@ RUN apk add --no-cache graphviz
 RUN apk add firefox
 # ADD VERSION .
 
-RUN wget https://testoptimal.com/downloads/Rel-7.0/TestOptimal_MBT_7.0.3_mac.zip -O /app/TestOptimal.zip
-#COPY build/TestOptimal_MBT_7.0.3_mac.zip /app/TestOptimal.zip
+#RUN wget https://testoptimal.com/downloads/Rel-7.0/TestOptimal_MBT_7.0.3_mac.zip -O /app/TestOptimal.zip
+COPY build/TestOptimal_MBT_7.0.3_mac.zip /app/TestOptimal.zip
 
 RUN unzip /app/TestOptimal.zip -d /app
 
