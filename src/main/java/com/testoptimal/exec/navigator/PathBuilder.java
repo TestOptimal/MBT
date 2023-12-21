@@ -75,7 +75,6 @@ public class PathBuilder {
 				if (((State) t.getToNode()).isModelFinal()) {
 					if (aTransList.size() > 1) {
 						SequencePath path = new SequencePath(aTransList);
-						path.setPathDesc("Path " + retList.size());
 						retList.add(path);
 					}
 					aTransList.clear();				
@@ -84,7 +83,6 @@ public class PathBuilder {
 		if (!aTransList.isEmpty()) {
 			// keep last in-complete path
 			SequencePath path = new SequencePath(aTransList);
-			path.setPathDesc("Path " + retList.size());
 			retList.add(path);
 		}
 		return retList;

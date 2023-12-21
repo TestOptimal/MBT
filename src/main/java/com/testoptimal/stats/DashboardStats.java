@@ -33,6 +33,9 @@ import com.testoptimal.util.FileUtil;
 
 public class DashboardStats {
 	public Date collectDate = new Date();
+	public Date minDate = new Date();
+	public Date maxDate = new Date (0);
+	
 	public StatsSummary overallStats = new StatsSummary();
 	public StatsSummary lastWeekStats = new StatsSummary();
 	public StatsSummary last24HrStats = new StatsSummary();
@@ -49,6 +52,8 @@ public class DashboardStats {
 			.map(f -> {
 				try {
 					ModelExecSummary sum = (ModelExecSummary) gson.fromJson(FileUtil.readFile(folder + f).toString(), ModelExecSummary.class);
+					dstats.minDate = dstats.minDate.after(sum.startDT)?sum.startDT:dstats.minDate;
+					dstats.maxDate = dstats.maxDate.before(sum.endDT)?sum.endDT:dstats.maxDate;
 					return sum;
 				}
 				catch (Exception e) {
