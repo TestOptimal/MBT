@@ -79,12 +79,12 @@ public class Exec {
 	 * Example:
 	 * 
 	 * <pre>
-	 * $SYS.trace()
+	 * $EXEC.trace()
 	 * </pre>
 	 * 
-	 * @return String, example output as follows 'transName:transUID'.
+	 * @return String, example output as follows 'transName(transUID)'.
 	 *  <p>
-	 * 		ContinueShopping:U101,AddItem:U112
+	 * 		ContinueShopping(U101),AddItem(U112)
 	 *  </p>
 	 * @throws Exception
 	 */
@@ -104,7 +104,7 @@ public class Exec {
 	 * </p>
 	 * 
 	 * <pre>
-	 * $SYS.trace(5,'|')
+	 * $EXEC.trace(5,'|')
 	 * </pre>
 	 * 
 	 * @param maxTraceCount_p
@@ -127,7 +127,7 @@ public class Exec {
 			stepList = stepList.subList(0, maxTraceCount_p);
 		}
 		
-		return stepList.stream().map(s -> collStat.transMap.get(s.UID).transName + ":" + s.UID)
+		return stepList.stream().map(s -> collStat.transMap.get(s.UID).transName + "(" + s.UID + ")")
 			.collect (Collectors.joining(delimiter_p));
 	}
 

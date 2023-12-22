@@ -84,6 +84,11 @@
 		    <version>4.15.1</version>
 		</dependency>	    
 
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-http-jdk-client</artifactId>
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 		<dependency>
 		    <groupId>io.github.bonigarcia</groupId>

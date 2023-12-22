@@ -1,8 +1,10 @@
 // Model Triggers
 import com.testoptimal.exec.mscript.TRIGGER
+
+
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	>> Open Safari browser
+	>> Open Current browser
 }
 
 @TRIGGER('MBT_END')
@@ -20,7 +22,7 @@ def 'MBT_ERROR' () {
 @TRIGGER('MBT_FAIL')
 def 'MBT_FAIL' () {
     >> Take a screenshot
-    >> Trace last 3 steps
+    >> Trace last 3 steps to log file
 }
 
 @TRIGGER('U1062')
