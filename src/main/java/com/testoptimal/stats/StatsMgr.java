@@ -89,6 +89,7 @@ public class StatsMgr {
 					.map(s -> s.mbtSessID)
 					.collect(Collectors.toList());
 			List<String> dList = statsMgr.deleteStats(modelName_p, mbtSessList);
+
 			// purge temp folder
 			File f = new File(modelMgr.getTempFolderPath());
 			Arrays.asList(f.list()).stream()

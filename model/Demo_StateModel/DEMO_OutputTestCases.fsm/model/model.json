@@ -3,6 +3,7 @@
   "typeCode": "scxml",
   "desc": "This model demonstrates how to write test cases generated to a file (html) for a typical garage door opener system.",
   "notepad": "\u003cp\u003eThis model describes a typical garage door opener system.\nIt was taken from \u003ca href\u003d\"https://www.amazon.com/Craft-Model-Based-Testing-Paul-Jorgensen/dp/1498712282\" target\u003d_blank\u003eThe Craft of Model-Based Testing\u003c/a\u003e by Paul C. Jorgensen.\n\u003c/p\u003e\n\u003cp\u003eRun this model and examine the test case generated in RESULTS tab and test case output in ARTIFACT/report folder.  Experiment with various Sequencers and review the differences in the test cases generated and test coverage achieved.\n\u003c/p\u003e",
+  "showNotepad": true,
   "childrenStates": [
     {
       "readOnly": false,

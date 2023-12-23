@@ -36,19 +36,14 @@ public final class ScxmlNode {
 	public String getUID() { return this.uid;}
 
 	private String typeCode = "scxml";
-	public String getTypeCode() { return this.typeCode; }
 	
 	private String desc = "";
-	public void setDesc (String desc_p) {
-		this.desc = desc_p;
-	}
-
 	public String getDesc() {
 		return this.desc;
 	}
 
 	private String notepad = "";
-	public String getNotepad() {return this.notepad;}
+	private boolean showNotepad = false;
 	
 	private List<StateNode> childrenStates = new java.util.ArrayList<StateNode>();
 	public List<StateNode> getChildrenStates () {

@@ -62,6 +62,10 @@
 					<td valign="top">Model Notepad</td>
 					<td><textarea class="inputField" ng-model="scxml.notepad" ng-change="setChanged();"></textarea></td>
 				</tr>
+				<tr>
+					<td valign="top" title="show notepad on model open">Show on Open</td>
+					<td><input class="inputField" type="checkbox" ng-model="scxml.showNotepad" ng-change="setChanged();"></input></td>
+				</tr>
 				<tr style="background: #EFEFEF;">
 					<td colspan="2">Model Versions:</td>
 				</tr>

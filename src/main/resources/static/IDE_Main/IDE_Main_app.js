@@ -582,7 +582,7 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 				$scope.tabList.push($scope.optionalTabList.Files);
 				$scope.selectTab("Model");
 				
-				if (modelInfo.isDemoModel) {
+				if (scxmlNode.showNotepad) {
 					alertDialog (scxmlNode.notepad);
 				}
 			}
