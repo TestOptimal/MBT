@@ -723,7 +723,14 @@ MainModule.controller('mainCtrl', function ($scope, $cookies, $window, SvrRest, 
 	}
 
 	$scope.tallyMsgList = function () {
-		$scope.sysMsg.msgGroups = Object.groupBy($scope.sysMsg.msgList, ({type}) => type);
+		$scope.sysMsg.msgGroups = $scope.sysMsg.msgList.reduce((acc, m) => {
+			m.type = m.type || '';
+			if (!acc[m.type]) {
+				acc[m.type] = [];
+			}
+			acc[m.type].push(m);
+			return acc;
+		}, {});
 		$scope.sysMsg.mostSevereType = "info";
 		if ($scope.sysMsg.msgGroups.alert?.length>0) $scope.sysMsg.mostSevereType = "alert";
 		if ($scope.sysMsg.msgGroups.warn?.length>0) $scope.sysMsg.mostSevereType = "warn";
