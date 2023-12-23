@@ -21,7 +21,7 @@ def 'MBT_START' () {
 	// change testBrowser to the browser you want to test with, 
 	// see setup_webdriver function at the end for browsers supported
  	testBrowser = 'HtmlUnit';
-	testBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
+// 	testBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
 	$EXEC.log('testing with browser ' + testBrowser);
 	
 	$VAR.webDriver = setup_webdriver(testBrowser);

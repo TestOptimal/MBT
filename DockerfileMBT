@@ -1,5 +1,5 @@
 
-FROM testoptimal/base:latest
+FROM testoptimal/base:7.0.3
 RUN apk add --no-cache wget unzip
 RUN apk add --no-cache graphviz
 RUN apk add firefox

@@ -4,7 +4,7 @@ import com.testoptimal.exec.mscript.TRIGGER
 
 @TRIGGER('MBT_START')
 def 'MBT_START' () {
-	>> Open Current browser
+	>> Open Htmlunit browser
 }
 
 @TRIGGER('MBT_END')

@@ -38,10 +38,12 @@ def close() {
 def setBrowserType (String browserType) {
 	// you may need to play with the web driver options to get it to work in your environment
 	// add additional browsers support here
-	if (browserType=='This' || browserType=='Current') {
-		browserType = $EXEC.getExecSetting().getOption('ideBrowser');
-	}
-	$EXEC.log 'browser type selected is $browserType';
+// 	if (browserType=='This' || browserType=='Current') {
+// 		browserType = $EXEC.getExecSetting().getOption('ideBrowser');
+// 	}
+	browserType = "Htmlunit";
+	
+	$EXEC.log "browser type selected is $browserType";
 	
 	switch (browserType) {
 		case 'Safari':
@@ -51,15 +53,15 @@ def setBrowserType (String browserType) {
 		case 'Chrome':
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions chromeOptions = new ChromeOptions();
-//  			chromeOptions.setHeadless(true);
+ 			chromeOptions.setHeadless(true);
 			chromeOptions.addArguments("--remote-allow-origins=*");
 			$VAR.webDriver = new ChromeDriver(chromeOptions);
 			break;
 		case 'Firefox':
 			WebDriverManager.firefoxdriver().setup();
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
-// 			firefoxOptions.setHeadless(true);
-			firefoxOptions.addArguments("--remote-allow-origins=*");
+			firefoxOptions.setHeadless(true);
+// 			firefoxOptions.addArguments("--remote-allow-origins=*");
 			$VAR.webDriver = new FirefoxDriver(firefoxOptions);
 			break;
 		case 'Remote':
@@ -138,8 +140,12 @@ def chooseDrink () {
 def checkDrinkDispensed (reqTag) {
     drinkDisplayed = $VAR.webDriver.findElement(By.id('productName')).getText();
     drinkExpected = $EXEC.dataset('DrinkChoices').get('DrinkCheckText');
+	$EXEC.log drinkExpected + ":" + $EXEC.dataset('DrinkChoices').get('Drink') + ", " + drinkDisplayed;
+	
+	 $EXEC.dataset('DrinkChoices').next();
+	
     if (drinkDisplayed.indexOf(drinkExpected)>=0) {
-        $EXEC.addReqPassed (reqTag, 'Correct drink has been dispensed: ' + drinkExpected);
+			$EXEC.getCurTraverseObj().addReqPassed (reqTag, 'Correct drink has been dispensed: ' + drinkExpected);
     }
     else {
         failMsg = 'Incorrect drink was dispensed. Expecting ' + drinkExpected + ', got this instead: ' + drinkDisplayed;
