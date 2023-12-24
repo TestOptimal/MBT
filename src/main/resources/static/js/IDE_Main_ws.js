@@ -9,26 +9,14 @@ function TOWS () {
 	function wsDoConnect() {
 	    var socket = new SockJS (url);
 	    stompClient = Stomp.over(socket);
-//		stompClient = Stomp.over (socket, function(){
-//	                                   return new SockJS('/to-ws');
-//	                               });
 	    stompClient.debug = null;
 	    stompClient.reconnect_delay = 1000;
-	    
-//	    stompClient.heartbeat.outgoing = 10000; // client will send heartbeats every 20000ms
-//	    stompClient.heartbeat.incoming = 0; 
 	    stompClient.connect({reconnect_delay: 1000}, function (frame) {
 	        console.log('Connected frame', frame, new Date());
 	        conCount++;
 	        wsConnected();
 	    }, function (err) {
-			if (stompClient) {
-				console.log ("Lost ws connection", new Date());
-		    	confirmDialog ("Lost connection to TestOptimal Server. Click OK to lougout and re-login.", function() {
-					$.ajax("/logout");
-					document.location = "/IDE_Login.html";
-				});
-			}
+			setTimeout(wsDoConnect, 1000);
 	    });
 	}
 
