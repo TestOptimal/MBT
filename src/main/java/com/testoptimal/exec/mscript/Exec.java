@@ -53,6 +53,8 @@ public class Exec {
 
 	/**
 	 * logs a message to model log
+	 * @param msg_p
+	 * 		message or object with .toString() implementation
 	 */
 	public void log(Object msg_p) {
 		this.execDir.log(msg_p.toString());
@@ -60,6 +62,8 @@ public class Exec {
 
 	/**
 	 * cause model execution to abort and trigger Error if declared.
+	 * @param msg_p
+	 * 		request MBT execution to be aborted.
 	 */
 	public void abort(String msg_p) throws Exception {
 		this.execDir.interrupt();
@@ -81,7 +85,6 @@ public class Exec {
 	 * <pre>
 	 * $EXEC.trace()
 	 * </pre>
-	 * 
 	 * @return String, example output as follows 'transName(transUID)'.
 	 *  <p>
 	 * 		ContinueShopping(U101),AddItem(U112)
@@ -156,6 +159,8 @@ public class Exec {
 	 * trigger to generate a test sequence that corresponds to a test case /
 	 * scenario.
 	 * 
+	 * @param chartLabel_p 
+	 * 		chart label
 	 * @param fileName_p
 	 *            name of the image file without extension. You may include "." in
 	 *            the file name, but the system will add file extension that matches
@@ -181,6 +186,8 @@ public class Exec {
 	 * trigger to generate a test sequence that corresponds to a test case /
 	 * scenario.
 	 * 
+	 * @param chartLabel_p
+	 * 		chart label
 	 * @param fileName_p
 	 *            name of the image file without extension. You may include "." in
 	 *            the file name, but the system will add file extension that matches
@@ -205,6 +212,8 @@ public class Exec {
 	 * trigger to generate a test sequence that corresponds to a test case /
 	 * scenario.
 	 * 
+	 * @param chartLabel_p
+	 * 		chart label
 	 * @param fileName_p
 	 *            name of the image file without extension. You may include "." in
 	 *            the file name, but the system will add file extension that matches
@@ -260,14 +269,10 @@ public class Exec {
 		return this.modelMgr.getReportFolderPath();
 	}
 	
-	public List<DataSet> datasets () {
-		return this.execDir.getDataSetList();
-	}
-	public DataSet dataset (String name_p) {
-		return this.execDir.getDataSetList().stream().filter(d -> d.dsName.equals(name_p)).findFirst().orElse(null);
-	}
 	/**
-	 * returns current test path name.
+	 * @param name_p
+	 * 		sets the name for the current test path (test case)
+	 * @returns current test path name.
 	 */
 	public void setPathName (String name_p) {
 		this.scriptExec.setPathName(name_p);
@@ -275,6 +280,7 @@ public class Exec {
 
 	/**
 	 * set current test path name.
+	 * @return name of the current test path
 	 */
 	public String getPathName () {
 		return this.scriptExec.getPathName();
@@ -292,6 +298,10 @@ public class Exec {
 	}
 	
 	
+	/**
+	 * returns the list of check failures
+	 * @return
+	 */
 	public List<String> getLastFailure () {
 		List<TagExec> failList = this.execDir.getSequenceNavigator().getCurTravObj().getFailedTagChecks();
 		if (failList.isEmpty()) {
@@ -301,10 +311,18 @@ public class Exec {
 		return retList;
 	}
 	
+	/**
+	 * returns the model execution settings for the current execution
+	 * @return
+	 */
 	public ExecutionSetting getExecSetting() {
 		return this.execSetting;
 	}
 	
+	/**
+	 * returns the name of this model
+	 * @return
+	 */
 	public String getModelName() {
 		return this.modelMgr.getModelName();
 	}

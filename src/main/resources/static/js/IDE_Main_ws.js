@@ -1,4 +1,5 @@
 function TOWS () {
+	var httpSessID;
 	var url = '/to-ws';
 	var subDefList = [];
 	var subList = [];
@@ -9,20 +10,36 @@ function TOWS () {
 	function wsDoConnect() {
 	    var socket = new SockJS (url);
 	    stompClient = Stomp.over(socket);
-	    stompClient.debug = null;
-	    stompClient.reconnect_delay = 1000;
+	    stompClient.debug = true;
+//	    stompClient.reconnect_delay = 1000;
 	    stompClient.connect({reconnect_delay: 1000}, function (frame) {
-	        console.log('Connected frame', frame, new Date());
-	        conCount++;
+	        console.log('Connected frame #' + conCount, frame, new Date());
 	        wsConnected();
 	    }, function (err) {
-			setTimeout(wsDoConnect, 1000);
+	        conCount++;
+			console.log("Lost ws connection", new Date(), err);
+			if (conCount < 200) {
+				setTimeout(wsDoConnect, 1000);			
+			}
+			else {
+		    	alertDialog("Lost connection to TestOptimal Server. Check if it's running.");
+			}
 	    });
 	}
 
 
 	function wsConnected() {
+    	stompClient.subscribe(topicPrefix + '/httpSess', function(data) {
+			httpSessID = data.body;
+			console.log("httpSessID " + httpSessID);
+			subList = [];
+			Object.keys(subDefList).forEach(function(k) {
+				wsDoSubscribe(subDefList[k]);
+			});
+		});	        
+
 		wsSend ("init", "");
+		
 		Object.keys(subDefList).forEach(function(k) {
 			wsDoSubscribe(subDefList[k]);
 		});
@@ -52,12 +69,10 @@ function TOWS () {
 		if (subList[subObj.subID]) {
 			subList[subObj.subID].unsubscribe();
 		}
-		if (conCount == 0) {
-			// console.log('subscribing before conID is set', subObj);
-		}
-		else {
-			subList[subObj.subID] = stompClient.subscribe(topicPrefix + '/' + subObj.action, subObj.cb, {id: subObj.subID});
-		}
+		if (httpSessID) {
+			console.log("adding sub " + subObj.subID);
+			subList[subObj.subID] = stompClient.subscribe(topicPrefix + '/' + httpSessID + '/' + subObj.action, subObj.cb, {id: subObj.subID});
+		}		
 	}
 
 	function wsSend (action, message) {

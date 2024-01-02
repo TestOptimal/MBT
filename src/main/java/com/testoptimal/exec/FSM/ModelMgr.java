@@ -97,7 +97,10 @@ public class ModelMgr {
 		if (!StringUtil.isEmpty(this.relativePath)) {
 			this.relativePath += "/";
 		}
-		this.relativePath += this.modelName + ".fsm";
+		this.relativePath += this.modelName;
+		if (!this.getRelativePath().endsWith(".fsm")) {
+			this.relativePath += ".fsm";
+		}
 		this.folderPath = FileUtil.concatFilePath(Config.getModelRoot(), this.relativePath);
 		this.loadScxml();
 	}
