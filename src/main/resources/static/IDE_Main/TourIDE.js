@@ -320,7 +320,7 @@ guidedTourList.execModel = function() {
 		},
 		{ title: "MBT Modes - Sequencers", 
 		  element: "#mbtModeSelect",
-		  content: "<p>Sequencers drives the test generation from the model.</p>The sequencer must be selected for all modes of model executions.</p><p>The default is Optimal, which generates test cases with minimum # of steps to cover the entire model.</p><p>For more information about sequencers and which sequencer to use, please refer to <a href='https://testoptimal.com/v6/wiki/doku.php?id=sequencers' target=_blank'>Sequencers</a>.</p>",
+		  content: "<p>Sequencers drives the test generation from the model.</p>The sequencer must be selected for all modes of model executions.</p><p>The default is Optimal, which generates test cases with minimum # of steps to cover the entire model.</p><p>For more information about sequencers and which sequencer to use, please refer to <a href='https://testoptimal.com/v7/wiki/doku.php?id=sequencers' target=_blank'>Sequencers</a>.</p>",
 		  placement: "bottom",
 		  onShown: function(tour) {
 		    frameAdjust (tour, -20,0);
