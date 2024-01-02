@@ -2,7 +2,8 @@
   "uid": "U1054",
   "typeCode": "scxml",
   "desc": "Demonstrate web application automation using VendingMachine sample webapp.",
-  "notepad": "\u003cp\u003eDemonstrate web application test automation using \u003ca href\u003d\"http://localhost:8888/DemoApp/VendingMachine/VendingMachine.html\" target\u003d_blank\u003eVending Machine\u003c/a\u003e as the web app.\n\u003c/p\u003e\n\u003cp\u003e\nOther features of this model:\n\u003cul\u003e\n\u003cli\u003eUI page object that provides a layer of abstraction of UI elements and automation actions. (check Script / PAGES)\n\u003c/li\u003e\n\u003cli\u003eOutput test case execution and results to html page. Click on testOutput.html in \"report\" folder in ARTIFACT tab after model execution has completed.\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\nTo run this model, click on Run or Play button on the toolbar and watch Vending Machine web page being tested. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e\n\u003cp\u003e\nBe sure to try out different sequencers and stop conditions and see it generates different test case that produces different test coverage with no model or automation script changes.\n\u003c/p\u003e",
+  "notepad": "\u003cp\u003eDemonstrate web application test automation using \u003ca href\u003d\"http://localhost:8888/DemoApp/VendingMachine/VendingMachine.html\" target\u003d_blank\u003eVending Machine\u003c/a\u003e as the web app.\n\u003c/p\u003e\n\u003cp\u003e\nOther features of this model:\n\u003cul\u003e\n\u003cli\u003eUI page object that provides a layer of abstraction of UI elements and automation actions. (check Script / PAGES)\n\u003c/li\u003e\n\u003cli\u003eOutput test case execution and results to html page. Click on testOutput.html in \"report\" folder in ARTIFACT tab after model execution has completed.\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\nTo run this model, click on Run or Play button on the toolbar.  By default, this demo is set up to test using headless HtmlUnit driver at  script line 23: \u003ccode\u003etestBrowser \u003d \u0027HtmlUnit\u0027\u003c/code\u003e.  But you can change it to test with your desired browser.\n\u003c/p\u003e\n\u003cp\u003e\n\u003c/p\u003e\n\u003cp\u003e\nBe sure to try out different sequencers and stop conditions and see it generates different test case that produces different test coverage with no model or automation script changes.\n\u003c/p\u003e",
+  "showNotepad": true,
   "childrenStates": [
     {
       "readOnly": false,
@@ -20,9 +21,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -67,8 +65,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -98,9 +95,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [],
       "position": {
@@ -128,9 +122,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -175,8 +166,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -218,8 +208,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -249,9 +238,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -296,8 +282,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -327,9 +312,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -370,8 +352,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -401,9 +382,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -444,8 +422,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -491,8 +468,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -522,9 +498,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -565,8 +538,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -612,8 +584,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 200,
           "subModelFinalStateUID": ""
         }
@@ -643,9 +614,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -686,8 +654,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -733,8 +700,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -767,7 +733,6 @@
     "typeCode": "misc",
     "canvasWidth": 2500,
     "canvasHeight": 2000,
-    "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
     "boxes": []

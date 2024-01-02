@@ -33,6 +33,7 @@ import com.testoptimal.exec.navigator.SequencePath;
 import com.testoptimal.exec.navigator.Sequencer;
 import com.testoptimal.exec.navigator.StopMonitor;
 import com.testoptimal.scxml.ScxmlNode;
+import com.testoptimal.util.StringUtil;
 
 public abstract class SequencerBase implements Sequencer {
 	private static Logger logger = LoggerFactory.getLogger(SequencerBase.class);
@@ -82,7 +83,17 @@ public abstract class SequencerBase implements Sequencer {
 		if (this.pathList.size() >= this.maxPaths) {
 			this.pathList.subList(0, this.maxPaths);
 		}
+		
+		for (int i=0; i< this.pathList.size(); i++) {
+			SequencePath path = this.pathList.get(i);
+			if (path.getPathDesc()==null) {
+				path.setPathDesc(StringUtil.genTCName("TC_", i+1, 6));
+			}
+		}
 		logger.info("paths to cover: " + this.pathList.size());
+		if (this.pathList.size()==0) {
+			throw new Exception ("No test paths have been generated");
+		}
 		this.curPathIdx = 0;
 		this.curPath = this.pathList.get(0); 
 		this.curPath.reset();

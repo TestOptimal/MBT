@@ -77,29 +77,29 @@ public class IdeSvc {
 	}
 
 	public static void sendIdeMessage (String httpSessID_p, IdeMessage msgObj_p) {
-//		wsSvc.template.convertAndSend("/ide/" + httpSessID_p + "/alert", msgObj_p);
 		if (msgObj_p!=null) {
-			wsSvc.template.convertAndSend("/ide/alert", msgObj_p);
+			wsSvc.template.convertAndSend("/ide/" + httpSessID_p + "/alert", msgObj_p);
+//			wsSvc.template.convertAndSend("/ide/alert", msgObj_p);
 		}
 	}
 
 	public static void sendIdeData (String httpSessID_p, String action_p, Object messageObj_p) {
-//		if (httpSessID_p!=null) {
-//			wsSvc.template.convertAndSend("/ide/" + httpSessID_p + "/" + action_p, messageObj_p);
-//		}
-		if (messageObj_p!=null) {
-			wsSvc.template.convertAndSend("/ide/" + action_p, messageObj_p);
+		if (httpSessID_p!=null) {
+			wsSvc.template.convertAndSend("/ide/" + httpSessID_p + "/" + action_p, messageObj_p);
 		}
+//		if (messageObj_p!=null) {
+//			wsSvc.template.convertAndSend("/ide/" + action_p, messageObj_p);
+//		}
 	}
 
 	public void sendIdeMessageLocal (SimpMessageHeaderAccessor accessor, IdeMessage msgObj_p) {
-//		wsSvc.template.convertAndSend("/ide/" + getHttpSessionId(accessor) + "/alert", msgObj_p);
-		wsSvc.template.convertAndSend("/ide/alert", msgObj_p);
+		wsSvc.template.convertAndSend("/ide/" + getHttpSessionId(accessor) + "/alert", msgObj_p);
+//		wsSvc.template.convertAndSend("/ide/alert", msgObj_p);
 	}
 
 	public void sendIdeDataLocal (SimpMessageHeaderAccessor accessor, String action_p, Object messageObj_p) {
-//		wsSvc.template.convertAndSend("/ide/" + getHttpSessionId(accessor) + "/" + action_p, messageObj_p==null?"null":messageObj_p);
-		wsSvc.template.convertAndSend("/ide/" + action_p, messageObj_p==null?"null":messageObj_p);
+		wsSvc.template.convertAndSend("/ide/" + getHttpSessionId(accessor) + "/" + action_p, messageObj_p==null?"null":messageObj_p);
+//		wsSvc.template.convertAndSend("/ide/" + action_p, messageObj_p==null?"null":messageObj_p);
 	}
 
 	public static void sendModelState (String httpSessionID, String modelName) {
@@ -113,6 +113,8 @@ public class IdeSvc {
 	
 	@MessageMapping("/init")
 	public void init (SimpMessageHeaderAccessor accessor) throws Exception {
+		wsSvc.template.convertAndSend("/ide/httpSess", this.getHttpSessionId(accessor));
+
 //		RuntimeController.sendIdeRuntimeSessions(this.getHttpSessionId(accessor));
 	}
 

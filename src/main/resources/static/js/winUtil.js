@@ -139,10 +139,10 @@ function WinManager (curAppState_p) {
 	function init() {
 		winRegList = {};
 		winEventList = {};
-		regWin("Help", 'https://testoptimal.com/v6/wiki');
+		regWin("Help", 'https://testoptimal.com/v7/wiki');
 		regWin("Support", 'https://testoptimal.com/support');
 		regWin("Forum", "https://github.com/TestOptimal/MBT/discussions");
-		regWin("APIDOCS", "https://testoptimal.com/v6/apidocs/");
+		regWin("APIDOCS", "https://testoptimal.com/v7/apidocs/");
 		regWin("Download", "https://testoptimal.com/#Download");
 	}
 

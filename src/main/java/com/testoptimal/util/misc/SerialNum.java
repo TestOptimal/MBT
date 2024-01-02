@@ -33,9 +33,7 @@ public class SerialNum {
 		if (sn==null) {
 			try {
 				String osName = System.getProperty("os.name").toLowerCase();
-//				System.out.println("os.name:" + osName);
-				
-				if (osName.startsWith("mac os x")) {
+				if ("linux,mac os x".indexOf(osName) >= 0) {
 					sn = getSerialMac();
 				}
 				else {

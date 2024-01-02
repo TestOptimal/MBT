@@ -2,7 +2,8 @@
   "uid": "U473",
   "typeCode": "scxml",
   "desc": "This model demonstrates the use of sub-models.",
-  "notepad": "\u003cp\u003eThis model demonstrates the usage of sub-model.  Sub-models allow sharing and reuse of testing components.\n\u003c/p\u003e\n\u003cp\u003eThis model tests login function on the sample web site.  The same login function is tested when different tab is selected.  The sub-model executes a set of testing scenarios (from the sub model), which is automatically repeated for each tab.\n\u003c/p\u003e\n\u003cp\u003eSub model is injected into LoginSubModel state by setting \"Sub Model\" property in State Property view.\n\u003c/p\u003e\n\u003cp\u003eThe model uses Selenium/Web Driver to interact with AUT. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e",
+  "notepad": "\u003cp\u003eThis model demonstrates the usage of sub-model.  Sub-models allow sharing and reuse of testing components.\n\u003c/p\u003e\n\u003cp\u003eThis model tests login function on the sample web site.  The same login function is tested when different tab is selected.  The sub-model executes a set of testing scenarios (from the sub model), which is automatically repeated for each tab.\n\u003c/p\u003e\n\u003cp\u003eSub model is injected into LoginSubModel state by setting \"Sub Model\" property in State Property view.\n\u003c/p\u003e",
+  "showNotepad": true,
   "childrenStates": [
     {
       "readOnly": false,
@@ -20,9 +21,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -143,9 +141,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [],
       "position": {
@@ -173,9 +168,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -296,9 +288,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -419,9 +408,6 @@
       "subModel": "DEMO_Login_SubModel",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -580,9 +566,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -740,7 +723,6 @@
     "typeCode": "misc",
     "canvasWidth": 1500,
     "canvasHeight": 1000,
-    "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
     "boxes": []

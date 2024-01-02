@@ -54,11 +54,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 		
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
-	      <groupId>com.google.code.gson</groupId>
-	      <artifactId>gson</artifactId>
-	      <scope>compile</scope>
-	    </dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
 	    
 	    <dependency>
 	      <groupId>org.springdoc</groupId>
@@ -84,6 +84,12 @@
 		    <version>4.15.1</version>
 		</dependency>	    
 
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-http-jdk-client</artifactId>
+		    <version>4.8.2</version>
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 		<dependency>
 		    <groupId>io.github.bonigarcia</groupId>
@@ -187,6 +193,7 @@
 		    <artifactId>jquery</artifactId>
 		    <version>3.3.1</version>
 		</dependency>
+		
 	</dependencies>
 
 	<properties>
@@ -312,9 +319,13 @@
 			        <title>TestOptimal API</title>
 			        <bottom><![CDATA[Copyright TestOptimal, LLC]]></bottom>
 			        <sourceFileIncludes>
-						<include>exec/mscript/Exec.java</include>
+						<include>com/testoptimal/exec/mscript/Exec.java</include>
+						<include>com/testoptimal/exec/mscript/Util.java</include>
+						<include>com/testoptimal/exec/plugin/RandPlugin.java</include>
+						<include>com/testoptimal/exec/plugin/DataSetMgr.java</include>
+						<include>com/testoptimal/exec/plugin/page/PageMgr.java</include>
 					</sourceFileIncludes>
-			        <sourcepath>${basedir}/src/main/java/com/testoptimal</sourcepath>
+			        <sourcepath>${basedir}/src/main/java</sourcepath>
 			        <classpath>${basedir}/src/main/java</classpath>
                     <configuration>
 		                <additionalparam>-Xdoclint:none</additionalparam>

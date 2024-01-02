@@ -37,6 +37,8 @@ import com.testoptimal.util.FileUtil;
 import com.testoptimal.util.StringUtil;
 import com.testoptimal.util.misc.SerialNum;
 
+import io.opentelemetry.sdk.autoconfigure.spi.ConfigProperties;
+
 /**
  * Config class must not call out other classes that have "static" initializer that may indirectly
  * calls back to Config.
@@ -111,6 +113,7 @@ public final class Config {
 	    }
 
 	    FileUtil.setEncoding(configProp.getProperty("file.encoding"));
+	    configProp.remove(Config.StartupError);
 	    Config.save();
 	}
 

@@ -86,6 +86,11 @@ public final class RandPlugin {
 
 	/**
 	 * generate a random alphanumeric (a-z, A-Z, 0-9) string with length between the ranges specified.
+	 * @param minChartNum_p
+	 * 		minimum # of characters to generate the random string
+	 * @param maChartNum_p
+	 * 		maximum # of characters to generate the random string
+	 * @return
 	 */
 	public String string(int minCharNum_p, int maxCharNum_p) {
 		int charNum = randObj.nextInt(maxCharNum_p - minCharNum_p+1) + minCharNum_p;
@@ -100,6 +105,9 @@ public final class RandPlugin {
 
 	/**
 	 * returns the value for the list of values supplied.
+	 * @param list_p
+	 * 		String array of list of strings to be selected randomly
+	 * @return
 	 */
 	public String fromList(String[] list_p) {
 		if (list_p==null) return null;
@@ -123,6 +131,7 @@ public final class RandPlugin {
 	 * @param maxChar_p maximum length for the word
 	 * @param cap_p UP for upercase, LO for lowercase, pattern "aAa" for word starts with lower case
 	 * and upercase at the second char and the rest in lowercase.
+	 * @return
 	 */
 	public String word(int minChar_p, int maxChar_p, String cap_p) {
 		cap_p = cap_p.toUpperCase();
@@ -146,6 +155,7 @@ public final class RandPlugin {
 	 * @param maxChar_p maximum length of the email name to the left of "@"
 	 * @param domainList_p a list of email domain (like .com, .gov, .edu, etc.) separated by comma,
 	 * if specify blank value, it defaults to "com,net,edu,gov,biz,au,cn,ca,co.uk,co.in.
+	 * @return
 	 */
 	public String email(int minChar_p, int maxChar_p, String[] domainList_p) {
 		if (domainList_p==null || domainList_p.length == 0) {
@@ -169,6 +179,7 @@ public final class RandPlugin {
 	 * 
 	 * @param ptn_p phone number pattern using "9" for each number and "-" to insert a "-" to the 
 	 * phone number.
+	 * @return
 	 */
 	public String phone(String pattern_p) {
 		if (pattern_p==null || pattern_p.equals("")) {
@@ -182,6 +193,7 @@ public final class RandPlugin {
 	
 	/**
 	 * return a US zip code between 00000 - 99999.
+	 * @return
 	 */
 	public String zipCode() {
 		return this.stringPattern("99999");
@@ -189,6 +201,7 @@ public final class RandPlugin {
 	
 	/**
 	 * return a US ZIP+4
+	 * @return
 	 */
 	public String zipCodePlus4() {
 		return this.stringPattern("99999-9999");
@@ -196,6 +209,7 @@ public final class RandPlugin {
 
 	/**
 	 * return a street address.
+	 * @return
 	 */
 	public String streetAddr() {
 		StringBuffer retBuf = new StringBuffer();
@@ -236,6 +250,7 @@ public final class RandPlugin {
 
 	/**
 	 * return a US state name.
+	 * @return
 	 */
 	public String stateUS() {
 		String[] StateListUS = {"ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS",
@@ -255,6 +270,7 @@ public final class RandPlugin {
 	
 	/**
 	 * return a US state code.
+	 * @return
 	 */
 	public String stateCodeUS() {
 		String[] StateCodeListUS = {"AL", "AK", "AZ", "AR", 

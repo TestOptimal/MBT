@@ -30,6 +30,11 @@ public class DataSetMgr {
 		execDir_p.getDataSetList().forEach(d -> this.dsMap.put(d.dsName, d));
 	}
 	
+	/**
+	 * returns the dataset by name/id
+	 * @param id_p
+	 * @return
+	 */
 	public DataSet dataset(String id_p) {
 		return this.dsMap.get(id_p);
 	}

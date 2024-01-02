@@ -2,7 +2,8 @@
   "uid": "U1054",
   "typeCode": "scxml",
   "desc": "This model demonstrates the use of freetext / behavior style scripting.",
-  "notepad": "\u003cp\u003eThis model demonstrates the use of freetext / behavior style scripting as used in Behavior-Driven Development (BBD).\n\u003c/p\u003e\n\u003cp\u003eStep definitions can be found in SCRIPT / STEPS. Steps are then used/called from the scripts in SCRIPT / TRIGGER.\n\u003c/p\u003e",
+  "notepad": "\u003cp\u003eThis model demonstrates the use of freetext / behavior style scripting as used in Behavior-Driven Development (BBD).\n\u003c/p\u003e\n\u003cp\u003eStep definitions can be found in SCRIPT / STEPS. Steps are then called from the scripts in SCRIPT / TRIGGER like\u003cbr/\u003e\n\u003ccode\u003e \u003e\u003e Click on Cancel button\u003c/code\u003e\n\u003c/p\u003e",
+  "showNotepad": true,
   "childrenStates": [
     {
       "readOnly": false,
@@ -17,13 +18,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -36,7 +33,6 @@
           "event": "discharge",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "DrinkChoices",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -69,8 +65,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -97,13 +92,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [],
       "position": {
@@ -128,13 +119,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -147,7 +134,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -180,8 +166,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -195,7 +180,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -224,8 +208,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -252,13 +235,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -271,7 +250,6 @@
           "event": "toDrink",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -304,8 +282,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -332,13 +309,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -351,7 +324,6 @@
           "event": "return25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -380,8 +352,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -408,13 +379,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -427,7 +394,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -456,8 +422,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -471,7 +436,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -504,8 +468,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -532,13 +495,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -551,7 +510,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "up",
@@ -580,8 +538,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -595,7 +552,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -628,8 +584,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -656,13 +611,9 @@
       "color": "",
       "textColor": "",
       "stereotype": "",
-      "dataset": "",
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "TRAV_COUNT",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -675,7 +626,6 @@
           "event": "add25",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "down",
@@ -704,8 +654,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         },
@@ -719,7 +668,6 @@
           "event": "add50",
           "weight": 5,
           "traverseTimes": 1,
-          "dataset": "",
           "hideName": false,
           "posInfo": {
             "startDir": "right",
@@ -752,8 +700,7 @@
           "css": {},
           "stereotype": "",
           "guard": "",
-          "guardHint": "",
-          "satisfyingHint": "",
+          "guardResolvers": "",
           "maxMillis": 2147483647,
           "subModelFinalStateUID": ""
         }
@@ -771,7 +718,7 @@
   "modelName": "DEMO_Behavior_Scripting",
   "version": "1.0",
   "versionAUT": "1.1",
-  "versionTO": "5.3.2",
+  "versionTO": "7.0.3",
   "versionReq": "2.1",
   "buildNum": 1,
   "mbtNode": {
@@ -780,21 +727,15 @@
     "stopCond": {
       "stopAtFinalOnly": true
     },
-    "execThreadNum": 1,
-    "threadSpreadDelay": 0,
     "seqParams": ""
   },
   "miscNode": {
     "typeCode": "misc",
     "canvasWidth": 1500,
     "canvasHeight": 1000,
-    "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
     "boxes": []
   },
-  "pluginList": [
-    "SELENIUM"
-  ],
   "modelType": "FSM"
 }

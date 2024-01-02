@@ -92,7 +92,4 @@ public class Util {
 		return Application.getPort();
 	}
 	
-	public static RandPlugin getRandom() {
-		return randPlugin;
-	}	
 }

@@ -2,7 +2,8 @@
   "uid": "U100",
   "typeCode": "scxml",
   "desc": "This is a sub model used by Demo_HomePageLogin model.",
-  "notepad": "\u003cp\u003eThis is a sub model used by Demo_HomePageLogin model.\n\u003c/p\u003e\n\u003cp\u003eThis sub model may be run independently by itself just like regular model\u003c/p\u003e\n\u003cp\u003eAll models with name prefixed with \"_sub_\" are treated as sub-models.\n\u003c/p\u003e\n\u003cp\u003eSub models are included into other models by setting the state property \"Sub Model\" in State Property in MODEL tab.\n\u003c/p\u003e\n\u003cp\u003eThe model uses Selenium/Web Driver to interact with AUT. \n\u003c/p\u003e\n\u003cp\u003eNote: internet connection is required for the first time execution of this model or when you switch to a new browser to allow the right browser adapter be downloaded.\n\u003c/p\u003e",
+  "notepad": "\u003cp\u003eThis is a sub model used by DEMO_Login_MainModel model. It also demonstrate the use of transition Guard (EFSM).\n\u003c/p\u003e\n\u003cp\u003eThis sub model may be run independently by itself just like regular model\u003c/p\u003e\n\u003cp\u003eSub models are included into other models by setting the state property \"Sub Model\" in State Property in MODEL tab of the main model.\n\u003c/p\u003e",
+  "showNotepad": true,
   "childrenStates": [
     {
       "readOnly": false,
@@ -20,9 +21,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -54,10 +52,10 @@
               }
             ],
             "label": {
-              "left": 5,
-              "top": -25,
-              "width": 126,
-              "height": 19
+              "left": 32,
+              "top": 6,
+              "width": 75,
+              "height": 25
             }
           },
           "css": {},
@@ -79,35 +77,35 @@
           "traverseTimes": 1,
           "hideName": false,
           "posInfo": {
-            "startDir": "down",
-            "endDir": "right",
+            "startDir": "right",
+            "endDir": "down",
             "posList": [
               {
-                "left": 331.0,
-                "top": 303.0
-              },
-              {
-                "left": 331.0,
-                "top": 338.0
-              },
-              {
-                "left": 466.0,
-                "top": 338.0
-              },
-              {
-                "left": 466.0,
-                "top": 284.0
-              },
-              {
                 "left": 440.0,
-                "top": 284.0
+                "top": 274.0
+              },
+              {
+                "left": 465.0,
+                "top": 274.0
+              },
+              {
+                "left": 465.0,
+                "top": 365.0
+              },
+              {
+                "left": 335.0,
+                "top": 365.0
+              },
+              {
+                "left": 335.0,
+                "top": 303.0
               }
             ],
             "label": {
-              "left": 2,
-              "top": 39,
-              "width": 133,
-              "height": 23
+              "left": -87,
+              "top": 104,
+              "width": 75,
+              "height": 25
             }
           },
           "css": {},
@@ -144,9 +142,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [],
       "position": {
@@ -175,9 +170,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -285,7 +277,7 @@
           "hideName": false,
           "posInfo": {
             "startDir": "down",
-            "endDir": "up",
+            "endDir": "left",
             "posList": [
               {
                 "left": 203.0,
@@ -293,20 +285,16 @@
               },
               {
                 "left": 203.0,
-                "top": 208.0
+                "top": 263.0
               },
               {
-                "left": 281.0,
-                "top": 208.0
-              },
-              {
-                "left": 281.0,
-                "top": 231.0
+                "left": 279.0,
+                "top": 263.0
               }
             ],
             "label": {
-              "left": 5,
-              "top": 25,
+              "left": -42,
+              "top": 18,
               "width": 75,
               "height": 25
             }
@@ -345,9 +333,6 @@
       "subModel": "",
       "hideSubstates": false,
       "maxMillis": 2147483647,
-      "activateType": "",
-      "activateThreshold": 1,
-      "firingType": "RANDOM",
       "childrenStates": [],
       "transitions": [
         {
@@ -426,7 +411,6 @@
     "typeCode": "misc",
     "canvasWidth": 1500,
     "canvasHeight": 1000,
-    "maxTestCaseNum": 100,
     "maxHistoryStat": 5,
     "swimlanes": [],
     "boxes": []

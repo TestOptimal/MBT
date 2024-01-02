@@ -29,7 +29,7 @@ public class SequencePath {
 	private List<Transition> transList = new java.util.ArrayList<Transition>();
 	private String pathId;
 	private int reqTransCnt = 0;
-	private String pathDesc = "";
+	private String pathDesc;
 	private int curTransIdxInPath = -1;
 
 	
@@ -106,10 +106,11 @@ public class SequencePath {
 	}
 
 	public String getPathDesc() {
-		if (StringUtil.isEmpty(this.pathDesc)) {
-			return this.pathId;
-		}
-		else return this.pathDesc;
+//		if (StringUtil.isEmpty(this.pathDesc)) {
+//			return this.pathId;
+//		}
+//		else return this.pathDesc;
+		return this.pathDesc;
 	}
 	
 	public String toString() {

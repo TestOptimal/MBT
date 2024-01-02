@@ -21,7 +21,9 @@ def 'MBT_START' () {
 	// change testBrowser to the browser you want to test with, 
 	// see setup_webdriver function at the end for browsers supported
  	testBrowser = 'HtmlUnit';
+// 	testBrowser = $EXEC.getExecSetting().getOption('ideBrowser');
 	$EXEC.log('testing with browser ' + testBrowser);
+	
 	$VAR.webDriver = setup_webdriver(testBrowser);
 	$VAR.outFile = new File ($EXEC.getReportFolderPath() + '/test_out.html');
 	$VAR.outFile.newWriter();
@@ -221,12 +223,14 @@ def setup_webdriver (testBrowser) {
 		case 'Chrome':
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions chromeOptions = new ChromeOptions();
- 			chromeOptions.setHeadless(true);
+//  			chromeOptions.setHeadless(true);
+			chromeOptions.addArguments("--remote-allow-origins=*");
 			return new ChromeDriver(chromeOptions);
 		case 'Firefox':
 			WebDriverManager.firefoxdriver().setup();
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
-			firefoxOptions.setHeadless(true);
+// 			firefoxOptions.setHeadless(true);
+			firefoxOptions.addArguments("--remote-allow-origins=*");
 			return new FirefoxDriver(firefoxOptions);
 		case 'Remote':
 			ChromeOptions remoteOptions = new ChromeOptions();
@@ -235,6 +239,7 @@ def setup_webdriver (testBrowser) {
 		case 'Edge':
 			WebDriverManager.edgedriver().setup();
 			EdgeOptions edgeOptions = new EdgeOptions();
+			edgeOptions.addArguments("--remote-allow-origins=*");
     		return new EdgeDriver(edgeOptions);
 		default:
 			wd = new HtmlUnitDriver();
